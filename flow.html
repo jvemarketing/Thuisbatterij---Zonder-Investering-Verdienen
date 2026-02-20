@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+<title>Uw aanvraag - ThuisBatterij.nl</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+<style>
+:root{--or:#FF5A00;--ord:#cc4700;--orl:#fff3ec;--gr:#00a651;--dk:#1a1a1a;--rd:#e02020;--yw:#ffc107}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(150deg,#0d1f3c 0%,#1a3a6e 60%,#0d2d55 100%);background-attachment:fixed;color:var(--dk);overflow-x:hidden;min-height:100vh}
+
+/* URGENCY BAR */
+.urgbar{background:var(--rd);color:#fff;font-size:.75rem;font-weight:700;padding:9px 12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.pulse{display:inline-block;width:8px;height:8px;background:#fff;border-radius:50%;margin-right:5px;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+
+/* MAIN CONTAINER */
+.main-container{max-width:680px;margin:2rem auto;padding:0 1rem}
+
+/* LOADER */
+.loader-card{background:#fff;border-radius:16px;padding:2.5rem 1.8rem;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center}
+.loader-title{font-size:1.4rem;font-weight:800;margin-bottom:.6rem;color:var(--dk)}
+.loader-subtitle{font-size:.92rem;color:#666;margin-bottom:2.2rem}
+.loader-steps{margin:2rem 0}
+.loader-step{display:flex;align-items:center;padding:.9rem 0;opacity:.3;transition:opacity .3s}
+.loader-step.active{opacity:1}
+.loader-step.done{opacity:.6}
+.ls-icon{width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;margin-right:1rem;flex-shrink:0;transition:background .3s}
+.loader-step.active .ls-icon{background:var(--or);color:#fff;animation:pulse-icon .8s infinite}
+.loader-step.done .ls-icon{background:var(--gr);color:#fff}
+@keyframes pulse-icon{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.ls-text{font-weight:600;font-size:.95rem}
+.loader-bar{background:#e8e8e8;height:10px;border-radius:20px;overflow:hidden;margin-top:2rem}
+.loader-bar-fill{background:linear-gradient(90deg,var(--or),#ff8c00);height:100%;width:0;transition:width .6s ease;border-radius:20px}
+
+/* SURVEY CARD */
+.survey-card{background:#fff;border-radius:16px;padding:2rem 1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:1.5rem}
+.q-progress{display:flex;justify-content:center;gap:.45rem;margin-bottom:1.8rem}
+.q-dot{width:9px;height:9px;background:#ddd;border-radius:50%;transition:background .3s,width .3s}
+.q-dot.active{background:var(--or);width:28px;border-radius:5px}
+.q-number{font-size:.8rem;color:var(--or);font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.6rem;text-align:center}
+.q-title{font-size:1.5rem;font-weight:800;line-height:1.3;margin-bottom:.5rem;color:var(--dk);text-align:center}
+.q-desc{font-size:.88rem;color:#666;margin-bottom:1.8rem;text-align:center;line-height:1.6}
+.q-options{display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.8rem}
+.q-option{background:var(--or);border:none;border-radius:12px;padding:1.1rem 1.5rem;font-size:.98rem;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;text-align:center;min-height:58px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(255,90,0,.2)}
+.q-option:hover{background:var(--ord);transform:translateY(-2px);box-shadow:0 4px 16px rgba(255,90,0,.35)}
+.q-option:active{transform:scale(.98);box-shadow:0 1px 4px rgba(255,90,0,.2)}
+.q-option.selected{background:#1a5f3e;box-shadow:0 4px 16px rgba(26,95,62,.4)}
+.q-option-icon{display:none}
+.q-nav{display:none}
+
+/* FORM */
+.form-card{background:#fff;border-radius:16px;padding:1.8rem 1.3rem;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:1.5rem}
+.form-title{font-size:1.5rem;font-weight:800;margin-bottom:.4rem;text-align:center;color:var(--dk)}
+.form-subtitle{font-size:.88rem;color:#666;margin-bottom:1.3rem;text-align:center;line-height:1.5}
+.form-row-custom{display:grid;grid-template-columns:1fr;gap:.7rem;margin-bottom:.7rem}
+@media(min-width:576px){
+  .form-row-custom.two-col{grid-template-columns:1fr 1fr}
+  .form-row-custom.three-col{grid-template-columns:2fr 1fr 1fr}
+}
+.fg{margin-bottom:.7rem}
+.fl{font-size:.8rem;font-weight:700;color:var(--dk);margin-bottom:.35rem;display:block}
+.fi{width:100%;border:2px solid #ddd;border-radius:10px;padding:.75rem .95rem;font-size:.92rem;transition:border-color .2s;font-family:inherit}
+.fi:focus{outline:none;border-color:var(--or);box-shadow:0 0 0 3px rgba(255,90,0,.12)}
+.fi.error{border-color:var(--rd)}
+.fi:disabled{background:#f8f8f8;cursor:not-allowed}
+.ferr{color:var(--rd);font-size:.74rem;margin-top:.3rem;display:none}
+.fi.error ~ .ferr{display:block}
+.fcheck{display:flex;align-items:start;gap:.6rem;margin:.8rem 0}
+.fcheck input{flex-shrink:0;margin-top:.2rem;width:17px;height:17px;cursor:pointer}
+.fcheck label{font-size:.78rem;color:#666;line-height:1.5;cursor:pointer}
+.fcheck label a{color:var(--or);text-decoration:underline}
+.fsubmit{background:var(--or);color:#fff;border:none;border-radius:50px;padding:.9rem 2rem;font-size:1rem;font-weight:800;width:100%;cursor:pointer;transition:all .2s;margin-top:.6rem;box-shadow:0 2px 8px rgba(255,90,0,.2)}
+.fsubmit:hover{background:var(--ord);transform:translateY(-2px);box-shadow:0 4px 16px rgba(255,90,0,.35)}
+.fsubmit:active{transform:scale(.98)}
+.fsubmit:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* USP BAR */
+.usp-bar{background:#fff;border-radius:12px;padding:1.2rem 1rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.usp-items{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem 1.5rem}
+.usp-item{display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:600;color:#555}
+.usp-icon{color:var(--gr);font-size:.9rem;flex-shrink:0}
+
+/* MINI REVIEWS */
+.reviews-mini{background:#fff;border-radius:12px;padding:1.5rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.reviews-title{font-size:1.05rem;font-weight:800;margin-bottom:1rem;text-align:center}
+.review-mini{background:#f9f9f9;border-radius:10px;padding:1rem;margin-bottom:.8rem;border:1px solid #eee}
+.review-mini:last-child{margin-bottom:0}
+.rmini-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.rmini-avatar{width:32px;height:32px;border-radius:50%;background:var(--or);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+.rmini-info{flex:1}
+.rmini-name{font-weight:700;font-size:.85rem}
+.rmini-stars{color:var(--yw);font-size:.75rem;letter-spacing:1px}
+.rmini-text{font-size:.82rem;color:#555;line-height:1.6;font-style:italic}
+
+/* EXIT GRID */
+.exit-container{max-width:900px;margin:2rem auto;padding:0 1rem}
+.exit-card-main{background:#fff;border-radius:16px;padding:2.5rem 1.8rem;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center}
+.exit-title{font-size:1.7rem;font-weight:800;margin-bottom:.5rem;color:var(--dk)}
+.exit-subtitle{font-size:.95rem;color:#666;margin-bottom:2.2rem;line-height:1.6}
+.exit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+.exit-item{background:#fff;border:2px solid #e8e8e8;border-radius:14px;padding:1rem;cursor:pointer;transition:all .25s;text-decoration:none;display:block}
+.exit-item:hover{border-color:var(--or);transform:translateY(-6px);box-shadow:0 10px 28px rgba(0,0,0,.12);text-decoration:none}
+.exit-img{width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:.7rem}
+.exit-item-title{font-size:.9rem;font-weight:700;color:var(--dk);line-height:1.35;margin-bottom:.3rem}
+.exit-item-desc{font-size:.75rem;color:#999}
+.exit-footer{padding-top:1.5rem;border-top:1px solid #eee}
+.exit-footer-text{font-size:.82rem;color:#999;margin-bottom:1rem}
+.exit-btn{background:var(--or);color:#fff;border:none;border-radius:50px;padding:.9rem 2rem;font-size:.95rem;font-weight:800;cursor:pointer;transition:background .2s;display:inline-block;text-decoration:none}
+.exit-btn:hover{background:var(--ord);color:#fff;text-decoration:none}
+
+@media(max-width:575px){
+  .main-container,.exit-container{margin:1rem auto;padding:0 .8rem}
+  .survey-card,.form-card{padding:1.3rem .9rem;border-radius:12px}
+  .form-title{font-size:1.3rem}
+  .form-subtitle{font-size:.82rem;margin-bottom:1rem}
+  .q-title{font-size:1.25rem}
+  .q-option{padding:.95rem 1rem;font-size:.9rem;min-height:58px}
+  .fg{margin-bottom:.6rem}
+  .fl{font-size:.76rem;margin-bottom:.3rem}
+  .fi{padding:.7rem .85rem;font-size:.88rem}
+  .fcheck{margin:.65rem 0}
+  .fcheck label{font-size:.74rem}
+  .fsubmit{padding:.85rem 1.5rem;font-size:.95rem}
+  .exit-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgbar">
+  <span class="pulse"></span>
+  Beperkt beschikbaar: nog <strong id="spotsTop">22</strong> plekken in <strong id="gemeenteTop">uw gemeente</strong>
+</div>
+
+<!-- LOADER (shown first) -->
+<div id="loaderSection" class="main-container">
+  <div class="loader-card">
+    <div class="loader-title">Even geduld...</div>
+    <div class="loader-subtitle">We controleren de beschikbaarheid in <strong id="gemeenteLoader">uw gemeente</strong></div>
+    <div class="loader-steps">
+      <div class="loader-step" id="ls1">
+        <div class="ls-icon"><i class="fas fa-search"></i></div>
+        <div class="ls-text">Beschikbaarheid controleren</div>
+      </div>
+      <div class="loader-step" id="ls2">
+        <div class="ls-icon"><i class="fas fa-check"></i></div>
+        <div class="ls-text"><span id="spotCount">--</span> plekken nog beschikbaar</div>
+      </div>
+      <div class="loader-step" id="ls3">
+        <div class="ls-icon"><i class="fas fa-clipboard-check"></i></div>
+        <div class="ls-text">Geschiktheid beoordelen</div>
+      </div>
+    </div>
+    <div class="loader-bar">
+      <div class="loader-bar-fill" id="loaderBarFill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SURVEY SECTION (hidden initially) -->
+<div id="surveySection" class="main-container" style="display:none">
+  <div class="survey-card" id="surveyCard"></div>
+  
+  <!-- USP BAR -->
+  <div class="usp-bar">
+    <div class="usp-items">
+      <div class="usp-item"><i class="fas fa-check-circle usp-icon"></i> Geen investering vereist</div>
+      <div class="usp-item"><i class="fas fa-check-circle usp-icon"></i> BTW-teruggave tot 21%</div>
+      <div class="usp-item"><i class="fas fa-check-circle usp-icon"></i> Gecertificeerd</div>
+      <div class="usp-item"><i class="fas fa-check-circle usp-icon"></i> Gratis advies</div>
+    </div>
+  </div>
+
+  <!-- MINI REVIEWS -->
+  <div class="reviews-mini">
+    <div class="reviews-title">4.8 uit 2.400+ reviews</div>
+    <div class="review-mini">
+      <div class="rmini-header">
+        <div class="rmini-avatar">M</div>
+        <div class="rmini-info">
+          <div class="rmini-name">Marco V.</div>
+          <div class="rmini-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="rmini-text">"Mijn energierekening is meer dan gehalveerd. Echt een aanrader!"</div>
+    </div>
+    <div class="review-mini">
+      <div class="rmini-header">
+        <div class="rmini-avatar">S</div>
+        <div class="rmini-info">
+          <div class="rmini-name">Sandra K.</div>
+          <div class="rmini-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="rmini-text">"Snelle installatie, professioneel advies. Blij dat we het gedaan hebben."</div>
+    </div>
+  </div>
+</div>
+
+<!-- EXIT SECTION (hidden initially) -->
+<div id="exitSection" class="exit-container" style="display:none">
+  <div class="exit-card-main">
+    <div class="exit-title">Bedankt voor uw aanvraag!</div>
+    <div class="exit-subtitle">U ontvangt binnen 24 uur een vrijblijvende offerte per e-mail.<br>Ontdek ondertussen ook deze interessante aanbiedingen:</div>
+    <div class="exit-grid">
+      <a href="https://partner-link.com/zonnepanelen" target="_blank" class="exit-item">
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&h=150&fit=crop&q=80" alt="Zonnepanelen" class="exit-img" loading="lazy"/>
+        <div class="exit-item-title">Zonnepanelen</div>
+        <div class="exit-item-desc">Vanaf €4.995 geïnstalleerd</div>
+      </a>
+      <a href="https://partner-link.com/warmtepomp" target="_blank" class="exit-item">
+        <img src="https://images.unsplash.com/photo-1635365405971-c732c6c1bf12?w=200&h=150&fit=crop&q=80" alt="Warmtepomp" class="exit-img" loading="lazy"/>
+        <div class="exit-item-title">Warmtepomp</div>
+        <div class="exit-item-desc">Tot €3.000 subsidie</div>
+      </a>
+      <a href="https://partner-link.com/isolatie" target="_blank" class="exit-item">
+        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=200&h=150&fit=crop&q=80" alt="Isolatie" class="exit-img" loading="lazy"/>
+        <div class="exit-item-title">Spouwmuurisolatie</div>
+        <div class="exit-item-desc">Bespaar tot 25% energie</div>
+      </a>
+      <a href="https://partner-link.com/laadpaal" target="_blank" class="exit-item">
+        <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=200&h=150&fit=crop&q=80" alt="Laadpaal" class="exit-img" loading="lazy"/>
+        <div class="exit-item-title">Laadpaal thuis</div>
+        <div class="exit-item-desc">Inclusief installatie</div>
+      </a>
+      <a href="https://partner-link.com/dakisolatie" target="_blank" class="exit-item">
+        <img src="https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=200&h=150&fit=crop&q=80" alt="Dakisolatie" class="exit-img" loading="lazy"/>
+        <div class="exit-item-title">Dakisolatie</div>
+        <div class="exit-item-desc">Vergelijk offertes</div>
+      </a>
+      <a href="https://partner-link.com/glas" target="_blank" class="exit-item">
+        <img src="https://images.unsplash.com/photo-1545259742-12f00f00042d?w=200&h=150&fit=crop&q=80" alt="Dubbel glas" class="exit-img" loading="lazy"/>
+        <div class="exit-item-title">HR++ Glas</div>
+        <div class="exit-item-desc">30% minder warmteverlies</div>
+      </a>
+    </div>
+    <div class="exit-footer">
+      <div class="exit-footer-text">Deze aanbiedingen zijn van partners waarmee wij samenwerken</div>
+      <a href="index.html" class="exit-btn"><i class="fas fa-home mr-2"></i>Terug naar homepage</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#0d1f3c;color:rgba(255,255,255,.7);padding:2rem 1rem 1.5rem;margin-top:3rem">
+  <div style="max-width:680px;margin:0 auto;text-align:center">
+    <div style="font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:.8rem">
+      Collectief <span style="color:var(--or)">Vrije Energie</span>
+    </div>
+    <p style="font-size:.78rem;margin-bottom:1rem;line-height:1.6">
+      Wij helpen Nederlandse huiseigenaren profiteren van subsidies en regelingen voor duurzame energie.
+    </p>
+    <div style="margin-bottom:1rem">
+      <a href="#" style="color:rgba(255,255,255,.6);text-decoration:none;margin:0 .8rem;font-size:.8rem">Privacybeleid</a>
+      <a href="#" style="color:rgba(255,255,255,.6);text-decoration:none;margin:0 .8rem;font-size:.8rem">Algemene voorwaarden</a>
+      <a href="#" style="color:rgba(255,255,255,.6);text-decoration:none;margin:0 .8rem;font-size:.8rem">Cookie-instellingen</a>
+    </div>
+    <div style="font-size:.72rem;color:rgba(255,255,255,.4);border-top:1px solid rgba(255,255,255,.1);padding-top:1rem">
+      © 2025 Collectief Vrije Energie - Alle rechten voorbehouden
+    </div>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+// Get URL params
+console.log('=== FLOW.HTML LOADED ===');
+console.log('Current URL:', window.location.href);
+console.log('Search params:', window.location.search);
+
+var urlParams = new URLSearchParams(window.location.search);
+var postcode = urlParams.get('pc') || '1234AB';
+console.log('Postcode from URL:', postcode);
+
+var gemeente = extractGemeente(postcode);
+console.log('Gemeente extracted:', gemeente);
+
+// Flow data
+var flowData = {
+  postcode: postcode,
+  gemeente: gemeente,
+  q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null, q8: null,
+  currentStep: 1
+};
+
+// Initialize with error handling
+$(function(){
+  console.log('jQuery ready');
+  console.log('Setting gemeente text to:', gemeente);
+  
+  $('#gemeenteLoader').text(gemeente);
+  $('#gemeenteTop').text(gemeente);
+  
+  console.log('gemeenteLoader element:', $('#gemeenteLoader').length);
+  console.log('gemeenteTop element:', $('#gemeenteTop').length);
+  
+
+  // Dynamic spots for urgency bar (same as index.html)
+  function getDailySpots() {
+    var now = new Date();
+    var seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+    return 15 + (seed % 14);
+  }
+  
+  var dailySpots = getDailySpots();
+  console.log('Daily spots:', dailySpots);
+  $('#spotsTop').text(dailySpots);
+  // Start loader animation
+  console.log('Starting loader...');
+  runLoader();
+});
+
+// Fallback if jQuery fails
+window.addEventListener('load', function() {
+  if (typeof jQuery === 'undefined') {
+    console.error('jQuery failed to load!');
+    alert('Er is een probleem met het laden van de pagina. Probeer de pagina te vernieuwen.');
+  } else {
+    console.log('jQuery loaded successfully, version:', jQuery.fn.jquery);
+  }
+});
+
+function extractGemeente(pc){
+  var postcodes = {
+    '1': 'Amsterdam', '2': 'Rotterdam', '3': 'Utrecht', '4': 'Den Haag',
+    '5': 'Eindhoven', '6': 'Nijmegen', '7': 'Enschede', '8': 'Zwolle', '9': 'Groningen'
+  };
+  var first = pc.charAt(0);
+  return postcodes[first] || 'uw gemeente';
+}
+
+function runLoader(){
+  setTimeout(function(){
+    $('#ls1').addClass('active');
+    $('#loaderBarFill').css('width','33%');
+  }, 400);
+  
+  setTimeout(function(){
+    $('#ls1').removeClass('active').addClass('done');
+    $('#ls2').addClass('active');
+    var spots = Math.floor(Math.random() * 15) + 8;
+    $('#spotCount').text(spots);
+    $('#spotsTop').text(spots);
+    $('#loaderBarFill').css('width','66%');
+  }, 2000);
+  
+  setTimeout(function(){
+    $('#ls2').removeClass('active').addClass('done');
+    $('#ls3').addClass('active');
+    $('#loaderBarFill').css('width','100%');
+  }, 3600);
+  
+  setTimeout(function(){
+    $('#ls3').removeClass('active').addClass('done');
+    showSurvey();
+  }, 5000);
+}
+
+function showSurvey(){
+  $('#loaderSection').fadeOut(300, function(){
+    $('#surveySection').fadeIn(300);
+    showQuestion(1);
+  });
+}
+
+function showQuestion(num){
+  flowData.currentStep = num;
+  var html = '';
+  
+  switch(num){
+    case 1:
+      html = buildQ(1, 8, 'Vraag 1 van 8', 'Heeft u al zonnepanelen?', '', [
+        {text: 'Ja, ik heb zonnepanelen', val: 'ja'},
+        {text: 'Nee, nog geen zonnepanelen', val: 'nee'},
+        {text: 'Ik overweeg zonnepanelen', val: 'overweeg'}
+      ]);
+      break;
+    case 2:
+      html = buildQ(2, 8, 'Vraag 2 van 8', 'Waar wilt u de thuisbatterij plaatsen?', '', [
+        {text: 'Woning', val: 'woning'},
+        {text: 'Bedrijfspand', val: 'bedrijf'}
+      ]);
+      break;
+    case 3:
+      html = buildQ(3, 8, 'Vraag 3 van 8', 'Wat is uw geschat jaarlijks verbruik?', '', [
+        {text: '2300 kWh (1 persoon)', val: '2300'},
+        {text: '3400 kWh (2 personen)', val: '3400'},
+        {text: '4100 kWh (3 personen)', val: '4100'},
+        {text: '4600 kWh (4 personen)', val: '4600'},
+        {text: '5300 kWh (5 personen)', val: '5300'},
+        {text: 'Meer dan 5300 kWh', val: '5300+'}
+      ]);
+      break;
+    case 4:
+      html = buildQ(4, 8, 'Vraag 4 van 8', 'Is er ruimte beschikbaar voor batterijopslag?', '', [
+        {text: 'Ja, er is voldoende ruimte', val: 'ja'},
+        {text: 'Nee, beperkte ruimte', val: 'nee'},
+        {text: 'Weet ik niet zeker', val: 'onzeker'}
+      ]);
+      break;
+    case 5:
+      html = buildQ(5, 8, 'Vraag 5 van 8', 'Wat voor type woning heeft u?', '', [
+        {text: 'Koopwoning', val: 'koop'},
+        {text: 'Huurwoning', val: 'huur'}
+      ]);
+      break;
+    case 6:
+      html = buildQ(6, 8, 'Vraag 6 van 8', 'Heeft u interesse in een warmtepomp?', 
+        'Bespaar tot €1.600 per jaar op gaskosten en verhoog de waarde van uw woning.', [
+        {text: 'Ja, interesse in warmtepomp', val: 'warmtepomp'},
+        {text: 'Nee, geen interesse', val: 'nee'}
+      ]);
+      break;
+    case 7:
+      html = buildQ(7, 8, 'Vraag 7 van 8', 'Heeft u interesse in isolatie?',
+        'Verminder warmteverlies met 30% en maak uw woning energiezuiniger.', [
+        {text: 'Ja, interesse in isolatie', val: 'isolatie'},
+        {text: 'Nee, geen interesse', val: 'nee'}
+      ]);
+      break;
+    case 8:
+      html = buildQ(8, 8, 'Vraag 8 van 8', 'Heeft u interesse in een laadpaal?',
+        'Laad thuis tot 5x goedkoper dan bij publieke laadpalen.', [
+        {text: 'Ja, interesse in laadpaal', val: 'laadpaal'},
+        {text: 'Nee, geen interesse', val: 'nee'}
+      ]);
+      break;
+  }
+  
+  $('#surveyCard').html(html);
+  $('html, body').animate({scrollTop: 0}, 300);
+}
+
+function buildQ(num, total, label, title, desc, options){
+  var dots = '';
+  for(var i=1; i<=total; i++){
+    dots += '<div class="q-dot' + (i===num?' active':'') + '"></div>';
+  }
+  
+  var opts = '';
+  options.forEach(function(opt){
+    opts += '<div class="q-option" data-value="' + opt.val + '" onclick="selectOpt(this,' + num + ')">' +
+      opt.text +
+    '</div>';
+  });
+  
+  return '<div class="q-progress">' + dots + '</div>' +
+    '<div class="q-number">' + label + '</div>' +
+    '<h3 class="q-title">' + title + '</h3>' +
+    (desc ? '<div class="q-desc">' + desc + '</div>' : '') +
+    '<div class="q-options">' + opts + '</div>';
+}
+
+function selectOpt(el, qNum){
+  // Store answer
+  flowData['q' + qNum] = $(el).data('value');
+  
+  // Visual feedback
+  $(el).addClass('selected');
+  
+  // Auto-advance to next question after brief delay
+  setTimeout(function(){
+    if(qNum === 8){
+      showForm();
+    } else {
+      showQuestion(qNum + 1);
+    }
+  }, 400);
+}
+
+function nextQ(current){
+  if(current === 8){
+    showForm();
+  } else {
+    showQuestion(current + 1);
+  }
+}
+
+function showForm(){
+  var html = '<div class="form-title">Bijna klaar!</div>' +
+    '<div class="form-subtitle">Vul uw gegevens in en ontvang binnen 24 uur een vrijblijvende offerte</div>' +
+    '<form id="finalForm" onsubmit="submitForm(event)">' +
+      '<div class="form-row-custom two-col">' +
+        '<div class="fg">' +
+          '<label class="fl" for="fVoornaam">Voornaam *</label>' +
+          '<input type="text" class="fi" id="fVoornaam" required />' +
+          '<div class="ferr">Voer uw voornaam in</div>' +
+        '</div>' +
+        '<div class="fg">' +
+          '<label class="fl" for="fAchternaam">Achternaam *</label>' +
+          '<input type="text" class="fi" id="fAchternaam" required />' +
+          '<div class="ferr">Voer uw achternaam in</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="fg">' +
+        '<label class="fl" for="fStraat">Straat *</label>' +
+        '<input type="text" class="fi" id="fStraat" placeholder="Bijv. Hoofdstraat" required />' +
+        '<div class="ferr">Voer uw straatnaam in</div>' +
+      '</div>' +
+      '<div class="form-row-custom three-col">' +
+        '<div class="fg">' +
+          '<label class="fl" for="fHuisnr">Huisnummer *</label>' +
+          '<input type="text" class="fi" id="fHuisnr" placeholder="123" required />' +
+          '<div class="ferr">Verplicht</div>' +
+        '</div>' +
+        '<div class="fg">' +
+          '<label class="fl" for="fToev">Toevoeging</label>' +
+          '<input type="text" class="fi" id="fToev" placeholder="A" />' +
+        '</div>' +
+      '</div>' +
+      '<div class="fg">' +
+        '<label class="fl" for="fPostcode">Postcode *</label>' +
+        '<input type="text" class="fi" id="fPostcode" value="' + postcode + '" disabled />' +
+      '</div>' +
+      '<div class="fg">' +
+        '<label class="fl" for="fEmail">E-mailadres *</label>' +
+        '<input type="email" class="fi" id="fEmail" placeholder="uw@email.nl" required />' +
+        '<div class="ferr">Voer een geldig e-mailadres in</div>' +
+      '</div>' +
+      '<div class="fg">' +
+        '<label class="fl" for="fTel">Mobiel nummer *</label>' +
+        '<input type="tel" class="fi" id="fTel" placeholder="06 12345678" required />' +
+        '<div class="ferr">Voer uw mobiel nummer in</div>' +
+      '</div>' +
+      '<div class="fcheck">' +
+        '<input type="checkbox" id="fPrivacy" required />' +
+        '<label for="fPrivacy">Ik ga akkoord met de <a href="#">privacyverklaring</a> en algemene voorwaarden *</label>' +
+      '</div>' +
+      '<div class="fcheck">' +
+        '<input type="checkbox" id="fNews" />' +
+        '<label for="fNews">Ja, ik ontvang graag tips en aanbiedingen over verduurzamen</label>' +
+      '</div>' +
+      '<button type="submit" class="fsubmit"><i class="fas fa-paper-plane mr-2"></i>Verstuur aanvraag</button>' +
+    '</form>';
+  
+  $('#surveyCard').html(html);
+  $('html, body').animate({scrollTop: 0}, 300);
+}
+
+function submitForm(e){
+  e.preventDefault();
+  
+  var valid = true;
+  $('#finalForm input[required]').each(function(){
+    if($(this).attr('type') !== 'checkbox' && !$(this).val().trim()){
+      $(this).addClass('error');
+      valid = false;
+    } else if($(this).attr('type') === 'checkbox' && !$(this).prop('checked')){
+      valid = false;
+      alert('U moet akkoord gaan met de privacyverklaring om door te gaan.');
+    } else {
+      $(this).removeClass('error');
+    }
+  });
+  
+  if(!valid) return;
+  
+  var formData = {
+    postcode: postcode,
+    gemeente: gemeente,
+    voornaam: $('#fVoornaam').val(),
+    achternaam: $('#fAchternaam').val(),
+    straat: $('#fStraat').val(),
+    huisnummer: $('#fHuisnr').val(),
+    toevoeging: $('#fToev').val(),
+    email: $('#fEmail').val(),
+    telefoon: $('#fTel').val(),
+    newsletter: $('#fNews').prop('checked'),
+    antwoorden: flowData
+  };
+  
+  console.log('Form submitted:', formData);
+  
+  // Show exit page
+  showExit();
+}
+
+function showExit(){
+  $('#surveySection').fadeOut(300, function(){
+    $('#exitSection').fadeIn(300);
+    $('html, body').animate({scrollTop: 0}, 300);
+  });
+}
+
+// Prevent back button
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+  history.go(1);
+};
+</script>
+</body>
+</html>

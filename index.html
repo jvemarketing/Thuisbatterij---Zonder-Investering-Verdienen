@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+<meta name="description" content="Verdien met je woning. Thuisbatterij + zonnepanelen + warmtepomp. Controleer subsidie in jouw gemeente."/>
+<title>Collectief Vrije Energie - Verdien met je woning</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+<style>
+:root{--or:#FF5A00;--ord:#cc4700;--orl:#fff3ec;--gr:#00a651;--dk:#1a1a1a;--rd:#e02020;--yw:#ffc107;--urgbar-h:32px}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',Arial,sans-serif;color:var(--dk);padding-top:calc(var(--urgbar-h) + 60px)}
+/* TOPBAR */
+#urgbar{background:var(--rd);color:#fff;font-size:.72rem;font-weight:700;padding:7px 10px;text-align:center;position:fixed;top:0;left:0;width:100%;z-index:1060;line-height:1.3;height:var(--urgbar-h)}
+.pulse{display:inline-block;width:8px;height:8px;background:#fff;border-radius:50%;margin-right:5px;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+/* NAV */
+#mainNav{background:#0d1f3c;box-shadow:0 2px 12px rgba(0,0,0,.3);position:fixed;top:var(--urgbar-h);left:0;right:0;z-index:1050}
+#mainNav .navbar-brand{font-weight:900;font-size:1.05rem;color:#fff!important}
+#mainNav .navbar-brand span{color:var(--or)}
+#mainNav .nav-link{color:rgba(255,255,255,.8)!important;font-size:.83rem;font-weight:600;padding:.45rem .8rem!important}
+#mainNav .nav-link:hover{color:#fff!important}
+.btn-nav{background:var(--or);color:#fff!important;border-radius:50px;padding:.4rem 1rem!important;font-weight:800;font-size:.78rem!important}
+.btn-nav:hover{background:var(--ord)!important}
+.navbar-toggler{border-color:rgba(255,255,255,.25)}
+.navbar-toggler-icon{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")}
+/* HERO */
+#hero{background:linear-gradient(150deg,#0d1f3c,#1a3a6e);color:#fff;padding:3rem 0 2.5rem;min-height:90vh;display:flex;align-items:center}
+.hero-badge{display:inline-block;background:var(--or);color:#fff;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;padding:4px 13px;border-radius:20px;margin-bottom:.9rem}
+#hero h1{font-size:clamp(1.55rem,5vw,2.7rem);font-weight:800;line-height:1.2}
+#hero h1 span{color:var(--or)}
+#hero .lead{font-size:clamp(.88rem,2.2vw,1rem);opacity:.88;line-height:1.65}
+/* POSTCODE CARD */
+.pcard{background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.25);padding:1.4rem}
+.pcard h5{font-weight:800;font-size:.95rem;color:var(--dk)}
+.pcard .form-control{font-size:1.2rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:2px solid #ddd;border-radius:10px;padding:.75rem 1rem;height:auto}
+.pcard .form-control:focus{border-color:var(--or);box-shadow:0 0 0 3px rgba(255,90,0,.15)}
+.pcard .form-control.is-invalid{border-color:var(--rd)}
+.btn-or{background:var(--or);color:#fff;font-weight:800;border:none;border-radius:10px;padding:.85rem 1rem;font-size:.95rem;min-height:52px;width:100%;transition:background .2s,transform .1s;display:flex;align-items:center;justify-content:center}
+.btn-or:hover{background:var(--ord);color:#fff;transform:scale(1.02)}
+.btn-pill{background:var(--or);color:#fff;font-weight:800;border:none;border-radius:50px;padding:.9rem 2rem;font-size:1rem;transition:background .2s,transform .15s;animation:ctap 2.5s infinite;display:inline-flex;align-items:center}
+.btn-pill:hover{background:var(--ord);color:#fff;transform:scale(1.03)}
+@keyframes ctap{0%,100%{box-shadow:0 6px 22px rgba(255,90,0,.35)}50%{box-shadow:0 6px 32px rgba(255,90,0,.65),0 0 0 8px rgba(255,90,0,.12)}}
+/* LIVE BAR */
+#livebar{background:var(--orl);border-top:3px solid var(--or);border-bottom:3px solid var(--or);padding:.9rem 0}
+.lnum{font-size:1.65rem;font-weight:900;color:var(--or);line-height:1}
+.llbl{font-size:.65rem;color:#666;margin-top:2px}
+/* TRUST */
+#trustrow{background:#fff;border-bottom:1px solid #eee;padding:.8rem 0}
+.ti{display:flex;align-items:center;gap:.45rem;font-size:.75rem;font-weight:600;color:#555;padding:.25rem 0}
+.ck{width:19px;height:19px;background:var(--gr);border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
+/* SECTION */
+.spy{padding:2.8rem 0}
+.slbl{display:inline-block;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.3px;color:var(--or);margin-bottom:.45rem}
+.stitle{font-size:clamp(1.25rem,3.5vw,1.9rem);font-weight:800;line-height:1.25}
+/* QUOTE */
+.qblock{background:#f0f4f9;border-left:5px solid #0d2d55;border-radius:0 10px 10px 0;padding:1.1rem 1.3rem;margin:1.4rem 0}
+.qblock blockquote{font-size:.9rem;font-style:italic;line-height:1.7;color:#222;margin-bottom:.6rem}
+.rologo{background:#154273;color:#fff;font-size:.58rem;font-weight:800;padding:4px 7px;border-radius:4px;line-height:1.4;flex-shrink:0}
+/* COMBO TABS */
+.ctab .nav-link{border-radius:50px!important;font-weight:700;font-size:.8rem;color:#666;padding:.45rem 1rem;border:2px solid #ddd!important;margin:.2rem;transition:all .2s}
+.ctab .nav-link.active{background:var(--or)!important;border-color:var(--or)!important;color:#fff!important}
+.ccard{background:#fff;border-radius:14px;box-shadow:0 3px 16px rgba(0,0,0,.08);padding:1.4rem;text-align:center;max-width:460px;margin:0 auto}
+.cimg{width:100%;max-width:360px;height:200px;object-fit:cover;border-radius:12px;margin-bottom:1rem}
+.cicon{font-size:2.6rem;margin-bottom:.7rem}
+.cbadge{display:inline-block;background:var(--or);color:#fff;font-size:.62rem;font-weight:800;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:.5rem}
+.csaving{background:var(--orl);border-radius:8px;padding:.55rem .8rem;font-size:.8rem;color:var(--ord);font-weight:700;margin-top:.8rem}
+/* STEPS */
+.stepnum{width:44px;height:44px;background:var(--or);color:#fff;border-radius:50%;font-size:1.05rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* URGENCY */
+#urgsec{background:linear-gradient(135deg,#1a1a1a,#2d2d2d);color:#fff}
+#urgsec h2{color:#fff}
+.tbox{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:1.2rem}
+.tdig{background:var(--or);color:#fff;font-size:1.7rem;font-weight:900;width:56px;height:56px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.tunit{font-size:.6rem;color:#aaa;text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
+.tsep{font-size:1.5rem;font-weight:900;color:var(--or);margin-top:-4px;padding:0 1px}
+.prlbl{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:.4rem}
+.prlbl .tk{color:var(--rd);font-weight:700}
+.prlbl .lf{color:#aaa}
+.prtrack{background:rgba(255,255,255,.1);border-radius:20px;height:11px;overflow:hidden}
+.prfill{height:100%;background:linear-gradient(90deg,var(--or),var(--rd));border-radius:20px;width:0;transition:width 1.5s ease}
+/* REVIEWS */
+.rcard{background:#f9f9f9;border-radius:12px;padding:1.1rem;border:1px solid #eee}
+.stars{color:var(--yw);letter-spacing:2px;font-size:.88rem}
+.rtext{font-size:.82rem;line-height:1.65;color:#555;font-style:italic;margin-bottom:.7rem}
+.ravatar{width:35px;height:35px;border-radius:50%;background:var(--or);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;flex-shrink:0}
+.rname{font-weight:700;font-size:.82rem}
+.rloc{font-size:.7rem;color:#aaa}
+.vbadge{display:inline-flex;align-items:center;gap:3px;font-size:.68rem;color:var(--gr);font-weight:600;margin-top:.35rem}
+.carousel-control-prev-icon,.carousel-control-next-icon{background-color:rgba(0,0,0,.22);border-radius:50%;padding:12px;background-size:50%}
+/* FAQ */
+#faqsec{background:#f8f8f8}
+.fcard{border:1px solid #e8e8e8!important;border-radius:10px!important;overflow:hidden;margin-bottom:.45rem}
+.fcard .card-header{background:#fff;border:none;padding:0}
+.fbtn{color:var(--dk);font-weight:700;font-size:.86rem;text-decoration:none;padding:.85rem 1rem;display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left}
+.fbtn:hover{text-decoration:none;color:var(--or)}
+.fbtn .fa{color:var(--or);transition:transform .25s;font-size:.78rem}
+.fbtn[aria-expanded="true"] .fa{transform:rotate(45deg)}
+.fcard .card-body{font-size:.82rem;line-height:1.7;color:#666;padding:.75rem 1rem .95rem}
+/* FINAL CTA */
+#fcta{background:linear-gradient(135deg,var(--or),#ff8c00);color:#fff}
+#fcta h2{color:#fff}
+/* MODAL */
+.mresult .modal-content{border-radius:18px;border:none;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.mresult .modal-header{border:none;padding:1.4rem 1.4rem .4rem}
+.mresult .modal-body{padding:0 1.4rem 1.4rem}
+.ric{font-size:3rem;margin-bottom:.7rem}
+.spotbox{background:var(--orl);border:1px solid #ffc8a0;border-radius:8px;padding:.65rem .9rem;font-size:.8rem;color:var(--ord);font-weight:700;margin-bottom:.9rem}
+/* TOASTS */
+#toastWrap{position:fixed;bottom:76px;left:12px;z-index:1070;max-width:280px}
+.ptoast{background:#fff;border-radius:9px;box-shadow:0 5px 22px rgba(0,0,0,.17);padding:.65rem .85rem;display:flex;align-items:center;gap:.55rem;border-left:4px solid var(--gr);margin-bottom:.4rem;position:relative;animation:tin .35s ease}
+@keyframes tin{from{transform:translateX(-100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.tic{font-size:1.3rem;flex-shrink:0}
+.ttx strong{font-size:.72rem;font-weight:700;display:block;color:var(--dk)}
+.ttx span{font-size:.65rem;color:#aaa}
+.tcls{position:absolute;top:5px;right:7px;font-size:.7rem;color:#ccc;cursor:pointer;background:none;border:none;padding:0}
+/* STICKY */
+#sbot{position:fixed;bottom:0;left:0;right:0;background:var(--dk);color:#fff;padding:.65rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem;z-index:1050;box-shadow:0 -3px 14px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .4s}
+#sbot.vis{transform:translateY(0)}
+#sbot .stxt{font-size:.72rem;color:#bbb;line-height:1.3}
+#sbot .stxt strong{color:#fff;display:block}
+.sbtn{background:var(--or);color:#fff;border:none;border-radius:50px;padding:.55rem 1.1rem;font-size:.8rem;font-weight:800;white-space:nowrap;flex-shrink:0}
+/* FOOTER */
+footer{background:#0d1f3c;color:rgba(255,255,255,.65);padding:2rem 0 1.4rem;font-size:.76rem}
+footer h6{color:#fff;font-weight:800;font-size:.78rem;margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.7px}
+footer a{color:rgba(255,255,255,.55);text-decoration:none}
+footer a:hover{color:#fff}
+.fbrand{font-size:1.05rem;font-weight:900;color:#fff}
+.fbrand span{color:var(--or)}
+.fdiv{border-color:rgba(255,255,255,.1)}
+.fbot{color:rgba(255,255,255,.35);font-size:.68rem}
+@media(max-width:575px){
+  .tdig{width:48px;height:48px;font-size:1.4rem}
+  #sbot{padding:.55rem .75rem}
+}
+/* FLOW OVERLAY */
+.flow-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
+.flow-overlay.active{display:flex}
+.flow-container{background:#fff;border-radius:20px;max-width:520px;width:100%;padding:2rem 1.5rem;box-shadow:0 20px 60px rgba(0,0,0,.4);position:relative;margin:auto}
+.flow-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;color:#999;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s}
+.flow-close:hover{background:#f0f0f0}
+/* LOADER */
+.loader-wrap{text-align:center;padding:2rem 1rem}
+.loader-title{font-size:1.3rem;font-weight:800;margin-bottom:.5rem;color:var(--dk)}
+.loader-subtitle{font-size:.9rem;color:#666;margin-bottom:2rem}
+.loader-steps{margin:2rem 0}
+.loader-step{display:flex;align-items:center;padding:.8rem 0;opacity:.3;transition:opacity .3s}
+.loader-step.active{opacity:1}
+.loader-step.done{opacity:.6}
+.loader-step .ls-icon{width:32px;height:32px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;margin-right:.9rem;flex-shrink:0;transition:background .3s}
+.loader-step.active .ls-icon{background:var(--or);color:#fff;animation:pulse-icon .8s infinite}
+.loader-step.done .ls-icon{background:var(--gr);color:#fff}
+@keyframes pulse-icon{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.loader-step .ls-text{font-weight:600;font-size:.9rem}
+.loader-bar{background:#e8e8e8;height:8px;border-radius:20px;overflow:hidden;margin-top:2rem}
+.loader-bar-fill{background:linear-gradient(90deg,var(--or),#ff8c00);height:100%;width:0;transition:width .6s ease;border-radius:20px}
+/* QUESTION FLOW */
+.question-wrap{text-align:center;padding:1rem 0}
+.q-progress{display:flex;justify-content:center;gap:.4rem;margin-bottom:1.5rem}
+.q-dot{width:8px;height:8px;background:#ddd;border-radius:50%;transition:background .3s,width .3s}
+.q-dot.active{background:var(--or);width:24px;border-radius:4px}
+.q-number{font-size:.8rem;color:var(--or);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem}
+.q-title{font-size:1.4rem;font-weight:800;line-height:1.3;margin-bottom:1.5rem;color:var(--dk)}
+.q-options{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.5rem}
+.q-option{background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:1rem 1.2rem;font-size:.95rem;font-weight:600;color:var(--dk);cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;min-height:60px}
+.q-option:hover{border-color:var(--or);background:var(--orl);transform:translateX(4px)}
+.q-option:active{transform:scale(.98)}
+.q-option.selected{border-color:var(--or);background:var(--or);color:#fff}
+.q-option-icon{font-size:1.3rem;margin-right:.8rem;flex-shrink:0}
+.q-nav{display:flex;gap:.6rem;justify-content:center}
+.q-btn{border:none;border-radius:50px;padding:.7rem 1.8rem;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s;min-width:110px}
+.q-btn-back{background:#f0f0f0;color:#666}
+.q-btn-back:hover{background:#e0e0e0}
+.q-btn-next{background:var(--or);color:#fff}
+.q-btn-next:hover{background:var(--ord)}
+.q-btn-next:disabled{background:#ccc;cursor:not-allowed}
+/* FINAL FORM */
+.final-form-wrap{padding:1rem 0}
+.final-form-title{font-size:1.5rem;font-weight:800;margin-bottom:.5rem;text-align:center}
+.final-form-subtitle{font-size:.88rem;color:#666;margin-bottom:1.5rem;text-align:center}
+.ff-group{margin-bottom:1rem}
+.ff-label{font-size:.82rem;font-weight:700;color:var(--dk);margin-bottom:.4rem;display:block}
+.ff-input{width:100%;border:2px solid #ddd;border-radius:10px;padding:.75rem 1rem;font-size:.95rem;transition:border-color .2s}
+.ff-input:focus{outline:none;border-color:var(--or);box-shadow:0 0 0 3px rgba(255,90,0,.1)}
+.ff-input.error{border-color:var(--rd)}
+.ff-error{color:var(--rd);font-size:.75rem;margin-top:.3rem;display:none}
+.ff-input.error ~ .ff-error{display:block}
+.ff-checkbox{display:flex;align-items:start;gap:.6rem;margin:1rem 0}
+.ff-checkbox input{flex-shrink:0;margin-top:.2rem}
+.ff-checkbox label{font-size:.8rem;color:#666;line-height:1.5}
+.ff-submit{background:var(--or);color:#fff;border:none;border-radius:50px;padding:.9rem 2rem;font-size:1rem;font-weight:800;width:100%;cursor:pointer;transition:background .2s;margin-top:.5rem}
+.ff-submit:hover{background:var(--ord)}
+.ff-submit:disabled{background:#ccc;cursor:not-allowed}
+/* EXIT UPSELL */
+.exit-wrap{padding:1rem 0;text-align:center}
+.exit-title{font-size:1.6rem;font-weight:800;margin-bottom:.4rem}
+.exit-subtitle{font-size:.9rem;color:#666;margin-bottom:1.8rem}
+.exit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.8rem;margin-bottom:1.5rem}
+.exit-card{background:#fff;border:2px solid #e8e8e8;border-radius:12px;padding:.8rem;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.exit-card:hover{border-color:var(--or);transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.1);text-decoration:none}
+.exit-img{width:100%;height:100px;object-fit:cover;border-radius:8px;margin-bottom:.6rem}
+.exit-card-title{font-size:.85rem;font-weight:700;color:var(--dk);line-height:1.3;margin-bottom:.2rem}
+.exit-card-desc{font-size:.72rem;color:#999}
+.exit-footer{padding-top:1rem;border-top:1px solid #eee}
+.exit-footer-text{font-size:.8rem;color:#999;margin-bottom:.8rem}
+@media(max-width:575px){
+  .flow-container{padding:1.5rem 1rem;border-radius:16px}
+  .q-title{font-size:1.2rem}
+  .q-option{padding:.85rem 1rem;font-size:.88rem;min-height:56px}
+  .exit-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- URGENCY TOPBAR -->
+<div id="urgbar" role="alert" aria-live="polite">
+  <span class="pulse"></span>
+  Beperkt beschikbaar: subsidie &amp; Subsidie geregeld nog actief -
+  <strong id="topSpots">22</strong> plekken resterend in jouw regio
+</div>
+
+<!-- NAVBAR -->
+<nav id="mainNav" class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Hoofdnavigatie">
+  <div class="container">
+    <a class="navbar-brand" href="#hero">Collectief <span>Vrije Energie</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"
+      aria-controls="navMenu" aria-expanded="false" aria-label="Menu openen">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ml-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#combo">Producten</a></li>
+        <li class="nav-item"><a class="nav-link" href="#steps">Hoe werkt het</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faqsec">FAQ</a></li>
+        <li class="nav-item mt-2 mt-lg-0 ml-lg-2">
+          <a class="nav-link btn-nav" href="#fcta">Check mijn postcode</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" aria-labelledby="heroH">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12 col-lg-6 mb-4 mb-lg-0 text-center text-lg-left">
+        <div class="hero-badge">NIEUW: Subsidie eindigt 5 maart 2026</div>
+        <h1 id="heroH">
+          Heeft u nog steeds niet verduurzaamd?<br>
+          <span>Zonder eigen geld kán het wel.</span><br>
+          <small class="d-block mt-2" style="font-size:clamp(.9rem,2.2vw,1.3rem);color:rgba(255,255,255,.72);font-weight:600">
+            Verdien tot €1.850 per jaar. Zonder eigen inleg. Alles wordt geregeld.
+          </small>
+        </h1>
+        <p class="lead mt-3 mb-4">
+          Waarom betaalt u nog teveel aan energie? Terwijl uw buren dat geld in hun woning stoppen? En hun huis €15.000-€25.000 meer waard wordt? Het verschil: zij regelden het. U nog niet.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start mb-4" style="gap:.4rem .9rem">
+          <div class="d-flex align-items-center"><span class="ck mr-2">✓</span><span style="font-size:.8rem;color:rgba(255,255,255,.82)">€0 eigen inleg</span></div>
+          <div class="d-flex align-items-center"><span class="ck mr-2">✓</span><span style="font-size:.8rem;color:rgba(255,255,255,.82)">Subsidie + BTW terug</span></div>
+          <div class="d-flex align-items-center"><span class="ck mr-2">✓</span><span style="font-size:.8rem;color:rgba(255,255,255,.82)">Wij regelen alles</span></div>
+        </div>
+        <button class="btn-pill" onclick="scrollToCheck()">
+          <i class="fas fa-bolt mr-2"></i> Ja, regel dit voor mij →
+        </button>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="pcard" role="form" aria-label="Postcode check">
+          <h5 class="mb-1"><i class="fas fa-map-marker-alt text-warning mr-2"></i>Check: Is dit nog beschikbaar zonder eigen geld?</h5>
+          <p class="text-muted mb-3" style="font-size:.77rem">Nog <span id="spotsInline1">22</span> plekken beschikbaar zonder eigen inleg. Check uw postcode.</p>
+          <div class="form-group mb-2">
+            <label for="hpc" class="sr-only">Jouw postcode</label>
+            <input type="text" class="form-control" id="hpc" maxlength="7" placeholder="1234 AB"
+              autocomplete="postal-code" aria-label="Postcode invoeren"/>
+            <div class="invalid-feedback">Voer een geldige postcode in (bijv. 1234 AB)</div>
+          </div>
+          <button class="btn-or" id="hbtn" onclick="checkPostcode('hpc','hbtn')">
+            <i class="fas fa-bolt mr-2"></i> Ja, check mijn postcode →
+          </button>
+          <p class="text-center mt-2" style="font-size:.68rem;color:#aaa">
+            <i class="fas fa-lock mr-1"></i> Gratis &amp; vrijblijvend - geen spam - resultaat binnen 10 sec
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE STATS -->
+<div id="livebar" role="complementary">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-4"><div class="lnum" id="signcnt">3.847</div><div class="llbl"><span class="pulse" style="background:var(--rd)"></span>aanmeldingen</div></div>
+      <div class="col-4"><div class="lnum">€ 1.240</div><div class="llbl">gem. verdient/jaar</div></div>
+      <div class="col-4"><div class="lnum">22</div><div class="llbl">plekken vrij</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST ROW -->
+<div id="trustrow">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-6 col-md-auto"><div class="ti"><span class="ck">✓</span> €0 eigen inleg</div></div>
+      <div class="col-6 col-md-auto"><div class="ti"><span class="ck">✓</span> Subsidie geregeld</div></div>
+      <div class="col-6 col-md-auto"><div class="ti"><span class="ck">✓</span> Gecertificeerde installateurs</div></div>
+      <div class="col-6 col-md-auto"><div class="ti"><span class="ck">✓</span> Alles geregeld</div></div>
+      <div class="col-12 col-md-auto"><div class="ti justify-content-center"><span class="ck">✓</span>&nbsp;4.8 ★ door 2.400+ klanten</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="spy" aria-labelledby="introh">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12 col-lg-7 mb-4 mb-lg-0">
+        <span class="slbl">Waarom een thuisbatterij de oplossing is</span>
+        <h2 class="stitle mb-3" id="introh">U betaalt €150-€250 per maand.<br class="d-none d-md-block">Terwijl dat geld in uw huis zou kunnen zitten.</h2>
+        <p style="font-size:.93rem;line-height:1.8;color:#333" class="mb-3">
+          Een thuisbatterij verdient op twee manieren. Heeft u zonnepanelen? Dan slaat u overdag op wat u maakt. Gebruikt u 's avonds. Niks meer weggeven voor een paar cent. Geen zonnepanelen? Dan laadt u 's nachts op wanneer stroom goedkoop is. Gebruikt u overdag uit de batterij wanneer stroom duur is. Het verschil? €60-75 per maand bespaard. Met of zonder panelen.
+        </p>
+        <p style="font-size:.93rem;line-height:1.8;color:#333" class="mb-3">
+          Het systeem werkt zo: batterij slaat 6-8 kWh op (van uw panelen of goedkope nachtstroom). U gebruikt dat wanneer stroom duur is. Verschil goedkoop/duur tarief: €0,27 per kWh. Op 200 kWh per maand = €54 bespaard. Zonder eigen geld? Subsidie regelen wij. BTW regelen wij. Financiering regelen wij. U betaalt €0 vooraf.
+        </p>
+      </div>
+      <div class="col-12 col-lg-5">
+        <img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=600&h=400&fit=crop&q=80" 
+             alt="Moderne thuisbatterij installatie" 
+             style="width:100%;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.1)" 
+             loading="lazy"/>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12 col-lg-8 offset-lg-2">
+        <div class="qblock" role="blockquote">
+          <blockquote class="mb-2">"Op steeds meer plekken loopt het stroomnet tegen de grenzen aan. Dat komt doordat we steeds meer stroom tegelijk gebruiken én op andere momenten produceren met zonnepanelen."</blockquote>
+          <div class="d-flex align-items-center">
+            <div class="rologo mr-2">RIJKS<br>OVERHEID</div>
+            <span style="font-size:.7rem;color:#666">Ministerie van Klimaat en Groene Groei - Rijksoverheid.nl, december 2026</span>
+          </div>
+        </div>
+        <p style="font-size:.93rem;line-height:1.8;color:#333">
+          En dan gebeurt dit: uw energierekening daalt met €100-€180 per maand. Uw woning stijgt €15.000-€25.000 in waarde. U heeft niks betaald. Alles is geregeld. Dit is niet te mooi om waar te zijn. Dit doen 3.800+ mensen al.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMBO TABS -->
+<section id="combo" class="spy" style="background:#f8f8f8" aria-labelledby="comboh">
+  <div class="container">
+    <div class="text-center mb-4">
+      <span class="slbl">Wat werkt echt</span>
+      <h2 class="stitle" id="comboh">Niet iedereen heeft alles nodig.<br class="d-none d-md-block">Hier is wat echt werkt voor u.</h2>
+    </div>
+    <div class="d-flex justify-content-center flex-wrap mb-3">
+      <ul class="nav ctab" id="ctabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" data-toggle="tab" href="#ct1" role="tab" aria-selected="true">Thuisbatterij</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-toggle="tab" href="#ct2" role="tab" aria-selected="false">Zonnepanelen</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-toggle="tab" href="#ct3" role="tab" aria-selected="false">Warmtepomp</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-toggle="tab" href="#ct4" role="tab" aria-selected="false">Complete set</a>
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="ct1" role="tabpanel">
+        <div class="ccard">
+          <img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=400&h=300&fit=crop&q=80" alt="Thuisbatterij" class="cimg" loading="lazy"/>
+          <div class="cbadge">Meest gekozen</div>
+          <h4 style="font-weight:800">Thuisbatterij</h4>
+          <p style="font-size:.87rem;color:#666;line-height:1.65">De batterij slaat op wat uw zonnepanelen overdag maken. U gebruikt het 's avonds. Besparing: €55-€70 per maand. Zonder eigen inleg. Wij regelen subsidie. Wij regelen BTW terug. U ziet lagere energierekening.</p>
+          <div class="csaving"><i class="fas fa-piggy-bank mr-1"></i> Gemiddeld <strong>€ 680 - €920 extra</strong> t.o.v. alleen zonnepanelen</div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="ct2" role="tabpanel">
+        <div class="ccard">
+          <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=300&fit=crop&q=80" alt="Zonnepanelen op dak" class="cimg" loading="lazy"/>
+          <h4 style="font-weight:800">Zonnepanelen</h4>
+          <p style="font-size:.87rem;color:#666;line-height:1.65">Gemiddeld: 8-10 panelen produceren €65-€90 per maand. Minder energierekening. Subsidie beschikbaar. BTW terug. Geen eigen geld nodig. Terugverdientijd: 6-8 jaar. Daarna pure besparing.</p>
+          <div class="csaving"><i class="fas fa-sun mr-1"></i> Terugverdientijd <strong>6 - 8 jaar</strong> - daarna pure winst</div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="ct3" role="tabpanel">
+        <div class="ccard">
+          <img src="https://images.unsplash.com/photo-1635365405971-c732c6c1bf12?w=400&h=300&fit=crop&q=80" alt="Warmtepomp installatie" class="cimg" loading="lazy"/>
+          <h4 style="font-weight:800">Warmtepomp</h4>
+          <p style="font-size:.87rem;color:#666;line-height:1.65">Geen gasrekening meer. Verwarm op stroom. Bij voorkeur eigen stroom (zonnepanelen). Subsidie tot €3.500. Hypotheekrente aftrek mogelijk. Woning stijgt €15.000-€25.000 in waarde. Zonder eigen inleg.</p>
+          <div class="csaving"><i class="fas fa-fire mr-1"></i> Bespaar gemiddeld <strong>€ 1.100 - €1.600</strong> per jaar op gas</div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="ct4" role="tabpanel">
+        <div class="ccard">
+          <img src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=400&h=300&fit=crop&q=80" alt="Complete duurzame energie set" class="cimg" loading="lazy"/>
+          <div class="cbadge">Maximaal voordeel</div>
+          <h4 style="font-weight:800">Complete set</h4>
+          <p style="font-size:.87rem;color:#666;line-height:1.65">Het complete pakket zonder eigen inleg. Totale investering: €12.000-€14.000. Subsidie: €2.500-€3.500. BTW terug: €2.100-€2.500. Financiering geregeld. Hypotheekrente aftrek mogelijk. Besparing: €135-€155/maand. Woningwaarde: +€15.000-€25.000. Dit betaalt zichzelf terug.</p>
+          <div class="csaving"><i class="fas fa-trophy mr-1"></i> <strong>€1.600-€1.850/jaar</strong> totaal verdienen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps" class="spy" aria-labelledby="stepsh">
+  <div class="container">
+    <div class="text-center mb-4">
+      <span class="slbl">Hoe dit werkt</span>
+      <h2 class="stitle" id="stepsh">Van postcode tot verduurzaamd.<br class="d-none d-md-block">Wij regelen alles.</h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-7 col-lg-5">
+        <div class="d-flex align-items-start mb-3">
+          <div class="stepnum mr-3 mt-1">1</div>
+          <div style="border-bottom:1px solid #f0f0f0;flex:1;padding-bottom:.9rem">
+            <h5 style="font-weight:800;font-size:.9rem;margin-bottom:.2rem">1. Postcode check</h5>
+            <p class="text-muted mb-0" style="font-size:.81rem;line-height:1.6">We checken of er nog plekken zijn zonder eigen inleg in uw gemeente.</p>
+          </div>
+        </div>
+        <div class="d-flex align-items-start mb-3">
+          <div class="stepnum mr-3 mt-1">2</div>
+          <div style="border-bottom:1px solid #f0f0f0;flex:1;padding-bottom:.9rem">
+            <h5 style="font-weight:800;font-size:.9rem;margin-bottom:.2rem">2. Uw persoonlijke berekening</h5>
+            <p class="text-muted mb-0" style="font-size:.81rem;line-height:1.6">Je ziet direct welke subsidies en Subsidie geregeld voor jou beschikbaar zijn. Gratis, zonder verplichtingen.</p>
+          </div>
+        </div>
+        <div class="d-flex align-items-start mb-3">
+          <div class="stepnum mr-3 mt-1">3</div>
+          <div style="border-bottom:1px solid #f0f0f0;flex:1;padding-bottom:.9rem">
+            <h5 style="font-weight:800;font-size:.9rem;margin-bottom:.2rem">3. Gratis adviesgesprek</h5>
+            <p class="text-muted mb-0" style="font-size:.81rem;line-height:1.6">Adviseur belt u. Bespreekt uw situatie. Legt uit wat past. Geen druk. Geen verplichtingen.</p>
+          </div>
+        </div>
+        <div class="d-flex align-items-start">
+          <div class="stepnum mr-3 mt-1">4</div>
+          <div style="flex:1">
+            <h5 style="font-weight:800;font-size:.9rem;margin-bottom:.2rem">4. Wij regelen alles</h5>
+            <p class="text-muted mb-0" style="font-size:.81rem;line-height:1.6">Subsidie aanvragen? Wij doen het. BTW teruggave? Wij regelen het. Installatie? Wij plannen het. U doet niks.</p>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn-pill" onclick="scrollToCheck()">
+            <i class="fas fa-bolt mr-2"></i> Ja, check mijn postcode →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY -->
+<section id="urgsec" class="spy" aria-labelledby="urgh">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8 offset-lg-2">
+        <span class="slbl text-warning">⚠️ Waarom u nu moet beslissen</span>
+        <h2 id="urgh" class="mb-3">De subsidie is beperkt.<br class="d-none d-md-block">Uw gemeente heeft nog 22 plekken.</h2>
+        <p style="color:#ccc;font-size:.9rem;line-height:1.8" class="mb-4">
+          Elk jaar stijgen de energieprijzen. Elk jaar betaalt u meer. Ondertussen zijn er mensen die niks meer betalen. Niet omdat ze rijker zijn. Omdat ze eerder waren. De subsidie is er nu. Volgend jaar niet meer.
+        </p>
+        <div class="tbox mb-4">
+          <div class="text-center mb-3" style="font-size:.68rem;color:#aaa;text-transform:uppercase;letter-spacing:1px">⏳ Aanmeldingsperiode sluit over:</div>
+          <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <div class="text-center mx-2"><div class="tdig" id="tD">00</div><div class="tunit">Dagen</div></div>
+            <div class="tsep mx-1 mb-2">:</div>
+            <div class="text-center mx-2"><div class="tdig" id="tH">00</div><div class="tunit">Uren</div></div>
+            <div class="tsep mx-1 mb-2">:</div>
+            <div class="text-center mx-2"><div class="tdig" id="tM">00</div><div class="tunit">Min</div></div>
+            <div class="tsep mx-1 mb-2">:</div>
+            <div class="text-center mx-2"><div class="tdig" id="tS">00</div><div class="tunit">Sec</div></div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <div class="prlbl"><span class="tk"><i class="fas fa-square mr-1"></i>78 plekken bezet</span><span class="lf">22 van 100 resterend</span></div>
+          <div class="prtrack"><div class="prfill" id="prfill" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div></div>
+        </div>
+        <p style="color:#bbb;font-size:.87rem;line-height:1.75">
+          Wat gebeurt er als u wacht? De subsidie verdwijnt. De BTW blijft. De energieprijzen stijgen. U betaalt jaar na jaar €2.000+ teveel. Terwijl het nu nog kan zonder eigen geld.
+        </p>
+        <div class="text-center mt-4">
+          <button class="btn-pill" onclick="scrollToCheck()">
+            <i class="fas fa-battery-full mr-2"></i> Ja, check of dit nog kan voor mij →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS CAROUSEL -->
+<section id="reviews" class="spy" aria-labelledby="revh">
+  <div class="container">
+    <div class="text-center mb-4">
+      <span class="slbl">Wat andere huiseigenaren zeggen</span>
+      <h2 class="stitle" id="revh">Dit zeggen mensen die het deden.<br class="d-none d-md-block">Zonder eigen geld.</h2>
+    </div>
+    <div id="revcar" class="carousel slide" data-ride="carousel" data-interval="5000" aria-label="Klantreviews">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row justify-content-center"><div class="col-12 col-md-7 col-lg-5">
+            <div class="rcard"><div class="stars">★★★★★</div><p class="rtext">"Ik dacht: dit kan niet zonder eigen geld. Belde toch. Alles werd geregeld. Subsidie, BTW, financiering. Ik betaalde niks. Nu verdien ik €140 per maand."</p><div class="d-flex align-items-center"><div class="ravatar mr-2">M</div><div><div class="rname">Marco V.</div><div class="rloc">Eindhoven</div></div></div><div class="vbadge"><i class="fas fa-check-circle"></i> Geverifieerde aankoop</div></div>
+          </div></div>
+        </div>
+        <div class="carousel-item">
+          <div class="row justify-content-center"><div class="col-12 col-md-7 col-lg-5">
+            <div class="rcard"><div class="stars">★★★★★</div><p class="rtext">"Wij wachtten 6 maanden. Dachten: komt later wel. Bijna te laat. Gemeente had nog 8 plekken. Nu geen gasrekening meer. €1.200 per jaar bespaard."</p><div class="d-flex align-items-center"><div class="ravatar mr-2">S</div><div><div class="rname">Sandra K.</div><div class="rloc">Utrecht</div></div></div><div class="vbadge"><i class="fas fa-check-circle"></i> Geverifieerde aankoop</div></div>
+          </div></div>
+        </div>
+        <div class="carousel-item">
+          <div class="row justify-content-center"><div class="col-12 col-md-7 col-lg-5">
+            <div class="rcard"><div class="stars">★★★★★</div><p class="rtext">"Duurste fout: 2 jaar gewacht. Hadden €2.800 kunnen besparen. Nu wel gedaan. Geen eigen geld. Alles geregeld. Energierekening van €185 naar €45."</p><div class="d-flex align-items-center"><div class="ravatar mr-2">R</div><div><div class="rname">Rob D.</div><div class="rloc">Groningen</div></div></div><div class="vbadge"><i class="fas fa-check-circle"></i> Geverifieerde aankoop</div></div>
+          </div></div>
+        </div>
+        <div class="carousel-item">
+          <div class="row justify-content-center"><div class="col-12 col-md-7 col-lg-5">
+            <div class="rcard"><div class="stars">★★★★★</div><p class="rtext">"Het gesprek duurde 20 minuten. Geen gedoe. Geen druk. Gewoon: dit kost het, dit bespaart het, dit regelen wij. Getekend. Nu €1.650 per jaar minder kwijt."</p><div class="d-flex align-items-center"><div class="ravatar mr-2">A</div><div><div class="rname">Anita B.</div><div class="rloc">Tilburg</div></div></div><div class="vbadge"><i class="fas fa-check-circle"></i> Geverifieerde aankoop</div></div>
+          </div></div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#revcar" role="button" data-slide="prev" aria-label="Vorige"><span class="carousel-control-prev-icon" aria-hidden="true"></span></a>
+      <a class="carousel-control-next" href="#revcar" role="button" data-slide="next" aria-label="Volgende"><span class="carousel-control-next-icon" aria-hidden="true"></span></a>
+      <ol class="carousel-indicators" style="bottom:-28px">
+        <li data-target="#revcar" data-slide-to="0" class="active" style="background:var(--or)"></li>
+        <li data-target="#revcar" data-slide-to="1" style="background:var(--or)"></li>
+        <li data-target="#revcar" data-slide-to="2" style="background:var(--or)"></li>
+        <li data-target="#revcar" data-slide-to="3" style="background:var(--or)"></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faqsec" class="spy" aria-labelledby="faqh">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8">
+        <div class="text-center mb-4">
+          <span class="slbl">Veelgestelde vragen</span>
+          <h2 class="stitle" id="faqh">De 5 vragen die iedereen stelt.</h2>
+        </div>
+        <div id="faqacc">
+          <div class="fcard card"><div class="card-header" id="fh1"><button class="fbtn" data-toggle="collapse" data-target="#fa1" aria-expanded="false" aria-controls="fa1">Moet ik al zonnepanelen hebben voor een thuisbatterij?<i class="fas fa-plus"></i></button></div><div id="fa1" class="collapse" aria-labelledby="fh1" data-parent="#faqacc"><div class="card-body">Nee, een thuisbatterij werkt ook zonder zonnepanelen - je laadt hem op met goedkope nachtstroom. Maar de combinatie met zonnepanelen levert het meeste voordeel op.</div></div></div>
+          <div class="fcard card"><div class="card-header" id="fh2"><button class="fbtn collapsed" data-toggle="collapse" data-target="#fa2" aria-expanded="false" aria-controls="fa2">Hoe lang duurt de installatie?<i class="fas fa-plus"></i></button></div><div id="fa2" class="collapse" aria-labelledby="fh2" data-parent="#faqacc"><div class="card-body">Een thuisbatterij wordt doorgaans op één dag geplaatst door een gecertificeerde installateur. Geen uitgebreide verbouwing, geen gedoe.</div></div></div>
+          <div class="fcard card"><div class="card-header" id="fh3"><button class="fbtn collapsed" data-toggle="collapse" data-target="#fa3" aria-expanded="false" aria-controls="fa3">Wat houdt de Subsidie geregeld precies in?<i class="fas fa-plus"></i></button></div><div id="fa3" class="collapse" aria-labelledby="fh3" data-parent="#faqacc"><div class="card-body">Bij de aanschaf van een thuisbatterij en zonnepanelen kun je onder bepaalde voorwaarden de betaalde BTW (21%) terugvragen. Onze adviseur legt dit gratis voor je uit.</div></div></div>
+          <div class="fcard card"><div class="card-header" id="fh4"><button class="fbtn collapsed" data-toggle="collapse" data-target="#fa4" aria-expanded="false" aria-controls="fa4">Is er echt een limiet per gemeente?<i class="fas fa-plus"></i></button></div><div id="fa4" class="collapse" aria-labelledby="fh4" data-parent="#faqacc"><div class="card-body">Ja. Subsidiebudgetten worden per gemeente toegewezen. Zodra het budget is uitgeput, vervallen de voordelen. Controleer jouw postcode om te zien of er nog plekken zijn.</div></div></div>
+          <div class="fcard card"><div class="card-header" id="fh5"><button class="fbtn collapsed" data-toggle="collapse" data-target="#fa5" aria-expanded="false" aria-controls="fa5">Zit ik ergens aan vast als ik mijn postcode invoer?<i class="fas fa-plus"></i></button></div><div id="fa5" class="collapse" aria-labelledby="fh5" data-parent="#faqacc"><div class="card-body">Absoluut niet. De check is volledig gratis en vrijblijvend. Je ontvangt een overzicht zonder dat je ergens voor tekent.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="fcta" class="spy text-center" aria-labelledby="fctah">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-7">
+        <h2 id="fctah" style="color:#fff;font-size:clamp(1.25rem,3.5vw,1.9rem)">Check nu of dit nog kan.<br class="d-none d-sm-block">Zonder eigen geld.</h2>
+        <p class="mt-2 mb-4" style="opacity:.92;font-size:.92rem">Geen verplichtingen. Geen kosten. Alleen duidelijkheid: kan dit voor u? Hoeveel bespaart u? Hoeveel subsidie krijgt u? In 2 minuten weet u het.</p>
+        <div class="form-row justify-content-center">
+          <div class="col-12 col-sm-7 mb-2">
+            <label for="fpc" class="sr-only">Jouw postcode</label>
+            <input type="text" class="form-control" id="fpc" maxlength="7" placeholder="1234 AB"
+              style="border:none;border-radius:10px;font-size:1.1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;height:52px;text-align:center"/>
+            <div class="invalid-feedback text-white font-weight-bold">Voer een geldige postcode in</div>
+          </div>
+          <div class="col-12 col-sm-5 mb-2">
+            <button type="button" class="btn btn-dark w-100 font-weight-800 d-flex align-items-center justify-content-center"
+              id="fbtn" onclick="checkPostcode('fpc','fbtn')" style="height:52px;border-radius:10px;font-weight:800">
+              <i class="fas fa-search mr-2"></i> Check nu →
+            </button>
+          </div>
+        </div>
+        <p class="mt-2" style="font-size:.7rem;opacity:.75"><i class="fas fa-lock mr-1"></i> Gratis &amp; vrijblijvend · Geen spam · Resultaat binnen 10 seconden</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-12 col-md-4 mb-4 mb-md-0">
+        <div class="fbrand mb-2">Collectief <span>Vrije Energie</span></div>
+        <p style="color:rgba(255,255,255,.5);font-size:.76rem;line-height:1.7">Wij helpen Nederlandse huiseigenaren profiteren van subsidies en regelingen voor duurzame energie. Gecertificeerde installateurs, transparant advies.</p>
+        <div class="d-flex mt-3" style="gap:.65rem">
+          <a href="#" aria-label="Facebook" style="color:rgba(255,255,255,.45);font-size:1rem"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram" style="color:rgba(255,255,255,.45);font-size:1rem"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn" style="color:rgba(255,255,255,.45);font-size:1rem"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2 mb-4 mb-md-0">
+        <h6>Producten</h6>
+        <ul class="list-unstyled mb-0">
+          <li class="mb-1"><a href="#combo">Thuisbatterij</a></li>
+          <li class="mb-1"><a href="#combo">Zonnepanelen</a></li>
+          <li class="mb-1"><a href="#combo">Warmtepomp</a></li>
+          <li class="mb-1"><a href="#combo">Complete set</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2 mb-4 mb-md-0">
+        <h6>Informatie</h6>
+        <ul class="list-unstyled mb-0">
+          <li class="mb-1"><a href="#steps">Hoe dit werkt</a></li>
+          <li class="mb-1"><a href="#faqsec">FAQ</a></li>
+          <li class="mb-1"><a href="#reviews">Reviews</a></li>
+          <li class="mb-1"><a href="#">Subsidies</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h6>Snel checken</h6>
+        <div class="d-flex">
+          <input type="text" class="form-control form-control-sm mr-2" id="ftpc" placeholder="1234 AB" maxlength="7" style="text-transform:uppercase;letter-spacing:1px;font-weight:700;border-radius:8px"/>
+          <button class="btn btn-sm btn-warning text-dark font-weight-800" onclick="checkPostcode('ftpc','ftbtn')" id="ftbtn" style="white-space:nowrap;border-radius:8px;font-weight:800">Check →</button>
+        </div>
+        <p class="mt-2" style="font-size:.68rem;color:rgba(255,255,255,.35)">Gratis &amp; vrijblijvend</p>
+      </div>
+    </div>
+    <hr class="fdiv"/>
+    <div class="row">
+      <div class="col-12 col-md-6 fbot mb-1">© 2025 Collectief Vrije Energie - Alle rechten voorbehouden</div>
+      <div class="col-12 col-md-6 fbot text-md-right">
+        <a href="#" class="mr-3">Privacybeleid</a>
+        <a href="#" class="mr-3">Voorwaarden</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BOTTOM BAR -->
+<div id="sbot" role="complementary" aria-label="Snelkoppeling">
+  <div class="stxt"><strong>Controleer jouw regio</strong>Subsidie beschikbaar - check nu</div>
+  <button class="sbtn" onclick="scrollToCheck()"><i class="fas fa-bolt mr-1"></i> Postcode check →</button>
+</div>
+
+<!-- FLOW OVERLAY -->
+<div id="flowOverlay" class="flow-overlay" role="dialog" aria-modal="true" aria-labelledby="flowTitle">
+  <div class="flow-container">
+    <button class="flow-close" onclick="closeFlow()" aria-label="Sluiten">&times;</button>
+    <div id="flowContent"></div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+// Simple postcode validation and redirect - no jQuery needed
+function checkPostcode(inputId, buttonId) {
+  console.log('=== checkPostcode called ===');
+  console.log('inputId:', inputId, 'buttonId:', buttonId);
+  
+  var input = document.getElementById(inputId);
+  var button = document.getElementById(buttonId);
+  
+  console.log('input element:', input);
+  console.log('button element:', button);
+  
+  if (!input || !button) {
+    alert('Error: Elements not found - input: ' + !!input + ', button: ' + !!button);
+    return;
+  }
+  
+  var postcode = input.value.trim().toUpperCase();
+  console.log('Postcode entered:', postcode);
+  
+  // Validate Dutch postcode format: 1234AB or 1234 AB
+  var isValid = /^[1-9][0-9]{3}\s?[A-Z]{2}$/.test(postcode);
+  console.log('Is valid:', isValid);
+  
+  if (!isValid) {
+    alert('Voer een geldige postcode in (bijvoorbeeld: 1234 AB)');
+    input.focus();
+    return;
+  }
+  
+  // Show loading
+  console.log('Showing loading state...');
+  button.innerHTML = '⏳ Controleren...';
+  button.disabled = true;
+  
+  // Redirect after short delay
+  console.log('Setting timeout for redirect...');
+  setTimeout(function() {
+    var redirectUrl = 'flow.html?pc=' + encodeURIComponent(postcode);
+    console.log('REDIRECTING TO:', redirectUrl);
+    console.log('Current location:', window.location.href);
+    window.location.href = redirectUrl;
+  }, 800);
+}
+
+// Scroll to final CTA
+function scrollToCheck() {
+  var finalCta = document.getElementById('fcta');
+  if (finalCta) {
+    finalCta.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() {
+      var input = document.getElementById('fpc');
+      if (input) input.focus();
+    }, 600);
+  }
+}
+
+// Auto-uppercase postcode inputs
+document.addEventListener('DOMContentLoaded', function() {
+  var inputs = document.querySelectorAll('input[type=text]');
+  inputs.forEach(function(input) {
+    input.addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
+  });
+  
+  // Dynamic countdown timer (always shows 14 days from today)
+  function updateTimer() {
+    var now = new Date();
+    var deadline = new Date(now.getTime() + (14 * 24 * 60 * 60 * 1000)); // 14 days from now
+    deadline.setHours(23, 59, 59, 999);
+    var diff = deadline - now;
+    
+    if (diff <= 0) {
+      document.getElementById('tD').textContent = '14';
+      document.getElementById('tH').textContent = '00';
+      document.getElementById('tM').textContent = '00';
+      document.getElementById('tS').textContent = '00';
+      return;
+    }
+    
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var minutes = Math.floor((diff % 3600000) / 60000);
+    var seconds = Math.floor((diff % 60000) / 1000);
+    
+    document.getElementById('tD').textContent = String(days).padStart(2, '0');
+    document.getElementById('tH').textContent = String(hours).padStart(2, '0');
+    document.getElementById('tM').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('tS').textContent = String(seconds).padStart(2, '0');
+  }
+  
+  updateTimer();
+  setInterval(updateTimer, 1000);
+  
+  // Update urgency bar with dynamic date
+  var urgencyDate = new Date();
+  urgencyDate.setDate(urgencyDate.getDate() + 14);
+  var monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+  var urgencyText = 'NIEUW: Subsidie eindigt ' + urgencyDate.getDate() + ' ' + monthNames[urgencyDate.getMonth()] + ' ' + urgencyDate.getFullYear();
+  var urgencyBadge = document.querySelector('.hero-badge');
+  if (urgencyBadge) {
+    urgencyBadge.textContent = urgencyText;
+  }
+  
+  // Progress bar animation
+  setTimeout(function() {
+    var progressBar = document.getElementById('prfill');
+    if (progressBar) {
+      progressBar.style.width = '78%';
+    }
+  }, 600);
+  
+  // Dynamic counter - resets daily, grows throughout the day
+  function getDailyCount() {
+    var now = new Date();
+    var dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+    var minutesSinceMidnight = Math.floor((now - dayStart) / 60000);
+    // Start at 3800, add ~1 signup per 3 minutes throughout the day
+    return 3800 + Math.floor(minutesSinceMidnight / 3);
+  }
+  
+  var count = getDailyCount();
+  var counterEl = document.getElementById('signcnt');
+  if (counterEl) {
+    counterEl.textContent = count.toLocaleString('nl-NL');
+  }
+  
+  setInterval(function() {
+    if (Math.random() > 0.55) {
+      count++;
+      if (counterEl) {
+        counterEl.textContent = count.toLocaleString('nl-NL');
+      }
+    }
+  }, 9500);
+  
+  // Dynamic spots remaining - between 15-28, resets daily
+  function getDailySpots() {
+    var now = new Date();
+    var seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+    return 15 + (seed % 14); // Returns number between 15-28, consistent for the day
+  }
+  
+  var spotsRemaining = getDailySpots();
+  var spotsElements = document.querySelectorAll('#spotsTop, #spotsCount, #spotsInline1, #spotsInline2');
+  spotsElements.forEach(function(el) {
+    el.textContent = spotsRemaining;
+  });
+  
+  // Update progress bar based on spots
+  var takenSpots = 100 - spotsRemaining;
+  var progressBar = document.getElementById('prfill');
+  if (progressBar) {
+    setTimeout(function() {
+      progressBar.style.width = takenSpots + '%';
+    }, 600);
+  }
+  
+  // Update "plekken bezet" text
+  var progressLabel = document.querySelector('.prlbl .tk');
+  if (progressLabel) {
+    progressLabel.innerHTML = '<i class="fas fa-square mr-1"></i>' + takenSpots + ' plekken bezet';
+  }
+  var progressLeft = document.querySelector('.prlbl .lf');
+  if (progressLeft) {
+    progressLeft.textContent = spotsRemaining + ' van 100 resterend';
+  }
+});
+</script>
+</body>
+</html>
