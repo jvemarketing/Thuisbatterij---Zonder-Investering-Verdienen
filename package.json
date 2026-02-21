@@ -1,5 +1,8 @@
 {
   "name": "thuisbatterij-landing",
   "version": "1.0.0",
-  "description": "Static landing page"
+  "description": "Static landing page",
+  "scripts": {
+    "start": "http-server -o"
+  }
 }
