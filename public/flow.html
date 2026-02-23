@@ -1151,13 +1151,15 @@
 
       if (!valid) return;
 
+      var huisnummer = $('#fHuisnr').val();
+
       var formData = {
         postcode: postcode,
         gemeente: gemeente,
         voornaam: $('#fVoornaam').val(),
         achternaam: $('#fAchternaam').val(),
         straat: $('#fStraat').val(),
-        huisnummer: $('#fHuisnr').val(),
+        huisnummer: huisnummer,
         toevoeging: $('#fToev').val(),
         email: $('#fEmail').val(),
         telefoon: $('#fTel').val(),
@@ -1167,8 +1169,11 @@
 
       console.log('Form submitted:', formData);
 
-      // Show exit page
-      showExit();
+      validatePostcodeNL(postcode, huisnummer, function () {
+        showExit();
+      }, function (errorMsg) {
+        alert(errorMsg); // Or display error in the form
+      });
     }
 
     function showExit() {
@@ -1178,6 +1183,36 @@
       });
     }
 
+
+    function validatePostcodeNL(postcode, huisnummer, onSuccess, onError) {
+      $.ajax({
+        url: "/api/postcodecheck",
+        method: "POST",
+        contentType: "application/json",   // <- important for jQuery
+        dataType: "json",                  // <- parse JSON response
+        processData: false,                // <- don't mess with the payload
+        data: JSON.stringify({
+          postalCode: postcode.replace(/\s+/g, "").toUpperCase(),
+          houseNumber: huisnummer
+        }),
+        success: function (response) {
+          // PostNL returns [] or [{ streetName, city, ... }]
+          if (Array.isArray(response) && response[0] && response[0].streetName) {
+            onSuccess(response[0]);
+          } else {
+            onError("Ongeldige postcode of huisnummer.");
+          }
+        },
+        error: function (xhr) {
+          onError(
+            "Fout bij het controleren van postcode: " +
+            (xhr.responseJSON?.message || xhr.responseText || "Onbekende fout")
+          );
+        }
+      });
+    }
+
+    
     // Prevent back button
     history.pushState(null, null, location.href);
     window.onpopstate = function () {
