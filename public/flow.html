@@ -1131,6 +1131,16 @@
 
       $('#surveyCard').html(html);
       $('html, body').animate({ scrollTop: 0 }, 300);
+
+      $('#fHuisnr, #fToev').on('blur', function () {
+        var huisnummer = $('#fHuisnr').val().trim();
+        if (!huisnummer) return;
+        searchAddress(postcode, huisnummer, function (result) {
+          $('#fStraat').val(result.streetName);
+        }, function () {
+          $('#fStraat').val('');
+        });
+      });
     }
 
     function submitForm(e) {
