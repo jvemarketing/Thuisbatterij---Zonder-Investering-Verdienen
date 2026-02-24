@@ -7,6 +7,7 @@
   <title>Uw aanvraag - ThuisBatterij.nl</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/css/intlTelInput.css" />
   <style>
     :root {
       --or: #FF5A00;
@@ -361,6 +362,14 @@
     .fi:disabled {
       background: #f8f8f8;
       cursor: not-allowed
+    }
+
+    .iti {
+      width: 100%
+    }
+
+    .iti__tel-input {
+      border-radius: 10px
     }
 
     .ferr {
@@ -858,6 +867,7 @@
   </footer>
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
   <script>
     // Get URL params
     console.log('=== FLOW.HTML LOADED ===');
@@ -870,6 +880,8 @@
 
     var gemeente = extractGemeente(postcode);
     console.log('Gemeente extracted:', gemeente);
+
+    var itiTel;
 
     // Flow data
     var flowData = {
@@ -1115,7 +1127,7 @@
         '</div>' +
         '<div class="fg">' +
         '<label class="fl" for="fTel">Mobiel nummer *</label>' +
-        '<input type="tel" class="fi" id="fTel" placeholder="06 12345678" required />' +
+        '<input type="tel" class="fi" id="fTel" required />' +
         '<div class="ferr">Voer uw mobiel nummer in</div>' +
         '</div>' +
         '<div class="fcheck">' +
@@ -1131,6 +1143,12 @@
 
       $('#surveyCard').html(html);
       $('html, body').animate({ scrollTop: 0 }, 300);
+
+      itiTel = window.intlTelInput(document.getElementById('fTel'), {
+        initialCountry: 'nl',
+        separateDialCode: true,
+        utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
+      });
 
       $('#fHuisnr, #fToev').on('blur', function () {
         var huisnummer = $('#fHuisnr').val().trim();
@@ -1159,6 +1177,11 @@
         }
       });
 
+      if (itiTel && !itiTel.isValidNumber()) {
+        $('#fTel').addClass('error');
+        valid = false;
+      }
+
       if (!valid) return;
 
       var huisnummer = $('#fHuisnr').val();
@@ -1172,7 +1195,7 @@
         huisnummer: huisnummer,
         toevoeging: $('#fToev').val(),
         email: $('#fEmail').val(),
-        telefoon: $('#fTel').val(),
+        telefoon: itiTel ? itiTel.getNumber() : $('#fTel').val(),
         newsletter: $('#fNews').prop('checked'),
         antwoorden: flowData
       };
