@@ -1280,28 +1280,43 @@
 
       if (!valid) return;
 
-      var huisnummer = $('#fHuisnr').val();
+      var $btn = $('.fsubmit');
+      $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Bezig met verzenden...');
 
       var formData = {
-        postcode: postcode,
-        gemeente: gemeente,
-        voornaam: $('#fVoornaam').val(),
+        postcode:   postcode,
+        gemeente:   gemeente,
+        voornaam:   $('#fVoornaam').val(),
         achternaam: $('#fAchternaam').val(),
-        straat: $('#fStraat').val(),
-        huisnummer: huisnummer,
+        straat:     $('#fStraat').val(),
+        huisnummer: $('#fHuisnr').val(),
         toevoeging: $('#fToev').val(),
-        email: $('#fEmail').val(),
-        telefoon: itiTel ? itiTel.getNumber() : $('#fTel').val(),
+        email:      $('#fEmail').val(),
+        telefoon:   itiTel ? itiTel.getNumber() : $('#fTel').val(),
         newsletter: $('#fNews').prop('checked'),
-        antwoorden: flowData
       };
 
-      console.log('Form submitted:', formData);
-
-      searchAddress(postcode, huisnummer, function () {
-        showExit();
-      }, function (errorMsg) {
-        alert(errorMsg); // Or display error in the form
+      $.ajax({
+        url: '/api/lead',
+        method: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        processData: false,
+        data: JSON.stringify(formData),
+        success: function (response) {
+          if (response.result === 'created') {
+            showExit();
+          } else {
+            console.warn('Lead rejected by Databowl:', response);
+            $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-2"></i>Verstuur aanvraag');
+            alert('Er is een probleem opgetreden bij het verwerken van uw aanvraag. Probeer het opnieuw.');
+          }
+        },
+        error: function (xhr) {
+          console.error('Lead submission error:', xhr.responseText);
+          $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-2"></i>Verstuur aanvraag');
+          alert('Er is een technische fout opgetreden. Probeer het later opnieuw.');
+        }
       });
     }
 
