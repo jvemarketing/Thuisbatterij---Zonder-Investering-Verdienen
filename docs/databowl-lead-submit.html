@@ -1,0 +1,401 @@
+<div class="col-sm-12 col-md-8"><h1 class="border-bottom-branded">Submitting leads via HTTP POST</h1>
+    <p class="text-center"> Leads are to be submitted by making a HTTP POST request to: </p>
+    <pre class="text-secondary text-center">https://jve.databowl.com/api/v1/lead</pre>
+    <p class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> HTTPS must be used and the request must be
+        POST otherwise the lead will not be accepted. </p>
+    <p> The request must be a valid HTTP POST request. Therefore you must make sure that the request contains
+        appropriate HTTP headers. As a minimum you must include the following headers: </p>
+    <ul>
+        <li><code>Content-Length</code></li>
+        <li><code>Content-Type</code> (Which must equal <code>application/x-www-form-urlencoded</code>)</li>
+        <li><code>Host</code></li>
+    </ul>
+    <h3>POST Parameters</h3>
+    <p> All data is to be submitted in the request body in the <code>application/x-www-form-urlencoded</code> format.
+    </p>
+    <table class="table table-striped table-fixed-columns">
+        <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Value</th>
+            <th>Format</th>
+            <th>Example Value</th>
+            <th class="text-right">Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="ng-star-inserted">
+            <td>cid</td>
+            <td>892<!----><!----><!----></td>
+            <td><!----><!----><!---->N/A<!----><!----></td>
+            <td><!---->N/A<!----><!----></td>
+            <td class="text-right"><i class="fa fa-check text-success ng-star-inserted"></i><!----><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>sid</td>
+            <td>34<!----><!----><!----></td>
+            <td><!----><!----><!---->N/A<!----><!----></td>
+            <td><!---->N/A<!----><!----></td>
+            <td class="text-right"><!----><!----><i class="fa fa-question-circle text-secondary ng-star-inserted"></i>
+                <!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>uid</td>
+            <td><!----><em class="ng-star-inserted">(uid)</em><!----></td>
+            <td><!----><!----><!---->N/A<!----><!----></td>
+            <td><!---->N/A<!----><!----></td>
+            <td class="text-right"><!----><!----><i class="fa fa-question-circle text-secondary ng-star-inserted"></i>
+                <!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_email</td>
+            <td><!----><em class="ng-star-inserted">(optin_email)</em><!----></td>
+            <td><!----><em class="ng-star-inserted">true</em> or <em class="ng-star-inserted">false</em> (or an empty
+                value for neither) <!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_email_timestamp</td>
+            <td><!----><em class="ng-star-inserted">(optin_email_timestamp)</em><!----></td>
+            <td><!----><!----> ISO 8601: yyyy-mm-ddThh:mm:ssZ where Z indicates that the time is in UTC or otherwise
+                replace with offset from UTC. <!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_phone</td>
+            <td><!----><em class="ng-star-inserted">(optin_phone)</em><!----></td>
+            <td><!----><em class="ng-star-inserted">true</em> or <em class="ng-star-inserted">false</em> (or an empty
+                value for neither) <!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_phone_timestamp</td>
+            <td><!----><em class="ng-star-inserted">(optin_phone_timestamp)</em><!----></td>
+            <td><!----><!----> ISO 8601: yyyy-mm-ddThh:mm:ssZ where Z indicates that the time is in UTC or otherwise
+                replace with offset from UTC. <!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_sms</td>
+            <td><!----><em class="ng-star-inserted">(optin_sms)</em><!----></td>
+            <td><!----><em class="ng-star-inserted">true</em> or <em class="ng-star-inserted">false</em> (or an empty
+                value for neither) <!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_sms_timestamp</td>
+            <td><!----><em class="ng-star-inserted">(optin_sms_timestamp)</em><!----></td>
+            <td><!----><!----> ISO 8601: yyyy-mm-ddThh:mm:ssZ where Z indicates that the time is in UTC or otherwise
+                replace with offset from UTC. <!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_postal</td>
+            <td><!----><em class="ng-star-inserted">(optin_postal)</em><!----></td>
+            <td><!----><em class="ng-star-inserted">true</em> or <em class="ng-star-inserted">false</em> (or an empty
+                value for neither) <!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>optin_postal_timestamp</td>
+            <td><!----><em class="ng-star-inserted">(optin_postal_timestamp)</em><!----></td>
+            <td><!----><!----> ISO 8601: yyyy-mm-ddThh:mm:ssZ where Z indicates that the time is in UTC or otherwise
+                replace with offset from UTC. <!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_1_email</td>
+            <td><!----><em class="ng-star-inserted">(f_1_email)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_2_title</td>
+            <td><!----><em class="ng-star-inserted">(f_2_title)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_3_firstname</td>
+            <td><!----><em class="ng-star-inserted">(f_3_firstname)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_4_lastname</td>
+            <td><!----><em class="ng-star-inserted">(f_4_lastname)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_5_dob</td>
+            <td><!----><em class="ng-star-inserted">(f_5_dob)</em><!----></td>
+            <td>ISO 8601: yyyy-mm-dd<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_6_address1</td>
+            <td><!----><em class="ng-star-inserted">(f_6_address1)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_7_address2</td>
+            <td><!----><em class="ng-star-inserted">(f_7_address2)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_8_address3</td>
+            <td><!----><em class="ng-star-inserted">(f_8_address3)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_9_towncity</td>
+            <td><!----><em class="ng-star-inserted">(f_9_towncity)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_10_county</td>
+            <td><!----><em class="ng-star-inserted">(f_10_county)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_11_postcode</td>
+            <td><!----><em class="ng-star-inserted">(f_11_postcode)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td><!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>f_991_street_name</td>
+            <td><!----><em class="ng-star-inserted">(f_991_street_name)</em><!----></td>
+            <td>Any valid UTF-8 string<!----><!----><!----><!----><!----></td>
+            <td>Buikslotermeerplein<!----><!----><!----></td>
+            <td class="text-right"><!----><i class="fa fa-times text-danger ng-star-inserted"></i><!----><!----></td>
+        </tr><!----></tbody>
+    </table>
+    <p> All required fields for the campaign must be included in the request otherwise the lead will be rejected. Fields
+        that are not required may be completely omitted from the request or left blank. Any fields submitted that are
+        not part of the campaign will be silently ignored. </p>
+    <p class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> All data must use UTF-8 encoding. Leads
+        may be rejected or ignored if UTF-8 is not used. </p>
+    <p class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> The POST data must be placed in the
+        request body. Placing the data in the query string is not acceptable </p>
+    <h3>Example Request Body</h3>
+    <pre>cid=892&amp;sid=34&amp;uid=[uid]&amp;optin_email=[optin_email]&amp;optin_email_timestamp=[optin_email_timestamp]&amp;optin_phone=[optin_phone]&amp;optin_phone_timestamp=[optin_phone_timestamp]&amp;optin_sms=[optin_sms]&amp;optin_sms_timestamp=[optin_sms_timestamp]&amp;optin_postal=[optin_postal]&amp;optin_postal_timestamp=[optin_postal_timestamp]&amp;f_1_email=[f_1_email]&amp;f_2_title=[f_2_title]&amp;f_3_firstname=[f_3_firstname]&amp;f_4_lastname=[f_4_lastname]&amp;f_5_dob=[f_5_dob]&amp;f_6_address1=[f_6_address1]&amp;f_7_address2=[f_7_address2]&amp;f_8_address3=[f_8_address3]&amp;f_9_towncity=[f_9_towncity]&amp;f_10_county=[f_10_county]&amp;f_11_postcode=[f_11_postcode]&amp;f_991_street_name=[f_991_street_name]</pre>
+    <!----><h3>Response</h3>
+    <p> The API will return a response in the JSON format with the following structure: </p>
+    <pre>{
+            "result": "&lt;result&gt;",
+            "lead_id":"&lt;lead_id&gt;",
+            "error": {
+            "msg": "&lt;error message&gt;",
+            ...&lt;additional_fields&gt;...
+            }
+        }</pre>
+    <p> Result will either be "created" or "error". The "error" key in the returned JSON will only be present if the
+        result is "error". You should store the lead_id in order to reference the lead. </p>
+    <p class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> A result of "created" does not indicate
+        that the lead has been accepted or rejected only that it has passed an initial set of checks and has been
+        submitted for further processing. </p>
+    <h3>Errors</h3>
+    <p> If the lead has a result of "error" then error message will be one of the following: </p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Message</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="ng-star-inserted">
+            <td>CONDITION_SET_REJECTED</td>
+            <td>The lead you submitted has been rejected due to the rule group configuration of the campaign</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>DAILY_CAP_REACHED</td>
+            <td>Either the daily cap on the campaign or your supplier-specific daily cap for the campaign has been
+                reached for the day. It will not be possible to submit further leads until tomorrow or if the cap is
+                manually raised.
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>DAILY_CAP_REACHED_QUARANTINED</td>
+            <td>Either the daily cap on the campaign or your supplier-specific daily cap for the campaign has been
+                reached for the day. The lead has not currently been accepted but may be accepted at a later date.
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>DUPLICATE_LEAD</td>
+            <td>The lead you submitted has been identified as a duplicate and, therefore, has been rejected.</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_CID</td>
+            <td>The cid (campaign_id) supplied in the request was invalid.</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_DATA_FOR_SUPPLIER_TYPE</td>
+            <td>You supplied a UID for a supplier that is not an affiliate, or an SID for a supplier that is an
+                affiliate..
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_EMAIL</td>
+            <td>You submitted an invalid email optin value</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_EMAIL_TIMESTAMP</td>
+            <td>You submitted an invalid email optin timestamp</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_PHONE</td>
+            <td>You submitted an invalid phone optin value</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_PHONE_TIMESTAMP</td>
+            <td>You submitted an invalid phone optin timestamp</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_POSTAL</td>
+            <td>You submitted an invalid postal optin value</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_POSTAL_TIMESTAMP</td>
+            <td>You submitted an invalid postal optin timestamp</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_SMS</td>
+            <td>You submitted an invalid sms optin value</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_OPTIN_SMS_TIMESTAMP</td>
+            <td>You submitted an invalid sms optin timestamp</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_SID</td>
+            <td>The sid (supplier_id) supplied in the request was invalid.</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_SSID</td>
+            <td>The ssid (sub_supplier_id) supplied in the request was invalid.</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_TERMS_URL</td>
+            <td>The terms URL you submitted is not a valid URL</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>INVALID_TERMS_URL_TIMESTAMP</td>
+            <td>You submitted a terms URL timestamp, but you have not submitted a terms URL</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>MATCHED_SUPPRESSION</td>
+            <td>The lead you submitted has matched a suppression file and, therefore, has been rejected</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>MISSING_CID</td>
+            <td>The cid (campaign_id) was missing from the request.
+
+                Note, if you are receiving this message but think you are already including the cid then please make
+                sure you are submitting data as set out in this documentation.
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>MISSING_FIELD</td>
+            <td>A required field is missing from the request.</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>MISSING_SID</td>
+            <td>The sid (supplier_id) was missing from the request.</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>MISSING_TERMS_URL</td>
+            <td>You submitted a terms URL timestamp, but you have not submitted a terms URL</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>MISSING_TERMS_URL_TIMESTAMP</td>
+            <td>You submitted a terms URL, but you have not submitted a terms URL timestamp</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>MISSING_UID</td>
+            <td>The uid (user_id) was missing from the request.</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>OPTIN_EMAIL_TIMESTAMP_IN_FUTURE</td>
+            <td>You submitted an email optin timestamp that is in the future</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>OPTIN_PHONE_TIMESTAMP_IN_FUTURE</td>
+            <td>You submitted a phone optin timestamp that is in the future</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>OPTIN_POSTAL_TIMESTAMP_IN_FUTURE</td>
+            <td>You submitted a postal optin timestamp that is in the future</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>OPTIN_SMS_TIMESTAMP_IN_FUTURE</td>
+            <td>You submitted a sms optin timestamp that is in the future</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>OUTSIDE_INCLUSION</td>
+            <td>The lead you submitted has failed to match an inclusion file and, therefore, has been rejected</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>REJECTED_BY_AFFILIATES</td>
+            <td>The user you submitted has been rejected by the configured affiliates rules on the campaign
+                (:affiliateRejectionMessage)
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>SUB_SUPPLIER_NOT_VALID_FOR_SUPPLIER</td>
+            <td>You are not able to submit leads for the sub supplier as they are not an assigned sub supplier of the
+                specified supplier.
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>SUPPLIER_NOT_VALID_FOR_CAMPAIGN</td>
+            <td>You are not able to submit leads for the campaign you specified in the request because you are not an
+                assigned supplier for that campaign.
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>SUPPLIER_PAUSED</td>
+            <td>You are currently paused on the campaign you are attempting to supply the lead for. The lead has not
+                currently been accepted but may be accepted at a later date.
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>TOTAL_CAP_REACHED</td>
+            <td>Either the total cap on the campaign or your supplier-specific total cap for the campaign has been
+                reached. Therefore no further leads will be accepted until this limit is manually raised.
+            </td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td>TOTAL_CAP_REACHED_QUARANTINED</td>
+            <td>Either the total cap on the campaign or your supplier-specific total cap for the campaign has been
+                reached. The lead has not currently been accepted but may be accepted at a later date.
+            </td>
+        </tr><!----></tbody>
+    </table>
+</div>
