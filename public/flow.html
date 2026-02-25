@@ -893,6 +893,7 @@
 
     var itiTel;
     var emailValid = false;
+    var phoneValid = false;
 
     // Flow data
     var flowData = {
@@ -1141,6 +1142,7 @@
         '<label class="fl" for="fTel">Mobiel nummer *</label>' +
         '<input type="tel" class="fi" id="fTel" required />' +
         '<div class="ferr">Voer uw mobiel nummer in</div>' +
+        '<div id="phoneStatus" class="email-status"></div>' +
         '</div>' +
         '<div class="fcheck">' +
         '<input type="checkbox" id="fPrivacy" required />' +
@@ -1169,6 +1171,44 @@
           $('#fStraat').val(result.streetName);
         }, function () {
           $('#fStraat').val('');
+        });
+      });
+
+      phoneValid = false;
+      $('#fTel').on('blur', function () {
+        var number = itiTel ? itiTel.getNumber() : $(this).val().trim();
+        if (!number) { phoneValid = false; return; }
+        if (itiTel && !itiTel.isValidNumber()) {
+          $('#fTel').addClass('error').removeClass('valid');
+          $('#phoneStatus').text('').css('color', '');
+          phoneValid = false;
+          return;
+        }
+        $('#fTel').removeClass('error valid');
+        $('#phoneStatus').html('<i class="fas fa-spinner fa-spin" style="margin-right:4px"></i>Controleren...').css('color', '#888');
+        $.ajax({
+          url: '/api/validate/mobile',
+          method: 'POST',
+          contentType: 'application/json',
+          dataType: 'json',
+          processData: false,
+          data: JSON.stringify({ mobile: number }),
+          success: function (response) {
+            if (response.result === 'live') {
+              $('#fTel').addClass('valid').removeClass('error');
+              $('#phoneStatus').text('').css('color', '');
+              phoneValid = true;
+            } else {
+              $('#fTel').addClass('error').removeClass('valid');
+              $('#phoneStatus').text('Dit mobiel nummer is niet geldig').css('color', 'var(--rd)');
+              phoneValid = false;
+            }
+          },
+          error: function () {
+            // On API failure, don't block the user
+            phoneValid = true;
+            $('#phoneStatus').text('').css('color', '');
+          }
         });
       });
 
@@ -1232,8 +1272,9 @@
         valid = false;
       }
 
-      if (itiTel && !itiTel.isValidNumber()) {
+      if (!phoneValid) {
         $('#fTel').addClass('error');
+        $('#phoneStatus').text('Bevestig een geldig mobiel nummer').css('color', 'var(--rd)');
         valid = false;
       }
 
