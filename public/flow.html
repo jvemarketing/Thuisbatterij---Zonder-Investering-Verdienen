@@ -364,6 +364,16 @@
       cursor: not-allowed
     }
 
+    .fi.valid {
+      border-color: var(--gr);
+      box-shadow: 0 0 0 3px rgba(0, 166, 81, .12)
+    }
+
+    .email-status {
+      font-size: .74rem;
+      margin-top: .3rem
+    }
+
     .iti {
       width: 100%
     }
@@ -882,6 +892,7 @@
     console.log('Gemeente extracted:', gemeente);
 
     var itiTel;
+    var emailValid = false;
 
     // Flow data
     var flowData = {
@@ -1124,6 +1135,7 @@
         '<label class="fl" for="fEmail">E-mailadres *</label>' +
         '<input type="email" class="fi" id="fEmail" placeholder="uw@email.nl" required />' +
         '<div class="ferr">Voer een geldig e-mailadres in</div>' +
+        '<div id="emailStatus" class="email-status"></div>' +
         '</div>' +
         '<div class="fg">' +
         '<label class="fl" for="fTel">Mobiel nummer *</label>' +
@@ -1159,6 +1171,43 @@
           $('#fStraat').val('');
         });
       });
+
+      emailValid = false;
+      $('#fEmail').on('blur', function () {
+        var email = $(this).val().trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          $('#fEmail').addClass('error').removeClass('valid');
+          $('#emailStatus').text('').css('color', '');
+          emailValid = false;
+          return;
+        }
+        $('#fEmail').removeClass('error valid');
+        $('#emailStatus').html('<i class="fas fa-spinner fa-spin" style="margin-right:4px"></i>Controleren...').css('color', '#888');
+        $.ajax({
+          url: '/api/validate/email',
+          method: 'POST',
+          contentType: 'application/json',
+          dataType: 'json',
+          processData: false,
+          data: JSON.stringify({ email: email }),
+          success: function (response) {
+            if (response.result === true) {
+              $('#fEmail').addClass('valid').removeClass('error');
+              $('#emailStatus').text('').css('color', '');
+              emailValid = true;
+            } else {
+              $('#fEmail').addClass('error').removeClass('valid');
+              $('#emailStatus').text('Dit e-mailadres is niet geldig').css('color', 'var(--rd)');
+              emailValid = false;
+            }
+          },
+          error: function () {
+            // On API failure, don't block the user
+            emailValid = true;
+            $('#emailStatus').text('').css('color', '');
+          }
+        });
+      });
     }
 
     function submitForm(e) {
@@ -1176,6 +1225,12 @@
           $(this).removeClass('error');
         }
       });
+
+      if (!emailValid) {
+        $('#fEmail').addClass('error');
+        $('#emailStatus').text('Bevestig een geldig e-mailadres').css('color', 'var(--rd)');
+        valid = false;
+      }
 
       if (itiTel && !itiTel.isValidNumber()) {
         $('#fTel').addClass('error');
