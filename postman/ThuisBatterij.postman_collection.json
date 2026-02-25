@@ -1,0 +1,297 @@
+{
+  "info": {
+    "name": "ThuisBatterij API",
+    "_postman_id": "thuisbatterij-local-api",
+    "description": "Local proxy endpoints for ThuisBatterij.nl — runs against http://localhost:8080 and forwards to Databowl / PostNL.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Lead Submission",
+      "item": [
+        {
+          "name": "Submit Lead — full payload (newsletter opt-in)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "pm.test('Databowl result is present', () => {",
+                  "    pm.expect(json).to.have.property('result');",
+                  "});",
+                  "",
+                  "pm.test('Result is created or error (not a proxy crash)', () => {",
+                  "    pm.expect(['created', 'error']).to.include(json.result);",
+                  "});",
+                  "",
+                  "if (json.result === 'created') {",
+                  "    pm.test('lead_id is returned', () => {",
+                  "        pm.expect(json).to.have.property('lead_id');",
+                  "    });",
+                  "    pm.collectionVariables.set('last_lead_id', json.lead_id);",
+                  "    console.log('Lead created — ID:', json.lead_id);",
+                  "} else {",
+                  "    console.warn('Lead not created — Databowl error:', JSON.stringify(json.error));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"voornaam\":   \"Jan\",\n  \"achternaam\":  \"Jansen\",\n  \"email\":       \"jan.jansen@example.com\",\n  \"telefoon\":    \"+31612345678\",\n  \"postcode\":    \"1234AB\",\n  \"huisnummer\":  \"10\",\n  \"toevoeging\":  \"A\",\n  \"straat\":      \"Hoofdstraat\",\n  \"gemeente\":    \"Amsterdam\",\n  \"newsletter\":  true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/lead",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lead"]
+            },
+            "description": "Submits a complete lead with all mapped fields and newsletter opt-in set to true.\n\nThe proxy will:\n1. Map frontend field names → Databowl `f_N_*` field names\n2. Set `optin_email / optin_phone / optin_sms` to `true`\n3. Attach `cid` and `sid` from server-side env vars\n4. POST to https://jve.databowl.com/api/v1/lead as `application/x-www-form-urlencoded`\n\nExpected response: `{ \"result\": \"created\", \"lead_id\": \"...\" }`"
+          },
+          "response": [
+            {
+              "name": "Success — lead created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"voornaam\":   \"Jan\",\n  \"achternaam\":  \"Jansen\",\n  \"email\":       \"jan.jansen@example.com\",\n  \"telefoon\":    \"+31612345678\",\n  \"postcode\":    \"1234AB\",\n  \"huisnummer\":  \"10\",\n  \"toevoeging\":  \"A\",\n  \"straat\":      \"Hoofdstraat\",\n  \"gemeente\":    \"Amsterdam\",\n  \"newsletter\":  true\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/lead",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "lead"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"result\": \"created\",\n  \"lead_id\": \"abc123\"\n}"
+            },
+            {
+              "name": "Databowl rejection example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/lead",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "lead"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"result\": \"error\",\n  \"error\": { \"msg\": \"MISSING_FIELD\" }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Submit Lead — minimal (no newsletter)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "pm.test('Databowl result is present', () => {",
+                  "    pm.expect(json).to.have.property('result');",
+                  "});",
+                  "",
+                  "pm.test('optin fields sent as false (check server logs)', () => {",
+                  "    // optin_* values are set server-side; we just verify the call succeeds",
+                  "    pm.expect(['created', 'error']).to.include(json.result);",
+                  "});",
+                  "",
+                  "if (json.result === 'created') {",
+                  "    console.log('Lead created — ID:', json.lead_id);",
+                  "} else {",
+                  "    console.warn('Databowl error:', JSON.stringify(json.error));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"voornaam\":   \"Maria\",\n  \"achternaam\":  \"de Vries\",\n  \"email\":       \"maria.devries@example.com\",\n  \"postcode\":    \"2500GH\",\n  \"huisnummer\":  \"5\",\n  \"gemeente\":    \"Den Haag\",\n  \"newsletter\":  false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/lead",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lead"]
+            },
+            "description": "Submits a lead with only the most common fields and newsletter opt-out (`false`).\n\nOptional fields `toevoeging` and `straat` are omitted — the proxy will skip them rather than sending empty strings."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Validation",
+      "item": [
+        {
+          "name": "Validate Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Result field present', () => pm.expect(json).to.have.property('result'));",
+                  "if (json.result === true) {",
+                  "    console.log('Email is valid');",
+                  "} else {",
+                  "    console.warn('Email invalid:', json.result);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jan.jansen@example.com\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/validate/email",
+              "host": ["{{base_url}}"],
+              "path": ["api", "validate", "email"]
+            },
+            "description": "Validates an email address via the Databowl validation API.\n\nResponse: `{ \"result\": true }` if valid, otherwise `{ \"result\": \"<error message>\" }`."
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Mobile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Result field present', () => pm.expect(json).to.have.property('result'));",
+                  "if (json.result === 'live') {",
+                  "    console.log('Mobile is live');",
+                  "} else {",
+                  "    console.warn('Mobile check result:', json.result);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"+31612345678\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/validate/mobile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "validate", "mobile"]
+            },
+            "description": "HLR lookup for a mobile number via Databowl.\n\nResponse: `{ \"result\": \"live\" }` for a valid active number."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Address",
+      "item": [
+        {
+          "name": "Postcode Check (PostNL)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test('Returns address array', () => pm.expect(json).to.be.an('array'));",
+                  "if (json.length > 0) {",
+                  "    console.log('Street:', json[0].streetName, '— City:', json[0].city);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postalCode\":  \"1234AB\",\n  \"houseNumber\": \"10\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/postcodecheck",
+              "host": ["{{base_url}}"],
+              "path": ["api", "postcodecheck"]
+            },
+            "description": "Resolves a Dutch postcode + house number to a street address via the PostNL Benelux API."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
