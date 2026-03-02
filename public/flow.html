@@ -879,64 +879,37 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
   <script>
-    // Get URL params
-    console.log('=== FLOW.HTML LOADED ===');
-    console.log('Current URL:', window.location.href);
-    console.log('Search params:', window.location.search);
-
     var urlParams = new URLSearchParams(window.location.search);
     var postcode = urlParams.get('pc') || '1234AB';
-    console.log('Postcode from URL:', postcode);
-
     var gemeente = extractGemeente(postcode);
-    console.log('Gemeente extracted:', gemeente);
 
     var itiTel;
     var emailValid = false;
     var phoneValid = false;
 
-    // Flow data
-    var flowData = {
-      postcode: postcode,
-      gemeente: gemeente,
-      q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null, q8: null,
-      currentStep: 1
-    };
+    // Survey state
+    var questions = [];
+    var questionsById = {};
+    var visitedIds = [];
+    var answers = {};
+    var currentId = null;
 
-    // Initialize with error handling
     $(function () {
-      console.log('jQuery ready');
-      console.log('Setting gemeente text to:', gemeente);
-
       $('#gemeenteLoader').text(gemeente);
       $('#gemeenteTop').text(gemeente);
 
-      console.log('gemeenteLoader element:', $('#gemeenteLoader').length);
-      console.log('gemeenteTop element:', $('#gemeenteTop').length);
-
-
-      // Dynamic spots for urgency bar (same as index.html)
       function getDailySpots() {
         var now = new Date();
         var seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
         return 15 + (seed % 14);
       }
-
-      var dailySpots = getDailySpots();
-      console.log('Daily spots:', dailySpots);
-      $('#spotsTop').text(dailySpots);
-      // Start loader animation
-      console.log('Starting loader...');
+      $('#spotsTop').text(getDailySpots());
       runLoader();
     });
 
-    // Fallback if jQuery fails
     window.addEventListener('load', function () {
       if (typeof jQuery === 'undefined') {
-        console.error('jQuery failed to load!');
         alert('Er is een probleem met het laden van de pagina. Probeer de pagina te vernieuwen.');
-      } else {
-        console.log('jQuery loaded successfully, version:', jQuery.fn.jquery);
       }
     });
 
@@ -945,8 +918,7 @@
         '1': 'Amsterdam', '2': 'Rotterdam', '3': 'Utrecht', '4': 'Den Haag',
         '5': 'Eindhoven', '6': 'Nijmegen', '7': 'Enschede', '8': 'Zwolle', '9': 'Groningen'
       };
-      var first = pc.charAt(0);
-      return postcodes[first] || 'uw gemeente';
+      return postcodes[pc.charAt(0)] || 'uw gemeente';
     }
 
     function runLoader() {
@@ -978,122 +950,64 @@
 
     function showSurvey() {
       $('#loaderSection').fadeOut(300, function () {
-        $('#surveySection').fadeIn(300);
-        showQuestion(1);
+        $.getJSON('/questions.json')
+          .done(function (data) {
+            questions = data;
+            data.forEach(function (q) { questionsById[q.question_id] = q; });
+            $('#surveySection').fadeIn(300);
+            goToQuestion(data[0].question_id);
+          })
+          .fail(function () {
+            alert('Kon vragenlijst niet laden. Probeer het opnieuw.');
+          });
       });
     }
 
-    function showQuestion(num) {
-      flowData.currentStep = num;
-      var html = '';
+    function goToQuestion(id) {
+      currentId = id;
+      visitedIds.push(id);
 
-      switch (num) {
-        case 1:
-          html = buildQ(1, 8, 'Vraag 1 van 8', 'Heeft u al zonnepanelen?', '', [
-            { text: 'Ja, ik heb zonnepanelen', val: 'ja' },
-            { text: 'Nee, nog geen zonnepanelen', val: 'nee' },
-            { text: 'Ik overweeg zonnepanelen', val: 'overweeg' }
-          ]);
-          break;
-        case 2:
-          html = buildQ(2, 8, 'Vraag 2 van 8', 'Waar wilt u de thuisbatterij plaatsen?', '', [
-            { text: 'Woning', val: 'woning' },
-            { text: 'Bedrijfspand', val: 'bedrijf' }
-          ]);
-          break;
-        case 3:
-          html = buildQ(3, 8, 'Vraag 3 van 8', 'Wat is uw geschat jaarlijks verbruik?', '', [
-            { text: '2300 kWh (1 persoon)', val: '2300' },
-            { text: '3400 kWh (2 personen)', val: '3400' },
-            { text: '4100 kWh (3 personen)', val: '4100' },
-            { text: '4600 kWh (4 personen)', val: '4600' },
-            { text: '5300 kWh (5 personen)', val: '5300' },
-            { text: 'Meer dan 5300 kWh', val: '5300+' }
-          ]);
-          break;
-        case 4:
-          html = buildQ(4, 8, 'Vraag 4 van 8', 'Is er ruimte beschikbaar voor batterijopslag?', '', [
-            { text: 'Ja, er is voldoende ruimte', val: 'ja' },
-            { text: 'Nee, beperkte ruimte', val: 'nee' },
-            { text: 'Weet ik niet zeker', val: 'onzeker' }
-          ]);
-          break;
-        case 5:
-          html = buildQ(5, 8, 'Vraag 5 van 8', 'Wat voor type woning heeft u?', '', [
-            { text: 'Koopwoning', val: 'koop' },
-            { text: 'Huurwoning', val: 'huur' }
-          ]);
-          break;
-        case 6:
-          html = buildQ(6, 8, 'Vraag 6 van 8', 'Heeft u interesse in een warmtepomp?',
-            'Bespaar tot €1.600 per jaar op gaskosten en verhoog de waarde van uw woning.', [
-            { text: 'Ja, interesse in warmtepomp', val: 'warmtepomp' },
-            { text: 'Nee, geen interesse', val: 'nee' }
-          ]);
-          break;
-        case 7:
-          html = buildQ(7, 8, 'Vraag 7 van 8', 'Heeft u interesse in isolatie?',
-            'Verminder warmteverlies met 30% en maak uw woning energiezuiniger.', [
-            { text: 'Ja, interesse in isolatie', val: 'isolatie' },
-            { text: 'Nee, geen interesse', val: 'nee' }
-          ]);
-          break;
-        case 8:
-          html = buildQ(8, 8, 'Vraag 8 van 8', 'Heeft u interesse in een laadpaal?',
-            'Laad thuis tot 5x goedkoper dan bij publieke laadpalen.', [
-            { text: 'Ja, interesse in laadpaal', val: 'laadpaal' },
-            { text: 'Nee, geen interesse', val: 'nee' }
-          ]);
-          break;
+      var q = questionsById[id];
+      var stepNum = visitedIds.length;
+      var total = questions.length;
+
+      var dots = '';
+      for (var i = 1; i <= total; i++) {
+        dots += '<div class="q-dot' + (i === stepNum ? ' active' : '') + '"></div>';
       }
+
+      var opts = '';
+      q.options.forEach(function (opt) {
+        opts += '<button class="q-option" data-value="' + opt.value + '" onclick="selectAnswer(this)">' + opt.text + '</button>';
+      });
+
+      var html =
+        '<div class="q-progress">' + dots + '</div>' +
+        '<div class="q-number">Vraag ' + stepNum + ' van ' + total + '</div>' +
+        '<h3 class="q-title">' + q.text + '</h3>' +
+        '<div class="q-options">' + opts + '</div>';
 
       $('#surveyCard').html(html);
       $('html, body').animate({ scrollTop: 0 }, 300);
     }
 
-    function buildQ(num, total, label, title, desc, options) {
-      var dots = '';
-      for (var i = 1; i <= total; i++) {
-        dots += '<div class="q-dot' + (i === num ? ' active' : '') + '"></div>';
-      }
+    function selectAnswer(el) {
+      var value = $(el).data('value');
+      answers[currentId] = value;
 
-      var opts = '';
-      options.forEach(function (opt) {
-        opts += '<div class="q-option" data-value="' + opt.val + '" onclick="selectOpt(this,' + num + ')">' +
-          opt.text +
-          '</div>';
-      });
-
-      return '<div class="q-progress">' + dots + '</div>' +
-        '<div class="q-number">' + label + '</div>' +
-        '<h3 class="q-title">' + title + '</h3>' +
-        (desc ? '<div class="q-desc">' + desc + '</div>' : '') +
-        '<div class="q-options">' + opts + '</div>';
-    }
-
-    function selectOpt(el, qNum) {
-      // Store answer
-      flowData['q' + qNum] = $(el).data('value');
-
-      // Visual feedback
       $(el).addClass('selected');
+      $('#surveyCard .q-option').prop('disabled', true);
 
-      // Auto-advance to next question after brief delay
+      var q = questionsById[currentId];
+      var nextId = (q.branching_rules && q.branching_rules[value]) || null;
+
       setTimeout(function () {
-        if (qNum === 8) {
-          showForm();
+        if (nextId && questionsById[nextId]) {
+          goToQuestion(nextId);
         } else {
-          showQuestion(qNum + 1);
+          showForm();
         }
       }, 400);
-    }
-
-    function nextQ(current) {
-      if (current === 8) {
-        showForm();
-      } else {
-        showQuestion(current + 1);
-      }
     }
 
     function showForm() {
@@ -1284,16 +1198,17 @@
       $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Bezig met verzenden...');
 
       var formData = {
-        postcode:   postcode,
-        gemeente:   gemeente,
-        voornaam:   $('#fVoornaam').val(),
-        achternaam: $('#fAchternaam').val(),
-        straat:     $('#fStraat').val(),
-        huisnummer: $('#fHuisnr').val(),
-        toevoeging: $('#fToev').val(),
-        email:      $('#fEmail').val(),
-        telefoon:   itiTel ? itiTel.getNumber() : $('#fTel').val(),
-        newsletter: $('#fNews').prop('checked'),
+        postcode:        postcode,
+        gemeente:        gemeente,
+        voornaam:        $('#fVoornaam').val(),
+        achternaam:      $('#fAchternaam').val(),
+        straat:          $('#fStraat').val(),
+        huisnummer:      $('#fHuisnr').val(),
+        toevoeging:      $('#fToev').val(),
+        email:           $('#fEmail').val(),
+        telefoon:        itiTel ? itiTel.getNumber() : $('#fTel').val(),
+        newsletter:      $('#fNews').prop('checked'),
+        survey_answers:  answers
       };
 
       $.ajax({
