@@ -141,47 +141,37 @@ const LEAD_ENDPOINT = "https://jve.databowl.com/api/v1/lead";
 
 // Maps incoming JSON keys (from the frontend) → Databowl field names.
 // Update this object when the campaign fields change — no other code needs touching.
-const LEAD_FIELD_MAP = {
-  email:      "f_1_email",
-  voornaam:   "f_3_firstname",
-  achternaam: "f_4_lastname",
-  straat:     "f_991_street_name",
-  huisnummer: "f_6_address1",
-  toevoeging: "f_7_address2",
-  postcode:   "f_11_postcode",
-  gemeente:   "f_9_towncity",
-  // telefoon: "f_??_mobile",  // add once the campaign exposes a mobile custom field
-};
-
 // POST /api/lead
-// Body (JSON): { voornaam, achternaam, email, telefoon, postcode, huisnummer,
-//               toevoeging, straat, gemeente, newsletter, ... }
+// Body (JSON): already-mapped Databowl field names (f_*) + newsletter boolean.
+// The frontend (flow.html) applies LEAD_FIELD_MAP before sending, so this
+// handler just forwards all fields directly — no mapping needed here.
 // Response: Databowl JSON — { result: "created"|"error", lead_id, error? }
 app.post("/api/lead", async (req, res) => {
   try {
     const body = req.body;
     const now = new Date().toISOString();
 
-    // Fixed campaign params — change via env vars without touching code
+    // Campaign params — sourced from the frontend; env vars as fallback
     const params = {
-      cid: process.env.DATABOWL_CID ?? "892",
-      sid: process.env.DATABOWL_SID ?? "34",
+      cid: body.cid ?? process.env.DATABOWL_CID,
+      sid: body.sid ?? process.env.DATABOWL_SID,
     };
 
     // Optin consent — newsletter checkbox drives all optin channels
     const optin = body.newsletter ? "true" : "false";
-    params.optin_email          = optin;
+    params.optin_email           = optin;
     params.optin_email_timestamp = now;
-    params.optin_phone          = optin;
+    params.optin_phone           = optin;
     params.optin_phone_timestamp = now;
-    params.optin_sms            = optin;
+    params.optin_sms             = optin;
     params.optin_sms_timestamp   = now;
 
-    // Map frontend fields → Databowl fields; omit blank / missing values
-    for (const [inKey, outKey] of Object.entries(LEAD_FIELD_MAP)) {
-      const val = body[inKey];
+    // Forward all pre-mapped fields from the frontend; skip internal keys
+    const skip = new Set(["newsletter", "cid", "sid"]);
+    for (const [key, val] of Object.entries(body)) {
+      if (skip.has(key)) continue;
       if (val !== undefined && val !== null && val !== "") {
-        params[outKey] = String(val);
+        params[key] = String(val);
       }
     }
 

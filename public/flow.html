@@ -887,6 +887,39 @@
     var emailValid = false;
     var phoneValid = false;
 
+    // Databowl campaign config — set per page.
+    var DATABOWL_CID = "892";
+    var DATABOWL_SID = "34";
+
+    // Databowl field map — rename outgoing keys before submission.
+    // Edit this object to configure which fields this page sends to Databowl.
+    var LEAD_FIELD_MAP = {
+      // Contact fields
+      email:      "f_1_email",
+      voornaam:   "f_3_firstname",
+      achternaam: "f_4_lastname",
+      postcode:   "f_11_postcode",
+      telefoon:   "f_12_phone1",
+      gemeente:   "f_40_city",
+      huisnummer: "f_167_house_number",
+      toevoeging: "f_1070_address_addition",
+      straat:     "f_991_street_name",
+      // Survey answer fields
+      woning_of_bedrijfspand:                  "f_1057_woning_of_bedrijfspand",
+      type_woning:                             "f_1058_type_woning",
+      heeft_u_zonnepanelen:                    "f_1059_heeft_u_zonnepanelen",
+      interesse_in_zonnepanelen:               "f_1060_interesse_in_zonnepanelen",
+      heeft_u_een_gas_aansluiting:             "f_1061_heeft_u_een_gas_aansluiting",
+      wilt_u_ook_verdienen_dmv_een_warmtepomp: "f_1062_wilt_u_ook_verdienen_dmv_een_warmtepomp",
+      rijdt_u_elektrisch:                      "f_1063_rijdt_u_elektrisch",
+      laadpaal:                                "f_1064_laadpaal",
+      is_uw_woning_al_goed_geisoleerd:         "f_1065_is_uw_woning_al_goed_geisoleerd",
+      wilt_u_meer_weten_over_isolatie:         "f_1066_wilt_u_meer_weten_over_isolatie",
+      woning_verder_verduurzamen:              "f_1067_woning_verder_verduurzamen",
+      jaarlijks_verbruik:                      "f_1068_jaarlijks_verbruik",
+      ruimte_voor_een_thuisbatterij:           "f_1069_ruimte_voor_een_thuisbatterij",
+    };
+
     // Survey state
     var questions = [];
     var questionsById = {};
@@ -1198,7 +1231,7 @@
       var $btn = $('.fsubmit');
       $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Bezig met verzenden...');
 
-      var formData = Object.assign({
+      var rawData = Object.assign({
         postcode:   postcode,
         gemeente:   gemeente,
         voornaam:   $('#fVoornaam').val(),
@@ -1210,6 +1243,15 @@
         telefoon:   itiTel ? itiTel.getNumber() : $('#fTel').val(),
         newsletter: $('#fNews').prop('checked')
       }, answers);
+
+      // Apply LEAD_FIELD_MAP: rename keys to Databowl field names.
+      // newsletter is passed through as-is for optin handling on the backend.
+      var formData = { newsletter: rawData.newsletter, cid: DATABOWL_CID, sid: DATABOWL_SID };
+      for (var key in LEAD_FIELD_MAP) {
+        if (rawData[key] !== undefined && rawData[key] !== null && rawData[key] !== '') {
+          formData[LEAD_FIELD_MAP[key]] = rawData[key];
+        }
+      }
 
       $.ajax({
         url: '/api/lead',
