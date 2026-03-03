@@ -1197,19 +1197,18 @@
       var $btn = $('.fsubmit');
       $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Bezig met verzenden...');
 
-      var formData = {
-        postcode:        postcode,
-        gemeente:        gemeente,
-        voornaam:        $('#fVoornaam').val(),
-        achternaam:      $('#fAchternaam').val(),
-        straat:          $('#fStraat').val(),
-        huisnummer:      $('#fHuisnr').val(),
-        toevoeging:      $('#fToev').val(),
-        email:           $('#fEmail').val(),
-        telefoon:        itiTel ? itiTel.getNumber() : $('#fTel').val(),
-        newsletter:      $('#fNews').prop('checked'),
-        survey_answers:  answers
-      };
+      var formData = Object.assign({
+        postcode:   postcode,
+        gemeente:   gemeente,
+        voornaam:   $('#fVoornaam').val(),
+        achternaam: $('#fAchternaam').val(),
+        straat:     $('#fStraat').val(),
+        huisnummer: $('#fHuisnr').val(),
+        toevoeging: $('#fToev').val(),
+        email:      $('#fEmail').val(),
+        telefoon:   itiTel ? itiTel.getNumber() : $('#fTel').val(),
+        newsletter: $('#fNews').prop('checked')
+      }, answers);
 
       $.ajax({
         url: '/api/lead',
