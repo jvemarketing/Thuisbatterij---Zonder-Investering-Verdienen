@@ -985,6 +985,7 @@
         '<div class="q-progress">' + dots + '</div>' +
         '<div class="q-number">Vraag ' + stepNum + ' van ' + total + '</div>' +
         '<h3 class="q-title">' + q.text + '</h3>' +
+        (q.description ? '<div class="q-desc">' + q.description + '</div>' : '') +
         '<div class="q-options">' + opts + '</div>';
 
       $('#surveyCard').html(html);

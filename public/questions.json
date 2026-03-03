@@ -1,6 +1,6 @@
 [
   {
-    "question_id": "bent_u_geinteresseerd_in_het_verduurzamen_van_uw_woning_of_bedrijfspand",
+    "question_id": "woning_of_bedrijfspand",
     "text": "Bent u geïnteresseerd in het verduurzamen van uw woning of bedrijfspand?",
     "type": "radio",
     "options": [
@@ -8,12 +8,12 @@
       {"text": "Bedrijf", "value": "bedrijf"}
     ],
     "branching_rules": {
-      "woning": "wat_voor_type_woning_heeft_u",
-      "bedrijf": "heeft_u_zonnepanelen_op_uw_dak"
+      "woning": "type_woning",
+      "bedrijf": "heeft_u_zonnepanelen"
     }
   },
   {
-    "question_id": "wat_voor_type_woning_heeft_u",
+    "question_id": "type_woning",
     "text": "Wat voor type woning heeft u?",
     "type": "radio",
     "options": [
@@ -21,12 +21,12 @@
       {"text": "Huurwoning", "value": "huurwoning"}
     ],
     "branching_rules": {
-      "koopwoning": "heeft_u_zonnepanelen_op_uw_dak",
-      "huurwoning": "heeft_u_zonnepanelen_op_uw_dak"
+      "koopwoning": "heeft_u_zonnepanelen",
+      "huurwoning": "heeft_u_zonnepanelen"
     }
   },
   {
-    "question_id": "heeft_u_zonnepanelen_op_uw_dak",
+    "question_id": "heeft_u_zonnepanelen",
     "text": "Heeft u zonnepanelen op uw dak?",
     "type": "radio",
     "options": [
@@ -34,12 +34,12 @@
       {"text": "Ja", "value": "ja"}
     ],
     "branching_rules": {
-      "nee_nog_niet": "heeft_u_interesse_in_zonnepanelen_zonder_eigen_inleg",
+      "nee_nog_niet": "interesse_in_zonnepanelen",
       "ja": "heeft_u_een_gas_aansluiting"
     }
   },
   {
-    "question_id": "heeft_u_interesse_in_zonnepanelen_zonder_eigen_inleg",
+    "question_id": "interesse_in_zonnepanelen",
     "text": "Heeft u interesse in zonnepanelen zonder eigen inleg?",
     "type": "radio",
     "options": [
@@ -66,7 +66,8 @@
   },
   {
     "question_id": "wilt_u_ook_verdienen_dmv_een_warmtepomp",
-    "text": "Wist u dat u met een warmtepomp 60% tot 100% minder energie verbruikt dan gas. Wilt u ook verdienen d.m.v. een warmtepomp?",
+    "text": "Wilt u ook verdienen d.m.v. een warmtepomp?",
+    "description": "Wist u dat u met een warmtepomp 60% tot 100% minder energie verbruikt dan gas.",
     "type": "radio",
     "options": [
       {"text": "Ja", "value": "ja"},
@@ -87,14 +88,15 @@
       {"text": "Nee", "value": "nee"}
     ],
     "branching_rules": {
-      "hybride": "wilt_u_meer_weten_over_de_voordelen_van_een_laadpaal",
-      "ja_volledig_elektrisch": "wilt_u_meer_weten_over_de_voordelen_van_een_laadpaal",
+      "hybride": "laadpaal",
+      "ja_volledig_elektrisch": "laadpaal",
       "nee": "is_uw_woning_al_goed_geisoleerd"
     }
   },
   {
-    "question_id": "wilt_u_meer_weten_over_de_voordelen_van_een_laadpaal",
-    "text": "Een laadpaal maakt uw auto opladen nog gemakkelijker en verhoogt daarbij ook de waarde van uw woning. Wilt u meer weten over de voordelen van een laadpaal?",
+    "question_id": "laadpaal",
+    "text": "Wilt u meer weten over de voordelen van een laadpaal?",
+    "description": "Een laadpaal maakt uw auto opladen nog gemakkelijker en verhoogt daarbij ook de waarde van uw woning.",
     "type": "radio",
     "options": [
       {"text": "Ja graag", "value": "ja_graag"},
@@ -116,8 +118,8 @@
     ],
     "branching_rules": {
       "nee_nog_niet": "wilt_u_meer_weten_over_isolatie",
-      "gedeeltelijk": "bent_u_van_plan_uw_woning_verder_te_verduurzamen",
-      "ja_helemaal": "wat_is_uw_geschat_jaarlijks_verbruik"
+      "gedeeltelijk": "woning_verder_verduurzamen",
+      "ja_helemaal": "jaarlijks_verbruik"
     }
   },
   {
@@ -129,12 +131,12 @@
       {"text": "Nee, dankjewel", "value": "nee_dankjewel"}
     ],
     "branching_rules": {
-      "ja_graag": "wat_is_uw_geschat_jaarlijks_verbruik",
-      "nee_dankjewel": "wat_is_uw_geschat_jaarlijks_verbruik"
+      "ja_graag": "jaarlijks_verbruik",
+      "nee_dankjewel": "jaarlijks_verbruik"
     }
   },
   {
-    "question_id": "bent_u_van_plan_uw_woning_verder_te_verduurzamen",
+    "question_id": "woning_verder_verduurzamen",
     "text": "Bent u van plan uw woning verder te verduurzamen en uw energierekening nog meer te verlagen?",
     "type": "radio",
     "options": [
@@ -142,12 +144,12 @@
       {"text": "Nee, ik denk het niet", "value": "nee_ik_denk_het_niet"}
     ],
     "branching_rules": {
-      "ja_zeker": "wat_is_uw_geschat_jaarlijks_verbruik",
-      "nee_ik_denk_het_niet": "wat_is_uw_geschat_jaarlijks_verbruik"
+      "ja_zeker": "jaarlijks_verbruik",
+      "nee_ik_denk_het_niet": "jaarlijks_verbruik"
     }
   },
   {
-    "question_id": "wat_is_uw_geschat_jaarlijks_verbruik",
+    "question_id": "jaarlijks_verbruik",
     "text": "Wat is uw geschat jaarlijks verbruik?",
     "type": "radio",
     "options": [
@@ -159,17 +161,17 @@
       {"text": ">5300 kWh", "value": ">5300_kWh"}
     ],
     "branching_rules": {
-      "2300_kWh": "is_er_in_uw_woning_voldoende_ruimte_voor_een_thuisbatterij",
-      "3400_kWh": "is_er_in_uw_woning_voldoende_ruimte_voor_een_thuisbatterij",
-      "4100_kWh": "is_er_in_uw_woning_voldoende_ruimte_voor_een_thuisbatterij",
-      "4600_kWh": "is_er_in_uw_woning_voldoende_ruimte_voor_een_thuisbatterij",
-      "5300_kWh": "is_er_in_uw_woning_voldoende_ruimte_voor_een_thuisbatterij",
-      ">5300_kWh": "is_er_in_uw_woning_voldoende_ruimte_voor_een_thuisbatterij"
+      "2300_kWh": "ruimte_voor_een_thuisbatterij",
+      "3400_kWh": "ruimte_voor_een_thuisbatterij",
+      "4100_kWh": "ruimte_voor_een_thuisbatterij",
+      "4600_kWh": "ruimte_voor_een_thuisbatterij",
+      "5300_kWh": "ruimte_voor_een_thuisbatterij",
+      ">5300_kWh": "ruimte_voor_een_thuisbatterij"
     }
   },
   {
-    "question_id": "is_er_in_uw_woning_voldoende_ruimte_voor_een_thuisbatterij",
-    "text": "Wat is uw geschat jaarlijks verbruik?",
+    "question_id": "ruimte_voor_een_thuisbatterij",
+    "text": "Is er in uw woning voldoende ruimte voor een thuisbatterij?",
     "type": "radio",
     "options": [
       {"text": "Ja, voldoende ruimte", "value": "ja_voldoende_ruimte"},
