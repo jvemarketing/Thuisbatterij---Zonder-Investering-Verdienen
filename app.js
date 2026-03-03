@@ -201,7 +201,7 @@ app.post("/api/lead", async (req, res) => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 if (process.env.NODE_ENV !== 'test') {
-  //app.listen(8080, () => console.log("Proxy running on http://127.0.0.1:8080"));
+  app.listen(80, () => console.log("Proxy running on http://127.0.0.1:80"));
 }
 
 // Export the Express app
