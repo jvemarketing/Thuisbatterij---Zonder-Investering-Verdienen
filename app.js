@@ -151,10 +151,13 @@ app.post("/api/lead", async (req, res) => {
     const body = req.body;
     const now = new Date().toISOString();
 
-    // Campaign params — sourced from the frontend; env vars as fallback
+    // Campaign params — must be provided by the frontend
+    if (!body.cid || !body.sid) {
+      return res.status(400).json({ error: "cid and sid are required" });
+    }
     const params = {
-      cid: body.cid ?? process.env.DATABOWL_CID,
-      sid: body.sid ?? process.env.DATABOWL_SID,
+      cid: body.cid,
+      sid: body.sid,
     };
 
     // Optin consent — newsletter checkbox drives all optin channels
