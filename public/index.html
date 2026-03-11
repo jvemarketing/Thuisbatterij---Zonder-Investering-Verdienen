@@ -1948,6 +1948,7 @@
   <!-- TOAST CONTAINER -->
   <div id="toastWrap" aria-live="polite" aria-atomic="true"></div>
 
+  <script src="affiliate.js"></script>
   <script>
     // Simple postcode validation and redirect - no jQuery needed
     function checkPostcode(inputId, buttonId) {
@@ -1983,10 +1984,14 @@
       button.innerHTML = '⏳ Controleren...';
       button.disabled = true;
 
-      // Redirect after short delay
+      // Redirect after short delay, preserving tracking params
       console.log('Setting timeout for redirect...');
       setTimeout(function () {
         var redirectUrl = 'flow.html?pc=' + encodeURIComponent(postcode);
+
+        // Append tracking parameters using affiliate module
+        redirectUrl = AffiliateTracking.appendToUrl(redirectUrl);
+
         console.log('REDIRECTING TO:', redirectUrl);
         console.log('Current location:', window.location.href);
         window.location.href = redirectUrl;

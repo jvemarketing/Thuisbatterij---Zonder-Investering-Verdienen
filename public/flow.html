@@ -878,10 +878,15 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
+  <script src="affiliate.js"></script>
   <script>
     var urlParams = new URLSearchParams(window.location.search);
     var postcode = urlParams.get('pc') || '1234AB';
     var gemeente = extractGemeente(postcode);
+
+    // Get Everflow tracking data using affiliate module
+    var everflowTracking = AffiliateTracking.getTracking();
+    console.log('Everflow tracking data:', everflowTracking);
 
     var itiTel;
     var emailValid = false;
@@ -1251,6 +1256,11 @@
         if (rawData[key] !== undefined && rawData[key] !== null && rawData[key] !== '') {
           formData[LEAD_FIELD_MAP[key]] = rawData[key];
         }
+      }
+
+      // Add Everflow tracking data
+      if (everflowTracking.ef_click_id) {
+        formData.everflow_tracking = everflowTracking;
       }
 
       $.ajax({

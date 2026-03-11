@@ -138,6 +138,7 @@ app.post("/api/lookup/mobile-payment-type", async (req, res) => {
 // ─── Lead submission ──────────────────────────────────────────────────────────
 
 const LEAD_ENDPOINT = "https://jve.databowl.com/api/v1/lead";
+const EVERFLOW_POSTBACK_URL = "https://www.jh5th1trk.com/";
 
 // Maps incoming JSON keys (from the frontend) → Databowl field names.
 // Update this object when the campaign fields change — no other code needs touching.
@@ -150,6 +151,9 @@ app.post("/api/lead", async (req, res) => {
   try {
     const body = req.body;
     const now = new Date().toISOString();
+
+    // Extract Everflow tracking data (not sent to Databowl)
+    const everflowTracking = body.everflow_tracking || null;
 
     // Campaign params — must be provided by the frontend
     if (!body.cid || !body.sid) {
@@ -170,7 +174,7 @@ app.post("/api/lead", async (req, res) => {
     params.optin_sms_timestamp   = now;
 
     // Forward all pre-mapped fields from the frontend; skip internal keys
-    const skip = new Set(["newsletter", "cid", "sid"]);
+    const skip = new Set(["newsletter", "cid", "sid", "everflow_tracking"]);
     for (const [key, val] of Object.entries(body)) {
       if (skip.has(key)) continue;
       if (val !== undefined && val !== null && val !== "") {
@@ -193,11 +197,46 @@ app.post("/api/lead", async (req, res) => {
       }
     }
 
+    // Fire Everflow postback on successful conversion
+    if (json.result === "created" && everflowTracking?.ef_click_id) {
+      fireEverflowPostback(everflowTracking.ef_click_id, json.lead_id)
+        .catch(err => console.error('Everflow postback error:', err));
+    }
+
     res.status(r.status).json(json);
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
 });
+
+// Fire Everflow conversion postback
+async function fireEverflowPostback(transactionId, leadId) {
+  try {
+    // Default amount (you can adjust or make this dynamic)
+    const amount = 1.00;
+
+    const postbackUrl = new URL(EVERFLOW_POSTBACK_URL);
+    postbackUrl.searchParams.set('nid', '3773');
+    postbackUrl.searchParams.set('transaction_id', transactionId);
+    postbackUrl.searchParams.set('amount', amount.toFixed(2));
+
+    console.log(`Firing Everflow postback for transaction ${transactionId}, lead ${leadId}:`, postbackUrl.toString());
+
+    const response = await fetch(postbackUrl.toString(), {
+      method: 'GET',
+      headers: { 'User-Agent': 'VerdienDuurzaam/1.0' }
+    });
+
+    if (!response.ok) {
+      console.error(`Everflow postback failed with status ${response.status}`);
+    } else {
+      console.log(`Everflow postback successful for transaction ${transactionId}`);
+    }
+  } catch (error) {
+    console.error('Everflow postback error:', error);
+    throw error;
+  }
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 
