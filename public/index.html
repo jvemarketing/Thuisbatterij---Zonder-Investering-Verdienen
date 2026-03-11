@@ -1335,7 +1335,7 @@
           <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
           <li class="nav-item"><a class="nav-link" href="#faqsec">FAQ</a></li>
           <li class="nav-item mt-2 mt-lg-0 ml-lg-2">
-            <a class="nav-link btn-nav" href="#fcta">Check mijn postcode</a>
+            <a class="nav-link btn-nav" href="#hcta" onclick="scrollToCheck()">Check mijn postcode</a>
           </li>
         </ul>
       </div>
@@ -1993,13 +1993,13 @@
       }, 800);
     }
 
-    // Scroll to final CTA
+    // Scroll to top postcode input
     function scrollToCheck() {
-      var finalCta = document.getElementById('fcta');
-      if (finalCta) {
-        finalCta.scrollIntoView({ behavior: 'smooth' });
+      var heroSection = document.getElementById('hero');
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: 'smooth' });
         setTimeout(function () {
-          var input = document.getElementById('fpc');
+          var input = document.getElementById('hpc');
           if (input) input.focus();
         }, 600);
       }
