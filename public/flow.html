@@ -909,6 +909,8 @@
       huisnummer: "f_167_house_number",
       toevoeging: "f_1070_address_addition",
       straat:     "f_991_street_name",
+      // Affiliate tracking
+      transaction_id: "f_331_transaction_id",
       // Survey answer fields
       woning_of_bedrijfspand:                  "f_1057_woning_of_bedrijfspand",
       type_woning:                             "f_1058_type_woning",
@@ -1246,7 +1248,8 @@
         toevoeging: $('#fToev').val(),
         email:      $('#fEmail').val(),
         telefoon:   itiTel ? itiTel.getNumber() : $('#fTel').val(),
-        newsletter: $('#fNews').prop('checked')
+        newsletter: $('#fNews').prop('checked'),
+        transaction_id: everflowTracking.ef_click_id || ''
       }, answers);
 
       // Apply LEAD_FIELD_MAP: rename keys to Databowl field names.
