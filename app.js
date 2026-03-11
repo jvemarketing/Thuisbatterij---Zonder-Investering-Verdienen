@@ -2,6 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import crypto from "crypto";
 import dotenv from "dotenv";
+import { waitUntil } from "@vercel/functions";
 
 dotenv.config();
 
@@ -199,8 +200,15 @@ app.post("/api/lead", async (req, res) => {
 
     // Fire Everflow postback on successful conversion
     if (json.result === "created" && everflowTracking?.ef_click_id) {
-      fireEverflowPostback(everflowTracking.ef_click_id, json.lead_id)
-        .catch(err => console.error('Everflow postback error:', err));
+      // Use Vercel's waitUntil to ensure postback completes before function shutdown
+      waitUntil(
+        fireEverflowPostback(everflowTracking.ef_click_id, json.lead_id)
+          .catch(err => {
+            console.error('❌ Everflow postback error:', err);
+            console.error('Error stack:', err.stack);
+          })
+      );
+      console.log('✓ Everflow postback scheduled with waitUntil');
     }
 
     res.status(r.status).json(json);
