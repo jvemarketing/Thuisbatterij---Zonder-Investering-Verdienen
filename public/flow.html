@@ -1270,6 +1270,11 @@
           }
         },
         error: function (xhr) {
+          // Show exit page for 409 (duplicate lead or daily cap reached)
+          if (xhr.status === 409) {
+            showExit();
+            return;
+          }
           console.error('Lead submission error:', xhr.responseText);
           $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-2"></i>Verstuur aanvraag');
           alert('Er is een technische fout opgetreden. Probeer het later opnieuw.');

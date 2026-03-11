@@ -185,6 +185,14 @@ app.post("/api/lead", async (req, res) => {
     });
 
     const json = await r.json();
+
+    // Return 409 for duplicate leads or daily cap reached
+    if (json.result === "error" && json.error?.msg) {
+      if (json.error.msg === "DUPLICATE_LEAD" || json.error.msg === "DAILY_CAP_REACHED") {
+        return res.status(409).json(json);
+      }
+    }
+
     res.status(r.status).json(json);
   } catch (e) {
     res.status(500).json({ error: String(e) });
