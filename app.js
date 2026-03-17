@@ -101,6 +101,10 @@ app.post("/api/validate/landline", async (req, res) => {
 
 // POST /api/validate/email   { email: "user@example.com" }
 app.post("/api/validate/email", async (req, res) => {
+
+  console.log('public: ' + process.env.DATABOWL_PUBLIC_KEY);
+  console.log('private: ' + process.env.DATABOWL_PRIVATE_KEY);
+
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: "email is required" });
