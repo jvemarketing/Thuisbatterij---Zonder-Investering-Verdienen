@@ -10,7 +10,7 @@
     { "source": "/thuisbatterij", "destination": "/public/thuisbatterij/index.html" },
     { "source": "/thuisbatterij/(.*)", "destination": "/public/thuisbatterij/$1" },
     { "source": "/faq.html", "destination": "/public/faq.html" },
-    { "source": "/out-out.html", "destination": "/public/out-out.html" },
+    { "source": "/opt-out.html", "destination": "/public/opt-out.html" },
     { "source": "/privacy.html", "destination": "/public/privacy.html" }
   ]
 }
