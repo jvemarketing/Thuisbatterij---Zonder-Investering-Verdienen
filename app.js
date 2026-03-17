@@ -224,13 +224,10 @@ app.post("/api/lead", async (req, res) => {
 // Fire Everflow conversion postback
 async function fireEverflowPostback(transactionId, leadId) {
   try {
-    // Default amount (you can adjust or make this dynamic)
-    const amount = 1.00;
 
     const postbackUrl = new URL(EVERFLOW_POSTBACK_URL);
     postbackUrl.searchParams.set('nid', '3773');
     postbackUrl.searchParams.set('transaction_id', transactionId);
-    postbackUrl.searchParams.set('amount', amount.toFixed(2));
 
     console.log(`Firing Everflow postback for transaction ${transactionId}, lead ${leadId}:`, postbackUrl.toString());
 
