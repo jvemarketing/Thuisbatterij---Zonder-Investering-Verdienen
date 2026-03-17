@@ -6,10 +6,11 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/app.js" },
+    { "source": "/affiliate.js", "destination": "/public/affiliate.js" },
     { "source": "/thuisbatterij", "destination": "/public/thuisbatterij/index.html" },
     { "source": "/thuisbatterij/(.*)", "destination": "/public/thuisbatterij/$1" },
-    { "source": "/faq.html", "destination": "/faq.html" },
-    { "source": "/out-out.html", "destination": "/out-out.html" },
-    { "source": "/privacy.html", "destination": "/privacy.html" }
+    { "source": "/faq.html", "destination": "/public/faq.html" },
+    { "source": "/out-out.html", "destination": "/public/out-out.html" },
+    { "source": "/privacy.html", "destination": "/public/privacy.html" }
   ]
 }
