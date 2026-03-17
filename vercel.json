@@ -7,6 +7,9 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/app.js" },
     { "source": "/thuisbatterij", "destination": "/public/thuisbatterij/index.html" },
-    { "source": "/thuisbatterij/(.*)", "destination": "/public/thuisbatterij/$1" }
+    { "source": "/thuisbatterij/(.*)", "destination": "/public/thuisbatterij/$1" },
+    { "source": "/faq.html", "destination": "/faq.html" },
+    { "source": "/out-out.html", "destination": "/out-out.html" },
+    { "source": "/privacy.html", "destination": "/privacy.html" }
   ]
 }
