@@ -878,7 +878,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
-  <script src="affiliate.js"></script>
+  <script src="/affiliate.js"></script>
   <script>
     var urlParams = new URLSearchParams(window.location.search);
     var postalCode = urlParams.get('pc') || '1234AB';
@@ -990,7 +990,7 @@
 
     function showSurvey() {
       $('#loaderSection').fadeOut(300, function () {
-        $.getJSON('/questions.json')
+        $.getJSON('questions.json')
           .done(function (data) {
             questions = data;
             data.forEach(function (q) { questionsById[q.question_id] = q; });

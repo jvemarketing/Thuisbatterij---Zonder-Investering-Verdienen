@@ -6,7 +6,7 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/app.js" },
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+    { "source": "/thuisbatterij", "destination": "/public/thuisbatterij/index.html" },
+    { "source": "/thuisbatterij/(.*)", "destination": "/public/thuisbatterij/$1" }
   ]
 }
