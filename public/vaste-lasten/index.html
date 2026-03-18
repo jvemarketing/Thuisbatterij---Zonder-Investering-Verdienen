@@ -567,12 +567,13 @@
         <button class="gender-btn" onclick="sg(this,'Mevr.')">Mevr.</button>
         <button class="gender-btn" onclick="sg(this,'Anders')">Anders</button>
       </div>
+      <div id="gdrStatus" class="email-status"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" id="fn" type="text" placeholder="Jan"></div>
-      <div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" id="ln" type="text" placeholder="Jansen"></div>
+      <div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" id="fn" type="text" placeholder="Jan"><div id="fnStatus" class="email-status"></div></div>
+      <div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" id="ln" type="text" placeholder="Jansen"><div id="lnStatus" class="email-status"></div></div>
     </div>
-    <div class="form-group"><label class="form-label">Geboortedatum</label><input class="form-input" id="dob" type="date"></div>
+    <div class="form-group"><label class="form-label">Geboortedatum</label><input class="form-input" id="dob" type="date"><div id="dobStatus" class="email-status"></div></div>
     <div class="form-divider"></div>
     <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" id="em" type="email" placeholder="jan@voorbeeld.nl"><div id="emStatus" class="email-status"></div></div>
     <div class="form-row">
@@ -1033,7 +1034,15 @@ function goLead(){
 function sg(btn,v){
   document.querySelectorAll('.gender-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');gdr=v;
+  document.getElementById('gdrStatus').textContent='';
 }
+
+['fn','ln','dob'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',function(){
+    this.classList.remove('error');
+    document.getElementById(id+'Status').textContent='';
+  });
+});
 
 let emailValid = false;
 FormValidation.attachEmail(
@@ -1070,21 +1079,40 @@ FormValidation.attachAddress(
 );
 
 function submitL(){
+  let ok = true;
+
+  if(!gdr){
+    const s = document.getElementById('gdrStatus');
+    s.textContent = 'Selecteer een aanspreektitel';
+    s.style.color = '#dc2626';
+    ok = false;
+  }
+  if(!document.getElementById('fn').value.trim()){
+    FormValidation.showError(document.getElementById('fn'), document.getElementById('fnStatus'), 'Voer je voornaam in');
+    ok = false;
+  }
+  if(!document.getElementById('ln').value.trim()){
+    FormValidation.showError(document.getElementById('ln'), document.getElementById('lnStatus'), 'Voer je achternaam in');
+    ok = false;
+  }
+  if(!document.getElementById('dob').value){
+    FormValidation.showError(document.getElementById('dob'), document.getElementById('dobStatus'), 'Voer je geboortedatum in');
+    ok = false;
+  }
   if(!emailValid){
     FormValidation.showError(document.getElementById('em'), document.getElementById('emStatus'), 'Bevestig een geldig e-mailadres');
-    document.getElementById('em').focus();
-    return;
+    ok = false;
   }
   if(!addressValid){
     FormValidation.showError(document.getElementById('hn'), document.getElementById('addrStatus'), 'Combinatie niet gevonden. Controleer uw huisnummer.');
-    document.getElementById('hn').focus();
-    return;
+    ok = false;
   }
   if(!phoneValid){
     FormValidation.showError(document.getElementById('ph'), document.getElementById('phStatus'), 'Bevestig een geldig mobiel nummer');
-    document.getElementById('ph').focus();
-    return;
+    ok = false;
   }
+  if(!ok) return;
+
   const ph=itiTel.getNumber();
   document.getElementById('mph').textContent='*'.repeat(7)+ph.slice(-3);
   setGiftDisplay('vfE','vfN');
