@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import crypto from "crypto";
 import dotenv from "dotenv";
 import { waitUntil } from "@vercel/functions";
+import twilio from "twilio";
 
 dotenv.config();
 
@@ -135,6 +136,40 @@ app.post("/api/lookup/mobile-payment-type", async (req, res) => {
     const data = network ? { mobile, network } : { mobile };
     const result = await databowlRequest("lookup", "mobile_payment_type", data);
     res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+});
+
+// ─── SMS verification via Twilio Verify ──────────────────────────────────────
+
+function getTwilioClient() {
+  return twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+}
+
+// POST /api/sms/send   { phone: "+31612345678" }
+app.post("/api/sms/send", async (req, res) => {
+  try {
+    const { phone } = req.body;
+    if (!phone) return res.status(400).json({ error: "phone is required" });
+    await getTwilioClient().verify.v2
+      .services(process.env.TWILIO_VERIFY_SERVICE_SID)
+      .verifications.create({ to: phone, channel: "sms" });
+    res.json({ sent: true });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+});
+
+// POST /api/sms/verify   { phone: "+31612345678", code: "123456" }
+app.post("/api/sms/verify", async (req, res) => {
+  try {
+    const { phone, code } = req.body;
+    if (!phone || !code) return res.status(400).json({ error: "phone and code are required" });
+    const check = await getTwilioClient().verify.v2
+      .services(process.env.TWILIO_VERIFY_SERVICE_SID)
+      .verificationChecks.create({ to: phone, code });
+    res.json({ verified: check.status === "approved" });
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
