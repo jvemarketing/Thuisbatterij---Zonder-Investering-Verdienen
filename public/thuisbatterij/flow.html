@@ -891,6 +891,7 @@
     var itiTel;
     var emailValid = false;
     var phoneValid = false;
+    var addressValid = false;
 
     // Databowl campaign config — set per page.
     var DATABOWL_CID = "892";
@@ -1076,6 +1077,7 @@
         '<label class="fl" for="fHouseNumber">Huisnummer *</label>' +
         '<input type="number" inputmode="numeric" min="1" class="fi" id="fHouseNumber" placeholder="123" required />' +
         '<div class="ferr">Verplicht</div>' +
+        '<div id="addressStatus" class="email-status"></div>' +
         '</div>' +
         '<div class="fg">' +
         '<label class="fl" for="fHouseNumberAddition">Toevoeging</label>' +
@@ -1123,9 +1125,15 @@
         var houseNumber = $('#fHouseNumber').val().trim();
         if (!houseNumber) return;
         searchAddress(postalCode, houseNumber, function (result) {
+          addressValid = true;
           $('#fStreet').val(result.streetName);
+          $('#fHouseNumber').removeClass('error');
+          $('#addressStatus').text('');
         }, function () {
+          addressValid = false;
           $('#fStreet').val('');
+          $('#fHouseNumber').addClass('error');
+          $('#addressStatus').text('Combinatie niet gevonden. Controleer uw huisnummer.').css('color', 'var(--rd)');
         });
       });
 
@@ -1230,6 +1238,12 @@
       if (!phoneValid) {
         $('#fPhone').addClass('error');
         $('#phoneStatus').text('Bevestig een geldig mobiel nummer').css('color', 'var(--rd)');
+        valid = false;
+      }
+
+      if (!addressValid) {
+        $('#fHouseNumber').addClass('error');
+        $('#addressStatus').text('Combinatie niet gevonden. Controleer uw huisnummer.').css('color', 'var(--rd)');
         valid = false;
       }
 
