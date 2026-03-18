@@ -1122,21 +1122,14 @@
         utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
       });
 
-      $('#fHouseNumber, #fHouseNumberAddition').on('blur', function () {
-        var houseNumber = $('#fHouseNumber').val().trim();
-        if (!houseNumber) return;
-        searchAddress(postalCode, houseNumber, function (result) {
-          addressValid = true;
-          $('#fStreet').val(result.streetName);
-          $('#fHouseNumber').removeClass('error');
-          $('#addressStatus').text('');
-        }, function () {
-          addressValid = false;
-          $('#fStreet').val('');
-          $('#fHouseNumber').addClass('error');
-          $('#addressStatus').text('Combinatie niet gevonden. Controleer uw huisnummer.').css('color', 'var(--rd)');
-        });
-      });
+      FormValidation.attachAddress(
+        function () { return postalCode; },
+        document.getElementById('fHouseNumber'),
+        document.getElementById('fHouseNumberAddition'),
+        document.getElementById('fStreet'),
+        document.getElementById('addressStatus'),
+        function (valid) { addressValid = valid; }
+      );
 
       FormValidation.attachPhone(
         document.getElementById('fPhone'),
@@ -1180,8 +1173,7 @@
       }
 
       if (!addressValid) {
-        $('#fHouseNumber').addClass('error');
-        $('#addressStatus').text('Combinatie niet gevonden. Controleer uw huisnummer.').css('color', 'var(--rd)');
+        FormValidation.showError(document.getElementById('fHouseNumber'), document.getElementById('addressStatus'), 'Combinatie niet gevonden. Controleer uw huisnummer.');
         valid = false;
       }
 
@@ -1255,33 +1247,6 @@
     }
 
 
-    function searchAddress(postalCode, houseNumber, onSuccess, onError) {
-      $.ajax({
-        url: "/api/postcodecheck",
-        method: "POST",
-        contentType: "application/json",   // <- important for jQuery
-        dataType: "json",                  // <- parse JSON response
-        processData: false,                // <- don't mess with the payload
-        data: JSON.stringify({
-          postalCode: postalCode.replace(/\s+/g, "").toUpperCase(),
-          houseNumber: houseNumber
-        }),
-        success: function (response) {
-          // PostNL returns [] or [{ streetName, city, ... }]
-          if (Array.isArray(response) && response[0] && response[0].streetName) {
-            onSuccess(response[0]);
-          } else {
-            onError("Ongeldige postcode of huisnummer.");
-          }
-        },
-        error: function (xhr) {
-          onError(
-            "Fout bij het controleren van postcode: " +
-            (xhr.responseJSON?.message || xhr.responseText || "Onbekende fout")
-          );
-        }
-      });
-    }
 
     
     // Prevent back button

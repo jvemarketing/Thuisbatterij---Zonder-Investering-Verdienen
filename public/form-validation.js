@@ -107,6 +107,50 @@
       statusEl.style.color = (state === 'error' && message) ? '#dc2626' : '';
     },
 
+    /**
+     * Attach address auto-complete based on postcode + house number.
+     * Triggers on blur of houseNumberEl (and additionEl if provided).
+     *
+     * @param {Function}         getPostcode    - Returns the current postcode string
+     * @param {HTMLElement}      houseNumberEl  - House number input
+     * @param {HTMLElement|null} additionEl     - Optional addition input (e.g. "A")
+     * @param {HTMLElement}      streetEl       - Readonly input to fill with street name
+     * @param {HTMLElement}      statusEl       - Status message element (placed near houseNumberEl)
+     * @param {Function}         onChange       - Called with (valid: boolean, result: object|null)
+     */
+    attachAddress: function (getPostcode, houseNumberEl, additionEl, streetEl, statusEl, onChange) {
+      var self = this;
+      onChange(false, null);
+
+      function doLookup() {
+        var pc = getPostcode().trim();
+        var hn = houseNumberEl.value.trim();
+        if (!hn) return;
+        self._setChecking(houseNumberEl, statusEl);
+        self._post('/api/postcodecheck', {
+          postalCode: pc.replace(/\s+/g, '').toUpperCase(),
+          houseNumber: hn
+        }, function (response) {
+          if (Array.isArray(response) && response[0] && response[0].streetName) {
+            streetEl.value = response[0].streetName;
+            self._setState(houseNumberEl, statusEl, null, '');
+            onChange(true, response[0]);
+          } else {
+            streetEl.value = '';
+            self._setState(houseNumberEl, statusEl, 'error', 'Combinatie niet gevonden. Controleer uw huisnummer.');
+            onChange(false, null);
+          }
+        }, function () {
+          streetEl.value = '';
+          self._setState(houseNumberEl, statusEl, 'error', 'Fout bij het ophalen van adres.');
+          onChange(false, null);
+        });
+      }
+
+      houseNumberEl.addEventListener('blur', doLookup);
+      if (additionEl) additionEl.addEventListener('blur', doLookup);
+    },
+
     _post: function (url, data, onSuccess, onError) {
       fetch(url, {
         method: 'POST',
