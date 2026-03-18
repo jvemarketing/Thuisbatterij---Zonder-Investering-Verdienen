@@ -903,6 +903,9 @@ footer{
 }
 .form-input:focus{border-color:var(--or);box-shadow:0 0 0 3px rgba(245,127,32,.09);}
 .form-input::placeholder{color:var(--t3);}
+.form-input.valid{border-color:var(--gr);box-shadow:0 0 0 3px rgba(22,163,74,.1);}
+.form-input.error{border-color:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.1);}
+.email-status{font-size:.74rem;margin-top:.3rem;}
 .form-group{margin-bottom:13px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .form-divider{height:1px;background:var(--bd);margin:18px 0;}

@@ -879,6 +879,7 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
   <script src="/affiliate.js"></script>
+  <script src="/form-validation.js"></script>
   <script>
     var urlParams = new URLSearchParams(window.location.search);
     var postalCode = urlParams.get('pc') || '1234AB';
@@ -1137,80 +1138,19 @@
         });
       });
 
-      phoneValid = false;
-      $('#fPhone').on('blur', function () {
-        var number = itiTel ? itiTel.getNumber() : $(this).val().trim();
-        if (!number) { phoneValid = false; return; }
-        if (itiTel && !itiTel.isValidNumber()) {
-          $('#fPhone').addClass('error').removeClass('valid');
-          $('#phoneStatus').text('').css('color', '');
-          phoneValid = false;
-          return;
-        }
-        $('#fPhone').removeClass('error valid');
-        $('#phoneStatus').html('<i class="fas fa-spinner fa-spin" style="margin-right:4px"></i>Controleren...').css('color', '#888');
-        $.ajax({
-          url: '/api/validate/mobile',
-          method: 'POST',
-          contentType: 'application/json',
-          dataType: 'json',
-          processData: false,
-          data: JSON.stringify({ mobile: number }),
-          success: function (response) {
-            if (response.result === 'live') {
-              $('#fPhone').addClass('valid').removeClass('error');
-              $('#phoneStatus').text('').css('color', '');
-              phoneValid = true;
-            } else {
-              $('#fPhone').addClass('error').removeClass('valid');
-              $('#phoneStatus').text('Dit mobiel nummer is niet geldig').css('color', 'var(--rd)');
-              phoneValid = false;
-            }
-          },
-          error: function () {
-            // On API failure, don't block the user
-            phoneValid = true;
-            $('#phoneStatus').text('').css('color', '');
-          }
-        });
-      });
+      FormValidation.attachPhone(
+        document.getElementById('fPhone'),
+        document.getElementById('phoneStatus'),
+        function () { return itiTel ? itiTel.getNumber() : document.getElementById('fPhone').value.trim(); },
+        function () { return !itiTel || itiTel.isValidNumber(); },
+        function (valid) { phoneValid = valid; }
+      );
 
-      emailValid = false;
-      $('#fEmail').on('blur', function () {
-        var email = $(this).val().trim();
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          $('#fEmail').addClass('error').removeClass('valid');
-          $('#emailStatus').text('').css('color', '');
-          emailValid = false;
-          return;
-        }
-        $('#fEmail').removeClass('error valid');
-        $('#emailStatus').html('<i class="fas fa-spinner fa-spin" style="margin-right:4px"></i>Controleren...').css('color', '#888');
-        $.ajax({
-          url: '/api/validate/email',
-          method: 'POST',
-          contentType: 'application/json',
-          dataType: 'json',
-          processData: false,
-          data: JSON.stringify({ email: email }),
-          success: function (response) {
-            if (response.result === true) {
-              $('#fEmail').addClass('valid').removeClass('error');
-              $('#emailStatus').text('').css('color', '');
-              emailValid = true;
-            } else {
-              $('#fEmail').addClass('error').removeClass('valid');
-              $('#emailStatus').text('Dit e-mailadres is niet geldig').css('color', 'var(--rd)');
-              emailValid = false;
-            }
-          },
-          error: function () {
-            // On API failure, don't block the user
-            emailValid = true;
-            $('#emailStatus').text('').css('color', '');
-          }
-        });
-      });
+      FormValidation.attachEmail(
+        document.getElementById('fEmail'),
+        document.getElementById('emailStatus'),
+        function (valid) { emailValid = valid; }
+      );
     }
 
     function submitForm(e) {
@@ -1230,14 +1170,12 @@
       });
 
       if (!emailValid) {
-        $('#fEmail').addClass('error');
-        $('#emailStatus').text('Bevestig een geldig e-mailadres').css('color', 'var(--rd)');
+        FormValidation.showError(document.getElementById('fEmail'), document.getElementById('emailStatus'), 'Bevestig een geldig e-mailadres');
         valid = false;
       }
 
       if (!phoneValid) {
-        $('#fPhone').addClass('error');
-        $('#phoneStatus').text('Bevestig een geldig mobiel nummer').css('color', 'var(--rd)');
+        FormValidation.showError(document.getElementById('fPhone'), document.getElementById('phoneStatus'), 'Bevestig een geldig mobiel nummer');
         valid = false;
       }
 

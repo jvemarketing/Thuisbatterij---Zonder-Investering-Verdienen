@@ -573,7 +573,7 @@
     </div>
     <div class="form-group"><label class="form-label">Geboortedatum</label><input class="form-input" id="dob" type="date"></div>
     <div class="form-divider"></div>
-    <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" id="em" type="email" placeholder="jan@voorbeeld.nl"></div>
+    <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" id="em" type="email" placeholder="jan@voorbeeld.nl"><div id="emStatus" class="email-status"></div></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Postcode</label><input class="form-input" id="pc" type="text" placeholder="1234 AB" maxlength="7" oninput="al()"></div>
       <div class="form-group"><label class="form-label">Huisnummer</label><input class="form-input" id="hn" type="text" placeholder="12" oninput="al()"></div>
@@ -670,6 +670,7 @@
 <!-- ════════════════════════════════════════════════════════════
      JAVASCRIPT
 ════════════════════════════════════════════════════════════ -->
+<script src="/form-validation.js"></script>
 <script>
 // ── ICONS (SVG strings for survey answers) ──────────────────────
 const SVG = {
@@ -1025,6 +1026,13 @@ function sg(btn,v){
   btn.classList.add('on');gdr=v;
 }
 
+let emailValid = false;
+FormValidation.attachEmail(
+  document.getElementById('em'),
+  document.getElementById('emStatus'),
+  function (valid) { emailValid = valid; }
+);
+
 let at;
 function al(){
   clearTimeout(at);
@@ -1039,6 +1047,11 @@ function al(){
 }
 
 function submitL(){
+  if(!emailValid){
+    FormValidation.showError(document.getElementById('em'), document.getElementById('emStatus'), 'Bevestig een geldig e-mailadres');
+    document.getElementById('em').focus();
+    return;
+  }
   const ph=document.getElementById('ph').value;
   if(!ph){alert('Vul je telefoonnummer in.');return;}
   document.getElementById('mph').textContent='*'.repeat(7)+ph.slice(-3);
