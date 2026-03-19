@@ -5,6 +5,10 @@ import dotenv from "dotenv";
 import { waitUntil } from "@vercel/functions";
 import twilio from "twilio";
 import routes from "./routes.js";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
 
@@ -12,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', join(__dirname, 'views'));
 
 // Domain-aware SSR routing — must come before express.static
 app.use((req, res, next) => {
@@ -25,7 +29,7 @@ app.use((req, res, next) => {
   res.render(route.view, { ...route.data, query: req.query });
 });
 
-app.use(express.static('public'));
+app.use(express.static(join(__dirname, 'public')));
 
 app.post("/api/postcodecheck", async (req, res) => {
   try {
