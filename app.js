@@ -99,6 +99,7 @@ app.post("/api/validate/mobile", async (req, res) => {
     const { mobile } = req.body;
     if (!mobile) return res.status(400).json({ error: "mobile is required" });
     const result = await databowlRequest("validate", "hlr", { mobile });
+    //res.json({result: 'live'});
     res.json(result);
   } catch (e) {
     res.status(500).json({ error: String(e) });
@@ -158,35 +159,38 @@ app.post("/api/lookup/mobile-payment-type", async (req, res) => {
   }
 });
 
-// ─── SMS verification via Twilio Verify ──────────────────────────────────────
+// ─── SMS verification via Twilio Programmable Messaging ──────────────────────
 
 function getTwilioClient() {
   return twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 }
 
-// POST /api/sms/send   { phone: "+31612345678" }
+// POST /api/sms/send   { phone: "+31612345678", firstName: "Jan" }
 app.post("/api/sms/send", async (req, res) => {
   try {
-    const { phone } = req.body;
+    const { phone, firstName } = req.body;
     if (!phone) return res.status(400).json({ error: "phone is required" });
-    await getTwilioClient().verify.v2
-      .services(process.env.TWILIO_VERIFY_SERVICE_SID)
-      .verifications.create({ to: phone, channel: "sms" });
+    const code = process.env.SMS_VERIFY_CODE;
+    const name = firstName || 'deelnemer';
+    const message = `Beste ${name}, uw Vaste Lasten Onderzoek verificatiecode is: ${code}. Vul deze in op de site.`;
+    await getTwilioClient().messages.create({
+      body: message,
+      from: process.env.TWILIO_FROM_NUMBER,
+      to: phone,
+    });
     res.json({ sent: true });
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
 });
 
-// POST /api/sms/verify   { phone: "+31612345678", code: "123456" }
+// POST /api/sms/verify   { code: "4463" }
 app.post("/api/sms/verify", async (req, res) => {
   try {
-    const { phone, code } = req.body;
-    if (!phone || !code) return res.status(400).json({ error: "phone and code are required" });
-    const check = await getTwilioClient().verify.v2
-      .services(process.env.TWILIO_VERIFY_SERVICE_SID)
-      .verificationChecks.create({ to: phone, code });
-    res.json({ verified: check.status === "approved" });
+    const { code } = req.body;
+    if (!code) return res.status(400).json({ error: "code is required" });
+    const verified = code.trim() === process.env.SMS_VERIFY_CODE;
+    res.json({ verified });
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
