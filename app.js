@@ -26,6 +26,7 @@ app.use((req, res, next) => {
     .replace(/\.local$/, '.nl'); // local dev: vastenlastenonderzoek.local → vastenlastenonderzoek.nl
   const route = routes.find(r => r.domain === host && req.path === r.path);
   if (!route) return next();
+  console.log({ ...route.data, query: req.query });
   res.render(route.view, { ...route.data, query: req.query });
 });
 
