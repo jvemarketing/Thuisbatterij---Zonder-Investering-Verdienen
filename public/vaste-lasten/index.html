@@ -1042,7 +1042,7 @@
         // ── 1 ─────────────────────────────────────────────────────────
         {
             id: 'q1', ic: 'bulb', label: 'Vraag 1', type: 'single',
-            img: 'img/Vraag-1.jpg',
+            img: '/vaste-lasten/img/Vraag-1.jpg',
             q: 'Laat je wel eens de lampen aan staan als je een kamer verlaat?',
             o: [{ic: 'bulb', l: 'Ja, dat gebeurt wel eens'}, {
                 ic: 'check',
@@ -1055,7 +1055,7 @@
         // ── 2 ─────────────────────────────────────────────────────────
         {
             id: 'q2', ic: 'bike', label: 'Vraag 2', type: 'single',
-            img: 'img/Elektrische-fiets.jpg',
+            img: '/vaste-lasten/img/Elektrische-fiets.jpg',
             q: 'Heb je een elektrische fiets?',
             o: [{ic: 'bike', l: 'Ja, ik gebruik die regelmatig'}, {
                 ic: 'question',
@@ -1068,7 +1068,7 @@
         // ── 3 ─────────────────────────────────────────────────────────
         {
             id: 'q3', ic: 'shower', label: 'Vraag 3', type: 'single',
-            img: 'img/Douchen.jpg',
+            img: '/vaste-lasten/img/Douchen.jpg',
             q: 'Hoe lang douche je gemiddeld per keer?',
             o: [{ic: 'lightning', l: 'Korter dan 5 minuten'}, {
                 ic: 'shower',
@@ -1081,7 +1081,7 @@
         // ── 4 ─────────────────────────────────────────────────────────
         {
             id: 'q4', ic: 'sun', label: 'Vraag 4', type: 'single',
-            img: 'img/Zonnepanelen.jpg',
+            img: '/vaste-lasten/img/Zonnepanelen.jpg',
             q: 'Heb je reeds al zonnepanelen op je dak?',
             o: [{ic: 'sun', l: 'Ja, al een tijdje'}, {ic: 'question', l: 'Nee, nog niet'}],
             r: 'Helder! Zonnepanelen maken een groot verschil. Nu zijn we benieuwd naar je vervoer.',
@@ -1089,7 +1089,7 @@
             branch: {
                 'Ja, al een tijdje': {
                     id: 'q4a', ic: 'battery', label: 'Vraag 4a', type: 'sub',
-                    img: 'img/Thuisbatterij.jpg',
+                    img: '/vaste-lasten/img/Thuisbatterij.jpg',
                     q: 'Met een thuisbatterij kunnen je zonnepanelen je nog meer geld opleveren.',
                     d: 'Wil je meer informatie over een thuisbatterij?',
                     o: [{ic: 'check', l: 'Ja, graag'}, {ic: 'question', l: 'Nee, dankje'}],
@@ -1097,7 +1097,7 @@
                 },
                 'Nee, nog niet': {
                     id: 'q4b', ic: 'sun', label: 'Vraag 4b', type: 'sub',
-                    img: 'img/Besparen-energie.jpg',
+                    img: '/vaste-lasten/img/Besparen-energie.jpg',
                     q: 'Heb je interesse in besparen op je energierekening met zonnepanelen?',
                     o: [{ic: 'sun', l: 'Ja, zeker'}, {ic: 'question', l: 'Nee, dankje'}],
                     r: null, k: 'zonnepanelen_interesse'
@@ -1108,7 +1108,7 @@
         // ── 5 ─────────────────────────────────────────────────────────
         {
             id: 'q5', ic: 'car', label: 'Vraag 5', type: 'single',
-            img: 'img/Laadpaal.jpg',
+            img: '/vaste-lasten/img/Laadpaal.jpg',
             q: 'Rijd je elektrisch?',
             o: [{ic: 'lightning', l: 'Ja, volledig elektrisch'}, {ic: 'car', l: 'Hybride'}, {ic: 'car', l: 'Nee'}],
             r: 'Dat geeft een goed beeld! Elektrisch rijden verandert ook je stroomverbruik thuis. Hoe zit het met je woning?',
@@ -1116,7 +1116,7 @@
             branch: {
                 'Ja, volledig elektrisch': {
                     id: 'q5a', ic: 'charge', label: 'Vraag 5a', type: 'sub',
-                    img: 'img/Laadpaal.jpg',
+                    img: '/vaste-lasten/img/Laadpaal.jpg',
                     q: 'Een laadpaal maakt je auto opladen nog gemakkelijker en verhoogt de waarde van je woning.',
                     d: 'Wil je meer weten over het plaatsen van een laadpaal?',
                     o: [{ic: 'check', l: 'Ja'}, {ic: 'question', l: 'Nee'}],
@@ -1128,7 +1128,7 @@
         // ── 6 ─────────────────────────────────────────────────────────
         {
             id: 'q6', ic: 'battery', label: 'Vraag 6', type: 'single',
-            img: 'img/Thuisbatterij.jpg',
+            img: '/vaste-lasten/img/Thuisbatterij.jpg',
             q: 'Heb jij interesse in een thuisbatterij?',
             d: 'Zo benut je je eigen stroom maximaal, verlaag je je energierekening en profiteer je van subsidies.',
             o: [{ic: 'lightning', l: 'Ja, ik wil verdienen!'}, {ic: 'question', l: 'Nee, dankjewel'}],
@@ -1138,7 +1138,7 @@
         // ── 7 ─────────────────────────────────────────────────────────
         {
             id: 'q7', ic: 'home', label: 'Vraag 7', type: 'single',
-            img: 'img/Woning-isoleren.jpg',
+            img: '/vaste-lasten/img/Woning-isoleren.jpg',
             q: 'Is je woning goed geïsoleerd?',
             o: [{ic: 'check', l: 'Ja, helemaal'}, {ic: 'question', l: 'Gedeeltelijk'}, {
                 ic: 'question',
@@ -1149,7 +1149,7 @@
             branch: {
                 'Nee, nog niet': {
                     id: 'q7a', ic: 'home', label: 'Vraag 7a', type: 'sub',
-                    img: 'img/Woning-isoleren.jpg',
+                    img: '/vaste-lasten/img/Woning-isoleren.jpg',
                     q: 'Wil je meer weten over isolatie?',
                     o: [{ic: 'check', l: 'Ja, graag'}, {ic: 'question', l: 'Nee, dankjewel'}],
                     r: null, k: 'isolatie_interesse'
@@ -1160,7 +1160,7 @@
         // ── 8 ─────────────────────────────────────────────────────────
         {
             id: 'q8', ic: 'cook', label: 'Vraag 8', type: 'single',
-            img: 'img/Koken.jpg',
+            img: '/vaste-lasten/img/Koken.jpg',
             q: 'Waar kook je op?',
             o: [{ic: 'cook', l: 'Gas'}, {ic: 'plug', l: 'Elektrisch'}, {ic: 'lightning', l: 'Inductie'}],
             r: 'Duidelijk! Laten we kijken naar het type woning.',
@@ -1168,7 +1168,7 @@
             branch: {
                 'Gas': {
                     id: 'q8a', ic: 'warmth', label: 'Vraag 8a', type: 'sub',
-                    img: 'img/Besparen-energie.jpg',
+                    img: '/vaste-lasten/img/Besparen-energie.jpg',
                     q: 'Een warmtepomp kan je kosten verlagen!',
                     o: [{ic: 'check', l: 'Ja, zeker'}, {ic: 'question', l: 'Nee, dankje'}],
                     r: null, k: 'warmtepomp_interesse'
@@ -1179,7 +1179,7 @@
         // ── 9 ─────────────────────────────────────────────────────────
         {
             id: 'q9', ic: 'building', label: 'Vraag 9', type: 'single',
-            img: 'img/Woning.jpg',
+            img: '/vaste-lasten/img/Woning.jpg',
             q: 'Wat voor type woning heb je?',
             o: [{ic: 'building', l: 'Appartement'}, {ic: 'home', l: 'Tussenwoning'}, {
                 ic: 'home',
@@ -1192,7 +1192,7 @@
         // ── 10 ────────────────────────────────────────────────────────
         {
             id: 'q10', ic: 'key', label: 'Vraag 10', type: 'single',
-            img: 'img/Koophuis.jpg',
+            img: '/vaste-lasten/img/Koophuis.jpg',
             q: 'Woon je in een koop of huurwoning?',
             o: [{ic: 'key', l: 'Koop'}, {ic: 'building', l: 'Huur'}],
             r: null, k: 'hurkoop'
@@ -1201,7 +1201,7 @@
         // ── 11 ────────────────────────────────────────────────────────
         {
             id: 'q11', ic: 'family', label: 'Vraag 11', type: 'single',
-            img: 'img/Gezinsamenstelling.jpg',
+            img: '/vaste-lasten/img/Gezinsamenstelling.jpg',
             q: 'Wat is je gezinssamenstelling?',
             o: [{ic: 'question', l: 'Alleenstaand'}, {ic: 'family', l: 'Met partner'}, {
                 ic: 'family',
@@ -1214,7 +1214,7 @@
         // ── 12 ────────────────────────────────────────────────────────
         {
             id: 'q12', ic: 'lightning', label: 'Vraag 12', type: 'dropdown',
-            img: 'img/Energieleverancier.jpg',
+            img: '/vaste-lasten/img/Energieleverancier.jpg',
             q: 'Wie is jouw huidige energieleverancier?',
             options: [
                 'Vattenfall', 'Eneco', 'Essent', 'Budget Energie', 'Greenchoice',
