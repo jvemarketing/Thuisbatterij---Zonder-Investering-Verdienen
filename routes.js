@@ -15,6 +15,10 @@ const routes = [
                 src: '/vaste-lasten/img/no-logo.png',
                 alt: 'Vaste lasten onderzoek',
             },
+            privacyURL: '/privacy.html',
+            termsURL: '/privacy.html',
+            faqURL: '/faq.html',
+            optOutURL: '/opt-out.html',
         },
     },
     {
@@ -27,8 +31,10 @@ const routes = [
                 src: '/vaste-lasten/img/Voltafy.png',
                 alt: 'Voltafy',
             },
-            termsURL: 'https://www.voltafy.nl/terms-conditions',
             privacyURL: 'https://www.voltafy.nl/privacy-policy',
+            termsURL: 'https://www.voltafy.nl/terms-conditions',
+            faqURL: '#',
+            optOutURL: '#',
         },
     },
     {
@@ -41,8 +47,10 @@ const routes = [
                 termsURL: 'https://www.gemakkelijkbesparen.nl/algemene-voorwaarden',
                 privacyURL: 'https://www.gemakkelijkbesparen.nl/privacy-verklaring',
             },
-            termsURL: 'https://www.gemakkelijkbesparen.nl/algemene-voorwaarden',
             privacyURL: 'https://www.gemakkelijkbesparen.nl/privacy-verklaring',
+            termsURL: 'https://www.gemakkelijkbesparen.nl/algemene-voorwaarden',
+            faqURL: '#',
+            optOutURL: '#',
         },
     },
     {
@@ -54,7 +62,11 @@ const routes = [
             logo: {
                 src: '/vaste-lasten/img/Vle.png',
                 alt: 'Vle'
-            }
+            },
+            privacyURL: 'https://vastelastenexperts.nl/privacy-policy/',
+            termsURL: 'https://vastelastenexperts.nl/algemene-voorwaarden/',
+            faqURL: '#',
+            optOutURL: 'https://vastelastenexperts.nl/toestemming-intrekken/',
         },
     },
 
