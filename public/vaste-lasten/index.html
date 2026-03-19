@@ -1114,10 +1114,31 @@ function submitL(){
   if(!ok) return;
 
   const ph=itiTel.getNumber();
-  document.getElementById('mph').textContent='*'.repeat(7)+ph.slice(-3);
-  setGiftDisplay('vfE','vfN');
-  showP('p-verify');sp(97);
+  const submitBtn=document.querySelector('#p-lead .cta-btn');
+  submitBtn.disabled=true;
+  submitBtn.textContent='Versturen...';
+  fetch('/api/sms/send',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({phone:ph})
+  }).then(r=>r.json()).then(data=>{
+    if(data.sent){
+      verifyPhone=ph;
+      document.getElementById('mph').textContent='*'.repeat(7)+ph.slice(-3);
+      setGiftDisplay('vfE','vfN');
+      showP('p-verify');sp(97);
+    } else {
+      alert('Fout bij versturen verificatiecode. Probeer opnieuw.');
+    }
+  }).catch(()=>{
+    alert('Fout bij versturen verificatiecode. Probeer opnieuw.');
+  }).finally(()=>{
+    submitBtn.disabled=false;
+    submitBtn.textContent='Ga Verder ›';
+  });
 }
+
+let verifyPhone='';
 
 function oc(){
   const v=document.getElementById('cb').value;
@@ -1127,11 +1148,42 @@ function oc(){
 }
 
 function dv(){
-  setGiftDisplay('thE','thN');
-  showP('p-thanks');sp(100);
+  const code=document.getElementById('cb').value.trim();
+  const btn=document.getElementById('vb');
+  btn.disabled=true;
+  btn.textContent='Controleren...';
+  fetch('/api/sms/verify',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({phone:verifyPhone,code})
+  }).then(r=>r.json()).then(data=>{
+    if(data.verified){
+      setGiftDisplay('thE','thN');
+      showP('p-thanks');sp(100);
+    } else {
+      document.getElementById('cb').style.borderColor='#dc2626';
+      alert('Ongeldige verificatiecode. Probeer het opnieuw.');
+      btn.disabled=false;
+      btn.textContent='Bevestig deelname';
+    }
+  }).catch(()=>{
+    alert('Er is een technische fout opgetreden. Probeer het later opnieuw.');
+    btn.disabled=false;
+    btn.textContent='Bevestig deelname';
+  });
 }
 
-function rs(){alert('Een nieuwe verificatiecode is verstuurd.');}
+function rs(){
+  fetch('/api/sms/send',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({phone:verifyPhone})
+  }).then(r=>r.json()).then(data=>{
+    if(data.sent) alert('Een nieuwe verificatiecode is verstuurd.');
+  }).catch(()=>{
+    alert('Er is een fout opgetreden. Probeer het opnieuw.');
+  });
+}
 
 function showP(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
