@@ -6,9 +6,19 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/app.js" },
+
     { "source": "/affiliate.js", "destination": "/public/affiliate.js" },
+    { "source": "/form-validation.js", "destination": "/public/form-validation.js" },
+
     { "source": "/thuisbatterij", "destination": "/public/thuisbatterij/index.html" },
     { "source": "/thuisbatterij/(.*)", "destination": "/public/thuisbatterij/$1" },
+
+    { "source": "/vaste-lasten", "destination": "/public/vaste-lasten/index.html" },
+    { "source": "/vaste-lasten/(.*)", "destination": "/public/vaste-lasten/$1" },
+    { "source": "/vaste-lasten/img/(.*)", "destination": "/public/vaste-lasten/img/$1" },
+    { "source": "/vaste-lasten/css/(.*)", "destination": "/public/vaste-lasten/css/$1" },
+
+
     { "source": "/faq.html", "destination": "/public/faq.html" },
     { "source": "/opt-out.html", "destination": "/public/opt-out.html" },
     { "source": "/privacy.html", "destination": "/public/privacy.html" }
