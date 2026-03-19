@@ -4,14 +4,26 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import { waitUntil } from "@vercel/functions";
 import twilio from "twilio";
+import routes from "./routes.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-console.log(process.env.DATABOWL_PUBLIC_KEY);
-console.log(process.env.DATABOWL_PRIVATE_KEY);
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
+// Domain-aware SSR routing — must come before express.static
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const host = req.hostname
+    .replace(/^www\./, '')
+    .replace(/\.local$/, '.nl'); // local dev: vastenlastenonderzoek.local → vastenlastenonderzoek.nl
+  const route = routes.find(r => r.domain === host && req.path === r.path);
+  if (!route) return next();
+  res.render(route.view, { ...route.data, query: req.query });
+});
 
 app.use(express.static('public'));
 
