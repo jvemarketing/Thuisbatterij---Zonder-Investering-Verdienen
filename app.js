@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') return next();
   const host = req.hostname
     .replace(/^www\./, '')
-    .replace(/\.local$/, '.nl'); // local dev: vastenlastenonderzoek.local → vastenlastenonderzoek.nl
+    .replace(/\.local$/, '.nl'); // local dev: vastelastenonderzoek.local → vastelastenonderzoek.nl
   const route = routes.find(r => r.domain === host && req.path === r.path);
   if (!route) return next();
   console.log({ ...route.data, query: req.query });

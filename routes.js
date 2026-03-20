@@ -4,9 +4,9 @@
  * Add new sites/partners here — no other code needs touching.
  */
 const routes = [
-    // vastenlastenonderzoek.nl
+    // vastelastenonderzoek.nl
     {
-        domain: 'vastenlastenonderzoek.nl',
+        domain: 'vastelastenonderzoek.nl',
         path: '/',
         view: 'vaste-lasten/index',
         data: {
@@ -22,7 +22,7 @@ const routes = [
         },
     },
     {
-        domain: 'vastenlastenonderzoek.nl',
+        domain: 'vastelastenonderzoek.nl',
         path: '/voltafy',
         view: 'vaste-lasten/index',
         data: {
@@ -38,7 +38,7 @@ const routes = [
         },
     },
     {
-        domain: 'vastenlastenonderzoek.nl',
+        domain: 'vastelastenonderzoek.nl',
         path: '/gemakkelijkbesparen',
         view: 'vaste-lasten/index',
         data: {
@@ -54,7 +54,7 @@ const routes = [
         },
     },
     {
-        domain: 'vastenlastenonderzoek.nl',
+        domain: 'vastelastenonderzoek.nl',
         path: '/vle',
         view: 'vaste-lasten/index',
         data: {

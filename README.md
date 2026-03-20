@@ -6,10 +6,10 @@ Express-based SSR server serving multiple landing pages under different domains.
 
 | Domain | Path | Page |
 |---|---|---|
-| `vastenlastenonderzoek.nl` | `/` | Vaste Lasten (no partner) |
-| `vastenlastenonderzoek.nl` | `/voltafy` | Vaste Lasten — Voltafy |
-| `vastenlastenonderzoek.nl` | `/gemakkelijkbesparen` | Vaste Lasten — Gemakkelijk Besparen |
-| `vastenlastenonderzoek.nl` | `/vle` | Vaste Lasten — VLE |
+| `vastelastenonderzoek.nl` | `/` | Vaste Lasten (no partner) |
+| `vastelastenonderzoek.nl` | `/voltafy` | Vaste Lasten — Voltafy |
+| `vastelastenonderzoek.nl` | `/gemakkelijkbesparen` | Vaste Lasten — Gemakkelijk Besparen |
+| `vastelastenonderzoek.nl` | `/vle` | Vaste Lasten — VLE |
 | `verdienduurzaam.nl` | `/thuisbatterij` | Thuisbatterij |
 
 Routes are configured in [`routes.js`](./routes.js).
@@ -61,15 +61,15 @@ The server starts on port 80. Because routing is domain-based, you need local do
 Add the following to `/etc/hosts` (requires sudo):
 
 ```
-127.0.0.1  vastenlastenonderzoek.local
+127.0.0.1  vastelastenonderzoek.local
 127.0.0.1  verdienduurzaam.local
 ```
 
 Then visit:
 
-- `http://vastenlastenonderzoek.local/voltafy`
-- `http://vastenlastenonderzoek.local/gemakkelijkbesparen`
-- `http://vastenlastenonderzoek.local/vle`
+- `http://vastelastenonderzoek.local/voltafy`
+- `http://vastelastenonderzoek.local/gemakkelijkbesparen`
+- `http://vastelastenonderzoek.local/vle`
 - `http://verdienduurzaam.local/thuisbatterij`
 
 The server automatically maps `.local` domains to their `.nl` equivalents for route matching.

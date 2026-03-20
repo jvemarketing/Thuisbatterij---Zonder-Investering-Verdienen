@@ -1,9 +1,9 @@
 I need to serve these static sites (public/thuisbatterij & public/vaste-lasten) under different domains and different paths.
 
-- `vastenlastenonderzoek.nl/voltafy` must resolve to `/public/vaste-lasten/index.html?partner=voltafy`
-- `vastenlastenonderzoek.nl/gemakkelijkbesparen` must resolve to `/public/vaste-lasten/index.html?partner=gemakkelijk-besparen`
-- `vastenlastenonderzoek.nl/vle` must resolve to `/public/vaste-lasten/index.html?partner=vle`
-- `vastenlastenonderzoek.nl/` must resolve to `/public/vaste-lasten/index.html` (no partner logo)
+- `vastelastenonderzoek.nl/voltafy` must resolve to `/public/vaste-lasten/index.html?partner=voltafy`
+- `vastelastenonderzoek.nl/gemakkelijkbesparen` must resolve to `/public/vaste-lasten/index.html?partner=gemakkelijk-besparen`
+- `vastelastenonderzoek.nl/vle` must resolve to `/public/vaste-lasten/index.html?partner=vle`
+- `vastelastenonderzoek.nl/` must resolve to `/public/vaste-lasten/index.html` (no partner logo)
 - `verdienduurzaam.nl/thuisbatterij` must resolve to `/public/thuisbatterij/index.html`
 
 This must be dynamic and configurable as possible, since we will add more sites in the future.
