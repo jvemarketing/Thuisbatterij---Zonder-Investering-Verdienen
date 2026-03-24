@@ -812,8 +812,10 @@
                 <div id="lnStatus" class="email-status"></div>
             </div>
         </div>
+        <% const maxDob = new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]; %>
+        <% const minDob = new Date(new Date().setFullYear(new Date().getFullYear() - 100)).toISOString().split('T')[0]; %>
         <div class="form-group"><label class="form-label">Geboortedatum</label><input class="form-input" id="dob" name="dateOfBirth"
-                                                                                      type="date" min="2008-01-01">
+                                                                                      type="date" min="<%= minDob %>" max="<%= maxDob %>">
             <div id="dobStatus" class="email-status"></div>
         </div>
         <div class="form-divider"></div>
@@ -1571,9 +1573,7 @@
         utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
     });
 
-    document.getElementById('dob').max = new Date(
-        new Date().setFullYear(new Date().getFullYear() - 18)
-    ).toISOString().split('T')[0];
+
 
     FormValidation.attachPhone(
         document.getElementById('ph'),
