@@ -803,21 +803,21 @@
             <div id="gdrStatus" class="email-status"></div>
         </div>
         <div class="form-row">
-            <div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" id="fn"
+            <div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" id="fn" name="firstName"
                                                                                      type="text" placeholder="Jan">
                 <div id="fnStatus" class="email-status"></div>
             </div>
-            <div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" id="ln"
+            <div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" id="ln" name="lastName"
                                                                                        type="text" placeholder="Jansen">
                 <div id="lnStatus" class="email-status"></div>
             </div>
         </div>
-        <div class="form-group"><label class="form-label">Geboortedatum</label><input class="form-input" id="dob"
+        <div class="form-group"><label class="form-label">Geboortedatum</label><input class="form-input" id="dob" name="dateOfBirth"
                                                                                       type="date" min="2008-01-01">
             <div id="dobStatus" class="email-status"></div>
         </div>
         <div class="form-divider"></div>
-        <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" id="em"
+        <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" id="em" name="email"
                                                                                     type="email"
                                                                                     placeholder="jan@voorbeeld.nl">
             <div id="emStatus" class="email-status"></div>
@@ -826,23 +826,23 @@
         <div style="display:grid;grid-template-columns:2fr 1.2fr 0.8fr;gap:10px;">
             <div class="form-group">
                 <label class="form-label">Postcode</label>
-                <input class="form-input" id="pc" type="text" placeholder="1234 AB" maxlength="7">
+                <input class="form-input" id="pc" name="postalCode" type="text" placeholder="1234 AB" maxlength="7">
             </div>
             <div class="form-group">
                 <label class="form-label">Huisnummer</label>
-                <input class="form-input" id="hn" type="number" inputmode="numeric" min="1" placeholder="12">
+                <input class="form-input" id="hn" name="houseNumber" type="number" inputmode="numeric" min="1" placeholder="12">
                 <div id="addrStatus" class="email-status"></div>
             </div>
             <div class="form-group">
                 <label class="form-label">Toevoeging</label>
-                <input class="form-input" id="hnAdd" type="text" placeholder="A">
+                <input class="form-input" id="hnAdd" name="houseNumberAddition" type="text" placeholder="A">
             </div>
         </div>
         <div class="form-group" id="addrRow" style="display:none"><label class="form-label">Straat
-                (automatisch)</label><input class="form-input" id="addrF" type="text" readonly></div>
+                (automatisch)</label><input class="form-input" id="addrF" name="street" type="text" readonly></div>
         <div class="form-divider"></div>
         <div class="form-row">
-            <div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" id="ph"
+            <div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" id="ph" name="phone"
                                                                                            type="tel">
                 <div id="phStatus" class="email-status"></div>
             </div>
