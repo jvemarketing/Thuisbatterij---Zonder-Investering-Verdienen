@@ -28,7 +28,7 @@ const routes = [
         data: {
             partner: 'voltafy',
             logo: {
-                src: '/vaste-lasten/img/Voltafy.png',
+                src: '/vaste-lasten/img/voltafy.png',
                 alt: 'Voltafy',
             },
             privacyURL: 'https://www.voltafy.nl/privacy-policy',
@@ -44,8 +44,8 @@ const routes = [
         data: {
             partner: 'gemakkelijk-besparen',
             logo: {
-                src: '/vaste-lasten/img/Gemakkelijk-besparen.png',
-                alt: 'Voltafy',
+                src: '/vaste-lasten/img/gemakkelijk-besparen.png',
+                alt: 'Gemakkelijkbesparen',
             },
             privacyURL: 'https://www.gemakkelijkbesparen.nl/privacy-verklaring',
             termsURL: 'https://www.gemakkelijkbesparen.nl/algemene-voorwaarden',
@@ -60,7 +60,7 @@ const routes = [
         data: {
             partner: 'vle',
             logo: {
-                src: '/vaste-lasten/img/Vle.png',
+                src: '/vaste-lasten/img/vle.png',
                 alt: 'Vle'
             },
             privacyURL: 'https://vastelastenexperts.nl/privacy-policy/',
