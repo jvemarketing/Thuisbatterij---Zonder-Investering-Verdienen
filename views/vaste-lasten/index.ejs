@@ -17,7 +17,7 @@
 <nav>
     <div class="container">
         <div class="nav-inner">
-            <a class="nav-logo" href="#" onclick="showP('p-home');return false;">
+            <a class="nav-logo" href="#" onclick="showPage('p-home');return false;">
                 <img src="<%= logo.src %>" alt="<%= logo.alt %>" style="height: 40px; width: auto; display: block;">
             </a>
             <div class="nav-right">
@@ -508,7 +508,7 @@
             <div class="sec-eyebrow">Veelgestelde vragen</div>
             <div class="sec-title" style="margin-bottom:24px;">Alles wat je wilt weten</div>
             <div class="faq-grid">
-                <div class="faq-item" onclick="tf(this)">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">Is deelname echt gratis?
                         <div class="faq-arrow">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
@@ -521,7 +521,7 @@
                         betalen.
                     </div>
                 </div>
-                <div class="faq-item" onclick="tf(this)">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">Wat is het gegarandeerde cadeautje?
                         <div class="faq-arrow">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
@@ -534,7 +534,7 @@
                         cadeauaanbod — los van de grote prijstrekking. Jij wint dus altijd iets!
                     </div>
                 </div>
-                <div class="faq-item" onclick="tf(this)">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">Wanneer weet ik of ik gewonnen heb?
                         <div class="faq-arrow">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
@@ -546,7 +546,7 @@
                     <div class="faq-a">De winnaar wordt persoonlijk gecontacteerd via het opgegeven telefoonnummer.
                     </div>
                 </div>
-                <div class="faq-item" onclick="tf(this)">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">Wat doet vaste Lasten Onderzoek met mijn gegevens?
                         <div class="faq-arrow">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
@@ -761,7 +761,7 @@
                 — gratis en gegarandeerd voor <strong>iedere</strong> deelnemer, los van de grote prijstrekking.
             </div>
         </div>
-        <button class="gift-go-btn" id="ggoBtn" onclick="goLead()">Ga verder met mijn deelname →</button>
+        <button class="gift-go-btn" id="ggoBtn" onclick="showLeadForm()">Ga verder met mijn deelname →</button>
     </div>
 </div>
 
@@ -796,9 +796,9 @@
             gegevens in:</p>
         <div class="form-group"><label class="form-label">Geslacht</label>
             <div class="gender-row">
-                <button class="gender-btn" onclick="sg(this,'Dhr.')">Dhr.</button>
-                <button class="gender-btn" onclick="sg(this,'Mevr.')">Mevr.</button>
-                <button class="gender-btn" onclick="sg(this,'Anders')">Anders</button>
+                <button class="gender-btn" onclick="selectGender(this,'Dhr.')">Dhr.</button>
+                <button class="gender-btn" onclick="selectGender(this,'Mevr.')">Mevr.</button>
+                <button class="gender-btn" onclick="selectGender(this,'Anders')">Anders</button>
             </div>
             <div id="gdrStatus" class="email-status"></div>
         </div>
@@ -847,7 +847,7 @@
                 <div id="phStatus" class="email-status"></div>
             </div>
         </div>
-        <button class="cta-btn" onclick="submitL()" style="width:100%;margin-top:4px;">Ga Verder ›</button>
+        <button class="cta-btn" onclick="submitLeadForm()" style="width:100%;margin-top:4px;">Ga Verder ›</button>
         <p class="legal-text">Wat gebeurt er met uw gegevens? Door op "Ga Verder" te klikken geeft u toestemming dat
             Vastelastenexperts u telefonisch benadert om te berekenen hoeveel u kunt besparen op uw energiekosten. De
             berekening wordt gratis en vrijblijvend telefonisch gedaan door een energieadviseur van Vastelastenexperts.
@@ -882,11 +882,11 @@
         <h2>Rond je aanvraag af door je telefoonnummer te verifiëren.</h2>
         <p>Er is zojuist een SMS met een verificatiecode gestuurd naar <strong id="mph">*******397</strong>.<br><br>Voer
             de code hieronder in om je deelname te bevestigen en een leuke verrassing te ontvangen!</p>
-        <input class="code-input" id="cb" type="tel" maxlength="4" placeholder="————" oninput="oc()">
-        <button class="cta-btn" id="vb" onclick="dv()" style="width:100%;opacity:.35;pointer-events:none">Bevestig
+        <input class="code-input" id="cb" type="tel" maxlength="4" placeholder="————" oninput="onCodeInput()">
+        <button class="cta-btn" id="vb" onclick="verifyCode()" style="width:100%;opacity:.35;pointer-events:none">Bevestig
             deelname
         </button>
-        <p class="resend-text">Geen SMS ontvangen? <span class="resend-link" onclick="rs()">Verstuur opnieuw</span></p>
+        <p class="resend-text">Geen SMS ontvangen? <span class="resend-link" onclick="resendCode()">Verstuur opnieuw</span></p>
     </div>
 </div>
 
@@ -971,7 +971,7 @@
             <p style="font-size:.8rem;color:var(--t3);text-align:center;margin-bottom:12px;">Vergroot je winkans door
                 deze actie te delen!</p>
             <div class="share-grid">
-                <button class="share-btn" onclick="swa()">
+                <button class="share-btn" onclick="shareWhatsApp()">
                     <div class="share-icon" style="background:#dcfce7;">
                         <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M16 2C8.268 2 2 8.268 2 16c0 2.47.648 4.792 1.782 6.8L2 30l7.378-1.762A13.944 13.944 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 01-5.836-1.597l-.418-.249-4.376 1.044 1.063-4.26-.274-.438A11.47 11.47 0 014.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.61c-.344-.172-2.04-1.006-2.356-1.12-.315-.115-.544-.172-.773.172-.229.344-.887 1.12-1.087 1.35-.2.228-.4.257-.744.086-.344-.172-1.452-.535-2.766-1.707-1.022-.912-1.713-2.038-1.913-2.382-.2-.344-.021-.53.15-.701.155-.154.344-.4.516-.6.172-.2.229-.344.344-.573.115-.229.057-.43-.028-.601-.086-.172-.773-1.864-1.059-2.552-.279-.672-.562-.58-.773-.59l-.658-.011c-.229 0-.6.086-.915.43-.315.344-1.202 1.175-1.202 2.866 0 1.692 1.23 3.326 1.401 3.555.172.229 2.42 3.697 5.865 5.186.82.354 1.46.565 1.958.724.823.261 1.572.224 2.164.136.66-.099 2.04-.834 2.327-1.64.287-.806.287-1.497.201-1.64-.086-.143-.315-.229-.659-.401z" fill="#25D366"/>
@@ -979,7 +979,7 @@
                     </div>
                     Deel via WhatsApp
                 </button>
-                <button class="share-btn" onclick="cu()">
+                <button class="share-btn" onclick="copyLink()">
                     <div class="share-icon" style="background:var(--bll);">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
@@ -1360,7 +1360,7 @@
         return paths[ic] || `<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="#7a90a8"/>`;
     }
 
-    function esc(s) {
+    function escapeQuotes(s) {
         return s.replace(/'/g, "\\'");
     }
 
@@ -1383,12 +1383,12 @@
         ms = [];
         queue = buildQueue();
         document.querySelector('.nav-cta').style.display = 'none';
-        showP('p-survey');
-        renderQ(queue[0]);
-        sp(5);
+        showPage('p-survey');
+        renderQuestion(queue[0]);
+        setProgress(5);
     }
 
-    function renderQ(qd) {
+    function renderQuestion(qd) {
         // Label: distinguish sub-questions visually
         const isSub = qd.type === 'sub';
         const labelClass = isSub ? 'q-num sub-label' : 'q-num';
@@ -1403,14 +1403,14 @@
             opts = `
       <div class="form-group" style="margin-top:14px;">
         <label class="form-label">Selecteer je leverancier</label>
-        <select class="form-input" id="ddSel" onchange="paDropdown(this,'${qd.k}')">
+        <select class="form-input" id="ddSel" onchange="handleDropdown(this,'${qd.k}')">
           <option value="" disabled selected>— Kies je leverancier —</option>
           ${optHtml}
         </select>
       </div>`;
         } else {
             qd.o.forEach(o => {
-                opts += `<button class="ans" onclick="paAns(this,'${esc(o.l)}','${qd.k}')">
+                opts += `<button class="ans" onclick="handleAnswer(this,'${escapeQuotes(o.l)}','${qd.k}')">
         <span class="ans-icon-wrap">${SVG[o.ic] || SVG.question}</span>
         ${o.l}
       </button>`;
@@ -1442,7 +1442,7 @@
         window.scrollTo({top: 0, behavior: 'smooth'});
         updateProgress();
     }// Answer handler for single/sub questions — auto-advance
-    function paAns(btn, label, key) {
+    function handleAnswer(btn, label, key) {
         // Disable all buttons immediately
         document.querySelectorAll('#qWrap .ans').forEach(b => {
             b.style.pointerEvents = 'none';
@@ -1476,7 +1476,7 @@
     }
 
     // Dropdown auto-advance on selection
-    function paDropdown(sel, key) {
+    function handleDropdown(sel, key) {
         if (!sel.value) return;
         ans[key] = sel.value;
         sel.disabled = true;
@@ -1495,27 +1495,27 @@
     function advance() {
         qi++;
         if (qi >= queue.length) {
-            showG();
+            showGiftSelection();
         } else {
-            renderQ(queue[qi]);
+            renderQuestion(queue[qi]);
         }
     }
 
-    function showG() {
-        showP('p-gifts');
-        sp(85);
+    function showGiftSelection() {
+        showPage('p-gifts');
+        setProgress(85);
         if (preSelectedPrize) {
             var cards = document.querySelectorAll('.gift-card');
             cards.forEach(function(c) {
                 if (c.getAttribute('onclick') && c.getAttribute('onclick').indexOf("'" + preSelectedPrize.id + "'") !== -1) {
-                    pg(c, preSelectedPrize.id, preSelectedPrize.name, preSelectedPrize.val);
+                    selectGift(c, preSelectedPrize.id, preSelectedPrize.name, preSelectedPrize.val);
                 }
             });
             preSelectedPrize = null;
         }
     }
 
-    function pg(card, id, name, val) {
+    function selectGift(card, id, name, val) {
         document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('sel'));
         card.classList.add('sel');
         gId = id;
@@ -1534,13 +1534,13 @@
         if (nEl) nEl.textContent = g.name + ' ' + g.val;
     }
 
-    function goLead() {
+    function showLeadForm() {
         setGiftDisplay('ldE', 'ldN');
-        showP('p-lead');
-        sp(92);
+        showPage('p-lead');
+        setProgress(92);
     }
 
-    function sg(btn, v) {
+    function selectGender(btn, v) {
         document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('on'));
         btn.classList.add('on');
         gdr = v;
@@ -1604,7 +1604,7 @@
         }
     );
 
-    function submitL() {
+    function submitLeadForm() {
         let ok = true;
 
         if (!gdr) {
@@ -1652,8 +1652,8 @@
                 verifyPhone = ph;
                 document.getElementById('mph').textContent = '*'.repeat(7) + ph.slice(-3);
                 setGiftDisplay('vfE', 'vfN');
-                showP('p-verify');
-                sp(97);
+                showPage('p-verify');
+                setProgress(97);
             } else {
                 alert('Fout bij versturen verificatiecode. Probeer opnieuw.');
             }
@@ -1667,14 +1667,14 @@
 
     let verifyPhone = '';
 
-    function oc() {
+    function onCodeInput() {
         const v = document.getElementById('cb').value;
         const b = document.getElementById('vb');
         b.style.opacity = v.length >= 4 ? '1' : '.35';
         b.style.pointerEvents = v.length >= 4 ? 'auto' : 'none';
     }
 
-    function dv() {
+    function verifyCode() {
         const code = document.getElementById('cb').value.trim();
         const btn = document.getElementById('vb');
         btn.disabled = true;
@@ -1688,8 +1688,8 @@
                 btn.textContent = 'Versturen...';
                 submitLead().finally(() => {
                     setGiftDisplay('thE', 'thN');
-                    showP('p-thanks');
-                    sp(100);
+                    showPage('p-thanks');
+                    setProgress(100);
                 });
             } else {
                 document.getElementById('cb').style.borderColor = '#dc2626';
@@ -1748,7 +1748,7 @@
         });
     }
 
-    function rs() {
+    function resendCode() {
         fetch('/api/sms/send', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -1760,25 +1760,25 @@
         });
     }
 
-    function showP(id) {
+    function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    function sp(p) {
+    function setProgress(p) {
         document.getElementById('prog').style.width = p + '%';
     }
 
-    function tf(el) {
+    function toggleFaq(el) {
         el.classList.toggle('open');
     }
 
-    function swa() {
+    function shareWhatsApp() {
         window.open('https://wa.me/?text=Doe+mee+met+het+Vaste+Lasten+Onderzoek!+https://consumentenquiz.nl/1', '_blank');
     }
 
-    function cu() {
+    function copyLink() {
         navigator.clipboard?.writeText('https://consumentenquiz.nl/1').then(() => alert('Link gekopieerd!'));
     }
 
