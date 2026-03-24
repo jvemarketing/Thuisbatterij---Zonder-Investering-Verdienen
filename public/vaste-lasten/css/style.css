@@ -909,6 +909,10 @@ footer{
 .form-group{margin-bottom:13px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .iti{width:100%;}
+@media(max-width:767px){
+  .form-input,select.form-input,.gender-btn{font-size:16px;}
+  input[type="date"].form-input{-webkit-appearance:none;appearance:none;min-height:50px;padding:13px 15px;display:block;}
+}
 .form-divider{height:1px;background:var(--bd);margin-bottom:18px;}
 .gender-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .gender-btn{
