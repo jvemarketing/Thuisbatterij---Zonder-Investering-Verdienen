@@ -1046,7 +1046,7 @@
     const BASE_QUESTIONS = [
         // ── 1 ─────────────────────────────────────────────────────────
         {
-            id: 'q1', ic: 'bulb', label: 'Vraag 1', type: 'single',
+            id: 'lampen_aan_staan', ic: 'bulb', label: 'Vraag 1', type: 'single',
             img: '/vaste-lasten/img/Vraag-1.jpg',
             q: 'Laat je wel eens de lampen aan staan als je een kamer verlaat?',
             o: [
@@ -1059,7 +1059,7 @@
 
         // ── 2 ─────────────────────────────────────────────────────────
         {
-            id: 'q2', ic: 'bike', label: 'Vraag 2', type: 'single',
+            id: 'elektrische_fiets', ic: 'bike', label: 'Vraag 2', type: 'single',
             img: '/vaste-lasten/img/Elektrische-fiets.jpg',
             q: 'Heb je een elektrische fiets?',
             o: [
@@ -1072,7 +1072,7 @@
 
         // ── 3 ─────────────────────────────────────────────────────────
         {
-            id: 'q3', ic: 'shower', label: 'Vraag 3', type: 'single',
+            id: 'douche_duur', ic: 'shower', label: 'Vraag 3', type: 'single',
             img: '/vaste-lasten/img/Douchen.jpg',
             q: 'Hoe lang douche je gemiddeld per keer?',
             o: [{ic: 'lightning', l: 'Korter dan 5 minuten'}, {
@@ -1085,7 +1085,7 @@
 
         // ── 4 ─────────────────────────────────────────────────────────
         {
-            id: 'q4', ic: 'sun', label: 'Vraag 4', type: 'single',
+            id: 'heeft_zonnepanelen', ic: 'sun', label: 'Vraag 4', type: 'single',
             img: '/vaste-lasten/img/Zonnepanelen.jpg',
             q: 'Heb je reeds al zonnepanelen op je dak?',
             o: [{ic: 'sun', l: 'Ja, al een tijdje'}, {ic: 'lightning', l: 'Nee, nog niet'}],
@@ -1093,7 +1093,7 @@
             k: 'zon',
             branch: {
                 'Ja, al een tijdje': {
-                    id: 'q4a', ic: 'battery', label: 'Vraag 4a', type: 'sub',
+                    id: 'thuisbatterij_info', ic: 'battery', label: 'Vraag 4a', type: 'sub',
                     img: '/vaste-lasten/img/Thuisbatterij.jpg',
                     q: 'Met een thuisbatterij kunnen je zonnepanelen je nog meer geld opleveren.',
                     d: 'Wil je meer informatie over een thuisbatterij?',
@@ -1101,7 +1101,7 @@
                     r: null, k: 'thuisbatterij_interesse'
                 },
                 'Nee, nog niet': {
-                    id: 'q4b', ic: 'sun', label: 'Vraag 4b', type: 'sub',
+                    id: 'interesse_zonnepanelen', ic: 'sun', label: 'Vraag 4b', type: 'sub',
                     img: '/vaste-lasten/img/Besparen-energie.jpg',
                     q: 'Heb je interesse in besparen op je energierekening met zonnepanelen?',
                     o: [{ic: 'sun', l: 'Ja, zeker'}, {ic: 'lightning', l: 'Nee, dankje'}],
@@ -1112,7 +1112,7 @@
 
         // ── 5 ─────────────────────────────────────────────────────────
         {
-            id: 'q5', ic: 'car', label: 'Vraag 5', type: 'single',
+            id: 'elektrisch_rijden', ic: 'car', label: 'Vraag 5', type: 'single',
             img: '/vaste-lasten/img/Laadpaal.jpg',
             q: 'Rijd je elektrisch?',
             o: [{ic: 'lightning', l: 'Ja, volledig elektrisch'}, {ic: 'car', l: 'Hybride'}, {ic: 'car', l: 'Nee'}],
@@ -1120,7 +1120,7 @@
             k: 'rijden',
             branch: {
                 'Ja, volledig elektrisch': {
-                    id: 'q5a', ic: 'charge', label: 'Vraag 5a', type: 'sub',
+                    id: 'laadpaal_info', ic: 'charge', label: 'Vraag 5a', type: 'sub',
                     img: '/vaste-lasten/img/Laadpaal.jpg',
                     q: 'Een laadpaal maakt je auto opladen nog gemakkelijker en verhoogt de waarde van je woning.',
                     d: 'Wil je meer weten over het plaatsen van een laadpaal?',
@@ -1135,7 +1135,7 @@
 
         // ── 6 ─────────────────────────────────────────────────────────
         {
-            id: 'q6', ic: 'battery', label: 'Vraag 6', type: 'single',
+            id: 'interesse_thuisbatterij', ic: 'battery', label: 'Vraag 6', type: 'single',
             img: '/vaste-lasten/img/Thuisbatterij.jpg',
             q: 'Heb jij interesse in een thuisbatterij?',
             d: 'Zo benut je je eigen stroom maximaal, verlaag je je energierekening en profiteer je van subsidies.',
@@ -1145,7 +1145,7 @@
 
         // ── 7 ─────────────────────────────────────────────────────────
         {
-            id: 'q7', ic: 'home', label: 'Vraag 7', type: 'single',
+            id: 'woning_isolatie', ic: 'home', label: 'Vraag 7', type: 'single',
             img: '/vaste-lasten/img/Woning-isoleren.jpg',
             q: 'Is je woning goed geïsoleerd?',
             o: [{ic: 'check', l: 'Ja, helemaal'}, {ic: 'lightning', l: 'Gedeeltelijk'}, {
@@ -1156,7 +1156,7 @@
             k: 'isolatie',
             branch: {
                 'Nee, nog niet': {
-                    id: 'q7a', ic: 'home', label: 'Vraag 7a', type: 'sub',
+                    id: 'meer_weten_isolatie', ic: 'home', label: 'Vraag 7a', type: 'sub',
                     img: '/vaste-lasten/img/Woning-isoleren.jpg',
                     q: 'Wil je meer weten over isolatie?',
                     o: [{ic: 'check', l: 'Ja, graag'}, {ic: 'lightning', l: 'Nee, dankjewel'}],
@@ -1167,7 +1167,7 @@
 
         // ── 8 ─────────────────────────────────────────────────────────
         {
-            id: 'q8', ic: 'cook', label: 'Vraag 8', type: 'single',
+            id: 'kookwijze', ic: 'cook', label: 'Vraag 8', type: 'single',
             img: '/vaste-lasten/img/Koken.jpg',
             q: 'Waar kook je op?',
             o: [
@@ -1179,7 +1179,7 @@
             k: 'koken',
             branch: {
                 'Gas': {
-                    id: 'q8a', ic: 'warmth', label: 'Vraag 8a', type: 'sub',
+                    id: 'warmtepomp_info', ic: 'warmth', label: 'Vraag 8a', type: 'sub',
                     img: '/vaste-lasten/img/Besparen-energie.jpg',
                     q: 'Een warmtepomp kan je kosten verlagen!',
                     o: [{ic: 'check', l: 'Ja, zeker'}, {ic: 'lightning', l: 'Nee, dankje'}],
@@ -1190,7 +1190,7 @@
 
         // ── 9 ─────────────────────────────────────────────────────────
         {
-            id: 'q9', ic: 'building', label: 'Vraag 9', type: 'single',
+            id: 'type_woning', ic: 'building', label: 'Vraag 9', type: 'single',
             img: '/vaste-lasten/img/Woning.jpg',
             q: 'Wat voor type woning heb je?',
             o: [
@@ -1205,7 +1205,7 @@
 
         // ── 10 ────────────────────────────────────────────────────────
         {
-            id: 'q10', ic: 'key', label: 'Vraag 10', type: 'single',
+            id: 'koop_of_huur', ic: 'key', label: 'Vraag 10', type: 'single',
             img: '/vaste-lasten/img/Koophuis.jpg',
             q: 'Woon je in een koop of huurwoning?',
             o: [{ic: 'key', l: 'Koop'}, {ic: 'building', l: 'Huur'}],
@@ -1214,7 +1214,7 @@
 
         // ── 11 ────────────────────────────────────────────────────────
         {
-            id: 'q11', ic: 'family', label: 'Vraag 11', type: 'single',
+            id: 'gezinssamenstelling', ic: 'family', label: 'Vraag 11', type: 'single',
             img: '/vaste-lasten/img/Gezinsamenstelling.jpg',
             q: 'Wat is je gezinssamenstelling?',
             o: [
@@ -1229,7 +1229,7 @@
 
         // ── 12 ────────────────────────────────────────────────────────
         {
-            id: 'q12', ic: 'lightning', label: 'Vraag 12', type: 'dropdown',
+            id: 'energieleverancier', ic: 'lightning', label: 'Vraag 12', type: 'dropdown',
             img: '/vaste-lasten/img/Energieleverancier.jpg',
             q: 'Wie is jouw huidige energieleverancier?',
             options: [
@@ -1521,9 +1521,11 @@
         allowDropdown: false,
         utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
     });
+
     document.getElementById('dob').max = new Date(
         new Date().setFullYear(new Date().getFullYear() - 18)
     ).toISOString().split('T')[0];
+
     FormValidation.attachPhone(
         document.getElementById('ph'),
         document.getElementById('phStatus'),
