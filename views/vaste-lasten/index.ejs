@@ -1770,6 +1770,12 @@
         document.getElementById('prog').style.width = p + '%';
     }
 
+    function updateProgress() {
+        // Survey runs from 5% to 80%; gift/lead/verify/thanks use fixed setProgress() calls
+        const pct = 5 + Math.round((qi / queue.length) * 75);
+        setProgress(pct);
+    }
+
     function toggleFaq(el) {
         el.classList.toggle('open');
     }
