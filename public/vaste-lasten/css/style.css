@@ -908,7 +908,8 @@ footer{
 .email-status{font-size:.74rem;margin-top:.3rem;}
 .form-group{margin-bottom:13px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.form-divider{height:1px;background:var(--bd);margin:18px 0;}
+.iti{width:100%;}
+.form-divider{height:1px;background:var(--bd);margin-bottom:18px;}
 .gender-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .gender-btn{
   background:var(--wh);border:1.5px solid var(--bd);border-radius:10px;

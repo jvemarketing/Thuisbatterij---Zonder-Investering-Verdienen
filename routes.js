@@ -44,8 +44,8 @@ const routes = [
         data: {
             partner: 'gemakkelijk-besparen',
             logo: {
-                termsURL: 'https://www.gemakkelijkbesparen.nl/algemene-voorwaarden',
-                privacyURL: 'https://www.gemakkelijkbesparen.nl/privacy-verklaring',
+                src: '/vaste-lasten/img/Gemakkelijk-besparen.png',
+                alt: 'Voltafy',
             },
             privacyURL: 'https://www.gemakkelijkbesparen.nl/privacy-verklaring',
             termsURL: 'https://www.gemakkelijkbesparen.nl/algemene-voorwaarden',
