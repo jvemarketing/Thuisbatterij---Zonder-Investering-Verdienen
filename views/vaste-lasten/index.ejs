@@ -198,7 +198,7 @@
                 <div class="hiz-tag">Beschikbare prijzen</div>
                 <div class="prize-chip-strip" style="position: relative; z-index: 1;">
 
-                    <div class="prize-chip">
+                    <div class="prize-chip" onclick="startSurveyWithPrize('bol','Bol.com Cadeaukaart','€250')" style="cursor:pointer;">
                         <div class="pc-icon" style="background: none;">
                             <img src="/vaste-lasten/img/bol.com-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
                         </div>
@@ -206,7 +206,7 @@
                         <div class="pc-val">€250</div>
                     </div>
 
-                    <div class="prize-chip">
+                    <div class="prize-chip" onclick="startSurveyWithPrize('coolblue','Coolblue Cadeaukaart','€250')" style="cursor:pointer;">
                         <div class="pc-icon" style="background: none;">
                             <img src="/vaste-lasten/img/coolblue-cadeaukaart.png"
                                  style="width:100%; height:100%; object-fit:contain;">
@@ -215,7 +215,7 @@
                         <div class="pc-val">€250</div>
                     </div>
 
-                    <div class="prize-chip">
+                    <div class="prize-chip" onclick="startSurveyWithPrize('airpods','Apple AirPods Pro','€279')" style="cursor:pointer;">
                         <div class="pc-icon" style="background: none;">
                             <img src="/vaste-lasten/img/apple-airpods-pro.png" style="width:100%; height:100%; object-fit:contain;">
                         </div>
@@ -223,7 +223,7 @@
                         <div class="pc-val">€279</div>
                     </div>
 
-                    <div class="prize-chip">
+                    <div class="prize-chip" onclick="startSurveyWithPrize('watch','Garmin Smartwatch','€299')" style="cursor:pointer;">
                         <div class="pc-icon" style="background: none;">
                             <img src="/vaste-lasten/img/garmin.png" style="width:100%; height:100%; object-fit:contain;">
                         </div>
@@ -231,7 +231,7 @@
                         <div class="pc-val">€299</div>
                     </div>
 
-                    <div class="prize-chip">
+                    <div class="prize-chip" onclick="startSurveyWithPrize('mediamarkt','Mediamarkt Kaart','€500')" style="cursor:pointer;">
                         <div class="pc-icon" style="background: none;">
                             <img src="/vaste-lasten/img/mediamarkt-cadeaukaart.png"
                                  style="width:100%; height:100%; object-fit:contain;">
@@ -240,7 +240,7 @@
                         <div class="pc-val">€500</div>
                     </div>
 
-                    <div class="prize-chip">
+                    <div class="prize-chip" onclick="startSurveyWithPrize('vvv','VVV Cadeaukaart','€250')" style="cursor:pointer;">
                         <div class="pc-icon" style="background: none;">
                             <img src="/vaste-lasten/img/vvv-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
                         </div>
@@ -636,7 +636,7 @@
         <div class="gifts-grid">
 
             <!-- Bol.com — vervang .gift-card-img-placeholder met <img src="bol.jpg" alt="Bol.com Cadeaukaart"> -->
-            <div class="gift-card" onclick="pg(this,'bol','Bol.com Cadeaukaart','€250')">
+            <div class="gift-card" onclick="selectGift(this,'bol','Bol.com Cadeaukaart','€250')">
                 <div class="gift-card-check">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
@@ -654,7 +654,7 @@
             </div>
 
             <!-- Coolblue -->
-            <div class="gift-card" onclick="pg(this,'coolblue','Coolblue Cadeaukaart','€250')">
+            <div class="gift-card" onclick="selectGift(this,'coolblue','Coolblue Cadeaukaart','€250')">
                 <div class="gift-card-check">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
@@ -672,7 +672,7 @@
             </div>
 
             <!-- VVV -->
-            <div class="gift-card" onclick="pg(this,'vvv','VVV Cadeaukaart','€250')">
+            <div class="gift-card" onclick="selectGift(this,'vvv','VVV Cadeaukaart','€250')">
                 <div class="gift-card-check">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
@@ -690,7 +690,7 @@
             </div>
 
             <!-- AirPods -->
-            <div class="gift-card" onclick="pg(this,'airpods','Apple AirPods Pro','€279')">
+            <div class="gift-card" onclick="selectGift(this,'airpods','Apple AirPods Pro','€279')">
                 <div class="gift-card-check">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
@@ -708,7 +708,7 @@
             </div>
 
             <!-- Smartwatch -->
-            <div class="gift-card" onclick="pg(this,'watch','Garmin Smartwatch','€299')">
+            <div class="gift-card" onclick="selectGift(this,'watch','Garmin Smartwatch','€299')">
                 <div class="gift-card-check">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
@@ -726,7 +726,7 @@
             </div>
 
             <!-- Mediamarkt -->
-            <div class="gift-card" onclick="pg(this,'mediamarkt','Mediamarkt Kaart','€500')">
+            <div class="gift-card" onclick="selectGift(this,'mediamarkt','Mediamarkt Kaart','€500')">
                 <div class="gift-card-check">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
