@@ -1025,24 +1025,24 @@
         // Affiliate tracking
         transaction_id:      "f_331_transaction_id",
         // Survey answer fields — TODO: replace with actual Databowl field IDs
-        lampen:                   "lampen",
-        efiets:                   "efiets",
-        douche:                   "douche",
-        zon:                      "zon",
-        thuisbatterij_interesse:  "thuisbatterij_interesse",
-        zonnepanelen_interesse:   "zonnepanelen_interesse",
-        rijden:                   "rijden",
-        laadpaal_interesse:       "laadpaal_interesse",
-        thuisbatterij_eigen:      "thuisbatterij_eigen",
-        isolatie:                 "isolatie",
-        isolatie_interesse:       "isolatie_interesse",
-        koken:                    "koken",
-        warmtepomp_interesse:     "warmtepomp_interesse",
-        woning:                   "woning",
-        hurkoop:                  "hurkoop",
-        gezin:                    "gezin",
-        leverancier:              "leverancier",
-        geselecteerde_prijs:      "geselecteerde_prijs",
+        lampen_aan_staan:         "lampen_aan_staan",
+        elektrische_fiets:        "elektrische_fiets",
+        douche_duur:              "douche_duur",
+        heeft_zonnepanelen:       "heeft_zonnepanelen",
+        thuisbatterij_info:       "thuisbatterij_info",
+        interesse_zonnepanelen:   "interesse_zonnepanelen",
+        elektrisch_rijden:        "elektrisch_rijden",
+        laadpaal_info:            "laadpaal_info",
+        interesse_thuisbatterij:  "interesse_thuisbatterij",
+        woning_isolatie:          "woning_isolatie",
+        meer_weten_isolatie:      "meer_weten_isolatie",
+        kookwijze:                "kookwijze",
+        warmtepomp_info:          "warmtepomp_info",
+        type_woning:              "type_woning",
+        koop_of_huur:             "koop_of_huur",
+        gezinssamenstelling:      "gezinssamenstelling",
+        energieleverancier:       "energieleverancier",
+        prize_name:               "prize_name",
         geboortedatum:            "geboortedatum",
         aanspreektitel:           "aanspreektitel",
     };
@@ -1405,14 +1405,14 @@
             opts = `
       <div class="form-group" style="margin-top:14px;">
         <label class="form-label">Selecteer je leverancier</label>
-        <select class="form-input" id="ddSel" onchange="handleDropdown(this,'${qd.k}')">
+        <select class="form-input" id="ddSel" onchange="handleDropdown(this,'${qd.id}')">
           <option value="" disabled selected>— Kies je leverancier —</option>
           ${optHtml}
         </select>
       </div>`;
         } else {
             qd.o.forEach(o => {
-                opts += `<button class="ans" onclick="handleAnswer(this,'${escapeQuotes(o.l)}','${qd.k}')">
+                opts += `<button class="ans" onclick="handleAnswer(this,'${escapeQuotes(o.l)}','${qd.id}')">
         <span class="ans-icon-wrap">${SVG[o.ic] || SVG.question}</span>
         ${o.l}
       </button>`;
