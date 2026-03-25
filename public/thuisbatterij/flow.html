@@ -883,7 +883,7 @@
   <script>
     var urlParams = new URLSearchParams(window.location.search);
     var postalCode = urlParams.get('pc') || '1234AB';
-    var city = extractCity(postalCode);
+    var city = null;
 
     // Get Everflow tracking data using affiliate module
     var everflowTracking = AffiliateTracking.getTracking();
@@ -954,14 +954,6 @@
         alert('Er is een probleem met het laden van de pagina. Probeer de pagina te vernieuwen.');
       }
     });
-
-    function extractCity(pc) {
-      var postcodes = {
-        '1': 'Amsterdam', '2': 'Rotterdam', '3': 'Utrecht', '4': 'Den Haag',
-        '5': 'Eindhoven', '6': 'Nijmegen', '7': 'Enschede', '8': 'Zwolle', '9': 'Groningen'
-      };
-      return postcodes[pc.charAt(0)] || 'uw gemeente';
-    }
 
     function runLoader() {
       setTimeout(function () {
@@ -1128,7 +1120,14 @@
         document.getElementById('fHouseNumberAddition'),
         document.getElementById('fStreet'),
         document.getElementById('addressStatus'),
-        function (valid) { addressValid = valid; }
+        function (valid, addressData) {
+          addressValid = valid;
+          if (addressData && addressData.cityName) {
+            city = addressData.cityName;
+            $('#cityLoader').text(city);
+            $('#cityTop').text(city);
+          }
+        }
       );
 
       FormValidation.attachPhone(

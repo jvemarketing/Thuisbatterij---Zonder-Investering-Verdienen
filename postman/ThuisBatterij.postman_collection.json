@@ -268,7 +268,7 @@
                   "const json = pm.response.json();",
                   "pm.test('Returns address array', () => pm.expect(json).to.be.an('array'));",
                   "if (json.length > 0) {",
-                  "    console.log('Street:', json[0].streetName, '— City:', json[0].city);",
+                  "    console.log('Street:', json[0].streetName, '— City:', json[0].cityName);",
                   "}"
                 ]
               }

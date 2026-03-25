@@ -1048,13 +1048,6 @@
         prize_name:              "prize_name",
     };
 
-    function extractCity(pc) {
-        var first = (pc || '').replace(/\s/g, '')[0];
-        var map = {'1': 'Amsterdam', '2': 'Rotterdam', '3': 'Utrecht', '4': 'Den Haag',
-                   '5': 'Eindhoven', '6': 'Nijmegen', '7': 'Enschede', '8': 'Zwolle', '9': 'Groningen'};
-        return map[first] || 'Nederland';
-    }
-
     // ── ICONS (SVG strings for survey answers) ──────────────────────
     const SVG = {
         bulb: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.9-3.1-7-7-7zm1 14h-2v-1h2v1zm1-3H10V9.8L8.8 11 7.4 9.6 12 5l4.6 4.6-1.4 1.4L14 9.8V13z" fill="#1a4f8a"/></svg>`,
@@ -1607,6 +1600,7 @@
     );
 
     let addressValid = false;
+    let resolvedCity = null;
     FormValidation.attachAddress(
         function () {
             return document.getElementById('pc').value;
@@ -1615,8 +1609,9 @@
         document.getElementById('hnAdd'),
         document.getElementById('addrF'),
         document.getElementById('addrStatus'),
-        function (valid) {
+        function (valid, addressData) {
             addressValid = valid;
+            resolvedCity = addressData ? (addressData.cityName || null) : null;
             document.getElementById('addrRow').style.display = valid ? 'block' : 'none';
         }
     );
@@ -1725,13 +1720,15 @@
         var everflowTracking = window.AffiliateTracking ? AffiliateTracking.getTracking() : {};
         var pc = document.getElementById('pc').value.trim();
 
+        console.log("City:" + resolvedCity);
+
         var rawData = Object.assign({
             firstName:           document.getElementById('fn').value.trim(),
             lastName:            document.getElementById('ln').value.trim(),
             email:               document.getElementById('em').value.trim(),
             phone:               itiTel.getNumber(),
             postalCode:          pc,
-            city:                extractCity(pc),
+            city:                resolvedCity,
             houseNumber:         document.getElementById('hn').value.trim(),
             houseNumberAddition: document.getElementById('hnAdd').value.trim(),
             street:              document.getElementById('addrF').value.trim(),

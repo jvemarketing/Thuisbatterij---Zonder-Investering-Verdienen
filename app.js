@@ -243,6 +243,8 @@ app.post("/api/lead", async (req, res) => {
       }
     }
 
+    console.log('Sending lead to Databowl:', params);
+
     const r = await fetch(LEAD_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
