@@ -1012,39 +1012,40 @@
 
     // Databowl field map — rename outgoing keys before submission.
     var LEAD_FIELD_MAP = {
-        // Contact fields (same Databowl instance as thuisbatterij)
+        // Contact fields
         email:               "f_1_email",
         firstName:           "f_3_firstname",
         lastName:            "f_4_lastname",
+        geboortedatum:       "f_5_dob",
         postalCode:          "f_11_postcode",
         phone:               "f_12_phone1",
         city:                "f_40_city",
+        aanspreektitel:      "f_101_gender",
         houseNumber:         "f_167_house_number",
         houseNumberAddition: "f_1070_address_addition",
         street:              "f_991_street_name",
         // Affiliate tracking
         transaction_id:      "f_331_transaction_id",
-        // Survey answer fields — TODO: replace with actual Databowl field IDs
-        lampen_aan_staan:         "lampen_aan_staan",
-        elektrische_fiets:        "elektrische_fiets",
-        douche_duur:              "douche_duur",
-        heeft_zonnepanelen:       "heeft_zonnepanelen",
-        thuisbatterij_info:       "thuisbatterij_info",
-        interesse_zonnepanelen:   "interesse_zonnepanelen",
-        elektrisch_rijden:        "elektrisch_rijden",
-        laadpaal_info:            "laadpaal_info",
-        interesse_thuisbatterij:  "interesse_thuisbatterij",
-        woning_isolatie:          "woning_isolatie",
-        meer_weten_isolatie:      "meer_weten_isolatie",
-        kookwijze:                "kookwijze",
-        warmtepomp_info:          "warmtepomp_info",
-        type_woning:              "type_woning",
-        koop_of_huur:             "koop_of_huur",
-        gezinssamenstelling:      "gezinssamenstelling",
-        energieleverancier:       "energieleverancier",
-        prize_name:               "prize_name",
-        geboortedatum:            "geboortedatum",
-        aanspreektitel:           "aanspreektitel",
+        // Survey answer fields
+        lampen_aan_staan:        "f_1156_lampen_aan_staan",
+        elektrische_fiets:       "f_1157_elektrische_fiets",
+        douche_duur:             "f_1158_douche_duur",
+        heeft_zonnepanelen:      "f_1159_heeft_zonnepanelen",
+        thuisbatterij_info:      "f_1160_thuisbatterij_info",
+        interesse_zonnepanelen:  "f_1161_interesse_zonnepanelen",
+        elektrisch_rijden:       "f_1162_elektrisch_rijden",
+        laadpaal_info:           "f_1163_laadpaal_info",
+        interesse_thuisbatterij: "f_1164_interesse_thuisbatterij",
+        woning_isolatie:         "f_1165_woning_isolatie",
+        meer_weten_isolatie:     "f_1166_meer_weten_isolatie",
+        kookwijze:               "f_1168_kookwijze",
+        warmtepomp_info:         "f_1169_warmtepomp_info",
+        type_woning:             "f_1058_type_woning",
+        koop_of_huur:            "f_1170_koop_of_huur",
+        gezinssamenstelling:     "f_1171_gezinssamenstelling",
+        energieleverancier:      "f_1172_energieleverancier",
+        // Extra fields (passed through as-is, ignored by Databowl if unknown)
+        prize_name:              "prize_name",
     };
 
     function extractCity(pc) {
@@ -1199,10 +1200,11 @@
             id: 'woning_isolatie', ic: 'home', label: 'Vraag 7', type: 'single',
             img: '/vaste-lasten/img/woning-isoleren.jpg',
             q: 'Is je woning goed geïsoleerd?',
-            o: [{ic: 'check', l: 'Ja, helemaal'}, {ic: 'lightning', l: 'Gedeeltelijk'}, {
-                ic: 'lightning',
-                l: 'Nee, nog niet'
-            }],
+            o: [
+                {ic: 'check', l: 'Ja, helemaal'},
+                {ic: 'lightning', l: 'Gedeeltelijk'},
+                {ic: 'lightning', l: 'Nee, nog niet'}
+            ],
             r: 'Dat is waardevolle info. Nu even over koken.',
             k: 'isolatie',
             branch: {
@@ -1212,6 +1214,20 @@
                     q: 'Wil je meer weten over isolatie?',
                     o: [{ic: 'check', l: 'Ja, graag'}, {ic: 'lightning', l: 'Nee, dankjewel'}],
                     r: null, k: 'isolatie_interesse'
+                },
+                'Gedeeltelijk': {
+                    id: 'verder_isoleren',
+                    ic: 'home',
+                    label: 'Vraag 7a',
+                    type: 'sub',
+                    img: '/vaste-lasten/img/woning-isoleren.jpg',
+                    q: 'Wil je je huis verder isoleren?',
+                    o: [
+                        {ic: 'check', l: 'Ja, graag'},
+                        {ic: 'lightning', l: 'Nee, dankjewel'}
+                    ],
+                    r: null,
+                    k: 'verder_isoleren'
                 }
             }
         },
@@ -1233,6 +1249,7 @@
                     id: 'warmtepomp_info', ic: 'warmth', label: 'Vraag 8a', type: 'sub',
                     img: '/vaste-lasten/img/besparen-energie.jpg',
                     q: 'Een warmtepomp kan je kosten verlagen!',
+                    d: 'Heb je interesse in een warmtepomp?',
                     o: [{ic: 'check', l: 'Ja, zeker'}, {ic: 'lightning', l: 'Nee, dankje'}],
                     r: null, k: 'warmtepomp_interesse'
                 }
