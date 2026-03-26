@@ -1,3 +1,13 @@
+<%
+const prizes = [
+    { id: 'bol',        name: 'Bol.com Cadeaukaart',  shortName: 'Bol.com',     val: '€500', img: '/vaste-lasten/img/bol.com-cadeaukaart.png' },
+    { id: 'coolblue',   name: 'Coolblue Cadeaukaart', shortName: 'Coolblue',    val: '€500', img: '/vaste-lasten/img/coolblue-cadeaukaart.png' },
+    { id: 'airpods',    name: 'Apple AirPods Pro',    shortName: 'AirPods Pro', val: '€279', img: '/vaste-lasten/img/apple-airpods-pro.png' },
+    { id: 'watch',      name: 'Garmin Smartwatch',    shortName: 'Smartwatch',  val: '€299', img: '/vaste-lasten/img/garmin.png' },
+    { id: 'mediamarkt', name: 'Mediamarkt Kaart',     shortName: 'Mediamarkt',  val: '€500', img: '/vaste-lasten/img/mediamarkt-cadeaukaart.png' },
+    { id: 'vvv',        name: 'VVV Cadeaukaart',      shortName: 'VVV Bon',     val: '€500', img: '/vaste-lasten/img/vvv-cadeaukaart.png' },
+];
+%>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -117,66 +127,15 @@
                         <div class="prize-panel">
                             <div class="prize-panel-title">Te winnen prijzen</div>
                             <div class="prize-panel-grid">
-
-                                <div class="prize-panel-card" onclick="startSurveyWithPrize('bol','Bol.com Cadeaukaart','€250')" style="cursor:pointer;">
-                                    <div class="ppc-icon"
-                                         style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
-                                        <img src="/vaste-lasten/img/bol.com-cadeaukaart.png"
-                                             style="width:100%; height:100%; object-fit:contain;">
+                                <% prizes.forEach(function(p) { %>
+                                <div class="prize-panel-card" onclick="startSurveyWithPrize('<%= p.id %>','<%= p.name %>','<%= p.val %>')" style="cursor:pointer;">
+                                    <div class="ppc-icon" style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
+                                        <img src="<%= p.img %>" alt="<%= p.name %>" style="width:100%; height:100%; object-fit:contain;">
                                     </div>
-                                    <div class="ppc-name">Bol.com Kaart</div>
-                                    <div class="ppc-val">€250</div>
+                                    <div class="ppc-name"><%= p.shortName %></div>
+                                    <div class="ppc-val"><%= p.val %></div>
                                 </div>
-
-                                <div class="prize-panel-card" onclick="startSurveyWithPrize('coolblue','Coolblue Cadeaukaart','€250')" style="cursor:pointer;">
-                                    <div class="ppc-icon"
-                                         style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
-                                        <img src="/vaste-lasten/img/coolblue-cadeaukaart.png"
-                                             style="width:100%; height:100%; object-fit:contain;">
-                                    </div>
-                                    <div class="ppc-name">Coolblue Kaart</div>
-                                    <div class="ppc-val">€250</div>
-                                </div>
-
-                                <div class="prize-panel-card" onclick="startSurveyWithPrize('airpods','Apple AirPods Pro','€279')" style="cursor:pointer;">
-                                    <div class="ppc-icon"
-                                         style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
-                                        <img src="/vaste-lasten/img/apple-airpods-pro.png"
-                                             style="width:100%; height:100%; object-fit:contain;">
-                                    </div>
-                                    <div class="ppc-name">AirPods Pro</div>
-                                    <div class="ppc-val">€279</div>
-                                </div>
-
-                                <div class="prize-panel-card" onclick="startSurveyWithPrize('watch','Garmin Smartwatch','€299')" style="cursor:pointer;">
-                                    <div class="ppc-icon"
-                                         style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
-                                        <img src="/vaste-lasten/img/garmin.png" style="width:100%; height:100%; object-fit:contain;">
-                                    </div>
-                                    <div class="ppc-name">Smartwatch</div>
-                                    <div class="ppc-val">€299</div>
-                                </div>
-
-                                <div class="prize-panel-card" onclick="startSurveyWithPrize('mediamarkt','Mediamarkt Kaart','€500')" style="cursor:pointer;">
-                                    <div class="ppc-icon"
-                                         style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
-                                        <img src="/vaste-lasten/img/mediamarkt-cadeaukaart.png"
-                                             style="width:100%; height:100%; object-fit:contain;">
-                                    </div>
-                                    <div class="ppc-name">Mediamarkt</div>
-                                    <div class="ppc-val">€500</div>
-                                </div>
-
-                                <div class="prize-panel-card" onclick="startSurveyWithPrize('vvv','VVV Cadeaukaart','€250')" style="cursor:pointer;">
-                                    <div class="ppc-icon"
-                                         style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
-                                        <img src="/vaste-lasten/img/vvv-cadeaukaart.png"
-                                             style="width:100%; height:100%; object-fit:contain;">
-                                    </div>
-                                    <div class="ppc-name">VVV Bon</div>
-                                    <div class="ppc-val">€250</div>
-                                </div>
-
+                                <% }) %>
                             </div>
                         </div>
                     </div>
@@ -197,57 +156,15 @@
             <div class="hiz-placeholder">
                 <div class="hiz-tag">Beschikbare prijzen</div>
                 <div class="prize-chip-strip" style="position: relative; z-index: 1;">
-
-                    <div class="prize-chip" onclick="startSurveyWithPrize('bol','Bol.com Cadeaukaart','€250')" style="cursor:pointer;">
+                    <% prizes.forEach(function(p) { %>
+                    <div class="prize-chip" onclick="startSurveyWithPrize('<%= p.id %>','<%= p.name %>','<%= p.val %>')" style="cursor:pointer;">
                         <div class="pc-icon" style="background: none;">
-                            <img src="/vaste-lasten/img/bol.com-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
+                            <img src="<%= p.img %>" alt="<%= p.name %>" style="width:100%; height:100%; object-fit:contain;">
                         </div>
-                        <div class="pc-name">Bol.com</div>
-                        <div class="pc-val">€250</div>
+                        <div class="pc-name"><%= p.shortName %></div>
+                        <div class="pc-val"><%= p.val %></div>
                     </div>
-
-                    <div class="prize-chip" onclick="startSurveyWithPrize('coolblue','Coolblue Cadeaukaart','€250')" style="cursor:pointer;">
-                        <div class="pc-icon" style="background: none;">
-                            <img src="/vaste-lasten/img/coolblue-cadeaukaart.png"
-                                 style="width:100%; height:100%; object-fit:contain;">
-                        </div>
-                        <div class="pc-name">Coolblue</div>
-                        <div class="pc-val">€250</div>
-                    </div>
-
-                    <div class="prize-chip" onclick="startSurveyWithPrize('airpods','Apple AirPods Pro','€279')" style="cursor:pointer;">
-                        <div class="pc-icon" style="background: none;">
-                            <img src="/vaste-lasten/img/apple-airpods-pro.png" style="width:100%; height:100%; object-fit:contain;">
-                        </div>
-                        <div class="pc-name">AirPods Pro</div>
-                        <div class="pc-val">€279</div>
-                    </div>
-
-                    <div class="prize-chip" onclick="startSurveyWithPrize('watch','Garmin Smartwatch','€299')" style="cursor:pointer;">
-                        <div class="pc-icon" style="background: none;">
-                            <img src="/vaste-lasten/img/garmin.png" style="width:100%; height:100%; object-fit:contain;">
-                        </div>
-                        <div class="pc-name">Smartwatch</div>
-                        <div class="pc-val">€299</div>
-                    </div>
-
-                    <div class="prize-chip" onclick="startSurveyWithPrize('mediamarkt','Mediamarkt Kaart','€500')" style="cursor:pointer;">
-                        <div class="pc-icon" style="background: none;">
-                            <img src="/vaste-lasten/img/mediamarkt-cadeaukaart.png"
-                                 style="width:100%; height:100%; object-fit:contain;">
-                        </div>
-                        <div class="pc-name">Mediamarkt</div>
-                        <div class="pc-val">€500</div>
-                    </div>
-
-                    <div class="prize-chip" onclick="startSurveyWithPrize('vvv','VVV Cadeaukaart','€250')" style="cursor:pointer;">
-                        <div class="pc-icon" style="background: none;">
-                            <img src="/vaste-lasten/img/vvv-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
-                        </div>
-                        <div class="pc-name">VVV Bon</div>
-                        <div class="pc-val">€250</div>
-                    </div>
-
+                    <% }) %>
                 </div>
             </div>
         </div>
@@ -339,59 +256,15 @@
                 <div class="sec-sub" style="max-width:320px;">Kies bij deelname jouw favoriete prijs.</div>
             </div>
             <div class="prizes-grid">
-                <div class="prize-card" onclick="startSurveyWithPrize('bol','Bol.com Cadeaukaart','€250')" style="cursor:pointer;">
-                    <div class="prize-card-icon"
-                         style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
-                        <img src="/vaste-lasten/img/bol.com-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
+                <% prizes.forEach(function(p) { %>
+                <div class="prize-card" onclick="startSurveyWithPrize('<%= p.id %>','<%= p.name %>','<%= p.val %>')" style="cursor:pointer;">
+                    <div class="prize-card-icon" style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
+                        <img src="<%= p.img %>" alt="<%= p.name %>" style="width:100%; height:100%; object-fit:contain;">
                     </div>
-                    <div class="prize-card-name">Bol.com Cadeaukaart</div>
-                    <div class="prize-card-val">€250</div>
+                    <div class="prize-card-name"><%= p.name %></div>
+                    <div class="prize-card-val"><%= p.val %></div>
                 </div>
-
-                <div class="prize-card" onclick="startSurveyWithPrize('coolblue','Coolblue Cadeaukaart','€250')" style="cursor:pointer;">
-                    <div class="prize-card-icon"
-                         style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
-                        <img src="/vaste-lasten/img/coolblue-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
-                    </div>
-                    <div class="prize-card-name">Coolblue Cadeaukaart</div>
-                    <div class="prize-card-val">€250</div>
-                </div>
-
-                <div class="prize-card" onclick="startSurveyWithPrize('vvv','VVV Cadeaukaart','€250')" style="cursor:pointer;">
-                    <div class="prize-card-icon"
-                         style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
-                        <img src="/vaste-lasten/img/vvv-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
-                    </div>
-                    <div class="prize-card-name">VVV Cadeaukaart</div>
-                    <div class="prize-card-val">€250</div>
-                </div>
-
-                <div class="prize-card" onclick="startSurveyWithPrize('airpods','Apple AirPods Pro','€279')" style="cursor:pointer;">
-                    <div class="prize-card-icon"
-                         style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
-                        <img src="/vaste-lasten/img/apple-airpods-pro.png" style="width:100%; height:100%; object-fit:contain;">
-                    </div>
-                    <div class="prize-card-name">Apple AirPods Pro</div>
-                    <div class="prize-card-val">€279</div>
-                </div>
-
-                <div class="prize-card" onclick="startSurveyWithPrize('watch','Garmin Smartwatch','€299')" style="cursor:pointer;">
-                    <div class="prize-card-icon"
-                         style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
-                        <img src="/vaste-lasten/img/garmin.png" style="width:100%; height:100%; object-fit:contain;">
-                    </div>
-                    <div class="prize-card-name">Garmin Smartwatch</div>
-                    <div class="prize-card-val">€299</div>
-                </div>
-
-                <div class="prize-card" onclick="startSurveyWithPrize('mediamarkt','Mediamarkt Kaart','€500')" style="cursor:pointer;">
-                    <div class="prize-card-icon"
-                         style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
-                        <img src="/vaste-lasten/img/mediamarkt-cadeaukaart.png" style="width:100%; height:100%; object-fit:contain;">
-                    </div>
-                    <div class="prize-card-name">Mediamarkt Kaart</div>
-                    <div class="prize-card-val">€500</div>
-                </div>
+                <% }) %>
             </div>
             <br><br>
             <div style="text-align:center;">
@@ -634,115 +507,23 @@
             </div>
         </div>
         <div class="gifts-grid">
-
-            <!-- Bol.com — vervang .gift-card-img-placeholder met <img src="bol.jpg" alt="Bol.com Cadeaukaart"> -->
-            <div class="gift-card" onclick="selectGift(this,'bol','Bol.com Cadeaukaart','€250')">
+            <% prizes.forEach(function(p) { %>
+            <div class="gift-card" onclick="selectGift(this,'<%= p.id %>','<%= p.name %>','<%= p.val %>')">
                 <div class="gift-card-check">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
                     </svg>
                 </div>
                 <div class="gift-card-img">
-                    <img src="/vaste-lasten/img/bol.com-cadeaukaart.png" alt="Bol.com Cadeaukaart"
-                         style="width: 100%; height: 100%; object-fit: contain;">
+                    <img src="<%= p.img %>" alt="<%= p.name %>" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
                 <div class="gift-card-body">
-                    <div class="gift-card-name">Bol.com Cadeaukaart</div>
-                    <div class="gift-card-val">t.w.v. €250</div>
+                    <div class="gift-card-name"><%= p.name %></div>
+                    <div class="gift-card-val">t.w.v. <%= p.val %></div>
                     <button class="gift-card-want">Ik wil deze prijs!</button>
                 </div>
             </div>
-
-            <!-- Coolblue -->
-            <div class="gift-card" onclick="selectGift(this,'coolblue','Coolblue Cadeaukaart','€250')">
-                <div class="gift-card-check">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
-                    </svg>
-                </div>
-                <div class="gift-card-img">
-                    <img src="/vaste-lasten/img/coolblue-cadeaukaart.png" alt="Coolblue Cadeaukaart"
-                         style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                <div class="gift-card-body">
-                    <div class="gift-card-name">Coolblue Cadeaukaart</div>
-                    <div class="gift-card-val">t.w.v. €250</div>
-                    <button class="gift-card-want">Ik wil deze prijs!</button>
-                </div>
-            </div>
-
-            <!-- VVV -->
-            <div class="gift-card" onclick="selectGift(this,'vvv','VVV Cadeaukaart','€250')">
-                <div class="gift-card-check">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
-                    </svg>
-                </div>
-                <div class="gift-card-img">
-                    <img src="/vaste-lasten/img/vvv-cadeaukaart.png" alt="VVV Cadeaukaart"
-                         style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                <div class="gift-card-body">
-                    <div class="gift-card-name">VVV Cadeaukaart</div>
-                    <div class="gift-card-val">t.w.v. €250</div>
-                    <button class="gift-card-want">Ik wil deze prijs!</button>
-                </div>
-            </div>
-
-            <!-- AirPods -->
-            <div class="gift-card" onclick="selectGift(this,'airpods','Apple AirPods Pro','€279')">
-                <div class="gift-card-check">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
-                    </svg>
-                </div>
-                <div class="gift-card-img">
-                    <img src="/vaste-lasten/img/apple-airpods-pro.png" alt="Apple AirPods Pro"
-                         style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                <div class="gift-card-body">
-                    <div class="gift-card-name">Apple AirPods Pro</div>
-                    <div class="gift-card-val">t.w.v. €279</div>
-                    <button class="gift-card-want">Ik wil deze prijs!</button>
-                </div>
-            </div>
-
-            <!-- Smartwatch -->
-            <div class="gift-card" onclick="selectGift(this,'watch','Garmin Smartwatch','€299')">
-                <div class="gift-card-check">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
-                    </svg>
-                </div>
-                <div class="gift-card-img">
-                    <img src="/vaste-lasten/img/garmin.png" alt="Garmin Smartwatch"
-                         style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                <div class="gift-card-body">
-                    <div class="gift-card-name">Garmin Smartwatch</div>
-                    <div class="gift-card-val">t.w.v. €299</div>
-                    <button class="gift-card-want">Ik wil deze prijs!</button>
-                </div>
-            </div>
-
-            <!-- Mediamarkt -->
-            <div class="gift-card" onclick="selectGift(this,'mediamarkt','Mediamarkt Kaart','€500')">
-                <div class="gift-card-check">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
-                    </svg>
-                </div>
-                <div class="gift-card-img">
-                    <img src="/vaste-lasten/img/mediamarkt-cadeaukaart.png" alt="MediaMarkt Cadeaukaart"
-                         style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                <div class="gift-card-body">
-                    <div class="gift-card-name">Mediamarkt Kaart</div>
-                    <div class="gift-card-val">t.w.v. €500</div>
-                    <button class="gift-card-want">Ik wil deze prijs!</button>
-                </div>
-            </div>
-
+            <% }) %>
         </div>
         <div class="sovendus-teaser">
             <div class="sov-badge">
@@ -1305,45 +1086,15 @@
         }
     ];
 
-    // ── GIFT DATA (for display in later pages) ─────────────────────
-    const GIFTS = {
-        bol: {
-            ic: 'bol',
-            svg: `<img src="/vaste-lasten/img/bol.com-cadeaukaart.png" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:8px; padding:4px; border:1px solid #dde5f0;">`,
-            name: 'Bol.com Cadeaukaart',
-            val: '€250'
-        },
-        coolblue: {
-            ic: 'coolblue',
-            svg: `<img src="/vaste-lasten/img/coolblue-cadeaukaart.png" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:8px; padding:4px; border:1px solid #dde5f0;">`,
-            name: 'Coolblue Cadeaukaart',
-            val: '€250'
-        },
-        vvv: {
-            ic: 'vvv',
-            svg: `<img src="/vaste-lasten/img/vvv-cadeaukaart.png" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:8px; padding:4px; border:1px solid #dde5f0;">`,
-            name: 'VVV Cadeaukaart',
-            val: '€250'
-        },
-        airpods: {
-            ic: 'airpods',
-            svg: `<img src="/vaste-lasten/img/apple-airpods-pro.png" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:8px; padding:4px; border:1px solid #dde5f0;">`,
-            name: 'Apple AirPods Pro',
-            val: '€279'
-        },
-        watch: {
-            ic: 'watch',
-            svg: `<img src="/vaste-lasten/img/garmin.png" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:8px; padding:4px; border:1px solid #dde5f0;">`,
-            name: 'Garmin Smartwatch',
-            val: '€299'
-        },
-        mediamarkt: {
-            ic: 'mediamarkt',
-            svg: `<img src="/vaste-lasten/img/mediamarkt-cadeaukaart.png" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:8px; padding:4px; border:1px solid #dde5f0;">`,
-            name: 'Mediamarkt Kaart',
-            val: '€500'
-        },
-    };
+    // ── GIFT DATA (generated from server-side prizes array) ─────────
+    const GIFTS = <%- JSON.stringify(prizes.reduce(function(acc, p) {
+        acc[p.id] = {
+            svg: '<img src="' + p.img + '" alt="' + p.name + '" style="width:50px;height:50px;object-fit:contain;background:#fff;border-radius:8px;padding:4px;border:1px solid #dde5f0;">',
+            name: p.name,
+            val: p.val
+        };
+        return acc;
+    }, {})) %>;
 
     // ── SVG PATH LOOKUP ────────────────────────────────────────────
     function getSVGPath(ic) {
