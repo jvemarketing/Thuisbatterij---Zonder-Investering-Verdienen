@@ -305,6 +305,20 @@ async function fireEverflowPostback(transactionId, leadId) {
   }
 }
 
+// ─── Sovendus clickout page ───────────────────────────────────────────────────
+// Opened in a new tab from the thank-you page; renders the Sovendus integration.
+app.get('/sovendus', (req, res) => {
+  res.render('sovendus', {
+    trafficSourceNumber: process.env.SOV_TRAFFIC_SOURCE_NUMBER || '',
+    trafficMediumNumber: process.env.SOV_TRAFFIC_MEDIUM_NUMBER || '',
+    sessionId:           Date.now().toString(36),
+    firstName:           req.query.firstName  || '',
+    lastName:            req.query.lastName   || '',
+    email:               req.query.email      || '',
+    zipcode:             req.query.zipcode    || '',
+  });
+});
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 if (process.env.NODE_ENV !== 'test') {

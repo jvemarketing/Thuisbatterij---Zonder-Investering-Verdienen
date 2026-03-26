@@ -745,8 +745,7 @@ const prizes = [
                         <div class="sov-gift-val">Gratis gereserveerd voor jou</div>
                     </div>
                 </div>
-                <button class="sov-btn"
-                        onclick="alert('Je wordt nu doorgestuurd naar je gratis cadeau via onze partner Sovendus!')">
+                <button class="sov-btn" onclick="openSovendusClickout()">
                     Claim nu mijn gratis cadeau →
                 </button>
                 <div class="sov-small">Aangeboden door onze partner · Gratis voor iedere deelnemer</div>
@@ -790,6 +789,7 @@ const prizes = [
     // ── DATABOWL CONFIG ─────────────────────────────────────────────
     var DATABOWL_CID = "925";
     var DATABOWL_SID = "34";
+
 
     // Databowl field map — rename outgoing keys before submission.
     var LEAD_FIELD_MAP = {
@@ -1543,6 +1543,22 @@ const prizes = [
 
     function toggleFaq(el) {
         el.classList.toggle('open');
+    }
+
+    function openSovendusClickout() {
+        var fn = document.getElementById('fn');
+        var ln = document.getElementById('ln');
+        var em = document.getElementById('em');
+        var pc = document.getElementById('pc');
+
+        var params = new URLSearchParams({
+            firstName: fn ? fn.value.trim() : '',
+            lastName:  ln ? ln.value.trim() : '',
+            email:     em ? em.value.trim() : '',
+            zipcode:   pc ? pc.value.trim() : '',
+        });
+
+        window.open('/sovendus?' + params.toString(), '_blank', 'noopener,noreferrer');
     }
 
     function shareWhatsApp() {
