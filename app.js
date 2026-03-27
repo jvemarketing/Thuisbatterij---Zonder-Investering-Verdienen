@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { waitUntil } from "@vercel/functions";
 import twilio from "twilio";
 import routes from "./routes.js";
+import suppressionRouter from "./suppression.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
@@ -14,6 +15,8 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use('/api', suppressionRouter);
 
 app.set('view engine', 'ejs');
 app.set('views', join(__dirname, 'views'));
