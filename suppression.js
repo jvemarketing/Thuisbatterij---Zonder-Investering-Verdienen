@@ -17,6 +17,13 @@ const META_PATH = `${BLOB_PREFIX}meta.json`;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+// Private blobs require the token in the Authorization header to read.
+function fetchBlob(url) {
+  return fetch(url, {
+    headers: { authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}` },
+  });
+}
+
 function todayFilename() {
   return `suppressions_${new Date().toISOString().slice(0, 10)}.csv`;
 }
@@ -34,7 +41,7 @@ async function readMeta() {
   try {
     const { blobs } = await list({ prefix: META_PATH });
     if (blobs.length === 0) return {};
-    const res = await fetch(blobs[0].url);
+    const res = await fetchBlob(blobs[0].url);
     return await res.json();
   } catch {
     return {};
@@ -87,7 +94,7 @@ router.post("/opt-out", async (req, res) => {
 
     let content = "phone,email\n";
     if (blobs.length > 0) {
-      const existing = await fetch(blobs[0].url);
+      const existing = await fetchBlob(blobs[0].url);
       content = await existing.text();
     }
     content += `${phone},${email}\n`;
@@ -156,10 +163,11 @@ router.get(
       };
       await writeMeta(meta);
 
-      const blobRes = await fetch(blobs[0].url);
+      const blobRes = await fetchBlob(blobs[0].url);
+      const content = await blobRes.text();
       res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
       res.setHeader("Content-Type", "text/csv");
-      blobRes.body.pipe(res);
+      res.send(content);
     } catch (e) {
       res.status(500).json({ error: String(e) });
     }
