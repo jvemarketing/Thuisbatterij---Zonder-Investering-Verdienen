@@ -1,22 +1,19 @@
 /**
- * Suppression list endpoints.
+ * Suppression list endpoints — backed by Vercel Blob.
  *
- * POST /api/opt-out                            – append an entry to today's CSV
- * GET  /api/suppression/files                  – list all CSV files (auth required)
+ * POST /api/opt-out                            – append an entry to today's CSV blob
+ * GET  /api/suppression/files                  – list all CSV blobs (auth required)
  * GET  /api/suppression/download/:filename     – download a CSV and mark it (auth required)
+ *
+ * Requires BLOB_READ_WRITE_TOKEN in the environment.
+ * Set up: Vercel Dashboard → Storage → Blob → connect project → vercel env pull
  */
 
 import { Router } from "express";
-import fs from "fs";
-import { promises as fsp } from "fs";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { put, list } from "@vercel/blob";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const SUPPRESSION_DIR = join(__dirname, "data", "suppressions");
-const SUPPRESSION_META = join(SUPPRESSION_DIR, "meta.json");
-
-fs.mkdirSync(SUPPRESSION_DIR, { recursive: true });
+const BLOB_PREFIX = "suppressions/";
+const META_PATH = `${BLOB_PREFIX}meta.json`;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -34,12 +31,22 @@ function normalisePhone(raw) {
 }
 
 async function readMeta() {
-  try { return JSON.parse(await fsp.readFile(SUPPRESSION_META, "utf8")); }
-  catch { return {}; }
+  try {
+    const { blobs } = await list({ prefix: META_PATH });
+    if (blobs.length === 0) return {};
+    const res = await fetch(blobs[0].url);
+    return await res.json();
+  } catch {
+    return {};
+  }
 }
 
 async function writeMeta(meta) {
-  await fsp.writeFile(SUPPRESSION_META, JSON.stringify(meta, null, 2));
+  await put(META_PATH, JSON.stringify(meta, null, 2), {
+    access: "private",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+  });
 }
 
 function requireBasicAuth(req, res, next) {
@@ -74,14 +81,23 @@ router.post("/opt-out", async (req, res) => {
     if (!email && !phone) {
       return res.status(400).json({ error: "email or mobile is required" });
     }
-    const filepath = join(SUPPRESSION_DIR, todayFilename());
-    const isNew = !fs.existsSync(filepath);
-    const line = `${phone},${email}\n`;
-    if (isNew) {
-      await fsp.writeFile(filepath, "phone,email\n" + line);
-    } else {
-      await fsp.appendFile(filepath, line);
+
+    const blobPath = `${BLOB_PREFIX}${todayFilename()}`;
+    const { blobs } = await list({ prefix: blobPath });
+
+    let content = "phone,email\n";
+    if (blobs.length > 0) {
+      const existing = await fetch(blobs[0].url);
+      content = await existing.text();
     }
+    content += `${phone},${email}\n`;
+
+    await put(blobPath, content, {
+      access: "private",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+    });
+
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: String(e) });
@@ -91,23 +107,21 @@ router.post("/opt-out", async (req, res) => {
 // GET /api/suppression/files
 router.get("/suppression/files", requireBasicAuth, async (req, res) => {
   try {
-    const entries = await fsp.readdir(SUPPRESSION_DIR);
+    const { blobs } = await list({ prefix: BLOB_PREFIX });
     const meta = await readMeta();
-    const files = await Promise.all(
-      entries
-        .filter((f) => f.endsWith(".csv"))
-        .sort()
-        .reverse()
-        .map(async (filename) => {
-          const stat = await fsp.stat(join(SUPPRESSION_DIR, filename));
-          return {
-            filename,
-            size: stat.size,
-            createdAt: stat.birthtime,
-            downloadedAt: meta[filename]?.downloadedAt ?? null,
-          };
-        })
-    );
+
+    const files = blobs
+      .filter((b) => b.pathname.endsWith(".csv"))
+      .sort((a, b) => b.pathname.localeCompare(a.pathname))
+      .map((b) => {
+        const filename = b.pathname.replace(BLOB_PREFIX, "");
+        return {
+          filename,
+          size: b.size,
+          createdAt: b.uploadedAt,
+          downloadedAt: meta[filename]?.downloadedAt ?? null,
+        };
+      });
 
     res.render("suppression/files", { files });
   } catch (e) {
@@ -129,19 +143,23 @@ router.get(
       ) {
         return res.status(400).json({ error: "Invalid filename" });
       }
-      const filepath = join(SUPPRESSION_DIR, filename);
-      if (!fs.existsSync(filepath)) {
+
+      const { blobs } = await list({ prefix: `${BLOB_PREFIX}${filename}` });
+      if (blobs.length === 0) {
         return res.status(404).json({ error: "File not found" });
       }
+
       const meta = await readMeta();
       meta[filename] = {
         ...meta[filename],
         downloadedAt: new Date().toISOString(),
       };
       await writeMeta(meta);
+
+      const blobRes = await fetch(blobs[0].url);
       res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
       res.setHeader("Content-Type", "text/csv");
-      fs.createReadStream(filepath).pipe(res);
+      blobRes.body.pipe(res);
     } catch (e) {
       res.status(500).json({ error: String(e) });
     }
