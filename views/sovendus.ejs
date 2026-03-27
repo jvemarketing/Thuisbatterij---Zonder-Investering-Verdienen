@@ -10,20 +10,34 @@
 </head>
 <body>
     <div id="sovendus-container-1"></div>
+    <!--sovendus code begin -->
     <script type="text/javascript">
         window.sovIframes = window.sovIframes || [];
         window.sovIframes.push({
             trafficSourceNumber: "<%- trafficSourceNumber %>",
             trafficMediumNumber: "<%- trafficMediumNumber %>",
-            sessionId:           "<%- sessionId %>",
-            consumerFirstName:   "<%- firstName %>",
-            consumerLastName:    "<%- lastName %>",
-            consumerEmail:       "<%- email %>",
-            consumerZipcode:     "<%- zipcode %>",
-            consumerCountry:     "NL",
-            hasConsent:          true,
+            hasConsent: true,
+            sessionId: "<%- sessionId %>",
+            orderCurrency: "EUR",
+            iframeContainerId: "sovendus-container-1",
+            integrationType: "genericScript-1.5.0-hasConsent",
         });
+
+        window.sovConsumer = {
+            consumerFirstName: "<%- firstName %>",
+            consumerLastName: "<%- lastName %>",
+            consumerEmail: "<%- email %>",
+            consumerZipcode: "<%- zipcode %>",
+            consumerCountry: "BR",
+        };
+
+        // Append Sovendus script to the head
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = "https://api.sovendus.com/sovabo/common/js/flexibleIframe.js";
+        document.head.appendChild(script);
     </script>
-    <script async src="https://api.sovendus.com/integration/sovendus.js"></script>
+    <!--sovendus code end -->
 </body>
 </html>
