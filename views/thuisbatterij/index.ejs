@@ -21,6 +21,10 @@
       --urgbar-h: 32px
     }
 
+    @media (max-width: 575.98px) {
+      :root { --urgbar-h: 50px }
+    }
+
     html {
       scroll-behavior: smooth
     }
@@ -1380,7 +1384,7 @@
         </div>
 
         <div class="col-12 col-lg-6">
-          <div class="pcard" role="form" aria-label="Postcode check">
+          <div class="pcard" id="postcodeForm" role="form" aria-label="Postcode check">
             <h5 class="mb-1"><i class="fas fa-map-marker-alt text-warning mr-2"></i>Check: Is dit nog beschikbaar zonder
               eigen geld?</h5>
             <p class="text-muted mb-3" style="font-size:.77rem">Nog <span id="spotsInline1">22</span> plekken
@@ -2005,16 +2009,18 @@
       }, 800);
     }
 
-    // Scroll to top postcode input
+    // Scroll to postcode form and vertically center it in the viewport
     function scrollToCheck() {
-      var heroSection = document.getElementById('hero');
-      if (heroSection) {
-        heroSection.scrollIntoView({ behavior: 'smooth' });
-        setTimeout(function () {
-          var input = document.getElementById('hpc');
-          if (input) input.focus();
-        }, 600);
-      }
+      var form = document.getElementById('postcodeForm');
+      if (!form) return;
+      var rect = form.getBoundingClientRect();
+      var formCenterY = window.pageYOffset + rect.top + rect.height / 2;
+      var targetY = formCenterY - window.innerHeight / 2;
+      window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+      setTimeout(function () {
+        var input = document.getElementById('hpc');
+        if (input) input.focus();
+      }, 600);
     }
 
     // Auto-uppercase postcode inputs
