@@ -18,6 +18,7 @@ const prizes = [
           rel="stylesheet">
     <link rel="stylesheet" href="/vaste-lasten/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/css/intlTelInput.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
 
@@ -596,8 +597,13 @@ const prizes = [
         </div>
         <% const maxDob = new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]; %>
         <% const minDob = new Date(new Date().setFullYear(new Date().getFullYear() - 100)).toISOString().split('T')[0]; %>
-        <div class="form-group"><label class="form-label">Geboortedatum</label><input class="form-input" id="dob" name="dateOfBirth"
-                                                                                      type="date" min="<%= minDob %>" max="<%= maxDob %>">
+        <div class="form-group">
+            <label class="form-label">Geboortedatum</label>
+            <input class="form-input" id="dob"
+              name="dateOfBirth"
+              type="text"
+              placeholder="DD-MM-JJJJ"
+              readonly>
             <div id="dobStatus" class="email-status"></div>
         </div>
         <div class="form-divider"></div>
@@ -784,6 +790,7 @@ const prizes = [
 <!-- ════════════════════════════════════════════════════════════
      JAVASCRIPT
 ════════════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
 <script src="/affiliate.js"></script>
 <script src="/form-validation.js"></script>
@@ -1312,11 +1319,38 @@ const prizes = [
         document.getElementById('gdrStatus').textContent = '';
     }
 
-    ['fn', 'ln', 'dob'].forEach(function (id) {
+    ['fn', 'ln'].forEach(function (id) {
         document.getElementById(id).addEventListener('input', function () {
             this.classList.remove('error');
             document.getElementById(id + 'Status').textContent = '';
         });
+    });
+
+    const dobPicker = flatpickr(document.getElementById('dob'), {
+        dateFormat: 'Y-m-d',
+        altInput: true,
+        altFormat: 'd-m-Y',
+        maxDate: '<%= maxDob %>',
+        minDate: '<%= minDob %>',
+        disableMobile: true,
+        locale: {
+            firstDayOfWeek: 1,
+            weekdays: {
+                shorthand: ['zo','ma','di','wo','do','vr','za'],
+                longhand:  ['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag']
+            },
+            months: {
+                shorthand: ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'],
+                longhand:  ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December']
+            }
+        },
+        onReady: function (_, __, fp) {
+            fp.altInput.classList.add('form-input');
+        },
+        onChange: function (_, __, fp) {
+            fp.altInput.classList.remove('error');
+            document.getElementById('dobStatus').textContent = '';
+        }
     });
 
     let emailValid = false;
@@ -1387,7 +1421,7 @@ const prizes = [
             ok = false;
         }
         if (!document.getElementById('dob').value) {
-            FormValidation.showError(document.getElementById('dob'), document.getElementById('dobStatus'), 'Voer je geboortedatum in');
+            FormValidation.showError(dobPicker.altInput, document.getElementById('dobStatus'), 'Voer je geboortedatum in');
             ok = false;
         }
         if (!emailValid) {

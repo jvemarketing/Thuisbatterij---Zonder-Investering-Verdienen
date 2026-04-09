@@ -27,7 +27,19 @@ app.use((req, res, next) => {
   const host = req.hostname
     .replace(/^www\./, '')
     .replace(/\.local$/, '.nl'); // local dev: vastelastenonderzoek.local → vastelastenonderzoek.nl
-  const route = routes.find(r => r.domain === host && req.path === r.path);
+
+  let route = routes.find(r => r.domain === host && req.path === r.path);
+
+  //used for local mobile testing directly on phone
+  const proxyHostname = '03ea-2803-9810-43ec-4010-39c1-f635-1838-69f3.ngrok-free.app';
+  if (req.hostname === proxyHostname) {
+    const domainToTest = 'vastelastenonderzoek.nl';
+    const pathToTest = "/";
+    console.log(host, req.path);
+    route = routes.find(r => r.domain === domainToTest && req.path === pathToTest);
+    console.log(route);
+  }
+
   if (!route) return next();
   console.log({ ...route.data, query: req.query });
   res.render(route.view, { ...route.data, query: req.query });
@@ -325,7 +337,7 @@ app.get('/sovendus', (req, res) => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(80, () => console.log("Proxy running on http://127.0.0.1:80"));
+  app.listen(3000, () => console.log("Proxy running on http://127.0.0.1:3000"));
 }
 
 // Export the Express app
