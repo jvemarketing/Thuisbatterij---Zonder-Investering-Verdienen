@@ -1292,6 +1292,7 @@ const prizes = [
     }
 
     function selectGift(card, id, name, val) {
+        const alreadySelected = card.classList.contains('sel');
         document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('sel'));
         card.classList.add('sel');
         gId = id;
@@ -1300,6 +1301,7 @@ const prizes = [
         const btn = document.getElementById('ggoBtn');
         btn.classList.add('on');
         btn.textContent = 'Ik wil de ' + name + ' winnen! →';
+        if (alreadySelected) showLeadForm();
     }
 
     function setGiftDisplay(eid, nid) {
