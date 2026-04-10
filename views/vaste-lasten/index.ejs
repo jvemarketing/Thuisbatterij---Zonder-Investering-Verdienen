@@ -1201,7 +1201,8 @@ const prizes = [
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none">${getSVGPath(qd.ic)}</svg>
       </div>`;
 
-        document.getElementById('qWrap').innerHTML = `
+        const qWrap = document.getElementById('qWrap');
+        qWrap.innerHTML = `
     <div class="q-image" style="background:none;">
       ${imageHtml}
     </div>
@@ -1209,6 +1210,10 @@ const prizes = [
     <div class="q-text">${qd.q}</div>
     ${qd.d ? `<div class="q-desc" style="font-size:.85rem;color:var(--t2);line-height:1.6;margin-bottom:18px;">${qd.d}</div>` : ''}
     ${opts}${respHtml}`;
+
+        // Block ghost taps on mobile (Safari fires a synthetic click ~300ms after touch)
+        qWrap.style.pointerEvents = 'none';
+        setTimeout(() => { qWrap.style.pointerEvents = ''; }, 450);
 
         window.scrollTo({top: 0, behavior: 'smooth'});
         updateProgress();
