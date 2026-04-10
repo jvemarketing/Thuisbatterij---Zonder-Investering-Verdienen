@@ -31,7 +31,10 @@ app.use((req, res, next) => {
   let route = routes.find(r => r.domain === host && req.path === r.path);
 
   //used for local mobile testing directly on phone
-  const proxyHostname = '03ea-2803-9810-43ec-4010-39c1-f635-1838-69f3.ngrok-free.app';
+  const proxyHostname = process.argv[2] || '';
+
+  console.log(proxyHostname);
+
   if (req.hostname === proxyHostname) {
     const domainToTest = 'vastelastenonderzoek.nl';
     const pathToTest = "/";

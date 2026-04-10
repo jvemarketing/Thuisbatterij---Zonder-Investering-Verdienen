@@ -51,7 +51,13 @@ Required environment variables:
 ## Running locally
 
 ```bash
-npm start
+npm run dev
+```
+
+## Running via proxy:
+
+```bash
+npm run dev -- your-new-hostname.ngrok-free.app
 ```
 
 The server starts on port 80. Because routing is domain-based, you need local domain aliases to test each site.
@@ -121,3 +127,7 @@ npm test
 ## Deployment
 
 Deployed on Vercel. All requests are routed through Express via the catch-all rewrite in `vercel.json`.
+
+## Google Sheet Receiver:
+https://script.google.com/macros/s/AKfycbwtWDl0-Aiw7WZ2Z62x3O2-8Pq4DGOaiheYJEnRaSfF8i7gNY09v7Exr1nllcNlwI9r5w/exec
+https://script.google.com/macros/s/AKfycbzOh0OnRsGMFxCfL957FE1rsnGzywWmHU3BPvFbDkD0u5q2BQnN5TULncvhaiq4eag2lg/exec
