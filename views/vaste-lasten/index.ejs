@@ -1459,6 +1459,7 @@ const prizes = [
                 setGiftDisplay('vfE', 'vfN');
                 showPage('p-verify');
                 setProgress(97);
+                setTimeout(() => document.getElementById('cb').focus(), 50);
             } else {
                 alert('Fout bij versturen verificatiecode. Probeer opnieuw.');
             }
