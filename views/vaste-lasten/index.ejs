@@ -1215,7 +1215,7 @@ const prizes = [
         qWrap.style.pointerEvents = 'none';
         setTimeout(() => { qWrap.style.pointerEvents = ''; }, 450);
 
-        window.scrollTo({top: 0, behavior: 'smooth'});
+        window.scrollTo({top: 0, behavior: 'instant'});
         updateProgress();
     }// Answer handler for single/sub questions — auto-advance
     function handleAnswer(btn, label, key) {
@@ -1570,7 +1570,7 @@ const prizes = [
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        window.scrollTo({top: 0, behavior: 'smooth'});
+        window.scrollTo({top: 0, behavior: 'instant'});
     }
 
     function setProgress(p) {
