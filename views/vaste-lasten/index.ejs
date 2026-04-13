@@ -833,6 +833,9 @@ const prizes = [
         koop_of_huur:            "f_1170_koop_of_huur",
         gezinssamenstelling:     "f_1171_gezinssamenstelling",
         energieleverancier:      "f_1172_energieleverancier",
+        // DOI timestamps
+        doi_sent_time:           "f_399_doi_sent_time",
+        doi_confirmed_time:      "f_400_doi_confirmed_time",
         // Extra fields (passed through as-is, ignored by Databowl if unknown)
         prize_name:              "prize_name",
     };
@@ -1455,6 +1458,7 @@ const prizes = [
         }).then(r => r.json()).then(data => {
             if (data.sent) {
                 verifyPhone = ph;
+                doiSentTime = data.doi_sent_time || '';
                 document.getElementById('mph').textContent = '*'.repeat(7) + ph.slice(-3);
                 setGiftDisplay('vfE', 'vfN');
                 showPage('p-verify');
@@ -1472,6 +1476,8 @@ const prizes = [
     }
 
     let verifyPhone = '';
+    let doiSentTime = '';
+    let doiConfirmedTime = '';
 
     function onCodeInput() {
         const v = document.getElementById('cb').value;
@@ -1491,6 +1497,7 @@ const prizes = [
             body: JSON.stringify({phone: verifyPhone, code})
         }).then(r => r.json()).then(data => {
             if (data.verified) {
+                doiConfirmedTime = data.doi_confirmed_time || '';
                 btn.textContent = 'Versturen...';
                 submitLead().finally(() => {
                     setGiftDisplay('thE', 'thN');
@@ -1530,6 +1537,8 @@ const prizes = [
             aanspreektitel:      gdr,
             geselecteerde_prijs: gN + ' ' + gV,
             transaction_id:      everflowTracking.ef_click_id || '',
+            doi_sent_time:       doiSentTime,
+            doi_confirmed_time:  doiConfirmedTime,
         }, ans);
 
         var formData = { cid: DATABOWL_CID, sid: DATABOWL_SID };

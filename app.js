@@ -188,7 +188,6 @@ app.post("/api/sms/send", async (req, res) => {
   try {
     const { phone, firstName } = req.body;
     if (!phone) return res.status(400).json({ error: "phone is required" });
-    const code = process.env.SMS_VERIFY_CODE;
     const name = firstName || 'deelnemer';
     const message = `Beste ${name}, Gebruik verificatiecode 4463 om je deelname www.vastelastenonderzoek.nl te bevestigen.`;
 
@@ -197,7 +196,7 @@ app.post("/api/sms/send", async (req, res) => {
       from: "Onderzoek",
       to: phone,
     });
-    res.json({ sent: true });
+    res.json({ sent: true, doi_sent_time: new Date().toISOString() });
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
@@ -209,7 +208,9 @@ app.post("/api/sms/verify", async (req, res) => {
     const { code } = req.body;
     if (!code) return res.status(400).json({ error: "code is required" });
     const verified = code.trim() === process.env.SMS_VERIFY_CODE;
-    res.json({ verified });
+    const result = { verified };
+    if (verified) result.doi_confirmed_time = new Date().toISOString();
+    res.json(result);
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
