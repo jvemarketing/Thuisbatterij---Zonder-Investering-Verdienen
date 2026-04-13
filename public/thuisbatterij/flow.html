@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/css/intlTelInput.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <style>
     :root {
       --or: #FF5A00;
@@ -835,6 +836,8 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/nl.js"></script>
   <script src="/affiliate.js"></script>
   <script src="/form-validation.js"></script>
   <script>
@@ -859,6 +862,8 @@
     // Edit this object to configure which fields this page sends to Databowl.
     var LEAD_FIELD_MAP = {
       // Contact fields
+      title:               "f_2_title",
+      dob:                 "f_5_dob",
       email:               "f_1_email",
       firstName:           "f_3_firstname",
       lastName:            "f_4_lastname",
@@ -1008,6 +1013,24 @@
         '<form id="finalForm" onsubmit="submitForm(event)">' +
         '<div class="form-row-custom two-col">' +
         '<div class="fg">' +
+        '<label class="fl" for="fTitle">Aanhef *</label>' +
+        '<select class="fi" id="fTitle" required>' +
+        '<option value="">Selecteer...</option>' +
+        '<option value="De heer">De heer</option>' +
+        '<option value="Mevrouw">Mevrouw</option>' +
+        '<option value="Dhr.">Dhr.</option>' +
+        '<option value="Mevr.">Mevr.</option>' +
+        '</select>' +
+        '<div class="ferr">Selecteer een aanhef</div>' +
+        '</div>' +
+        '<div class="fg">' +
+        '<label class="fl" for="fDob">Geboortedatum *</label>' +
+        '<input type="text" class="fi" id="fDob" placeholder="DD-MM-JJJJ" required autocomplete="off" readonly />' +
+        '<div class="ferr">Voer uw geboortedatum in (minimaal 18 jaar)</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="form-row-custom two-col">' +
+        '<div class="fg">' +
         '<label class="fl" for="fFirstName">Voornaam *</label>' +
         '<input type="text" class="fi" id="fFirstName" required />' +
         '<div class="ferr">Voer uw voornaam in</div>' +
@@ -1073,6 +1096,17 @@
         utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
       });
 
+      var maxDob = new Date();
+      maxDob.setFullYear(maxDob.getFullYear() - 18);
+      flatpickr(document.getElementById('fDob'), {
+        locale: 'nl',
+        dateFormat: 'Y-m-d',
+        altInput: true,
+        altFormat: 'd-m-Y',
+        maxDate: maxDob,
+        disableMobile: true
+      });
+
       FormValidation.attachAddress(
         function () { return postalCode; },
         document.getElementById('fHouseNumber'),
@@ -1120,6 +1154,22 @@
         }
       });
 
+      var $title = $('#fTitle');
+      if (!$title.val()) {
+        $title.addClass('error');
+        valid = false;
+      } else {
+        $title.removeClass('error');
+      }
+
+      var $dob = $('#fDob');
+      if (!$dob.val().trim()) {
+        $dob.addClass('error');
+        valid = false;
+      } else {
+        $dob.removeClass('error');
+      }
+
       if (!emailValid) {
         FormValidation.showError(document.getElementById('fEmail'), document.getElementById('emailStatus'), 'Bevestig een geldig e-mailadres');
         valid = false;
@@ -1141,6 +1191,8 @@
       $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Bezig met verzenden...');
 
       var rawData = Object.assign({
+        title:               $('#fTitle').val(),
+        dob:                 $('#fDob').val(),
         postalCode:          $('#fPostalCode').val(),
         city:                city,
         firstName:           $('#fFirstName').val(),
