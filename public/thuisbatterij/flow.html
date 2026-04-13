@@ -1064,7 +1064,7 @@
         '<div class="form-row-custom three-col">' +
         '<div class="fg">' +
         '<label class="fl" for="fPostalCode">Postcode *</label>' +
-        '<input type="text" class="fi" id="fPostalCode" value="' + postalCode + '" disabled />' +
+        '<input type="text" class="fi" id="fPostalCode" value="' + postalCode + '"/>' +
         '</div>' +
         '<div class="fg">' +
         '<label class="fl" for="fHouseNumber">Huisnummer *</label>' +
@@ -1182,7 +1182,7 @@
       $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Bezig met verzenden...');
 
       var rawData = Object.assign({
-        postalCode:          postalCode,
+        postalCode:          $('#fPostalCode').val(),
         city:                city,
         firstName:           $('#fFirstName').val(),
         lastName:            $('#fLastName').val(),
