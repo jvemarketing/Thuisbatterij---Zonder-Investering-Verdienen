@@ -21,6 +21,23 @@ const routes = [
             optOutURL: '/opt-out.html',
         },
     },
+    //domain with typo
+    {
+        domain: 'vastenlastenonderzoek.nl',
+        path: '/',
+        view: 'vaste-lasten/index',
+        data: {
+            partner: 'vaste-lasten-onderzoek',
+            logo: {
+                src: '/vaste-lasten/img/no-logo.png',
+                alt: 'Vaste lasten onderzoek',
+            },
+            privacyURL: '/privacy.html',
+            termsURL: '/terms.html',
+            faqURL: '/faq.html',
+            optOutURL: '/opt-out.html',
+        },
+    },
     {
         domain: 'vastelastenonderzoek.nl',
         path: '/voltafy',
