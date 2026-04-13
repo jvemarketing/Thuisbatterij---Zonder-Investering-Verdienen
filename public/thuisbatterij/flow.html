@@ -1067,7 +1067,9 @@
 
       itiTel = window.intlTelInput(document.getElementById('fPhone'), {
         initialCountry: 'nl',
+        onlyCountries: ['nl'],
         separateDialCode: true,
+        allowDropdown: false,
         utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
       });
 
