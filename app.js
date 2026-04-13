@@ -117,7 +117,7 @@ app.post("/api/validate/mobile", async (req, res) => {
     const { mobile } = req.body;
     if (!mobile) return res.status(400).json({ error: "mobile is required" });
     const result = await databowlRequest("validate", "hlr", { mobile });
-    res.json({result: 'live'});
+    //res.json({result: 'live'});
     res.json(result);
   } catch (e) {
     res.status(500).json({ error: String(e) });
@@ -190,7 +190,8 @@ app.post("/api/sms/send", async (req, res) => {
     if (!phone) return res.status(400).json({ error: "phone is required" });
     const code = process.env.SMS_VERIFY_CODE;
     const name = firstName || 'deelnemer';
-    const message = `Beste ${name}, uw Vaste Lasten Onderzoek verificatiecode is: ${code}. Vul deze in op de site.`;
+    const message = `Beste ${name}, Gebruik verificatiecode 4463 om je deelname www.vastelastenonderzoek.nl te bevestigen.`;
+
     await getTwilioClient().messages.create({
       body: message,
       from: "Onderzoek",
