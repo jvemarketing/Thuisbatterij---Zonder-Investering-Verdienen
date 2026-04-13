@@ -117,7 +117,7 @@ app.post("/api/validate/mobile", async (req, res) => {
     const { mobile } = req.body;
     if (!mobile) return res.status(400).json({ error: "mobile is required" });
     const result = await databowlRequest("validate", "hlr", { mobile });
-    //res.json({result: 'live'});
+    res.json({result: 'live'});
     res.json(result);
   } catch (e) {
     res.status(500).json({ error: String(e) });
@@ -193,7 +193,7 @@ app.post("/api/sms/send", async (req, res) => {
     const message = `Beste ${name}, uw Vaste Lasten Onderzoek verificatiecode is: ${code}. Vul deze in op de site.`;
     await getTwilioClient().messages.create({
       body: message,
-      from: process.env.TWILIO_FROM_NUMBER,
+      from: "Onderzoek",
       to: phone,
     });
     res.json({ sent: true });
