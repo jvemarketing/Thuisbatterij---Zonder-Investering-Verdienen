@@ -77,6 +77,12 @@ const routes = [
         view: 'thuisbatterij/index',
         data: {},
     },
+    {
+        domain: 'verdienduurzamer.nl',
+        path: '/',
+        view: 'thuisbatterij/index',
+        data: {},
+    },
 ];
 
 export default routes;
