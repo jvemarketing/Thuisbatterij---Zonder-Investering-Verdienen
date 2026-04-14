@@ -1110,7 +1110,7 @@
       });
 
       FormValidation.attachAddress(
-        function () { return postalCode; },
+        function () { return document.getElementById('fPostalCode').value.trim(); },
         document.getElementById('fHouseNumber'),
         document.getElementById('fHouseNumberAddition'),
         document.getElementById('fStreet'),
