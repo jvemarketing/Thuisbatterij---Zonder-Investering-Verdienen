@@ -809,6 +809,7 @@ const prizes = [
         postalCode:          "f_11_postcode",
         phone:               "f_12_phone1",
         city:                "f_40_city",
+        stateName:           "f_10_county",
         aanspreektitel:      "f_101_gender",
         houseNumber:         "f_167_house_number",
         houseNumberAddition: "f_1070_address_addition",
@@ -1397,6 +1398,7 @@ const prizes = [
 
     let addressValid = false;
     let resolvedCity = null;
+    let resolvedState = null;
     FormValidation.attachAddress(
         function () {
             return document.getElementById('pc').value;
@@ -1407,7 +1409,8 @@ const prizes = [
         document.getElementById('addrStatus'),
         function (valid, addressData) {
             addressValid = valid;
-            resolvedCity = addressData ? (addressData.cityName || null) : null;
+            resolvedCity  = addressData ? (addressData.cityName  || null) : null;
+            resolvedState = addressData ? (addressData.stateName || null) : null;
             document.getElementById('addrRow').style.display = valid ? 'block' : 'none';
         }
     );
@@ -1530,6 +1533,7 @@ const prizes = [
             phone:               itiTel.getNumber(),
             postalCode:          pc,
             city:                resolvedCity,
+            stateName:           resolvedState,
             houseNumber:         document.getElementById('hn').value.trim(),
             houseNumberAddition: document.getElementById('hnAdd').value.trim(),
             street:              document.getElementById('addrF').value.trim(),

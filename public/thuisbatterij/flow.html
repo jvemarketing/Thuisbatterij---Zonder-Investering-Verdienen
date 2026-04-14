@@ -844,6 +844,7 @@
     var urlParams = new URLSearchParams(window.location.search);
     var postalCode = urlParams.get('pc') || '1234AB';
     var city = null;
+    var state = null;
 
     // Get Everflow tracking data using affiliate module
     var everflowTracking = AffiliateTracking.getTracking();
@@ -870,6 +871,7 @@
       postalCode:          "f_11_postcode",
       phone:               "f_12_phone1",
       city:                "f_40_city",
+      stateName:           "f_10_county",
       houseNumber:         "f_167_house_number",
       houseNumberAddition: "f_1070_address_addition",
       street:              "f_991_street_name",
@@ -1116,7 +1118,8 @@
         function (valid, addressData) {
           addressValid = valid;
           if (addressData && addressData.cityName) {
-            city = addressData.cityName;
+            city  = addressData.cityName;
+            state = addressData.stateName || null;
             $('#cityLoader').text(city);
             $('#cityTop').text(city);
           }
@@ -1195,6 +1198,7 @@
         dob:                 $('#fDob').val(),
         postalCode:          $('#fPostalCode').val(),
         city:                city,
+        stateName:           state,
         firstName:           $('#fFirstName').val(),
         lastName:            $('#fLastName').val(),
         street:              $('#fStreet').val(),
