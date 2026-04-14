@@ -245,6 +245,10 @@ app.post("/api/lead", async (req, res) => {
       sid: body.sid,
     };
 
+    // IP address and source URL
+    params.f_17_ipaddress          = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '';
+    params.f_1288_lead_source_url  = `${req.protocol}://${req.hostname}${req.originalUrl}`;
+
     // Optin consent — newsletter checkbox drives all optin channels
     const optin = body.newsletter ? "true" : "false";
     params.optin_email           = optin;
