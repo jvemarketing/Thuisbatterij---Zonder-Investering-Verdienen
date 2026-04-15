@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/css/intlTelInput.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <style>
     :root {
       --or: #FF5A00;
@@ -836,10 +835,10 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/nl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/imask/dist/imask.min.js"></script>
   <script src="/affiliate.js"></script>
   <script src="/form-validation.js"></script>
+  <script src="/dob-mask.js"></script>
   <script>
     var urlParams = new URLSearchParams(window.location.search);
     var postalCode = urlParams.get('pc') || '1234AB';
@@ -1027,7 +1026,7 @@
         '</div>' +
         '<div class="fg">' +
         '<label class="fl" for="fDob">Geboortedatum *</label>' +
-        '<input type="text" class="fi" id="fDob" placeholder="DD-MM-JJJJ" required autocomplete="off" readonly />' +
+        '<input type="text" class="fi" id="fDob" placeholder="DD/MM/JJJJ" inputmode="numeric" autocomplete="off" />' +
         '<div class="ferr">Voer uw geboortedatum in (minimaal 18 jaar)</div>' +
         '</div>' +
         '</div>' +
@@ -1098,16 +1097,7 @@
         utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
       });
 
-      var maxDob = new Date();
-      maxDob.setFullYear(maxDob.getFullYear() - 18);
-      flatpickr(document.getElementById('fDob'), {
-        locale: 'nl',
-        dateFormat: 'Y-m-d',
-        altInput: true,
-        altFormat: 'd-m-Y',
-        maxDate: maxDob,
-        disableMobile: true
-      });
+      DobMask.init(document.getElementById('fDob'));
 
       FormValidation.attachAddress(
         function () { return document.getElementById('fPostalCode').value.trim(); },
@@ -1165,12 +1155,8 @@
         $title.removeClass('error');
       }
 
-      var $dob = $('#fDob');
-      if (!$dob.val().trim()) {
-        $dob.addClass('error');
+      if (!DobMask.validate(document.getElementById('fDob'), null)) {
         valid = false;
-      } else {
-        $dob.removeClass('error');
       }
 
       if (!emailValid) {
@@ -1195,7 +1181,7 @@
 
       var rawData = Object.assign({
         title:               $('#fTitle').val(),
-        dob:                 $('#fDob').val(),
+        dob:                 DobMask.toISO(document.getElementById('fDob')),
         postalCode:          $('#fPostalCode').val(),
         city:                city,
         stateName:           state,
