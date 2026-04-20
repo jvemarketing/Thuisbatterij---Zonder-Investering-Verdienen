@@ -189,7 +189,7 @@ app.post("/api/sms/send", async (req, res) => {
     const { phone, firstName } = req.body;
     if (!phone) return res.status(400).json({ error: "phone is required" });
     const name = firstName || 'deelnemer';
-    const message = `Beste ${name}, Gebruik verificatiecode 4463 om je deelname www.vastelastenonderzoek.nl te bevestigen.`;
+    const message = `Beste ${name}, Gebruik verificatiecode 4463 om je deelname op www.vastelastenonderzoek.nl te bevestigen.`;
 
     await getTwilioClient().messages.create({
       body: message,

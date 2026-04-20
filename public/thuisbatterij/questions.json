@@ -178,6 +178,21 @@
       {"text": "Ik twijfel", "value": "ik_twijfel"},
       {"text": "Nee", "value": "nee"}
     ],
+    "branching_rules": {
+      "ja_voldoende_ruimte": "interesse_in_airco",
+      "ik_twijfel": "interesse_in_airco",
+      "nee": "interesse_in_airco"
+    }
+  },
+  {
+    "question_id": "interesse_in_airco",
+    "text": "Wilt u ook profiteren van een energiezuinige airco?",
+    "description": "Koelen in de zomer, verwarmen in de winter én besparen op uw energiekosten. Ontvang vrijblijvend advies bij u thuis.",
+    "type": "radio",
+    "options": [
+      {"text": "Ja, ik wil gratis advies", "value": "ja"},
+      {"text": "Nee, bedankt", "value": "nee"}
+    ],
     "branching_rules": {}
   }
 ]
