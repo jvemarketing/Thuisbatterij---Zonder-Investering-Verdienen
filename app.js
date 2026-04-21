@@ -247,7 +247,9 @@ app.post("/api/lead", async (req, res) => {
 
     // IP address and source URL
     params.f_17_ipaddress          = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '';
-    params.f_1288_lead_source_url  = req.hostname;
+    const referer = req.headers.referer || req.headers.referrer || '';
+    const refPath = referer ? new URL(referer).pathname : '';
+    params.f_1288_lead_source_url  = req.hostname + refPath;
 
     // Optin consent — newsletter checkbox drives all optin channels
     const optin = body.newsletter ? "true" : "false";
