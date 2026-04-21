@@ -901,7 +901,8 @@
     var currentId = null;
 
     $(function () {
-      $('#cityLoader').text(city);
+      var province = FormValidation._getProvince(postalCode);
+      if (province) $('#cityLoader').text(province);
       $('#cityTop').text(city);
 
       function getDailySpots() {
