@@ -8,7 +8,7 @@
   'use strict';
 
   var MAX_AGE = 100;
-  var MIN_AGE = 18;
+  var MIN_AGE = 25;
 
   function maxDobDate() {
     var d = new Date();
@@ -26,7 +26,7 @@
 
     /**
      * Apply IMask date mask to an input element.
-     * Format: DD/MM/YYYY. Enforces 18–100 year age range.
+     * Format: DD/MM/YYYY. Enforces 25–100 year age range.
      *
      * @param  {HTMLElement} inputEl
      * @returns {IMask.InputMask} The mask instance
@@ -90,7 +90,7 @@
       var max = maxDobDate();
       if (!dobComplete || dobDate > max) {
         var msg = (dobComplete && dobDate > max)
-          ? 'Je moet minimaal 18 jaar oud zijn'
+          ? 'Je moet minimaal ' + MIN_AGE + ' jaar oud zijn'
           : 'Voer een geldige geboortedatum in';
         inputEl.classList.remove('valid');
         inputEl.classList.add('error');
