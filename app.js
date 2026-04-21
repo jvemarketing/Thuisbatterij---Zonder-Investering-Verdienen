@@ -221,6 +221,14 @@ app.post("/api/sms/verify", async (req, res) => {
 const LEAD_ENDPOINT = "https://jve.databowl.com/api/v1/lead";
 const EVERFLOW_POSTBACK_URL = "https://www.jh5th1trk.com/";
 
+// Domain → Facebook pixel config. Add one entry per domain that needs FB conversion tracking.
+const FB_PIXEL_CONFIG = {
+  'verdienduurzamer.nl': {
+    pixelId: process.env.FB_PIXEL_ID_VERDIENDUURZAMER,
+    token:   process.env.FB_TOKEN_VERDIENDUURZAMER,
+  },
+};
+
 // Maps incoming JSON keys (from the frontend) → Databowl field names.
 // Update this object when the campaign fields change — no other code needs touching.
 // POST /api/lead
@@ -233,8 +241,9 @@ app.post("/api/lead", async (req, res) => {
     const body = req.body;
     const now = new Date().toISOString();
 
-    // Extract Everflow tracking data (not sent to Databowl)
+    // Extract network tracking data (not forwarded to Databowl)
     const everflowTracking = body.everflow_tracking || null;
+    const fbTracking       = body.fb_tracking       || null;
 
     // Campaign params — must be provided by the frontend
     if (!body.cid || !body.sid) {
@@ -260,8 +269,8 @@ app.post("/api/lead", async (req, res) => {
     params.optin_sms             = optin;
     params.optin_sms_timestamp   = now;
 
-    // Forward all pre-mapped fields from the frontend; skip internal keys
-    const skip = new Set(["newsletter", "cid", "sid", "everflow_tracking"]);
+    // Forward all pre-mapped fields from the frontend; skip internal/tracking keys
+    const skip = new Set(["newsletter", "cid", "sid", "everflow_tracking", "fb_tracking"]);
     for (const [key, val] of Object.entries(body)) {
       if (skip.has(key)) continue;
       if (val !== undefined && val !== null && val !== "") {
@@ -286,17 +295,23 @@ app.post("/api/lead", async (req, res) => {
       }
     }
 
-    // Fire Everflow postback on successful conversion
-    if (json.result === "created" && everflowTracking?.ef_click_id) {
-      // Use Vercel's waitUntil to ensure postback completes before function shutdown
-      waitUntil(
-        fireEverflowPostback(everflowTracking.ef_click_id, json.lead_id)
-          .catch(err => {
-            console.error('❌ Everflow postback error:', err);
-            console.error('Error stack:', err.stack);
-          })
-      );
-      console.log('✓ Everflow postback scheduled with waitUntil');
+    if (json.result === "created") {
+      if (everflowTracking?.ef_click_id) {
+        waitUntil(
+          fireEverflowPostback(everflowTracking.ef_click_id, json.lead_id)
+            .catch(err => console.error('❌ Everflow postback error:', err))
+        );
+        console.log('✓ Everflow postback scheduled');
+      }
+
+      const fbConfig = FB_PIXEL_CONFIG[req.hostname];
+      if (fbConfig?.pixelId && fbConfig?.token && fbTracking?.fbclid) {
+        waitUntil(
+          fireFacebookConversion(fbConfig, fbTracking, req)
+            .catch(err => console.error('❌ Facebook Conversions API error:', err))
+        );
+        console.log('✓ Facebook postback scheduled');
+      }
     }
 
     res.status(r.status).json(json);
@@ -329,6 +344,38 @@ async function fireEverflowPostback(transactionId, leadId) {
     console.error('Everflow postback error:', error);
     throw error;
   }
+}
+
+// Fire Facebook Conversions API event
+async function fireFacebookConversion(fbConfig, fbTracking, req) {
+  const { pixelId, token } = fbConfig;
+  const { fbclid, fbevent } = fbTracking;
+  const eventTime = Math.floor(Date.now() / 1000);
+
+  const payload = {
+    data: [{
+      event_name:    fbevent,
+      event_time:    eventTime,
+      action_source: 'website',
+      user_data: {
+        fbc:               `fb.1.${eventTime}.${fbclid}`,
+        client_ip_address: req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '',
+        client_user_agent: req.headers['user-agent'] || '',
+      },
+    }],
+  };
+
+  const url = `https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${token}`;
+  console.log(`[facebook] pixel=${pixelId} event=${fbevent} fbclid=${fbclid}`);
+
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const json = await r.json();
+  if (!r.ok) throw new Error(`Facebook Conversions API ${r.status}: ${JSON.stringify(json)}`);
+  console.log('[facebook] ✓', json);
 }
 
 // ─── Sovendus clickout page ───────────────────────────────────────────────────

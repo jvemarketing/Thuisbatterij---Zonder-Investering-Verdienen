@@ -849,6 +849,10 @@
     var everflowTracking = AffiliateTracking.getTracking();
     console.log('Everflow tracking data:', everflowTracking);
 
+    // Get Facebook tracking data
+    var fbTracking = AffiliateTracking.getFbTracking();
+    console.log('Facebook tracking data:', fbTracking);
+
     var itiTel;
     var emailValid = false;
     var phoneValid = false;
@@ -1210,6 +1214,11 @@
       // Add Everflow tracking data
       if (everflowTracking.ef_click_id) {
         formData.everflow_tracking = everflowTracking;
+      }
+
+      // Add Facebook tracking data
+      if (fbTracking.fbclid) {
+        formData.fb_tracking = fbTracking;
       }
 
       $.ajax({

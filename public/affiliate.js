@@ -9,9 +9,13 @@
   var AffiliateTracking = {
     // Storage key for localStorage
     STORAGE_KEY: 'everflow_tracking',
+    FB_STORAGE_KEY: 'fb_tracking',
 
     // Everflow parameter names
     PARAMS: ['ef_click_id', 'aff_id', 'pub', 'sub'],
+
+    // Facebook parameter names
+    FB_PARAMS: ['fbclid', 'fbevent'],
 
     /**
      * Capture tracking parameters from URL and store them
@@ -32,6 +36,18 @@
       if (Object.keys(trackingData).length > 0) {
         this.save(trackingData);
         console.log('Everflow tracking captured:', trackingData);
+      }
+
+      // Capture Facebook parameters
+      var fbData = {};
+      var fbStorageKey = this.FB_STORAGE_KEY;
+      this.FB_PARAMS.forEach(function(param) {
+        var value = urlParams.get(param);
+        if (value) fbData[param] = value;
+      });
+      if (Object.keys(fbData).length > 0) {
+        try { localStorage.setItem(fbStorageKey, JSON.stringify(fbData)); } catch (e) {}
+        console.log('Facebook tracking captured:', fbData);
       }
 
       return trackingData;
@@ -78,10 +94,22 @@
     },
 
     /**
+     * Get Facebook tracking data from localStorage
+     */
+    getFbTracking: function() {
+      try {
+        var stored = localStorage.getItem(this.FB_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : {};
+      } catch (e) {
+        return {};
+      }
+    },
+
+    /**
      * Append tracking parameters to a URL
      */
     appendToUrl: function(url) {
-      var tracking = this.get();
+      var tracking = Object.assign({}, this.get(), this.getFbTracking());
 
       if (Object.keys(tracking).length === 0) {
         return url;
