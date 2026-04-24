@@ -227,6 +227,10 @@ const FB_PIXEL_CONFIG = {
     pixelId: "4513411092222816",
     token: "EAALWuyeezx4BRYXAlMyZCCBY2z5lOshOmt9vuQTKOL5YmWZCerXZCWhUjcBHYB9Wuw19ZA3cw6bOAzbTSdEgksnemx6HfIDrJ0eb7nKTaxrYiFos13vSEFpgpgA0aqJiKJHCsOjwUTHkhyBhtv6mnAAN8yFlgzYgfMhnH05ZCZC4c1EsbK8MfNc9YyOWNFKQZDZD",
   },
+  'vastenlastenonderzoek.nl': {
+    pixelId: "4513411092222816",
+    token: "EAALWuyeezx4BRYXAlMyZCCBY2z5lOshOmt9vuQTKOL5YmWZCerXZCWhUjcBHYB9Wuw19ZA3cw6bOAzbTSdEgksnemx6HfIDrJ0eb7nKTaxrYiFos13vSEFpgpgA0aqJiKJHCsOjwUTHkhyBhtv6mnAAN8yFlgzYgfMhnH05ZCZC4c1EsbK8MfNc9YyOWNFKQZDZD",
+  },
 };
 
 // Maps incoming JSON keys (from the frontend) → Databowl field names.
