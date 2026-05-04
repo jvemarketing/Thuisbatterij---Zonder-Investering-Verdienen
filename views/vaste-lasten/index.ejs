@@ -1,5 +1,5 @@
 <%
-const prizes = [
+const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPrizes : [
     { id: 'bol',        name: 'Bol.com Cadeaukaart',  shortName: 'Bol.com',     val: '€500', img: '/vaste-lasten/img/bol.com-cadeaukaart.png' },
     { id: 'coolblue',   name: 'Coolblue Cadeaukaart', shortName: 'Coolblue',    val: '€500', img: '/vaste-lasten/img/coolblue-cadeaukaart.png' },
     { id: 'airpods',    name: 'Apple AirPods Pro',    shortName: 'AirPods Pro', val: '€279', img: '/vaste-lasten/img/apple-airpods-pro.png' },
