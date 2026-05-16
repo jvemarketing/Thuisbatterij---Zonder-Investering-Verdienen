@@ -227,6 +227,10 @@ const FB_PIXEL_CONFIG = {
     pixelId: "4513411092222816",
     token: "EAALWuyeezx4BRYXAlMyZCCBY2z5lOshOmt9vuQTKOL5YmWZCerXZCWhUjcBHYB9Wuw19ZA3cw6bOAzbTSdEgksnemx6HfIDrJ0eb7nKTaxrYiFos13vSEFpgpgA0aqJiKJHCsOjwUTHkhyBhtv6mnAAN8yFlgzYgfMhnH05ZCZC4c1EsbK8MfNc9YyOWNFKQZDZD",
   },
+  'verdienduurzamer.local': {
+    pixelId: "937971222531441",
+    token: "EAAbdZANluGEkBRU21QKutVVWlhL1e6cd90rn4ByzJMhXta6LbiZANqBoe92ZCZBlbrSUTFQpNCAMC0lbDmWJzpdxXGKBsHqnZBUn4PSo4vA3JyYir6ECIuIzudpQ8FmWlgDoZBsUTQwJjCvDtMjoZCBQHD2ngb9rUQQhOYewGqjhBB2ohoTYF57YdNCSM6f3j0bJwZDZD",
+  },
   'vastenlastenonderzoek.nl': {
     pixelId: "4513411092222816",
     token: "EAALWuyeezx4BRYXAlMyZCCBY2z5lOshOmt9vuQTKOL5YmWZCerXZCWhUjcBHYB9Wuw19ZA3cw6bOAzbTSdEgksnemx6HfIDrJ0eb7nKTaxrYiFos13vSEFpgpgA0aqJiKJHCsOjwUTHkhyBhtv6mnAAN8yFlgzYgfMhnH05ZCZC4c1EsbK8MfNc9YyOWNFKQZDZD",
@@ -309,6 +313,9 @@ app.post("/api/lead", async (req, res) => {
       }
 
       const fbConfig = FB_PIXEL_CONFIG[req.hostname];
+
+      console.log(fbConfig, fbTracking);
+
       if (fbConfig?.pixelId && fbConfig?.token && fbTracking?.fbclid) {
         waitUntil(
           fireFacebookConversion(fbConfig, fbTracking, req)
@@ -358,7 +365,7 @@ async function fireFacebookConversion(fbConfig, fbTracking, req) {
 
   const payload = {
     data: [{
-      event_name:    'lead',
+      event_name:    'Lead',
       event_time:    eventTime,
       action_source: 'website',
       user_data: {
@@ -369,8 +376,8 @@ async function fireFacebookConversion(fbConfig, fbTracking, req) {
     }],
   };
 
-  const url = `https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${token}`;
-  console.log(`[facebook] pixel=${pixelId} event=${fbevent} fbclid=${fbclid}`);
+  const url = `https://graph.facebook.com/v25.0/${pixelId}/events?access_token=${token}`;
+  console.log(`[facebook] pixel=${pixelId} event=Lead fbclid=${fbclid}`);
 
   const r = await fetch(url, {
     method: 'POST',
