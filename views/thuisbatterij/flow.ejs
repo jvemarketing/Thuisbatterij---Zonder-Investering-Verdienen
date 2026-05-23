@@ -731,7 +731,7 @@
       c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
       t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
       y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wlt8ml5f4e");
+    })(window, document, "clarity", "script", "<%= clarityId %>");
   </script>
 
   <!-- Meta Pixel Code -->
@@ -980,7 +980,7 @@
 
     function showSurvey() {
       $('#loaderSection').fadeOut(300, function () {
-        $.getJSON('questions.json')
+        $.getJSON('/thuisbatterij/questions.json')
           .done(function (data) {
             questions = data;
             data.forEach(function (q) { questionsById[q.question_id] = q; });
@@ -1286,7 +1286,7 @@
 
 
 
-    
+
     // Prevent back button
     history.pushState(null, null, location.href);
     window.onpopstate = function () {

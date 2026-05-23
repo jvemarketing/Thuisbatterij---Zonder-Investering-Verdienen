@@ -152,13 +152,25 @@ const routes = [
         domain: 'verdienduurzaam.nl',
         path: '/thuisbatterij',
         view: 'thuisbatterij/index',
-        data: {},
+        data: { clarityId: 'wlt8ml5f4e' },
+    },
+    {
+        domain: 'verdienduurzaam.nl',
+        path: '/thuisbatterij/flow',
+        view: 'thuisbatterij/flow',
+        data: { clarityId: 'wlt8ml5f4e' },
     },
     {
         domain: 'verdienduurzamer.nl',
         path: '/',
         view: 'thuisbatterij/index',
-        data: {},
+        data: { clarityId: 'wnwa4jr0p8' },
+    },
+    {
+        domain: 'verdienduurzamer.nl',
+        path: '/flow',
+        view: 'thuisbatterij/flow',
+        data: { clarityId: 'wnwa4jr0p8' },
     },
 ];
 
