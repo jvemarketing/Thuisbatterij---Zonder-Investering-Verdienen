@@ -28,7 +28,8 @@ app.use((req, res, next) => {
     .replace(/^www\./, '')
     .replace(/\.local$/, '.nl'); // local dev: vastelastenonderzoek.local → vastelastenonderzoek.nl
 
-  let route = routes.find(r => r.domain === host && req.path === r.path);
+  const normalizedPath = req.path !== '/' ? req.path.replace(/\/$/, '') : '/';
+  let route = routes.find(r => r.domain === host && normalizedPath === r.path);
 
   //used for local mobile testing directly on phone
   const proxyHostname = process.argv[2] || '';
