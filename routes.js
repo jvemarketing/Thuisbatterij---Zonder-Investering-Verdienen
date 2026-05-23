@@ -45,8 +45,8 @@ const routes = [
         },
     },
     {
-        domain: 'vastenlastenonderzoek.nl',
-        path: '/cadeaukaart',
+        domain: 'vastelastenonderzoek.nl',
+        path: '/1',
         view: 'vaste-lasten/index',
         data: {
             partner: 'vaste-lasten-onderzoek',
@@ -69,8 +69,8 @@ const routes = [
         },
     },
     {
-        domain: 'vastenlastenonderzoek.nl',
-        path: '/cadeau',
+        domain: 'vastelastenonderzoek.nl',
+        path: '/2',
         view: 'vaste-lasten/index',
         data: {
             partner: 'vaste-lasten-onderzoek',
