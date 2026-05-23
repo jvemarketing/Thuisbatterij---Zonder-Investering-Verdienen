@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thuisbatterij: €60-75 Per Maand Verdienen — Met Of Zonder Zonnepanelen</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B1A;
+    --orange-dark: #E85A0C;
+    --orange-light: #FFF4EC;
+    --navy: #0A1F3D;
+    --navy-mid: #152E54;
+    --navy-light: #E8EDF5;
+    --red-alert: #DC2626;
+    --green-check: #10B981;
+    --ink: #0A1F3D;
+    --white: #ffffff;
+    --gray-light: #F5F7FA;
+    --gray-mid: #E0E4EB;
+    --muted: #4A5568;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #ffffff;
+    color: #0A1F3D;
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* ── ALERT BAR ── */
+  .alert-bar {
+    background: var(--red-alert);
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Inter', system-ui, sans-serif;
+    letter-spacing: 0.3px;
+  }
+  .alert-bar::before {
+    content: '●';
+    color: white;
+    margin-right: 8px;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(180deg, #0A1F3D 0%, #152E54 60%, #1A3866 100%);
+    color: white;
+    padding: 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-content {
+    padding: 90px 24px 70px;
+    position: relative;
+  }
+  .hero-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,107,26,0.15) 0%, transparent 70%);
+  }
+  .hero-content > * { position: relative; }
+  .hero-tag {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: clamp(2rem, 6vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    max-width: 780px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--orange);
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    max-width: 560px;
+    margin: 0 auto 40px;
+    opacity: 0.88;
+    line-height: 1.7;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 4px 20px rgba(255,107,26,0.35);
+  }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,26,0.5); background: var(--orange-dark); }
+  .hero-proof {
+    margin-top: 36px;
+    font-size: 0.88rem;
+    opacity: 0.7;
+    font-style: italic;
+  }
+  .hero-proof strong { color: var(--orange); font-style: normal; }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    padding: 64px 24px 40px;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .intro h2 {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 24px;
+    line-height: 1.25;
+  }
+  .intro-lead {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 24px;
+    line-height: 1.7;
+    text-align: left;
+    border-left: 4px solid var(--orange);
+    padding-left: 20px;
+  }
+  .intro p { margin-bottom: 18px; color: var(--navy); text-align: left; }
+  .intro-question {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--orange-dark);
+    margin-top: 36px;
+    font-weight: 700;
+  }
+
+  /* ── DUAL BENEFIT BANNER ── */
+  .dual-benefit {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 36px 32px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .dual-benefit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 100% 0%, rgba(255,107,26,0.15) 0%, transparent 70%);
+  }
+  .dual-benefit > * { position: relative; }
+  .dual-benefit h3 {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--orange);
+    text-align: center;
+  }
+  .dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .dual-option {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,107,26,0.3);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .dual-option .label {
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .dual-option .title {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+  .dual-option p { font-size: 0.92rem; line-height: 1.6; opacity: 0.88; }
+  @media (max-width: 600px) {
+    .dual-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── BLISSY-STYLE LISTICLE ROW ── */
+  .list-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--gray-mid);
+  }
+  .list-row:last-of-type { border-bottom: none; }
+
+  /* Odd rows: image left, text right */
+  .list-row.layout-left .row-image { order: 1; }
+  .list-row.layout-left .row-text { order: 2; }
+
+  /* Even rows: text left, image right */
+  .list-row.layout-right .row-text { order: 1; }
+  .list-row.layout-right .row-image { order: 2; }
+
+  .row-text h2 {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: clamp(1.3rem, 2.6vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--navy);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .row-text h2 .num {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.6rem;
+    color: var(--orange);
+    font-weight: 900;
+    font-style: italic;
+    flex-shrink: 0;
+  }
+  .row-text h2 .num::after {
+    content: '.';
+    color: var(--orange);
+  }
+  .row-text p {
+    margin-bottom: 14px;
+    font-size: 0.98rem;
+    color: var(--navy);
+    line-height: 1.7;
+  }
+  .row-text p:last-child { margin-bottom: 0; }
+  .row-text strong { color: var(--navy); font-weight: 700; }
+
+  /* ── IMAGE PLACEHOLDER ── */
+  .img-placeholder {
+    background: var(--gray-light);
+    border: 2px dashed var(--gray-mid);
+    border-radius: 8px;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-style: italic;
+    text-align: center;
+    gap: 8px;
+    position: sticky;
+    top: 24px;
+  }
+  .img-placeholder .icon { font-size: 2.4rem; }
+  .img-placeholder strong { color: var(--orange); font-style: normal; font-size: 0.85rem; }
+  .img-placeholder .suggestion {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 720px) {
+    .list-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 32px 0;
+    }
+    .list-row.layout-left .row-image,
+    .list-row.layout-right .row-image { order: 1; }
+    .list-row.layout-left .row-text,
+    .list-row.layout-right .row-text { order: 2; }
+    .img-placeholder {
+      aspect-ratio: 16 / 10;
+      position: static;
+    }
+  }
+
+  /* ── INLINE QUOTE (lighter, inside text) ── */
+  .inline-quote {
+    background: var(--navy-light);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--navy);
+  }
+  .inline-quote .attribution {
+    margin-top: 8px;
+    font-style: normal;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--orange-dark);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── OFFICIAL QUOTE ── */
+  .official-quote {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: white;
+    border-radius: 6px;
+    padding: 20px 22px;
+    margin: 16px 0;
+    border-left: 3px solid var(--orange);
+  }
+  .official-quote .badge {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+  }
+  .official-quote .text {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-style: italic;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin-bottom: 10px;
+    color: white;
+  }
+  .official-quote .source {
+    font-size: 0.76rem;
+    opacity: 0.7;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── INLINE DOUBT BUSTER ── */
+  .doubt-inline {
+    background: var(--orange-light);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  .doubt-inline .q {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    display: flex;
+    gap: 6px;
+  }
+  .doubt-inline .q::before { content: '🤔'; flex-shrink: 0; }
+  .doubt-inline .a {
+    color: var(--navy);
+    font-weight: 500;
+    display: flex;
+    gap: 6px;
+  }
+  .doubt-inline .a::before { content: '✅'; flex-shrink: 0; }
+
+  /* ── INLINE STATS ── */
+  .inline-stats {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .inline-stat {
+    flex: 1;
+    min-width: 100px;
+    background: var(--navy);
+    color: white;
+    border-radius: 6px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .inline-stat .val {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--orange);
+    display: block;
+    line-height: 1.2;
+  }
+  .inline-stat .lbl {
+    font-size: 0.7rem;
+    opacity: 0.85;
+    line-height: 1.35;
+    margin-top: 4px;
+  }
+
+  /* ── URGENCY BOX ── */
+  .urgency-box {
+    background: #FFF5F5;
+    border: 2px solid var(--red-alert);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .urgency-box .icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .urgency-box h4 {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1rem;
+    color: var(--red-alert);
+    margin-bottom: 4px;
+  }
+  .urgency-box p {
+    margin: 0 !important;
+    font-size: 0.85rem !important;
+    color: var(--navy);
+    line-height: 1.5 !important;
+  }
+
+  /* ── CTA BLOCK (full-width) ── */
+  .cta-full {
+    background: linear-gradient(135deg, #0A1F3D 0%, #152E54 100%);
+    color: white;
+    padding: 60px 24px;
+    margin: 60px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-full::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 20%, rgba(255,107,26,0.15) 0%, transparent 70%);
+  }
+  .cta-full > * { position: relative; }
+  .cta-full h2 {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: 16px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-full p {
+    font-size: 1rem;
+    opacity: 0.9;
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+  .cta-full a {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 16px 44px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(255,107,26,0.35);
+  }
+  .cta-full a:hover { transform: translateY(-2px); background: var(--orange-dark); box-shadow: 0 8px 30px rgba(255,107,26,0.5); }
+  .cta-full .sub { margin-top: 16px; font-size: 0.82rem; opacity: 0.65; font-style: italic; }
+  .cta-checks {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 24px auto 8px;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    max-width: 600px;
+  }
+  .cta-checks span { display: flex; align-items: center; gap: 6px; }
+  .cta-checks span::before { content: '✓'; color: var(--green-check); font-weight: 900; }
+
+  /* ── FINAL VERDICT ── */
+  .verdict {
+    background: var(--orange-light);
+    border: 2px solid var(--orange);
+    border-radius: 12px;
+    padding: 36px 32px;
+    margin: 40px 0;
+  }
+  .verdict h3 {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    color: var(--navy);
+    text-align: center;
+  }
+  .verdict ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .verdict ul li {
+    display: flex;
+    gap: 10px;
+    font-size: 0.97rem;
+    color: var(--navy);
+  }
+  .verdict ul li::before { content: '✓'; flex-shrink: 0; color: var(--orange); font-weight: 900; font-size: 1.1rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 36px 24px;
+    font-size: 0.82rem;
+  }
+  footer a { color: var(--orange); text-decoration: none; font-weight: 600; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * { animation: fadeUp 0.7s ease both; }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.25s; }
+  .hero-sub { animation-delay: 0.4s; }
+  .hero-cta { animation-delay: 0.55s; }
+  .hero-proof { animation-delay: 0.65s; }
+</style>
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wlt8ml5f4e");
+  </script>
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '4513411092222816');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+                 src="https://www.facebook.com/tr?id=4513411092222816&ev=PageView&noscript=1"
+    /></noscript>
+  <!-- End Meta Pixel Code -->
+
+</head>
+<body>
+
+<!-- ALERT BAR -->
+<div class="alert-bar">Beperkt beschikbaar: subsidie & regeling nog actief — 22 plekken resterend in jouw regio</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+  <div class="hero-tag">Nieuw: Subsidie Eindigt Eind 2026</div>
+  <h1>€150-€250 Per Maand Aan Energie.<br><em>Dat geld hoort in úw huis.</em></h1>
+  <p class="hero-sub">Met een thuisbatterij verdient u €60-75 per maand. Met óf zonder zonnepanelen. Zonder eigen geld. Alles wordt voor u geregeld — subsidie, BTW, installatie.</p>
+  <a class="hero-cta" href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">Check uw besparing in 10 seconden →</a>
+  <p class="hero-proof"><strong>3.800+ Nederlanders</strong> gingen u al voor — lees hieronder hoe</p>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="intro container">
+  <h2>VIRAL IN NEDERLAND: Waarom 3.800+ Huishoudens Nu Een Thuisbatterij Regelen (En Waarom U Dat Straks Ook Wilt)</h2>
+  <p class="intro-lead">U betaalt €150-€250 per maand aan energie. Terwijl dat geld in uw huis zou kunnen zitten. Terwijl uw buren die rekening stoppen in hun woning. En hun huis intussen €15.000-€25.000 méér waard wordt. Het verschil? Zij regelden het. U nog niet.</p>
+
+  <p>Dit is het verhaal van een beslissing die duizenden Nederlanders al namen. Geen slimme handel. Geen verborgen risico. Een simpel principe: <strong>stop met energie inkopen op het duurste moment van de dag.</strong></p>
+
+  <p>En het mooie: dit werkt <strong>met én zonder zonnepanelen</strong>. De komende 10 punten tonen hoe — gebaseerd op honderden reacties van mensen die hun rekening al lieten dalen.</p>
+
+  <p class="intro-question">Dus wat doet een thuisbatterij precies?</p>
+</section>
+
+<!-- DUAL BENEFIT BANNER -->
+<div class="container">
+  <div class="dual-benefit">
+    <h3>Een thuisbatterij verdient op twéé manieren</h3>
+    <div class="dual-grid">
+      <div class="dual-option">
+        <div class="label">Mét zonnepanelen</div>
+        <div class="title">Sla op wat u overdag maakt</div>
+        <p>Gebruik 's avonds wat u 's middags al heeft opgewekt. Niks meer weggeven aan het net voor een paar cent per kWh. U gebruikt uw eigen stroom op het moment dat die het meest waard is.</p>
+      </div>
+      <div class="dual-option">
+        <div class="label">Zónder zonnepanelen</div>
+        <div class="title">Laad 's nachts op, gebruik overdag</div>
+        <p>De batterij laadt op als de prijs laag is, en u gebruikt deze goedkope stroom als de prijs hoog is. Het verschil: €0,27 per kWh in úw voordeel.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTICLE: Blissy-style alternating rows -->
+<main class="container">
+
+  <!-- 1 — image left, text right -->
+  <div class="list-row layout-left">
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/1-1.jpg" alt="Thuisbatterij afbeelding 1" style="width:100%;border-radius:8px;display:block;">
+    </div>
+    <div class="row-text">
+      <h2><span class="num">1</span> U betaalt teveel. Elke maand opnieuw.</h2>
+      <p>Of u nu wél of géén zonnepanelen heeft — één ding is gelijk: u betaalt elke maand. Tussen de €150 en €250 gaat er van uw rekening af, zonder dat u er grip op heeft. En wie zonnepanelen heeft voelt het dubbel: overdag geeft u stroom weg voor bijna niks, 's avonds koopt u dezelfde stroom terug voor het volle tarief.</p>
+      <div class="inline-quote">
+        Ik heb een thuisbatterij om zo weinig mogelijk stroom terug te leveren. En om opgewekte zonnestroom zelf gebruiken. De energiemaatschappijen betalen nog geen 2 cent per kW en verkopen het voor 28 cent. Kun jij rekenen?
+        <div class="attribution">— Peter Krielen</div>
+      </div>
+      <p>Het verschil tussen goedkope en dure stroom is gemiddeld <strong>€0,27 per kWh</strong>. Op 200 kWh per maand in piekuren bespaart een thuisbatterij u direct <strong>€54 per maand</strong>.</p>
+      <div class="doubt-inline">
+        <div class="q">Maar ik heb geen zonnepanelen — werkt dit dan wel voor mij?</div>
+        <div class="a">Ja. U laadt 's nachts goedkoop, gebruikt overdag. Dat levert al €50-75 per maand op.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 — text left, image right -->
+  <div class="list-row layout-right">
+    <div class="row-text">
+      <h2><span class="num">2</span> De rekensom die klopt: €60-€75 per maand, elke maand</h2>
+      <p>Hier is de berekening, zonder marketingmist. Een thuisbatterij slaat 6-8 kWh op — genoeg om uw dure uren te overbruggen. Met een prijsverschil van €0,27 per kWh en dagelijks gebruik van 6 kWh uit de batterij:</p>
+      <div class="inline-stats">
+        <div class="inline-stat">
+          <span class="val">+€54</span>
+          <span class="lbl">tariefverschil per maand</span>
+        </div>
+        <div class="inline-stat">
+          <span class="val">+€15-21</span>
+          <span class="lbl">extra via dynamisch contract</span>
+        </div>
+        <div class="inline-stat">
+          <span class="val">+€60-75</span>
+          <span class="lbl">netto besparing per maand</span>
+        </div>
+      </div>
+      <div class="inline-quote">
+        Afgelopen wintermaanden tot nu toe gemiddeld €150 per maand bespaard aan stroom. Alpha ESS 7,6 kWh batterij.
+        <div class="attribution">— Harro Sterrenburg (12 likes)</div>
+      </div>
+      <div class="doubt-inline">
+        <div class="q">Ben ik dan niet jaren bezig voordat ik dit terugverdiend heb?</div>
+        <div class="a">Met €0 eigen inleg verdient de batterij zichzelf terug vanaf maand één. Elke bespaarde euro blijft direct in uw zak.</div>
+      </div>
+    </div>
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/1.jpg" alt="Thuisbatterij afbeelding 2" style="width:100%;border-radius:8px;display:block;">
+    </div>
+  </div>
+
+  <!-- 3 — image left, text right -->
+  <div class="list-row layout-left">
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/2.jpg" alt="Thuisbatterij afbeelding 3" style="width:100%;border-radius:8px;display:block;">
+    </div>
+    <div class="row-text">
+      <h2><span class="num">3</span> De overheid waarschuwt: het stroomnet raakt vol</h2>
+      <p>Dit is geen doemverhaal — dit is officiële overheidscommunicatie. Het net loopt vast. Stroomprijzen worden volatieler, terugleververgoeding verdwijnt, piektarieven stijgen. De mensen die nu een buffer in huis hebben, zijn straks de winnaars.</p>
+      <div class="official-quote">
+        <div class="badge">Rijksoverheid · Officiële bron</div>
+        <div class="text">Op steeds meer plekken loopt het stroomnet tegen de grenzen aan. Dat komt doordat we steeds meer stroom tegelijk gebruiken én op andere momenten produceren met zonnepanelen.</div>
+        <div class="source">Ministerie van Klimaat en Groene Groei — Rijksoverheid.nl, december 2026</div>
+      </div>
+      <p>Vertaald: <strong>dynamische prijzen worden de norm</strong>. Wie straks wil profiteren, heeft een batterij nodig. Wie nu instapt, legt de subsidie vast tegen huidige voorwaarden.</p>
+      <div class="urgency-box">
+        <span class="icon">⚠️</span>
+        <div>
+          <h4>Subsidieregeling eindigt eind 2026</h4>
+          <p>Hierna vervalt BTW-teruggave en 0%-financiering. Gemiddelde kostenbesparing van €1.200-€1.800 is dan weg.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 — text left, image right -->
+  <div class="list-row layout-right">
+    <div class="row-text">
+      <h2><span class="num">4</span> €0 vooraf. €0 eigen inleg. Alles wordt geregeld.</h2>
+      <p>Dit is waar het écht interessant wordt. De grootste drempel voor mensen is de aanschafprijs. Die drempel hoeft u niet te nemen.</p>
+      <p>Onder de huidige regeling betaalt u <strong>€0 eigen geld</strong>. De subsidie wordt voor u aangevraagd. De BTW-teruggave wordt voor u geregeld. De financiering loopt via een partner waarbij de maandelijkse aflossing <strong>lager is dan uw maandelijkse besparing</strong>. U houdt elke maand geld over — zelfs tijdens de aflossing.</p>
+      <div class="inline-quote">
+        Je betaalt niets meer aan de leveranciers voor energie omdat je deze zelf kan opslaan met een thuisbatterij. Daar zit de winst in!
+        <div class="attribution">— Laurens Visser (4 likes)</div>
+      </div>
+      <div class="doubt-inline">
+        <div class="q">Klinkt te mooi — wat is het addertje onder het gras?</div>
+        <div class="a">Geen addertje. Wél een voorwaarde: op tijd zijn. De subsidiepot is per regio beperkt.</div>
+      </div>
+    </div>
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/3-1.jpg" alt="Thuisbatterij afbeelding 4" style="width:100%;border-radius:8px;display:block;">
+    </div>
+  </div>
+
+</main>
+
+<!-- MID CTA (full width) -->
+<div class="cta-full">
+  <h2>22 plekken resterend in uw regio</h2>
+  <p>Check in 10 seconden of uw postcode nog in aanmerking komt voor de regeling zonder eigen inleg. Gratis & vrijblijvend.</p>
+  <a href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">Ja, check mijn postcode →</a>
+  <div class="cta-checks">
+    <span>€0 eigen geld</span>
+    <span>Subsidie + BTW geregeld</span>
+    <span>Resultaat binnen 10 sec</span>
+  </div>
+  <p class="sub">Geen verkooppraatjes. Gewoon een eerlijke check.</p>
+</div>
+
+<main class="container">
+
+  <!-- 5 — image left, text right -->
+  <div class="list-row layout-left">
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/4.jpg" alt="Thuisbatterij afbeelding 5" style="width:100%;border-radius:8px;display:block;">
+    </div>
+    <div class="row-text">
+      <h2><span class="num">5</span> Uw woning stijgt €15.000-€25.000 in waarde</h2>
+      <p>Dit is het stille voordeel waar weinigen over praten: een thuisbatterij is niet alleen een besparing, maar een <strong>vaste waardeverhoging</strong> van uw woning. Makelaars noemen het standaard als pluspunt. Kopers betalen letterlijk meer voor een energieneutraal huis.</p>
+      <div class="inline-stats">
+        <div class="inline-stat">
+          <span class="val">€15.000</span>
+          <span class="lbl">minimale waardestijging</span>
+        </div>
+        <div class="inline-stat">
+          <span class="val">€25.000</span>
+          <span class="lbl">maximale waardestijging (mét panelen)</span>
+        </div>
+        <div class="inline-stat">
+          <span class="val">€0</span>
+          <span class="lbl">wat het u kost</span>
+        </div>
+      </div>
+      <div class="doubt-inline">
+        <div class="q">Maar ik ga niet verhuizen — heeft dit waarde voor mij?</div>
+        <div class="a">Ja. Uw woning wordt direct een beter onderpand voor financieringen en taxaties. En áls u ooit verhuist, heeft u die waarde al ingebouwd.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 — text left, image right -->
+  <div class="list-row layout-right">
+    <div class="row-text">
+      <h2><span class="num">6</span> Simpel, automatisch, onzichtbaar</h2>
+      <p>U hoeft niks te doen. Geen knoppen. Geen app die u moet bijhouden. Het systeem bepaalt zelf het slimste moment om te laden en te ontladen, op basis van stroomprijs en uw verbruikspatroon.</p>
+      <p><strong>De batterij slaat 6-8 kWh op.</strong> Die capaciteit wordt elke dag gevuld — via uw zonnepanelen (als u die heeft) of via het net tijdens goedkope uren ('s nachts). Vervolgens gebruikt u die opgeslagen stroom tijdens piekuren.</p>
+      <div class="inline-quote">
+        Ik heb geen omkijken naar mijn thuisbatterij, ik hoef niks bij te houden maar ik bespaar wel iedere maand!
+        <div class="attribution">— Kenneth van Dijk</div>
+      </div>
+      <div class="doubt-inline">
+        <div class="q">En als er stroomuitval is?</div>
+        <div class="a">De batterijen via de regeling hebben noodstroomfunctie. Huis blijft verlicht, koelkast draait door, internet blijft werken.</div>
+      </div>
+    </div>
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/4-1.jpg" alt="Thuisbatterij afbeelding 6" style="width:100%;border-radius:8px;display:block;">
+    </div>
+  </div>
+
+  <!-- 7 — image left, text right -->
+  <div class="list-row layout-left">
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/6.jpg" alt="Thuisbatterij afbeelding 7" style="width:100%;border-radius:8px;display:block;">
+    </div>
+    <div class="row-text">
+      <h2><span class="num">7</span> De noodstroombonus: zekerheid als het net uitvalt</h2>
+      <p>Stroomuitval komt vaker voor dan u denkt. Met een steeds voller belast net: nog vaker in de komende jaren. Met een thuisbatterij blijft u gewoon doordraaien — zonder stress, zonder diepvrieszorgen, zonder "werkt mijn internet straks nog?".</p>
+      <div class="inline-quote">
+        In het nieuws hoor je steeds vaker dat het stroomnet overbelast raakt. Sinds ik een thuisbatterij heb, geeft dat me toch wat meer zekerheid.
+        <div class="attribution">— Toon Akkermans</div>
+      </div>
+      <p>Voor wie thuiswerkt, jonge kinderen heeft, een warmtepomp gebruikt of afhankelijk is van medische apparatuur: deze continuïteit is niet zomaar een extraatje. Het komt er als bonus bij.</p>
+      <div class="doubt-inline">
+        <div class="q">Werkt elke thuisbatterij automatisch als noodstroom?</div>
+        <div class="a">Niet allemaal, maar alle systemen via deze regeling hebben deze functie standaard.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 — text left, image right -->
+  <div class="list-row layout-right">
+    <div class="row-text">
+      <h2><span class="num">8</span> De levensduur is langer dan iedereen denkt: 15-25 jaar</h2>
+      <p>Een grote zorg: "hoe lang gaat zo'n batterij mee?" De technische realiteit is geruststellend:</p>
+      <div class="inline-quote">
+        De levensduur van een batterij tot 70-80% capaciteit is ongeveer 15 jaar, hij gaat dus langer mee dan die 10 jaar. Met een beetje overcapaciteit kun je de batterij 25-30 jaar inzetten.
+        <div class="attribution">— Patrick Smit</div>
+      </div>
+      <p>Dat betekent: als u nu instapt en €60-75 per maand bespaart, dan bespaart u over 15 jaar <strong>€10.800-€13.500</strong>. Over 20 jaar: <strong>€14.400-€18.000</strong>. Zonder ooit één euro vooraf betaald te hebben.</p>
+      <div class="doubt-inline">
+        <div class="q">Heb ik niet beter kunnen wachten op betere technologie?</div>
+        <div class="a">Elke maand wachten = €60-75 weggegooid. Twee jaar wachten = €1.440-€1.800 verlies. En de subsidie is na eind 2026 weg.</div>
+      </div>
+    </div>
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/7.jpg" alt="Thuisbatterij afbeelding 8" style="width:100%;border-radius:8px;display:block;">
+    </div>
+  </div>
+
+  <!-- 9 — image left, text right -->
+  <div class="list-row layout-left">
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/8.jpg" alt="Thuisbatterij afbeelding 9" style="width:100%;border-radius:8px;display:block;">
+    </div>
+    <div class="row-text">
+      <h2><span class="num">9</span> Elektrische auto of warmtepomp? Dan bijna onmisbaar</h2>
+      <p>Hoe hoger uw stroomverbruik, hoe groter uw besparing. Voor huizen met een warmtepomp, EV of airco-verwarming is de rekening simpel: u heeft véél stroom nodig op dure momenten. De batterij vangt precies dát gat op.</p>
+      <div class="inline-quote">
+        Mijn verbruik is 4.500 kWh op jaarbasis. Ik verwarm en koel mijn huis met mijn airco, dus 4.500 gedeeld door 365 — dat is 12 kWh per dag. Dan zou ik er een van 10 kWh moeten hebben denk ik toch?
+        <div class="attribution">— Willem Van de Wiel</div>
+      </div>
+      <p>Voor EV-rijders: u laadt uw auto met goedkope nachtstroom of eigen zonnestroom — uit de batterij. Dat scheelt al snel honderden euro's per jaar bovenop de reguliere besparingen.</p>
+      <div class="doubt-inline">
+        <div class="q">Moet ik dan een grotere, duurdere batterij?</div>
+        <div class="a">Niet noodzakelijk. De regeling berekent welke capaciteit past. €0 blijft €0, ongeacht de gekozen capaciteit.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 — text left, image right -->
+  <div class="list-row layout-right">
+    <div class="row-text">
+      <h2><span class="num">10</span> 3.800+ Nederlanders gingen u voor. Wacht u nog?</h2>
+      <p>Dit is geen experiment meer. Geen gok op nieuwe technologie. Dit is een bewezen systeem dat al bij duizenden huishoudens draait — en elke maand structureel geld oplevert.</p>
+      <p>Het verschil tussen hen en degenen die nog twijfelen is niet intelligentie. Niet geld. Niet kennis van energiemarkten. Het is timing. <strong>Zij kozen ervoor om nú te handelen, toen de regeling nog voordelig was.</strong></p>
+      <p>En wat opvalt in alle berichten van mensen die het al hebben: geen spijt. Alleen de vraag waarom ze niet eerder instapten.</p>
+      <div class="urgency-box">
+        <span class="icon">⏰</span>
+        <div>
+          <h4>Nog 22 plekken beschikbaar in uw regio</h4>
+          <p>De postcodecheck duurt 10 seconden. Als uw regio vol is, weet u dat direct. Zo niet — dan weet u binnen één week wat u structureel bespaart.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row-image">
+      <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/9-1.jpg" alt="Thuisbatterij afbeelding 10" style="width:100%;border-radius:8px;display:block;">
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict">
+    <h3>De eerlijke conclusie: voor wie is een thuisbatterij slim?</h3>
+    <ul>
+      <li>U betaalt meer dan €100 per maand aan energie (vrijwel iedereen in 2026)</li>
+      <li>U heeft zonnepanelen — of u heeft ze juist níet, beiden profiteren</li>
+      <li>U gebruikt stroom in de ochtend of avond (piekuren)</li>
+      <li>U heeft een warmtepomp, EV, airco of andere stroomverbruiker</li>
+      <li>U wil minder afhankelijk zijn van stijgende energieprijzen</li>
+      <li>U wil stroom houden bij netstoringen</li>
+      <li>U wil uw woningwaarde verhogen zonder uit eigen zak te betalen</li>
+      <li>U wil nu instappen — zolang de subsidie nog geldt</li>
+    </ul>
+  </div>
+
+</main>
+
+<!-- FINAL CTA -->
+<div class="cta-full">
+  <h2>Check of uw regio nog beschikbaar is</h2>
+  <p>22 plekken resterend voor de regeling zonder eigen inleg. Na eind 2026 vervalt de subsidie en BTW-teruggave. Wacht u — of handelt u nú?</p>
+  <a href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">Ja, check mijn postcode in 10 seconden →</a>
+  <div class="cta-checks">
+    <span>€0 eigen inleg</span>
+    <span>Subsidie + BTW geregeld</span>
+    <span>Wij regelen alles</span>
+  </div>
+  <p class="sub">Gratis & vrijblijvend · Geen spam · Resultaat binnen 10 sec</p>
+</div>
+
+<footer>
+  <p>© 2026 · Onafhankelijk energieadvies · <a href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">verdienduurzaam.nl/thuisbatterij</a></p>
+</footer>
+
+  <script src="/affiliate.js"></script>
+
+</body>
+</html>

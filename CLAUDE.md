@@ -66,3 +66,7 @@ npm run dev -- your-hostname.ngrok-free.app
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob for suppression CSVs |
 | `SUPPRESSION_USER` / `SUPPRESSION_PASS` | Basic Auth for suppression admin endpoints |
 | `SOV_TRAFFIC_SOURCE_NUMBER` / `SOV_TRAFFIC_MEDIUM_NUMBER` | Sovendus integration |
+
+## Git
+
+Do not add `Co-Authored-By` trailers to commit messages.

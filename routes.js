@@ -138,6 +138,12 @@ const routes = [
     // verdienduurzaam.nl
     {
         domain: 'verdienduurzaam.nl',
+        path: '/thuisbatterij-advies',
+        view: 'thuisbatterij/pre-lander',
+        data: {},
+    },
+    {
+        domain: 'verdienduurzaam.nl',
         path: '/thuisbatterij',
         view: 'thuisbatterij/index',
         data: {},
