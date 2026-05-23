@@ -172,6 +172,12 @@ const routes = [
         view: 'thuisbatterij/flow',
         data: { clarityId: 'wnwa4jr0p8' },
     },
+    {
+        domain: 'verdienduurzamer.nl',
+        path: '/thuisbatterij/flow',
+        view: 'thuisbatterij/flow',
+        data: { clarityId: 'wnwa4jr0p8' },
+    },
 ];
 
 export default routes;
