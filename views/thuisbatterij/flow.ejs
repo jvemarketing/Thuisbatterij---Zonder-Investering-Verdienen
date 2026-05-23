@@ -1116,7 +1116,7 @@
         '<input type="checkbox" id="fNews" />' +
         '<label for="fNews">Ja, ik ontvang graag tips en aanbiedingen over verduurzamen</label>' +
         '</div>' +
-        '<button type="submit" class="fsubmit"><i class="fas fa-paper-plane mr-2"></i>Verstuur aanvraag</button>' +
+        '<button type="submit" class="fsubmit"><i class="fas fa-paper-plane mr-2"></i>Ontvang vrijblijvend advies</button>' +
         '</form>';
 
       $('#surveyCard').html(html);
@@ -1260,7 +1260,7 @@
             showExit();
           } else {
             console.warn('Lead rejected by Databowl:', response);
-            $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-2"></i>Verstuur aanvraag');
+            $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-2"></i>Ontvang vrijblijvend advies');
             alert('Er is een probleem opgetreden bij het verwerken van uw aanvraag. Probeer het opnieuw.');
           }
         },
@@ -1271,7 +1271,7 @@
             return;
           }
           console.error('Lead submission error:', xhr.responseText);
-          $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-2"></i>Verstuur aanvraag');
+          $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-2"></i>Ontvang vrijblijvend advies');
           alert('Er is een technische fout opgetreden. Probeer het later opnieuw.');
         }
       });
