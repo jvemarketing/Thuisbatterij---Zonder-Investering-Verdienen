@@ -306,8 +306,13 @@ app.post("/api/lead", async (req, res) => {
 
     if (json.result === "created") {
       if (everflowTracking?.ef_click_id) {
+        const leadContactData = {
+          adv1: body.f_1_email     || '',
+          adv2: body.f_12_phone1   || '',
+          adv3: body.f_11_postcode || '',
+        };
         waitUntil(
-          fireEverflowPostback(everflowTracking.ef_click_id, json.lead_id)
+          fireEverflowPostback(everflowTracking.ef_click_id, json.lead_id, leadContactData)
             .catch(err => console.error('❌ Everflow postback error:', err))
         );
         console.log('✓ Everflow postback scheduled');
@@ -333,12 +338,16 @@ app.post("/api/lead", async (req, res) => {
 });
 
 // Fire Everflow conversion postback
-async function fireEverflowPostback(transactionId, leadId) {
+async function fireEverflowPostback(transactionId, leadId, leadContactData = {}) {
   try {
 
     const postbackUrl = new URL(EVERFLOW_POSTBACK_URL);
     postbackUrl.searchParams.set('nid', '3773');
     postbackUrl.searchParams.set('transaction_id', transactionId);
+
+    if (leadContactData.adv1) postbackUrl.searchParams.set('adv1', leadContactData.adv1);
+    if (leadContactData.adv2) postbackUrl.searchParams.set('adv2', leadContactData.adv2);
+    if (leadContactData.adv3) postbackUrl.searchParams.set('adv3', leadContactData.adv3);
 
     console.log(`Firing Everflow postback for transaction ${transactionId}, lead ${leadId}:`, postbackUrl.toString());
 
