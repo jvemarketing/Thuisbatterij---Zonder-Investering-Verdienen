@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thuisbatterij: €60-75 Per Maand Verdienen — Met Of Zonder Zonnepanelen</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --orange: #FF6B1A;
@@ -25,11 +25,15 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: #ffffff;
     color: #0A1F3D;
-    line-height: 1.7;
+    line-height: 1.65;
     font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
   }
 
   /* ── ALERT BAR ── */
@@ -40,7 +44,6 @@
     padding: 10px 16px;
     font-size: 0.85rem;
     font-weight: 600;
-    font-family: 'Inter', system-ui, sans-serif;
     letter-spacing: 0.3px;
   }
   .alert-bar::before {
@@ -58,27 +61,22 @@
   .hero {
     background: linear-gradient(180deg, #0A1F3D 0%, #152E54 60%, #1A3866 100%);
     color: white;
-    padding: 0;
+    padding: 90px 24px 70px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
-  .hero-content {
-    padding: 90px 24px 70px;
-    position: relative;
-  }
-  .hero-content::before {
+  .hero::before {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,107,26,0.15) 0%, transparent 70%);
   }
-  .hero-content > * { position: relative; }
+  .hero > * { position: relative; }
   .hero-tag {
     display: inline-block;
     background: var(--orange);
     color: white;
-    font-family: 'Inter', system-ui, sans-serif;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 2px;
@@ -88,13 +86,12 @@
     margin-bottom: 28px;
   }
   .hero h1 {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: clamp(2rem, 6vw, 3.8rem);
     font-weight: 900;
-    line-height: 1.15;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
     max-width: 780px;
     margin: 0 auto 24px;
-    position: relative;
   }
   .hero h1 em {
     font-style: normal;
@@ -108,21 +105,6 @@
     opacity: 0.88;
     line-height: 1.7;
   }
-  .hero-cta {
-    display: inline-block;
-    background: var(--orange);
-    color: white;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 16px 40px;
-    border-radius: 50px;
-    text-decoration: none;
-    letter-spacing: 0.5px;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    box-shadow: 0 4px 20px rgba(255,107,26,0.35);
-  }
-  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,26,0.5); background: var(--orange-dark); }
   .hero-proof {
     margin-top: 36px;
     font-size: 0.88rem;
@@ -146,27 +128,25 @@
     text-align: center;
   }
   .intro h2 {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: clamp(1.5rem, 4vw, 2.2rem);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--navy);
     margin-bottom: 24px;
-    line-height: 1.25;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
   .intro-lead {
     font-size: 1.15rem;
     font-weight: 400;
     color: var(--navy);
     margin-bottom: 24px;
-    line-height: 1.7;
+    line-height: 1.6;
     text-align: left;
     border-left: 4px solid var(--orange);
     padding-left: 20px;
   }
   .intro p { margin-bottom: 18px; color: var(--navy); text-align: left; }
   .intro-question {
-    font-family: 'Sora', system-ui, sans-serif;
-    font-style: italic;
     font-size: 1.35rem;
     color: var(--orange-dark);
     margin-top: 36px;
@@ -191,8 +171,9 @@
   }
   .dual-benefit > * { position: relative; }
   .dual-benefit h3 {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     margin-bottom: 20px;
     color: var(--orange);
     text-align: center;
@@ -218,8 +199,8 @@
     margin-bottom: 10px;
   }
   .dual-option .title {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: 1.15rem;
+    font-weight: 700;
     margin-bottom: 10px;
   }
   .dual-option p { font-size: 0.92rem; line-height: 1.6; opacity: 0.88; }
@@ -238,19 +219,16 @@
   }
   .list-row:last-of-type { border-bottom: none; }
 
-  /* Odd rows: image left, text right */
   .list-row.layout-left .row-image { order: 1; }
   .list-row.layout-left .row-text { order: 2; }
-
-  /* Even rows: text left, image right */
   .list-row.layout-right .row-text { order: 1; }
   .list-row.layout-right .row-image { order: 2; }
 
   .row-text h2 {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: clamp(1.3rem, 2.6vw, 1.65rem);
-    font-weight: 700;
-    line-height: 1.25;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     color: var(--navy);
     margin-bottom: 16px;
     display: flex;
@@ -258,11 +236,9 @@
     align-items: baseline;
   }
   .row-text h2 .num {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: 1.6rem;
     color: var(--orange);
     font-weight: 900;
-    font-style: italic;
     flex-shrink: 0;
   }
   .row-text h2 .num::after {
@@ -273,37 +249,10 @@
     margin-bottom: 14px;
     font-size: 0.98rem;
     color: var(--navy);
-    line-height: 1.7;
+    line-height: 1.65;
   }
   .row-text p:last-child { margin-bottom: 0; }
   .row-text strong { color: var(--navy); font-weight: 700; }
-
-  /* ── IMAGE PLACEHOLDER ── */
-  .img-placeholder {
-    background: var(--gray-light);
-    border: 2px dashed var(--gray-mid);
-    border-radius: 8px;
-    aspect-ratio: 4 / 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    color: var(--muted);
-    font-size: 0.82rem;
-    font-style: italic;
-    text-align: center;
-    gap: 8px;
-    position: sticky;
-    top: 24px;
-  }
-  .img-placeholder .icon { font-size: 2.4rem; }
-  .img-placeholder strong { color: var(--orange); font-style: normal; font-size: 0.85rem; }
-  .img-placeholder .suggestion {
-    font-size: 0.75rem;
-    opacity: 0.8;
-    margin-top: 4px;
-  }
 
   @media (max-width: 720px) {
     .list-row {
@@ -315,13 +264,9 @@
     .list-row.layout-right .row-image { order: 1; }
     .list-row.layout-left .row-text,
     .list-row.layout-right .row-text { order: 2; }
-    .img-placeholder {
-      aspect-ratio: 16 / 10;
-      position: static;
-    }
   }
 
-  /* ── INLINE QUOTE (lighter, inside text) ── */
+  /* ── INLINE QUOTE ── */
   .inline-quote {
     background: var(--navy-light);
     border-left: 3px solid var(--orange);
@@ -363,8 +308,8 @@
     margin-bottom: 10px;
   }
   .official-quote .text {
-    font-family: 'Sora', system-ui, sans-serif;
     font-style: italic;
+    font-weight: 500;
     font-size: 0.98rem;
     line-height: 1.55;
     margin-bottom: 10px;
@@ -377,7 +322,7 @@
     letter-spacing: 0.3px;
   }
 
-  /* ── INLINE DOUBT BUSTER ── */
+  /* ── DOUBT BUSTER ── */
   .doubt-inline {
     background: var(--orange-light);
     border-left: 3px solid var(--orange);
@@ -419,9 +364,9 @@
     text-align: center;
   }
   .inline-stat .val {
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     color: var(--orange);
     display: block;
     line-height: 1.2;
@@ -444,13 +389,11 @@
     gap: 12px;
     align-items: flex-start;
   }
-  .urgency-box .icon {
-    font-size: 1.4rem;
-    flex-shrink: 0;
-  }
+  .urgency-box .icon { font-size: 1.4rem; flex-shrink: 0; }
   .urgency-box h4 {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
     color: var(--red-alert);
     margin-bottom: 4px;
   }
@@ -461,7 +404,7 @@
     line-height: 1.5 !important;
   }
 
-  /* ── CTA BLOCK (full-width) ── */
+  /* ── CTA BLOCK ── */
   .cta-full {
     background: linear-gradient(135deg, #0A1F3D 0%, #152E54 100%);
     color: white;
@@ -479,8 +422,10 @@
   }
   .cta-full > * { position: relative; }
   .cta-full h2 {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
     margin-bottom: 16px;
     max-width: 700px;
     margin-left: auto;
@@ -492,20 +437,6 @@
     max-width: 560px;
     margin: 0 auto 32px;
   }
-  .cta-full a {
-    display: inline-block;
-    background: var(--orange);
-    color: white;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 1.05rem;
-    padding: 16px 44px;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(255,107,26,0.35);
-  }
-  .cta-full a:hover { transform: translateY(-2px); background: var(--orange-dark); box-shadow: 0 8px 30px rgba(255,107,26,0.5); }
   .cta-full .sub { margin-top: 16px; font-size: 0.82rem; opacity: 0.65; font-style: italic; }
   .cta-checks {
     display: flex;
@@ -528,8 +459,9 @@
     margin: 40px 0;
   }
   .verdict h3 {
-    font-family: 'Sora', system-ui, sans-serif;
     font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     margin-bottom: 16px;
     color: var(--navy);
     text-align: center;
@@ -550,6 +482,116 @@
   }
   .verdict ul li::before { content: '✓'; flex-shrink: 0; color: var(--orange); font-weight: 900; font-size: 1.1rem; }
 
+  /* ── POSTCODE WIDGET ── */
+  .postcode-check {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px 28px 24px;
+    max-width: 480px;
+    margin: 0 auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.15);
+    text-align: left;
+  }
+  .postcode-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .postcode-header .pin { color: #FFC107; font-size: 1.3rem; line-height: 1.1; flex-shrink: 0; }
+  .postcode-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 0;
+    line-height: 1.3;
+  }
+  .postcode-sub {
+    color: #6B7280;
+    font-size: 0.92rem;
+    margin: 0 0 18px;
+    line-height: 1.5;
+  }
+  .postcode-input {
+    width: 100%;
+    padding: 16px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--navy);
+    background: #ffffff;
+    border: 1.5px solid #D1D5DB;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .postcode-input::placeholder { color: #9CA3AF; font-weight: 600; letter-spacing: 2px; }
+  .postcode-input:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255,107,26,0.15);
+  }
+  .postcode-input.error {
+    border-color: var(--red-alert);
+    box-shadow: 0 0 0 3px rgba(220,38,38,0.15);
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  .postcode-button {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(255,107,26,0.35);
+  }
+  .postcode-button:hover {
+    background: var(--orange-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255,107,26,0.45);
+  }
+  .postcode-button:active { transform: translateY(0); }
+  .postcode-footer {
+    margin-top: 12px;
+    text-align: center;
+    color: #9CA3AF;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .postcode-footer::before { content: '🔒'; font-size: 0.9rem; }
+  .postcode-error-msg {
+    display: none;
+    background: #FEF2F2;
+    color: var(--red-alert);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .postcode-error-msg.show { display: block; }
+  .cta-full .postcode-check { margin-top: 8px; }
+
   /* ── FOOTER ── */
   footer {
     background: var(--navy);
@@ -559,45 +601,48 @@
     font-size: 0.82rem;
   }
   footer a { color: var(--orange); text-decoration: none; font-weight: 600; }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: rgba(255,255,255,0.6); margin: 0 10px; font-weight: 400; }
+  .footer-links a:hover { color: var(--orange); }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .hero-content > * { animation: fadeUp 0.7s ease both; }
+  .hero > * { animation: fadeUp 0.7s ease both; }
   .hero-tag { animation-delay: 0.1s; }
   .hero h1 { animation-delay: 0.25s; }
   .hero-sub { animation-delay: 0.4s; }
-  .hero-cta { animation-delay: 0.55s; }
-  .hero-proof { animation-delay: 0.65s; }
+  .hero .postcode-check { animation-delay: 0.55s; }
+  .hero-proof { animation-delay: 0.7s; }
 </style>
 
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wlt8ml5f4e");
-  </script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "wlt8ml5f4e");
+</script>
 
-  <!-- Meta Pixel Code -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '4513411092222816');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-                 src="https://www.facebook.com/tr?id=4513411092222816&ev=PageView&noscript=1"
-    /></noscript>
-  <!-- End Meta Pixel Code -->
+<!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '4513411092222816');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+               src="https://www.facebook.com/tr?id=4513411092222816&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 
 </head>
 <body>
@@ -607,13 +652,23 @@
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-content">
   <div class="hero-tag">Nieuw: Subsidie Eindigt Eind 2026</div>
   <h1>€150-€250 Per Maand Aan Energie.<br><em>Dat geld hoort in úw huis.</em></h1>
-  <p class="hero-sub">Met een thuisbatterij verdient u €60-75 per maand. Met óf zonder zonnepanelen. Zonder eigen geld. Alles wordt voor u geregeld — subsidie, BTW, installatie.</p>
-  <a class="hero-cta" href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">Check uw besparing in 10 seconden →</a>
-  <p class="hero-proof"><strong>3.800+ Nederlanders</strong> gingen u al voor — lees hieronder hoe</p>
+  <p class="hero-sub">Een thuisbatterij verdient €60-75 per maand terug. Met óf zonder zonnepanelen. Zonder eigen geld. Alles wordt voor u geregeld — subsidie, BTW, installatie.</p>
+  <div class="postcode-check">
+    <div class="postcode-header">
+      <span class="pin">📍</span>
+      <h3>Check: Is dit nog beschikbaar in mijn regio?</h3>
+    </div>
+    <p class="postcode-sub">Nog 22 plekken beschikbaar zonder eigen inleg. Check uw postcode.</p>
+    <div class="postcode-error-msg">Vul een geldige Nederlandse postcode in (bijv. 1234 AB)</div>
+    <input type="text" class="postcode-input" placeholder="1234 AB" maxlength="7" autocomplete="postal-code" inputmode="text">
+    <button type="button" class="postcode-button" onclick="checkPostcode(this)">
+      <span>⚡</span> Ja, bekijk mijn mogelijkheden →
+    </button>
+    <div class="postcode-footer">Gratis &amp; vrijblijvend</div>
   </div>
+  <p class="hero-proof"><strong>3.800+ Nederlanders</strong> gingen u al voor — lees hieronder hoe</p>
 </header>
 
 <!-- INTRO -->
@@ -636,21 +691,21 @@
       <div class="dual-option">
         <div class="label">Mét zonnepanelen</div>
         <div class="title">Sla op wat u overdag maakt</div>
-        <p>Gebruik 's avonds wat u 's middags al heeft opgewekt. Niks meer weggeven aan het net voor een paar cent per kWh. U gebruikt uw eigen stroom op het moment dat die het meest waard is.</p>
+        <p>Gebruik 's avonds wat u 's middags opwekte. Niks meer weggeven aan het net voor een paar cent per kWh. U gebruikt uw eigen stroom op het moment dat die het meest waard is.</p>
       </div>
       <div class="dual-option">
         <div class="label">Zónder zonnepanelen</div>
         <div class="title">Laad 's nachts op, gebruik overdag</div>
-        <p>De batterij laadt op als de prijs laag is, en u gebruikt deze goedkope stroom als de prijs hoog is. Het verschil: €0,27 per kWh in úw voordeel.</p>
+        <p>Stroom is 's nachts goedkoop en overdag duur. De batterij laadt op als de prijs laag is, u gebruikt hem als de prijs hoog is. Het verschil: €0,27 per kWh in úw voordeel.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- LISTICLE: Blissy-style alternating rows -->
+<!-- LISTICLE -->
 <main class="container">
 
-  <!-- 1 — image left, text right -->
+  <!-- 1 -->
   <div class="list-row layout-left">
     <div class="row-image">
       <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/1-1.jpg" alt="Thuisbatterij afbeelding 1" style="width:100%;border-radius:8px;display:block;">
@@ -659,7 +714,7 @@
       <h2><span class="num">1</span> U betaalt teveel. Elke maand opnieuw.</h2>
       <p>Of u nu wél of géén zonnepanelen heeft — één ding is gelijk: u betaalt elke maand. Tussen de €150 en €250 gaat er van uw rekening af, zonder dat u er grip op heeft. En wie zonnepanelen heeft voelt het dubbel: overdag geeft u stroom weg voor bijna niks, 's avonds koopt u dezelfde stroom terug voor het volle tarief.</p>
       <div class="inline-quote">
-        Ik heb een thuisbatterij om zo weinig mogelijk stroom terug te leveren. En om opgewekte zonnestroom zelf gebruiken. De energiemaatschappijen betalen nog geen 2 cent per kW en verkopen het voor 28 cent. Kun jij rekenen?
+        Zo weinig mogelijk terugleveren. Opgewekte zonnestroom zelf gebruiken. De energiemaatschappijen betalen nog geen 2 cent per kW en verkopen het voor 28 cent. Kun jij rekenen?
         <div class="attribution">— Peter Krielen</div>
       </div>
       <p>Het verschil tussen goedkope en dure stroom is gemiddeld <strong>€0,27 per kWh</strong>. Op 200 kWh per maand in piekuren bespaart een thuisbatterij u direct <strong>€54 per maand</strong>.</p>
@@ -670,22 +725,22 @@
     </div>
   </div>
 
-  <!-- 2 — text left, image right -->
+  <!-- 2 -->
   <div class="list-row layout-right">
     <div class="row-text">
       <h2><span class="num">2</span> De rekensom die klopt: €60-€75 per maand, elke maand</h2>
       <p>Hier is de berekening, zonder marketingmist. Een thuisbatterij slaat 6-8 kWh op — genoeg om uw dure uren te overbruggen. Met een prijsverschil van €0,27 per kWh en dagelijks gebruik van 6 kWh uit de batterij:</p>
       <div class="inline-stats">
         <div class="inline-stat">
-          <span class="val">+€54</span>
+          <span class="val">€54</span>
           <span class="lbl">tariefverschil per maand</span>
         </div>
         <div class="inline-stat">
-          <span class="val">+€15-21</span>
+          <span class="val">€15-21</span>
           <span class="lbl">extra via dynamisch contract</span>
         </div>
         <div class="inline-stat">
-          <span class="val">+€60-75</span>
+          <span class="val">€60-75</span>
           <span class="lbl">netto besparing per maand</span>
         </div>
       </div>
@@ -703,7 +758,7 @@
     </div>
   </div>
 
-  <!-- 3 — image left, text right -->
+  <!-- 3 -->
   <div class="list-row layout-left">
     <div class="row-image">
       <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/2.jpg" alt="Thuisbatterij afbeelding 3" style="width:100%;border-radius:8px;display:block;">
@@ -727,7 +782,7 @@
     </div>
   </div>
 
-  <!-- 4 — text left, image right -->
+  <!-- 4 -->
   <div class="list-row layout-right">
     <div class="row-text">
       <h2><span class="num">4</span> €0 vooraf. €0 eigen inleg. Alles wordt geregeld.</h2>
@@ -749,11 +804,23 @@
 
 </main>
 
-<!-- MID CTA (full width) -->
+<!-- MID CTA -->
 <div class="cta-full">
   <h2>22 plekken resterend in uw regio</h2>
   <p>Check in 10 seconden of uw postcode nog in aanmerking komt voor de regeling zonder eigen inleg. Gratis & vrijblijvend.</p>
-  <a href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">Ja, check mijn postcode →</a>
+  <div class="postcode-check">
+    <div class="postcode-header">
+      <span class="pin">📍</span>
+      <h3>Check: Is dit nog beschikbaar in mijn regio?</h3>
+    </div>
+    <p class="postcode-sub">Nog 22 plekken beschikbaar zonder eigen inleg. Check uw postcode.</p>
+    <div class="postcode-error-msg">Vul een geldige Nederlandse postcode in (bijv. 1234 AB)</div>
+    <input type="text" class="postcode-input" placeholder="1234 AB" maxlength="7" autocomplete="postal-code" inputmode="text">
+    <button type="button" class="postcode-button" onclick="checkPostcode(this)">
+      <span>⚡</span> Ja, bekijk mijn mogelijkheden →
+    </button>
+    <div class="postcode-footer">Gratis &amp; vrijblijvend</div>
+  </div>
   <div class="cta-checks">
     <span>€0 eigen geld</span>
     <span>Subsidie + BTW geregeld</span>
@@ -764,7 +831,7 @@
 
 <main class="container">
 
-  <!-- 5 — image left, text right -->
+  <!-- 5 -->
   <div class="list-row layout-left">
     <div class="row-image">
       <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/4.jpg" alt="Thuisbatterij afbeelding 5" style="width:100%;border-radius:8px;display:block;">
@@ -793,7 +860,7 @@
     </div>
   </div>
 
-  <!-- 6 — text left, image right -->
+  <!-- 6 -->
   <div class="list-row layout-right">
     <div class="row-text">
       <h2><span class="num">6</span> Simpel, automatisch, onzichtbaar</h2>
@@ -813,7 +880,7 @@
     </div>
   </div>
 
-  <!-- 7 — image left, text right -->
+  <!-- 7 -->
   <div class="list-row layout-left">
     <div class="row-image">
       <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/6.jpg" alt="Thuisbatterij afbeelding 7" style="width:100%;border-radius:8px;display:block;">
@@ -833,7 +900,7 @@
     </div>
   </div>
 
-  <!-- 8 — text left, image right -->
+  <!-- 8 -->
   <div class="list-row layout-right">
     <div class="row-text">
       <h2><span class="num">8</span> De levensduur is langer dan iedereen denkt: 15-25 jaar</h2>
@@ -853,19 +920,19 @@
     </div>
   </div>
 
-  <!-- 9 — image left, text right -->
+  <!-- 9 -->
   <div class="list-row layout-left">
     <div class="row-image">
       <img src="https://vastelastenexperts.nl/wp-content/uploads/2026/05/8.jpg" alt="Thuisbatterij afbeelding 9" style="width:100%;border-radius:8px;display:block;">
     </div>
     <div class="row-text">
       <h2><span class="num">9</span> Elektrische auto of warmtepomp? Dan bijna onmisbaar</h2>
-      <p>Hoe hoger uw stroomverbruik, hoe groter uw besparing. Voor huizen met een warmtepomp, EV of airco-verwarming is de rekening simpel: u heeft véél stroom nodig op dure momenten. De batterij vangt precies dát gat op.</p>
+      <p>Hoe hoger uw stroomverbruik, hoe groter uw besparing. Voor huizen met een warmtepomp, elektrische auto of airco-verwarming is de rekening simpel: u heeft véél stroom nodig op dure momenten. De batterij vangt precies dát gat op.</p>
       <div class="inline-quote">
         Mijn verbruik is 4.500 kWh op jaarbasis. Ik verwarm en koel mijn huis met mijn airco, dus 4.500 gedeeld door 365 — dat is 12 kWh per dag. Dan zou ik er een van 10 kWh moeten hebben denk ik toch?
         <div class="attribution">— Willem Van de Wiel</div>
       </div>
-      <p>Voor EV-rijders: u laadt uw auto met goedkope nachtstroom of eigen zonnestroom — uit de batterij. Dat scheelt al snel honderden euro's per jaar bovenop de reguliere besparingen.</p>
+      <p>Voor wie elektrisch rijdt: u laadt uw auto met goedkope nachtstroom of eigen zonnestroom — uit de batterij. Dat scheelt al snel honderden euro's per jaar bovenop de reguliere besparingen.</p>
       <div class="doubt-inline">
         <div class="q">Moet ik dan een grotere, duurdere batterij?</div>
         <div class="a">Niet noodzakelijk. De regeling berekent welke capaciteit past. €0 blijft €0, ongeacht de gekozen capaciteit.</div>
@@ -873,7 +940,7 @@
     </div>
   </div>
 
-  <!-- 10 — text left, image right -->
+  <!-- 10 -->
   <div class="list-row layout-right">
     <div class="row-text">
       <h2><span class="num">10</span> 3.800+ Nederlanders gingen u voor. Wacht u nog?</h2>
@@ -900,7 +967,7 @@
       <li>U betaalt meer dan €100 per maand aan energie (vrijwel iedereen in 2026)</li>
       <li>U heeft zonnepanelen — of u heeft ze juist níet, beiden profiteren</li>
       <li>U gebruikt stroom in de ochtend of avond (piekuren)</li>
-      <li>U heeft een warmtepomp, EV, airco of andere stroomverbruiker</li>
+      <li>U heeft een warmtepomp, elektrische auto, airco of andere stroomverbruiker</li>
       <li>U wil minder afhankelijk zijn van stijgende energieprijzen</li>
       <li>U wil stroom houden bij netstoringen</li>
       <li>U wil uw woningwaarde verhogen zonder uit eigen zak te betalen</li>
@@ -914,7 +981,19 @@
 <div class="cta-full">
   <h2>Check of uw regio nog beschikbaar is</h2>
   <p>22 plekken resterend voor de regeling zonder eigen inleg. Na eind 2026 vervalt de subsidie en BTW-teruggave. Wacht u — of handelt u nú?</p>
-  <a href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">Ja, check mijn postcode in 10 seconden →</a>
+  <div class="postcode-check">
+    <div class="postcode-header">
+      <span class="pin">📍</span>
+      <h3>Check: Is dit nog beschikbaar in mijn regio?</h3>
+    </div>
+    <p class="postcode-sub">Nog 22 plekken beschikbaar zonder eigen inleg. Check uw postcode.</p>
+    <div class="postcode-error-msg">Vul een geldige Nederlandse postcode in (bijv. 1234 AB)</div>
+    <input type="text" class="postcode-input" placeholder="1234 AB" maxlength="7" autocomplete="postal-code" inputmode="text">
+    <button type="button" class="postcode-button" onclick="checkPostcode(this)">
+      <span>⚡</span> Ja, bekijk mijn mogelijkheden →
+    </button>
+    <div class="postcode-footer">Gratis &amp; vrijblijvend</div>
+  </div>
   <div class="cta-checks">
     <span>€0 eigen inleg</span>
     <span>Subsidie + BTW geregeld</span>
@@ -924,10 +1003,64 @@
 </div>
 
 <footer>
-  <p>© 2026 · Onafhankelijk energieadvies · <a href="https://verdienduurzaam.nl/thuisbatterij" target="_blank">verdienduurzaam.nl/thuisbatterij</a></p>
+  <div class="footer-links">
+    <a href="/privacy.html" target="_blank">Privacybeleid</a>
+    <a href="/terms.html" target="_blank">Algemene voorwaarden</a>
+    <a href="/opt-out.html" target="_blank">Afmelden</a>
+  </div>
+  <p>© 2026 · Onafhankelijk energieadvies · <a href="https://verdienduurzaam.nl/thuisbatterij">verdienduurzaam.nl/thuisbatterij</a></p>
+  <p style="margin-top:8px;">De genoemde besparingen zijn gebaseerd op gemiddelde Nederlandse huishoudens en kunnen afwijken per situatie.</p>
 </footer>
 
-  <script src="/affiliate.js"></script>
+<script src="/affiliate.js"></script>
+<script>
+  // Auto-format postcode while typing (e.g. "1234AB" → "1234 AB")
+  document.querySelectorAll('.postcode-input').forEach(function(input) {
+    input.addEventListener('input', function(e) {
+      var val = e.target.value.toUpperCase().replace(/[^0-9A-Z]/g, '');
+      if (val.length > 4) {
+        val = val.slice(0, 4) + ' ' + val.slice(4, 6);
+      }
+      e.target.value = val;
+      e.target.classList.remove('error');
+      var errorMsg = e.target.parentElement.querySelector('.postcode-error-msg');
+      if (errorMsg) errorMsg.classList.remove('show');
+    });
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        var btn = e.target.parentElement.querySelector('.postcode-button');
+        if (btn) checkPostcode(btn);
+      }
+    });
+  });
+
+  function checkPostcode(button) {
+    var widget = button.closest('.postcode-check');
+    var input = widget.querySelector('.postcode-input');
+    var errorMsg = widget.querySelector('.postcode-error-msg');
+
+    var postcode = input.value.trim().toUpperCase().replace(/\s+/g, '');
+
+    // Dutch postcode: 4 digits (first not 0) + 2 letters
+    var regex = /^[1-9][0-9]{3}[A-Z]{2}$/;
+
+    if (!regex.test(postcode)) {
+      input.classList.add('error');
+      if (errorMsg) errorMsg.classList.add('show');
+      input.focus();
+      return false;
+    }
+
+    button.disabled = true;
+    button.style.opacity = '0.7';
+    button.innerHTML = '<span>⚡</span> Even geduld...';
+
+    window.location.href = '/thuisbatterij/flow?pc=' + encodeURIComponent(postcode) + '&source=prelander';
+    return true;
+  }
+</script>
 
 </body>
 </html>
