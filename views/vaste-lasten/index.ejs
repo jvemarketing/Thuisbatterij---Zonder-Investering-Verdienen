@@ -1610,6 +1610,10 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     window.addEventListener('popstate', function() {
         history.pushState(null, '', location.href);
     });
+
+    if (new URLSearchParams(location.search).has('start')) {
+        startSurvey();
+    }
 </script>
 </body>
 </html>
