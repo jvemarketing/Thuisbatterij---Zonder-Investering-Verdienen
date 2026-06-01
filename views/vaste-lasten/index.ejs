@@ -57,7 +57,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
 <!-- ════════════════════════════════════════════════════════════
      HOME PAGE
 ════════════════════════════════════════════════════════════ -->
-<div class="page active" id="p-home">
+<div class="page <%= query && query.start !== undefined ? '' : 'active' %>" id="p-home">
 
     <!-- Top strip -->
     <div class="tstrip">
@@ -482,7 +482,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
 <!-- ════════════════════════════════════════════════════════════
      SURVEY PAGE
 ════════════════════════════════════════════════════════════ -->
-<div class="page" id="p-survey">
+<div class="page <%= query && query.start !== undefined ? 'active' : '' %>" id="p-survey">
     <div class="survey-wrap">
         <div class="survey-inner" id="qWrap"></div>
     </div>
@@ -1612,7 +1612,11 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     });
 
     if (new URLSearchParams(location.search).has('start')) {
-        startSurvey();
+        qi = 0; ans = {}; ms = [];
+        queue = buildQueue();
+        document.querySelector('.nav-cta').style.display = 'none';
+        renderQuestion(queue[0]);
+        setProgress(5);
     }
 </script>
 </body>
