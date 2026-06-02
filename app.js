@@ -322,7 +322,8 @@ app.post("/api/lead", async (req, res) => {
 
       console.log(fbConfig, fbTracking);
 
-      if (fbConfig?.pixelId && fbConfig?.token && fbTracking?.fbclid) {
+      const notARenter = body.f_1058_type_woning !== 'huurwoning';
+      if (fbConfig?.pixelId && fbConfig?.token && fbTracking?.fbclid && notARenter) {
         waitUntil(
           fireFacebookConversion(fbConfig, fbTracking, req)
             .catch(err => console.error('❌ Facebook Conversions API error:', err))
