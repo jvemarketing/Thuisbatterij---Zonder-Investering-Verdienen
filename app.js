@@ -226,7 +226,7 @@ const EVERFLOW_POSTBACK_URL = "https://www.jh5th1trk.com/";
 const FB_PIXEL_CONFIG = {
   'verdienduurzamer.nl': {
     pixelId: "4513411092222816",
-    token: "EAALWuyeezx4BRYXAlMyZCCBY2z5lOshOmt9vuQTKOL5YmWZCerXZCWhUjcBHYB9Wuw19ZA3cw6bOAzbTSdEgksnemx6HfIDrJ0eb7nKTaxrYiFos13vSEFpgpgA0aqJiKJHCsOjwUTHkhyBhtv6mnAAN8yFlgzYgfMhnH05ZCZC4c1EsbK8MfNc9YyOWNFKQZDZD",
+    token: "EAALWuyeezx4BRgfv1yQs0TUuN5K4eP0JAWnedI4HFOZAUlarSmqHLBbMjJmczmTBnGW4Jke2ZBzOeiZBRG4RXZBPPyzdCgV2Um8TDJx5JO5zulupGoJYgiUZAGBM4s0v2ZAZAqIpmNCXsIuA3HXW1A1ovsLzo6dlmGjKSFm8L3P58lQTITGob5MB9OnwsYh9wZDZD",
   },
   'verdienduurzamer.local': {
     pixelId: "937971222531441",
