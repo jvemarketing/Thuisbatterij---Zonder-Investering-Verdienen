@@ -12,6 +12,12 @@ const routes = [
         data: {},
     },
     {
+        domain: 'vastenlastenonderzoek.nl',
+        path: '/energiecrisis',
+        view: 'vaste-lasten/pre-lander-energie-crisis',
+        data: {},
+    },
+    {
         domain: 'vastelastenonderzoek.nl',
         path: '/',
         view: 'vaste-lasten/index',
