@@ -152,7 +152,7 @@ const routes = [
         domain: 'verdienduurzaam.nl',
         path: '/thuisbatterij-advies',
         view: 'thuisbatterij/pre-lander',
-        data: {},
+        data: { clarityId: 'wlt8ml5f4e' },
     },
     {
         domain: 'verdienduurzaam.nl',
@@ -188,6 +188,12 @@ const routes = [
         domain: 'verdienduurzamer.nl',
         path: '/thuisbatterij/flow',
         view: 'thuisbatterij/flow',
+        data: { clarityId: 'wnwa4jr0p8' },
+    },
+    {
+        domain: 'verdienduurzamer.nl',
+        path: '/thuisbatterij-advies',
+        view: 'thuisbatterij/pre-lander',
         data: { clarityId: 'wnwa4jr0p8' },
     },
 ];
