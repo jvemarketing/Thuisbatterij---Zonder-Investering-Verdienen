@@ -318,7 +318,7 @@ app.post("/api/lead", async (req, res) => {
         console.log('✓ Everflow postback scheduled');
       }
 
-      const fbConfig = FB_PIXEL_CONFIG[req.hostname];
+      const fbConfig = FB_PIXEL_CONFIG[req.hostname.replace(/^www\./, '')];
 
       console.log(FB_PIXEL_CONFIG, req.hostname);
 
