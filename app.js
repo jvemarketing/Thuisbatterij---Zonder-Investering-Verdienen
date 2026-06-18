@@ -416,6 +416,7 @@ async function fireFacebookConversion(fbConfig, fbTracking, req, body = {}) {
   };
 
   const url = `https://graph.facebook.com/v25.0/${pixelId}/events?access_token=${token}`;
+  console.log(userData);
   console.log(`[facebook] pixel=${pixelId} event=Lead fbclid=${fbclid}`);
 
   const r = await fetch(url, {
