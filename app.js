@@ -320,10 +320,20 @@ app.post("/api/lead", async (req, res) => {
 
       const fbConfig = FB_PIXEL_CONFIG[req.hostname];
 
-      console.log(fbConfig, fbTracking);
+      console.log(FB_PIXEL_CONFIG, req.hostname);
 
       const isThuisbatterijFlow = refPath.endsWith('/flow');
       const notARenter = !isThuisbatterijFlow || body.f_1058_type_woning !== 'huurwoning';
+
+      console.log(`Degugging FB tracking: + 
+        ${body.f_1058_type_woning} + 
+        ${referer} + 
+        ${fbConfig?.pixelId} && 
+        ${fbConfig?.token} && 
+        ${fbTracking?.fbclid} && 
+        ${notARenter}`
+      );
+
       if (fbConfig?.pixelId && fbConfig?.token && fbTracking?.fbclid && notARenter) {
         waitUntil(
           fireFacebookConversion(fbConfig, fbTracking, req)
