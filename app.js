@@ -234,7 +234,7 @@ const FB_PIXEL_CONFIG = {
   },
   'vastenlastenonderzoek.nl': {
     pixelId: "4513411092222816",
-    token: "EAALWuyeezx4BRYXAlMyZCCBY2z5lOshOmt9vuQTKOL5YmWZCerXZCWhUjcBHYB9Wuw19ZA3cw6bOAzbTSdEgksnemx6HfIDrJ0eb7nKTaxrYiFos13vSEFpgpgA0aqJiKJHCsOjwUTHkhyBhtv6mnAAN8yFlgzYgfMhnH05ZCZC4c1EsbK8MfNc9YyOWNFKQZDZD",
+    token: "EAALWuyeezx4BRpHQQCh2NRXXyEKXgZBDzduK5QWK3xc6R7ZCKc9WZCi7WNplSgX8ZCtan0BAIkI2UdHuwx5T0wC6W3EC0fzJlUdZAJRm0e0qOIYTv2Jt609ZA3vAeR2EhM8znduZBOqMZBOhZA1MYa2vyOgPrkxlLR4pHvT0uZAV5faws0M3Amg6pQWmIZCruNX8wZDZD",
   },
 };
 
@@ -320,7 +320,7 @@ app.post("/api/lead", async (req, res) => {
 
       const fbConfig = FB_PIXEL_CONFIG[req.hostname.replace(/^www\./, '')];
 
-      console.log(FB_PIXEL_CONFIG, req.hostname);
+      console.log(FB_PIXEL_CONFIG, req.hostname, fbTracking);
 
       const isThuisbatterijFlow = refPath.endsWith('/flow');
       const notARenter = !isThuisbatterijFlow || body.f_1058_type_woning !== 'huurwoning';
