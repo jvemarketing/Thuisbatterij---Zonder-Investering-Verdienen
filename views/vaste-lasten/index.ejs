@@ -1503,6 +1503,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
 
     function submitLead() {
         var everflowTracking = window.AffiliateTracking ? AffiliateTracking.getTracking() : {};
+        var fbTracking = window.AffiliateTracking ? AffiliateTracking.getFbTracking() : {};
         var pc = document.getElementById('pc').value.trim();
 
         console.log("City:" + resolvedCity);
@@ -1535,6 +1536,10 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
 
         if (everflowTracking.ef_click_id) {
             formData.everflow_tracking = everflowTracking;
+        }
+
+        if (fbTracking.fbclid) {
+            formData.fb_tracking = fbTracking;
         }
 
         return fetch('/api/lead', {
