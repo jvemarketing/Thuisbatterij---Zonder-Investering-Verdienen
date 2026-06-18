@@ -336,7 +336,7 @@ app.post("/api/lead", async (req, res) => {
 
       if (fbConfig?.pixelId && fbConfig?.token && fbTracking?.fbclid && notARenter) {
         waitUntil(
-          fireFacebookConversion(fbConfig, fbTracking, req)
+          fireFacebookConversion(fbConfig, fbTracking, req, body)
             .catch(err => console.error('❌ Facebook Conversions API error:', err))
         );
         console.log('✓ Facebook postback scheduled');
@@ -379,22 +379,39 @@ async function fireEverflowPostback(transactionId, leadId, leadContactData = {})
   }
 }
 
+function sha256(value) {
+  return crypto.createHash('sha256').update(String(value).trim().toLowerCase()).digest('hex');
+}
+
 // Fire Facebook Conversions API event
-async function fireFacebookConversion(fbConfig, fbTracking, req) {
+async function fireFacebookConversion(fbConfig, fbTracking, req, body = {}) {
   const { pixelId, token } = fbConfig;
-  const { fbclid, fbevent } = fbTracking;
+  const { fbclid } = fbTracking;
   const eventTime = Math.floor(Date.now() / 1000);
+
+  const userData = {
+    fbc:               `fb.1.${eventTime}.${fbclid}`,
+    client_ip_address: req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '',
+    client_user_agent: req.headers['user-agent'] || '',
+  };
+
+  if (body.f_1_email)    userData.em      = sha256(body.f_1_email);
+  if (body.f_3_firstname) userData.fn     = sha256(body.f_3_firstname);
+  if (body.f_4_lastname)  userData.ln     = sha256(body.f_4_lastname);
+  if (body.f_11_postcode) userData.zp     = sha256(body.f_11_postcode.replace(/\s+/g, ''));
+  if (body.f_40_city)     userData.ct     = sha256(body.f_40_city);
+  if (body.f_10_county)   userData.st     = sha256(body.f_10_county);
+  if (body.f_12_phone1)   userData.ph     = sha256(body.f_12_phone1.replace(/\D/g, ''));
+  // DOB stored as YYYY-MM-DD — Facebook wants YYYYMMDD
+  if (body.f_5_dob)       userData.db     = sha256(body.f_5_dob.replace(/-/g, ''));
+  userData.country = sha256('nl');
 
   const payload = {
     data: [{
       event_name:    'Lead',
       event_time:    eventTime,
       action_source: 'website',
-      user_data: {
-        fbc:               `fb.1.${eventTime}.${fbclid}`,
-        client_ip_address: req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '',
-        client_user_agent: req.headers['user-agent'] || '',
-      },
+      user_data:     userData,
     }],
   };
 
