@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="nl"><head>
+<html lang="nl">
+<head>
 <meta charset="utf-8">
 <title>Energiecrisis kan 10 jaar duren — wat doe jij? · Vaste Lasten Onderzoek</title>
 
@@ -7,15 +8,15 @@
 <meta name="description" content="Hoogleraar waarschuwt: energiecrisis kan vijf tot tien jaar duren. Check in 2 minuten hoeveel jij kunt besparen — en maak kans op een prijs t.w.v. €500.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap">
 <style>
   :root {
-    --purple:#211337;
-    --purple-deep:#170a26;
-    --purple-soft:#f5f3fa;
-    --purple-line:#e0d9ee;
-    --lime:#6BE669;
-    --lime-deep:#4ec84c;
+    --purple:#14447C;
+    --purple-deep:#0E3460;
+    --purple-soft:#eef3f9;
+    --purple-line:#d4e0ee;
+    --lime:#FF8300;
+    --lime-deep:#E66F00;
     --warn:#E2001A;
     --t1:#1a1330;
     --t2:#4a3f63;
@@ -72,13 +73,16 @@
   }
   .urgency .msg b { color:var(--lime); }
   .urgency a.cta-mini {
-    background:var(--lime); color:var(--purple);
+    background:linear-gradient(0deg, #13C406 0%, #5BFF4D 100%); color:#ffffff;
     text-decoration:none;
-    font-weight:800; font-size:13px;
-    padding:8px 14px; border-radius:8px;
+    font-weight:900; font-size:13px;
+    padding:10px 16px; border-radius:12px;
     white-space:nowrap;
     transition:transform .15s ease;
     flex:0 0 auto;
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'Outfit',Arial,sans-serif;
+    box-shadow:0 3px 8px rgba(27,242,12,0.4), 0 1px 3px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
   }
   .urgency a.cta-mini:hover { transform:translateY(-1px); }
 
@@ -149,11 +153,6 @@
     font-size:13px; color:var(--t3);
     margin-bottom:28px;
   }
-  .byline .avatar {
-    width:36px; height:36px; border-radius:50%; background:var(--purple);
-    color:var(--lime); display:flex; align-items:center; justify-content:center;
-    font-family:'Outfit',Arial,sans-serif; font-weight:800; font-size:14px;
-  }
   .byline b { color:var(--t1); }
 
   /* ============ HERO IMAGE HEADER ============ */
@@ -162,7 +161,7 @@
     width:calc(100% + 48px);
     position:relative;
     aspect-ratio: 16 / 9;
-    background:#211337;
+    background:#14447C;
     overflow:hidden;
   }
   .hero-image-header .bg {
@@ -196,7 +195,7 @@
   }
   .hero-image-header h1 .hl {
     background:var(--lime);
-    color:var(--purple);
+    color:#ffffff;
     padding:2px 10px;
     border-radius:6px;
     white-space:nowrap;
@@ -209,7 +208,7 @@
     font-weight:600;
     font-size:clamp(15px, 1.8vw, 19px);
     line-height:1.4;
-    color:#e7dffb;
+    color:#d6e4f5;
     margin:14px 0 0;
     text-shadow:0 2px 12px rgba(0,0,0,0.35);
     max-width:560px;
@@ -222,11 +221,7 @@
     box-shadow:0 4px 12px rgba(226,0,26,0.4);
   }
   @media (max-width:720px) {
-    .hero-image-header { aspect-ratio: 4 / 3; }
-    .hero-image-header .bg {
-      background-size: cover;
-      background-position: center top;
-    }
+    .hero-image-header { aspect-ratio: 4 / 5; }
     .hero-image-header .content { padding:22px 22px 22px; }
     .hero-image-header h1 { font-size:26px; }
   }
@@ -236,7 +231,7 @@
     margin:0 -24px 28px;
     width:calc(100% + 48px);
     position:relative;
-    background:linear-gradient(180deg, #1a0f2b 0%, #211337 60%, #2a1947 100%);
+    background:linear-gradient(180deg, #0E3460 0%, #14447C 60%, #1B5499 100%);
     overflow:hidden;
     border-radius:0;
   }
@@ -244,7 +239,7 @@
     content:""; position:absolute; inset:0;
     background:
       radial-gradient(circle at 10% 20%, rgba(226,0,26,0.18), transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(107,230,105,0.10), transparent 50%);
+      radial-gradient(circle at 90% 80%, rgba(27,242,12,0.12), transparent 50%);
   }
   .hero-visual .inner {
     position:relative; padding:36px 28px 32px;
@@ -267,7 +262,7 @@
   }
   .hero-stat .n .unit { font-size:18px; color:#fff; opacity:.7; margin-left:2px; }
   .hero-stat .l {
-    font-size:11px; color:#cfc4e4; letter-spacing:0.3px; margin-top:8px; line-height:1.4;
+    font-size:11px; color:#c5d6ec; letter-spacing:0.3px; margin-top:8px; line-height:1.4;
   }
   .hero-headline-strip {
     font-family:'Outfit',Arial,sans-serif;
@@ -281,7 +276,7 @@
     margin-right:8px; text-transform:uppercase;
   }
   .hero-sub {
-    font-size:13px; color:#cfc4e4; margin-top:2px;
+    font-size:13px; color:#c5d6ec; margin-top:2px;
   }
 
   /* ============ BODY COPY ============ */
@@ -364,18 +359,19 @@
     padding:32px 28px;
     color:#fff;
     position:relative; overflow:hidden;
+    text-align:center;
   }
   .cta-card::before {
     content:""; position:absolute; top:-40px; right:-40px;
     width:200px; height:200px; border-radius:50%;
-    background:radial-gradient(circle, rgba(107,230,105,0.20), transparent 65%);
+    background:radial-gradient(circle, rgba(27,242,12,0.22), transparent 65%);
   }
   .cta-card .eyebrow {
     display:inline-block;
     font-family:'Inter',Arial,sans-serif;
     font-size:10px; font-weight:700; letter-spacing:2px;
     text-transform:uppercase; color:var(--lime);
-    border:1px solid rgba(107,230,105,0.4);
+    border:1px solid rgba(27,242,12,0.45);
     padding:4px 10px; border-radius:20px;
     margin-bottom:14px;
   }
@@ -387,33 +383,37 @@
   }
   .cta-card h3 .lime { color:var(--lime); }
   .cta-card .body {
-    font-size:15px; line-height:1.55; color:#cfc4e4;
+    font-size:15px; line-height:1.55; color:#c5d6ec;
     margin:0 0 22px;
   }
   .cta-btn {
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--lime); color:var(--purple);
+    display:inline-flex; align-items:center; justify-content:center; gap:12px;
+    width:100%; max-width:460px; box-sizing:border-box;
+    background:linear-gradient(0deg, #13C406 0%, #5BFF4D 100%); color:#ffffff;
     font-family:'Outfit',Arial,sans-serif; font-weight:900;
-    font-size:17px; letter-spacing:0.2px;
-    padding:18px 30px; border-radius:14px;
+    font-size:22px; letter-spacing:0.2px;
+    padding:22px 34px; border-radius:22px;
     text-decoration:none;
-    box-shadow:0 12px 32px rgba(107,230,105,0.32);
+    box-shadow:0 9px 20px rgba(27,242,12,0.45), 0 3px 7px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
     transition:transform .15s ease, box-shadow .2s ease;
     border:0;
   }
+  .cta-btn .bolt { font-size:20px; line-height:1; }
   .cta-btn:hover {
     transform:translateY(-2px);
-    box-shadow:0 16px 38px rgba(107,230,105,0.42);
+    box-shadow:0 12px 25px rgba(27,242,12,0.55), 0 4px 9px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
   }
   .cta-btn .arrow {
-    font-weight:900; font-size:20px;
+    font-weight:900; font-size:22px;
     transition:transform .15s ease;
   }
   .cta-btn:hover .arrow { transform:translateX(3px); }
+  .cta-card .btn-wrap { text-align:center; }
   .cta-card .trust-row {
     display:flex; flex-wrap:wrap; gap:8px 18px;
     margin-top:18px;
-    font-size:12px; color:#cfc4e4;
+    justify-content:center;
+    font-size:12px; color:#c5d6ec;
   }
   .cta-card .trust-row span { display:inline-flex; align-items:center; gap:6px; }
   .cta-card .trust-row span::before {
@@ -449,7 +449,7 @@
   .poll .opt:hover { border-color:var(--lime); background:#fff; }
   .poll .opt .bar {
     position:absolute; left:0; top:0; bottom:0;
-    background:rgba(107,230,105,0.25);
+    background:rgba(27,242,12,0.22);
     width:0%; transition:width .6s cubic-bezier(.4,1.6,.6,1);
     z-index:0;
   }
@@ -468,8 +468,6 @@
   /* ============ FINAL CTA SECTION ============ */
   .final-cta {
     background:var(--purple);
-    margin:0 -24px;
-    width:calc(100% + 48px);
     padding:48px 28px 64px;
     color:#fff;
     text-align:center;
@@ -477,9 +475,8 @@
   }
   .final-cta::before {
     content:""; position:absolute; inset:0;
-    pointer-events:none;
     background:
-      radial-gradient(circle at 20% 30%, rgba(107,230,105,0.10), transparent 50%),
+      radial-gradient(circle at 20% 30%, rgba(27,242,12,0.12), transparent 50%),
       radial-gradient(circle at 80% 70%, rgba(226,0,26,0.08), transparent 50%);
   }
   .final-cta .eyebrow {
@@ -494,7 +491,7 @@
   }
   .final-cta h2 .lime { color:var(--lime); }
   .final-cta p {
-    color:#cfc4e4; font-size:16px; line-height:1.55;
+    color:#c5d6ec; font-size:16px; line-height:1.55;
     margin:0 auto 24px; max-width:480px; position:relative;
   }
   .final-cta .stats {
@@ -509,17 +506,17 @@
     font-size:24px; color:var(--lime); line-height:1;
   }
   .final-cta .stats .l {
-    font-size:11px; color:#cfc4e4; letter-spacing:0.5px;
+    font-size:11px; color:#c5d6ec; letter-spacing:0.5px;
     margin-top:6px; text-transform:uppercase;
   }
 
   /* ============ FOOTER ============ */
   footer {
-    background:var(--purple-deep); color:#9a8db6;
+    background:var(--purple-deep); color:#8aa3c4;
     padding:28px 24px; text-align:center;
     font-size:12px; line-height:1.7;
   }
-  footer a { color:#bfb4d6; text-decoration:underline; }
+  footer a { color:#bcd0e8; text-decoration:underline; }
 
   /* ============ STICKY MOBILE CTA ============ */
   .sticky-mobile {
@@ -531,11 +528,13 @@
     box-shadow:0 -10px 30px rgba(26,15,43,0.15);
   }
   .sticky-mobile a {
-    display:block; text-align:center;
-    background:var(--lime); color:var(--purple);
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    text-align:center;
+    background:linear-gradient(0deg, #13C406 0%, #5BFF4D 100%); color:#ffffff;
     font-family:'Outfit',Arial,sans-serif; font-weight:900;
-    font-size:16px; padding:16px 14px; border-radius:12px;
+    font-size:18px; padding:18px 14px; border-radius:18px;
     text-decoration:none;
+    box-shadow:0 6px 14px rgba(27,242,12,0.45), 0 2px 5px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
   }
   .sticky-mobile .sub {
     font-size:11px; color:var(--t3); margin-top:6px; text-align:center;
@@ -560,6 +559,7 @@
     .urgency .msg-short { display:none; }
   }
 </style>
+
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
       c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -577,11 +577,11 @@
       <span class="pulse-dot" aria-hidden="true"></span>
       <span class="label">Update</span>
       <span class="msg">
-        <span class="msg-long">Hoogleraar: <b>energiecrisis kan 5–10 jaar duren</b> — check je besparing nu</span>
-        <span class="msg-short">Crisis tot 10 jaar — check besparing</span>
+        <span class="msg-long">Hoogleraar: <b>energiecrisis kan 5–10 jaar duren</b>. Check je besparing nu</span>
+        <span class="msg-short">Crisis tot 10 jaar. Check besparing</span>
       </span>
     </div>
-    <a href="https://vastelastenonderzoek.nl/?start" class="cta-mini">Check &amp; win →</a>
+    <a href="#start" class="cta-mini"><span class="bolt">⚡</span> Start onderzoek →</a>
   </div>
 </div>
 
@@ -590,7 +590,7 @@
   <div class="sitebar-inner">
     <a href="#" class="brand">Vaste Lasten Onderzoek</a>
     <div class="breadcrumbs">
-      <span class="cat">NIEUWS</span> &nbsp;·&nbsp; ENERGIE
+      <span class="cat">NIEUWS</span> &nbsp;·&nbsp; ENERGIECRISIS
     </div>
     <div class="ad-tag" title="Aangeboden door Vaste Lasten Onderzoek">Advertorial</div>
   </div>
@@ -600,13 +600,13 @@
 <article>
 
   <!-- HERO IMAGE HEADER with overlaid title -->
-  <div class="hero-image-header">
+  <div class="hero-image-header" id="hero-header" data-variant="photo">
     <div class="bg" role="img" aria-label="Tankstation en gasvlam — stijgende energiekosten"></div>
     <div class="scrim"></div>
     <div class="content">
-      <span class="warn-tag">Energiecrisis · maart 2026</span>
+      <span class="warn-tag">Energiecrisis · Juni 2026</span>
       <h1>
-        Energiecrisis kan<br><span class="hl">vijf tot tien jaar</span> duren!
+        Energiecrisis kan nog<br><span class="hl">vijf tot tien jaar</span> duren!
       </h1>
       <p class="subline">Wat doe jij om je rekening te verlagen?</p>
     </div>
@@ -617,9 +617,8 @@
   </p>
 
   <div class="byline">
-    <div class="avatar">R</div>
     <div>
-      Door <b>Redactie Vaste Lasten Onderzoek</b> &nbsp;·&nbsp; 30 maart 2026 &nbsp;·&nbsp; 3 min leestijd
+      Door <b>Redactie Vaste Lasten Onderzoek</b> &nbsp;·&nbsp; 22 juni 2026 &nbsp;·&nbsp; 3 min leestijd
     </div>
   </div>
 
@@ -629,7 +628,7 @@
       <div class="hero-headline-strip">
         <span class="warn-tag">Waarschuwing</span> Wat jou dit kan kosten
       </div>
-      <div class="hero-sub">3 cijfers die je niet kunt negeren — laatste update vandaag.</div>
+      <div class="hero-sub">3 cijfers die je niet kunt negeren. Laatste update vandaag.</div>
       <div class="hero-stat-grid">
         <div class="hero-stat">
           <div class="n">10<span class="unit">jr</span></div>
@@ -648,11 +647,11 @@
   </div>
 
   <p class="lead">
-    De energiecrisis waar Nederland nu in zit is volgens hoogleraar Jan Rotmans <strong>veel groter dan die van 1973</strong>. De prijzen aan de pomp en op je energierekening blijven stijgen — en volgens experts kan dat nog jaren zo blijven.
+    De energiecrisis waar Nederland nu in zit is volgens hoogleraar Jan Rotmans <strong>veel groter dan die van 1973</strong>. De prijzen aan de pomp en op je energierekening blijven stijgen, en volgens experts kan dat nog jaren zo blijven.
   </p>
 
   <p>
-    Het gaat niet alleen om olie. Ook gas raakt steeds schaarser. Ongeveer <strong>40 olie- en gasinstallaties</strong> zijn beschadigd. Het opnieuw opbouwen daarvan duurt jaren — en in de tussentijd betaal jij de rekening.
+    Het gaat niet alleen om olie. Ook gas raakt steeds schaarser. Ongeveer <strong>40 olie- en gasinstallaties</strong> zijn beschadigd. Het opnieuw opbouwen daarvan duurt jaren, en in de tussentijd betaal jij de rekening.
   </p>
 
   <!-- PULL QUOTE 1 -->
@@ -660,12 +659,12 @@
     <p class="q">Deze crisis is veel groter dan die van 1973.</p>
     <div class="attr">
       <img class="src-logo" src="/vaste-lasten/img/energie-crisis-wnl.svg" alt="WNL">
-      <div><b>Jan Rotmans</b> — hoogleraar energie en transitie</div>
+      <div><b>Jan Rotmans</b>, hoogleraar energie en transitie</div>
     </div>
   </div>
 
   <p>
-    Den Haag overweegt de accijnzen te verlagen of een maximumprijs in te voeren. Maar volgens vrijwel alle experts is dat <strong>geen structurele oplossing</strong> — alleen pleisters plakken op een wond die maar groter wordt.
+    Den Haag overweegt de accijnzen te verlagen of een maximumprijs in te voeren. Maar volgens vrijwel alle experts is dat <strong>geen structurele oplossing</strong>. Alleen pleisters plakken op een wond die maar groter wordt.
   </p>
 
   <h2><span class="warn">Wat betekent dit voor jou?</span></h2>
@@ -674,17 +673,17 @@
     <li><div class="icon">!</div><div><b>Hogere maandelijkse rekening.</b> Gemiddelde huishoudens betalen nu al €80–€140 per maand meer dan twee jaar geleden.</div></li>
     <li><div class="icon">!</div><div><b>Wachten op de politiek is geen optie.</b> Een eventuele accijnsverlaging is volgens experts niet langer dan een jaar vol te houden.</div></li>
     <li><div class="icon">!</div><div><b>Wie nu niets doet betaalt straks meer.</b> Energiecontracten worden duurder; vaste lasten lopen elke maand op.</div></li>
-    <li><div class="icon">!</div><div><b>Je betaalt mee aan inefficiëntie.</b> 1 op 3 huishoudens kan honderden euro's per jaar besparen — maar weet niet waar te beginnen.</div></li>
+    <li><div class="icon">!</div><div><b>Je betaalt mee aan inefficiëntie.</b> 1 op 3 huishoudens kan honderden euro's per jaar besparen, maar weet niet waar te beginnen.</div></li>
   </ul>
 
   <!-- =================== MID CTA =================== -->
   <div class="cta-card" id="start">
     <div class="eyebrow">Wat kun je vandaag doen</div>
-    <h3>Check in 2 minuten hoeveel <span class="lime">jij kunt besparen</span> — en kies een prijs t.w.v. €500</h3>
+    <h3>Check in 2 minuten hoeveel <span class="lime">jij kunt besparen</span>, en kies een prijs t.w.v. €500</h3>
     <div class="body">
       Het <b style="color:#fff;">Vaste Lasten Onderzoek</b> stelt 11 korte vragen over jouw woning en energieverbruik. Op basis daarvan krijg je bespaartips op maat. Elke deelnemer krijgt bovendien een gegarandeerd cadeau.
     </div>
-    <a href="https://vastelastenonderzoek.nl/?start" class="cta-btn">Doe nu mee &amp; win <span class="arrow">→</span></a>
+    <div class="btn-wrap"><a href="https://vastelastenonderzoek.nl/?start" class="cta-btn"><span class="bolt">⚡</span> Doe nu mee &amp; win <span class="arrow">→</span></a></div>
     <div class="trust-row">
       <span>100% gratis</span>
       <span>2 minuten</span>
@@ -693,10 +692,10 @@
     </div>
   </div>
 
-  <h2>Wat de experts zeggen — én adviseren</h2>
+  <h2>Wat de experts zeggen én adviseren</h2>
 
   <p>
-    De experts zijn duidelijk: de enige manier om als consument <strong>uit deze crisis te komen</strong>, is <span class="hl">minder afhankelijk worden van olie en gas</span>. Verduurzamen, isoleren, slimmer omgaan met je verbruik — daar zit de structurele winst.
+    De experts zijn duidelijk: de enige manier om als consument <strong>uit deze crisis te komen</strong>, is <span class="hl">minder afhankelijk worden van olie en gas</span>. Verduurzamen, isoleren, slimmer omgaan met je verbruik. Daar zit de structurele winst.
   </p>
 
   <p>
@@ -705,7 +704,7 @@
 
   <!-- PULL QUOTE 2 -->
   <div class="pullquote">
-    <p class="q">Duurzamer worden — juist daarmee help je de gewone man of vrouw.</p>
+    <p class="q">Duurzamer worden, juist daarmee help je de gewone man of vrouw.</p>
     <div class="attr">
       <img class="src-logo" src="/vaste-lasten/img/energie-crisis-wnl.svg" alt="WNL">
       <div><b>Jan Rotmans</b> in <em>Goedemorgen Nederland</em></div>
@@ -742,14 +741,14 @@
 
   <h2>Hoe het Vaste Lasten Onderzoek werkt</h2>
 
-  <ul class="danger-list" style="--icon-color:var(--lime);">
-    <li><div class="icon" style="background:#e7fbe5;color:#1d8a1d;">1</div><div><b>Beantwoord 11 korte vragen.</b> Over je woning, je energieverbruik en je gewoonten. Duurt 2 minuten.</div></li>
-    <li><div class="icon" style="background:#e7fbe5;color:#1d8a1d;">2</div><div><b>Krijg een persoonlijk bespaaradvies.</b> Direct na het invullen — geen wachttijd, geen verkoper aan de lijn.</div></li>
-    <li><div class="icon" style="background:#e7fbe5;color:#1d8a1d;">3</div><div><b>Kies jouw cadeau.</b> Cadeaukaart bij Bol.com, Coolblue, VVV of MediaMarkt — óf maak kans op een prijs t.w.v. €500.</div></li>
+  <ul class="danger-list">
+    <li><div class="icon" style="background:#fbeede;color:#b85e15;">1</div><div><b>Beantwoord 11 korte vragen.</b> Over je woning, je energieverbruik en je gewoonten. Duurt 2 minuten.</div></li>
+    <li><div class="icon" style="background:#fbeede;color:#b85e15;">2</div><div><b>Krijg een persoonlijk bespaaradvies.</b> Direct na het invullen, geen wachttijd, geen verkoper aan de lijn.</div></li>
+    <li><div class="icon" style="background:#fbeede;color:#b85e15;">3</div><div><b>Kies jouw cadeau.</b> Cadeaukaart bij Bol.com, Coolblue, VVV of MediaMarkt, óf maak kans op een prijs t.w.v. €500.</div></li>
   </ul>
 
   <p style="font-size:14px;color:var(--t3);font-style:italic;border-top:1px solid #ececec;padding-top:18px;margin-top:32px;">
-    Bron citaten: hoogleraar Jan Rotmans in <em>Goedemorgen Nederland</em>, 30 maart 2026.
+    Bron citaten: hoogleraar Jan Rotmans in <em>Goedemorgen Nederland</em>, 22 juni 2026.
     Deze pagina is een commerciële uiting van Vaste Lasten Onderzoek en geen redactioneel artikel.
   </p>
 
@@ -762,7 +761,7 @@
   <p>
     In 2 minuten weet je hoeveel jij kunt besparen. Altijd gratis, altijd een cadeau — en je maakt kans op een prijs naar keuze t.w.v. €500.
   </p>
-  <a href="https://vastelastenonderzoek.nl/?start" class="cta-btn">Doe nu mee &amp; win <span class="arrow">→</span></a>
+  <a href="https://vastelastenonderzoek.nl/?start" class="cta-btn"><span class="bolt">⚡</span> Doe nu mee &amp; win <span class="arrow">→</span></a>
   <div class="stats">
     <div class="s"><div class="n">28.400+</div><div class="l">Deelnemers</div></div>
     <div class="s"><div class="n">€420</div><div class="l">Gem. besparing</div></div>
@@ -780,7 +779,7 @@
 
 <!-- =================== STICKY MOBILE CTA =================== -->
 <div class="sticky-mobile">
-  <a href="https://vastelastenonderzoek.nl/?start">Doe het Onderzoek &amp; win →</a>
+  <a href="https://vastelastenonderzoek.nl/?start"><span style="font-size:16px;">⚡</span> Doe het Onderzoek &amp; win →</a>
   <div class="sub">✓ Gratis · ✓ 2 minuten · ✓ Altijd een cadeau</div>
 </div>
 
@@ -808,14 +807,11 @@
     let lastY = 0;
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
-      // could add behaviors here later
       lastY = y;
     }, { passive:true });
   })();
 </script>
 
-
-
-
-  <script src="/affiliate.js"></script>
-</body></html>
+<script src="/affiliate.js"></script>
+</body>
+</html>
