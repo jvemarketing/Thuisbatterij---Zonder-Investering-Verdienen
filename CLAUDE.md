@@ -67,6 +67,37 @@ npm run dev -- your-hostname.ngrok-free.app
 | `SUPPRESSION_USER` / `SUPPRESSION_PASS` | Basic Auth for suppression admin endpoints |
 | `SOV_TRAFFIC_SOURCE_NUMBER` / `SOV_TRAFFIC_MEDIUM_NUMBER` | Sovendus integration |
 
+## Prelander Workflow (Bundled HTML → EJS)
+
+Marketing generates new prelander designs in a visual tool (Framer or similar) and exports them as a single bundled HTML file (e.g. `views/vaste-lasten/html-reference.html`). These bundles pack all assets as base64 inside `<script type="__bundler/manifest">` and `<script type="__bundler/template">` tags. Each time a new bundle arrives, extract the template and apply these standard fixes before saving as the target `.ejs` file.
+
+**Extract the template HTML:**
+```js
+const html = fs.readFileSync('views/.../html-reference.html', 'utf8');
+const tmStart = html.indexOf('<script type="__bundler/template">');
+const tmEnd = html.indexOf('</script>', tmStart);
+const data = JSON.parse(html.slice(tmStart + '<script type="__bundler/template">'.length, tmEnd));
+const pageHtml = data.pages[data.entry];
+```
+
+**Standard fixes to apply:**
+
+1. Replace inlined `@font-face` UUID declarations with a Google Fonts `<link>` for Inter + Outfit.
+2. Replace UUID image references with real asset paths (check `<script type="__bundler/manifest">` to identify which UUIDs are images).
+3. Add `overflow-x:hidden` to `html,body` — the bundler omits this and negative-margin bleed elements cause horizontal scroll.
+4. Add `width:calc(100% + 48px)` to elements using `margin:0 -24px` inside `<article>` (`.hero-image-header`, `.hero-visual`) — the bundler omits this.
+5. Remove `margin:0 -24px` from `.final-cta` — it sits outside `<article>` at body level and is naturally full-width; negative margins cause overflow.
+6. Fix placeholder CTA links — bundled CTAs use `#funnel` or `#start`; replace with `?start` (relative, not absolute URL — the same prelander may be served from multiple domains).
+7. Fix footer links — bundled footer uses `#`; replace with `/opt-out.html`, `/privacy.html`, `/terms.html`.
+8. Fix sticky mobile CTA link — same placeholder issue.
+9. Add the Clarity tracking script with the correct tag ID for the campaign.
+10. Add `<script src="/affiliate.js"></script>` at the end of `<body>`.
+11. Mobile hero image — change `aspect-ratio: 4/5` to `4/3` and add `background-size:cover; background-position:center top` on `.bg` in the mobile media query.
+
+**Clarity tag IDs by campaign:**
+- `vaste-lasten` / `vastelastenonderzoek.nl`: `wlt83wv5rj`
+- `thuisbatterij` / `verdienduurzaam.nl`: `wlt8ml5f4e`
+
 ## Git
 
 Do not add `Co-Authored-By` trailers to commit messages.
