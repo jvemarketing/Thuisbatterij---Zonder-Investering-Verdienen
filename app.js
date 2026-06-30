@@ -4,7 +4,7 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import { waitUntil } from "@vercel/functions";
 import twilio from "twilio";
-import routes from "./routes.js";
+import pages from "./pages.js";
 import suppressionRouter from "./suppression.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
@@ -28,25 +28,30 @@ app.use((req, res, next) => {
     .replace(/^www\./, '')
     .replace(/\.local$/, '.nl'); // local dev: vastelastenonderzoek.local → vastelastenonderzoek.nl
 
-  const normalizedPath = req.path !== '/' ? req.path.replace(/\/$/, '') : '/';
-  let route = routes.find(r => r.domain === host && normalizedPath === r.path);
+  let lookupHost = host;
 
   //used for local mobile testing directly on phone
   const proxyHostname = process.argv[2] || '';
-
-  console.log(proxyHostname);
-
   if (req.hostname === proxyHostname) {
-    const domainToTest = 'vastelastenonderzoek.nl';
-    const pathToTest = "/";
-    console.log(host, req.path);
-    route = routes.find(r => r.domain === domainToTest && req.path === pathToTest);
-    console.log(route);
+    lookupHost = 'vastelastenonderzoek.nl';
   }
 
-  if (!route) return next();
-  console.log({ ...route.data, query: req.query });
-  res.render(route.view, { ...route.data, query: req.query });
+  const normalizedPath = req.path !== '/' ? req.path.replace(/\/$/, '') : '/';
+
+  const page = pages.find(p => p.domains.some(d => d.domain === lookupHost));
+  const domainEntry = page?.domains.find(d => d.domain === lookupHost);
+  const route = page?.routes.find(r => r.path === normalizedPath);
+
+  if (!page || !domainEntry || !route) return next();
+
+  const viewData = {
+    ...page.defaultViewData,
+    ...route.routeViewData,
+    clarityId: domainEntry.clarityId,
+    query: req.query,
+  };
+  console.log(viewData);
+  res.render(route.view, viewData);
 });
 
 app.use(express.static(join(__dirname, 'public')));
