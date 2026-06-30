@@ -551,7 +551,6 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                 — gratis en gegarandeerd voor <strong>iedere</strong> deelnemer, los van de grote prijstrekking.
             </div>
         </div>
-        <button class="gift-go-btn" id="ggoBtn" onclick="showLeadForm()">Ga verder met mijn deelname →</button>
     </div>
 </div>
 
@@ -1303,16 +1302,12 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     }
 
     function selectGift(card, id, name, val) {
-        const alreadySelected = card.classList.contains('sel');
         document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('sel'));
         card.classList.add('sel');
         gId = id;
         gN = name;
         gV = val;
-        const btn = document.getElementById('ggoBtn');
-        btn.classList.add('on');
-        btn.textContent = 'Ik wil de ' + name + ' winnen! →';
-        if (alreadySelected) showLeadForm();
+        showLeadForm();
     }
 
     function setGiftDisplay(eid, nid) {
