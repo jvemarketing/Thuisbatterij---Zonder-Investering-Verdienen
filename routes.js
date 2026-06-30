@@ -9,13 +9,13 @@ const routes = [
         domain: 'vastelastenonderzoek.nl',
         path: '/energiecrisis',
         view: 'vaste-lasten/pre-lander-energie-crisis',
-        data: {},
+        data: { clarityId: 'wlt83wv5rj' },
     },
     {
         domain: 'vastenlastenonderzoek.nl',
         path: '/energiecrisis',
         view: 'vaste-lasten/pre-lander-energie-crisis',
-        data: {},
+        data: { clarityId: 'xf1u2vo340' },
     },
     {
         domain: 'vastelastenonderzoek.nl',
