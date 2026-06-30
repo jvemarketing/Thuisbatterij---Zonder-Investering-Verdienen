@@ -87,7 +87,7 @@ const pageHtml = data.pages[data.entry];
 3. Add `overflow-x:hidden` to `html,body` — the bundler omits this and negative-margin bleed elements cause horizontal scroll.
 4. Add `width:calc(100% + 48px)` to elements using `margin:0 -24px` inside `<article>` (`.hero-image-header`, `.hero-visual`) — the bundler omits this.
 5. Remove `margin:0 -24px` from `.final-cta` — it sits outside `<article>` at body level and is naturally full-width; negative margins cause overflow.
-6. Fix placeholder CTA links — bundled CTAs use `#funnel` or `#start`; replace with `?start` (relative, not absolute URL — the same prelander may be served from multiple domains).
+6. Fix placeholder CTA links — bundled CTAs use `#funnel` or `#start`; replace with `/?start` (relative, not absolute URL — the same prelander may be served from multiple domains).
 7. Fix footer links — bundled footer uses `#`; replace with `/opt-out.html`, `/privacy.html`, `/terms.html`.
 8. Fix sticky mobile CTA link — same placeholder issue.
 9. Add the Clarity tracking script with the correct tag ID for the campaign.
