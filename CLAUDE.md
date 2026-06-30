@@ -24,7 +24,12 @@ npm run dev -- your-hostname.ngrok-free.app
 
 ## Architecture
 
-**Domain-based SSR routing** — all routes are defined in `routes.js` as an array of `{ domain, path, view, data }` objects. `app.js` matches incoming requests against this array and renders the EJS template with the associated data. **To add a new site or partner, only `routes.js` needs to be edited.**
+**Domain-based SSR routing** — all routes are defined in `pages.js` as an array of page objects. Each page has:
+- `domains` — one or more `{ domain, clarityId }` entries (the same routes serve all listed domains, each with its own Clarity tag)
+- `defaultViewData` — view data shared across all routes for that page
+- `routes` — array of `{ path, view, routeViewData }` where `routeViewData` is merged over `defaultViewData`
+
+`app.js` matches the incoming `Host` header against `pages.js`, merges the data, and renders the EJS template. **To add a new site, domain, or partner route, only `pages.js` needs to be edited.**
 
 **Views & static assets** are co-located by campaign under `views/` (EJS templates) and `public/` (CSS, JS, images):
 - `views/vaste-lasten/index.ejs` — shared template for all Vaste Lasten partner variants
@@ -90,13 +95,9 @@ const pageHtml = data.pages[data.entry];
 6. Fix placeholder CTA links — bundled CTAs use `#funnel` or `#start`; replace with `/?start` (relative, not absolute URL — the same prelander may be served from multiple domains).
 7. Fix footer links — bundled footer uses `#`; replace with `/opt-out.html`, `/privacy.html`, `/terms.html`.
 8. Fix sticky mobile CTA link — same placeholder issue.
-9. Add the Clarity tracking script with the correct tag ID for the campaign.
+9. Add the Clarity tracking script using `<%= clarityId %>` — the ID is injected server-side from `pages.js` per domain, so no hardcoded value is needed in the template.
 10. Add `<script src="/affiliate.js"></script>` at the end of `<body>`.
 11. Mobile hero image — change `aspect-ratio: 4/5` to `4/3` and add `background-size:cover; background-position:center top` on `.bg` in the mobile media query.
-
-**Clarity tag IDs by campaign:**
-- `vaste-lasten` / `vastelastenonderzoek.nl`: `wlt83wv5rj`
-- `thuisbatterij` / `verdienduurzaam.nl`: `wlt8ml5f4e`
 
 ## Git
 
