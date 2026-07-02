@@ -364,22 +364,17 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     </div>
 
     <!-- STATS BAND -->
+    <% if (!hideStatsBand) { %>
     <div class="stats-band">
         <div class="container">
             <div class="stats-grid">
-                <% if (!hideParticipantStat) { %>
                 <div class="stat-item">
                     <div class="stat-num">28.400+</div>
                     <div class="stat-label">Deelnemers deze maand</div>
                 </div>
-                <% } %>
                 <div class="stat-item">
-                    <% if (savingStatLabel) { %>
-                    <div class="stat-label" style="font-size:.95rem;font-weight:700;color:var(--primary)"><%= savingStatLabel %></div>
-                    <% } else { %>
                     <div class="stat-num">€420</div>
                     <div class="stat-label">Gem. besparing per jaar</div>
-                    <% } %>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">4.7 / 5</div>
@@ -388,6 +383,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
             </div>
         </div>
     </div>
+    <% } %>
 
     <!-- FAQ -->
     <div class="sec sec-white">
