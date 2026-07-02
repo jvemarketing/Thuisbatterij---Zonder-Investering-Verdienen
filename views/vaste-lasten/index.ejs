@@ -646,6 +646,14 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                 <div id="phStatus" class="email-status"></div>
             </div>
         </div>
+        <% if (consentCheckbox) { %>
+        <div class="consent-row" id="consentRow">
+            <div class="consent-box" id="consentBox"></div>
+            <span class="consent-txt">Door op "Akkoord &amp; Ga Verder" te klikken geeft u toestemming aan Vastelastenexperts om u binnen drie maanden éénmalig telefonisch te benaderen voor persoonlijk advies over mogelijke besparingen op uw vaste lasten en om u een commercieel aanbod te doen van verschillende leveranciers. Dit gesprek is vrijblijvend. Wilt u uw toestemming intrekken? Dat kan eenvoudig via het <a href="https://vastelastenexperts.nl/toestemming-intrekken/" target="_blank">formulier op onze website</a>. Raadpleeg ook onze <a href="<%= privacyURL %>" target="_blank">Privacy Policy</a> voor meer informatie.</span>
+        </div>
+        <div class="consent-err" id="consentErr">Vink de checkbox aan om door te gaan.</div>
+        <button class="cta-btn" onclick="submitLeadForm()" style="width:100%;margin-top:12px;opacity:.5;cursor:not-allowed;" disabled>Akkoord &amp; Ga Verder ›</button>
+        <% } else { %>
         <button class="cta-btn" onclick="submitLeadForm()" style="width:100%;margin-top:4px;">Ga Verder ›</button>
         <p class="legal-text">Wat gebeurt er met uw gegevens? Door op "Ga Verder" te klikken geeft u toestemming dat
             Vastelastenexperts u telefonisch benadert om te berekenen hoeveel u kunt Besparen op uw energie en telecomkosten. De
@@ -653,6 +661,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
             Wilt u dit niet meer, intrek via het <a href="https://vastelastenexperts.nl/toestemming-intrekken/" target="_blank">formulier
                 op onze website</a>. Zie ook onze <a href="https://vastelastenexperts.nl/privacy-policy/" target="_blank">Privacy
                 Policy</a>.</p>
+        <% } %>
     </div>
     <div class="foot-lt">
         <a href="<%= privacyURL %>" target="_blank">Privacy Beleid</a> &nbsp;·&nbsp; <a
@@ -1443,6 +1452,11 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
             FormValidation.showError(document.getElementById('ph'), document.getElementById('phStatus'), 'Bevestig een geldig mobiel nummer');
             ok = false;
         }
+        const consentErr = document.getElementById('consentErr');
+        if (consentErr && document.querySelector('#p-lead .cta-btn').disabled) {
+            consentErr.style.display = 'block';
+            ok = false;
+        }
         if (!ok) return;
 
         const ph = itiTel.getNumber();
@@ -1469,7 +1483,9 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
             alert('Fout bij versturen verificatiecode. Probeer opnieuw.');
         }).finally(() => {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Ga Verder ›';
+            submitBtn.textContent = '<%= consentCheckbox ? "Akkoord & Ga Verder ›" : "Ga Verder ›" %>';
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
         });
     }
 
@@ -1637,6 +1653,29 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
         renderQuestion(queue[0]);
         setProgress(5);
     }
+
+    (function() {
+        const row = document.getElementById('consentRow');
+        if (!row) return;
+        const box   = document.getElementById('consentBox');
+        const err   = document.getElementById('consentErr');
+        const btn   = document.querySelector('#p-lead .cta-btn');
+        let checked = false;
+
+        function setChecked(val) {
+            checked = val;
+            box.classList.toggle('is-checked', val);
+            btn.disabled          = !val;
+            btn.style.opacity     = val ? '1' : '.5';
+            btn.style.cursor      = val ? 'pointer' : 'not-allowed';
+            if (val) err.style.display = 'none';
+        }
+
+        row.addEventListener('click', function(e) {
+            if (e.target.closest('a')) return;
+            setChecked(!checked);
+        });
+    })();
 </script>
 </body>
 </html>

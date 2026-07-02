@@ -20,6 +20,7 @@ const pages = [
             joinLabel: null,
             optOutLabel: null,
             hideStatsBand: false,
+            consentCheckbox: false,
             partnerFooter: null,
         },
         routes: [
@@ -109,6 +110,7 @@ const pages = [
                     joinLabel: 'vrijblijvend deelnemen',
                     optOutLabel: 'Toestemming intrekken',
                     hideStatsBand: true,
+                    consentCheckbox: true,
                     partnerFooter: 'In samenwerking met: Essent - EnergieDirect - Vattenfall - Engie - Greenchoice - Omnis Energy - NextEnergy',
                 },
             },

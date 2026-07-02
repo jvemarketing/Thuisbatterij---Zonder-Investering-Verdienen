@@ -923,6 +923,13 @@ footer{
 .gender-btn:hover,.gender-btn.on{border-color:var(--or);background:var(--olt);color:var(--or);}
 .legal-text{font-size:.69rem;color:var(--t3);line-height:1.75;margin-top:14px;}
 .legal-text a{color:var(--or);text-decoration:underline;}
+.consent-row{display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-top:14px;user-select:none;}
+.consent-box{flex-shrink:0;width:22px;height:22px;border:2px solid #cbd5e1;border-radius:4px;background:#fff;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:border-color .15s;}
+.consent-box.is-checked{border-color:#22c55e;}
+.consent-box.is-checked::after{content:'';display:block;width:5px;height:10px;border:2.5px solid #22c55e;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+.consent-txt{font-size:.72rem;color:var(--t3);line-height:1.65;}
+.consent-txt a{color:var(--or);text-decoration:underline;}
+.consent-err{color:#dc2626;font-size:.72rem;margin-top:6px;display:none;}
 select.form-input{
   appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a90a8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
