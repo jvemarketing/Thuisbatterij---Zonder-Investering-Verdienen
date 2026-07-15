@@ -1578,7 +1578,9 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
         }).then(r => r.json()).then(data => {
-            if (data.result !== 'created') {
+            if (data.result === 'created') {
+                if (window.va) window.va('event', { name: 'lead_submitted' });
+            } else {
                 console.warn('Lead rejected by Databowl:', data);
             }
         }).catch(err => {

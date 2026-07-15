@@ -1257,6 +1257,7 @@
         data: JSON.stringify(formData),
         success: function (response) {
           if (response.result === 'created') {
+            if (window.va) window.va('event', { name: 'lead_submitted' });
             showExit();
           } else {
             console.warn('Lead rejected by Databowl:', response);
