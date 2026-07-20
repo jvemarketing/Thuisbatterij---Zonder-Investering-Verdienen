@@ -29,7 +29,9 @@ npm run dev -- your-hostname.ngrok-free.app
 - `defaultViewData` — view data shared across all routes for that page
 - `routes` — array of `{ path, view, routeViewData }` where `routeViewData` is merged over `defaultViewData`
 
-`app.js` matches the incoming `Host` header against `pages.js`, merges the data, and renders the EJS template. **To add a new site, domain, or partner route, only `pages.js` needs to be edited.**
+`api/index.js` matches the incoming `Host` header against `pages.js`, merges the data, and renders the EJS template. **To add a new site, domain, or partner route, only `pages.js` needs to be edited.**
+
+Each `/api/*` endpoint is its own zero-config Vercel Function file under `api/` (e.g. `api/lead.js`, `api/validate/mobile.js`), not a route inside `api/index.js` — this is what lets Vercel Observability Plus show per-endpoint latency instead of one row for the whole app. Shared logic lives in `lib/databowl.js` (Databowl HMAC signing) and `lib/tracking.js` (Everflow/Facebook conversion tracking). **To add a new API endpoint, create a new file under `api/` and add its dev-mount line in `api/index.js`** (near the bottom, alongside the other handler mounts — these run unconditionally so tests can exercise them directly; only the `app.listen` call is gated by `NODE_ENV !== 'test'`) — Vercel auto-detects the new file in production, no `vercel.json` change needed.
 
 **Views & static assets** are co-located by campaign under `views/` (EJS templates) and `public/` (CSS, JS, images):
 - `views/vaste-lasten/index.ejs` — shared template for all Vaste Lasten partner variants
@@ -37,7 +39,7 @@ npm run dev -- your-hostname.ngrok-free.app
 - `views/sovendus.ejs` — post-conversion Sovendus integration page
 - `public/form-validation.js`, `public/affiliate.js` — shared frontend scripts
 
-**API endpoints** (all in `app.js`):
+**API endpoints** (each its own file under `api/`):
 | Endpoint | Purpose |
 |---|---|
 | `POST /api/postcodecheck` | PostNL address lookup proxy |
@@ -56,9 +58,9 @@ npm run dev -- your-hostname.ngrok-free.app
 
 **Lead submission flow**: The frontend applies the Databowl field name mapping (e.g. `voornaam` → `f_3_firstname`) before posting to `/api/lead`. The server forwards pre-mapped fields directly to Databowl. The `newsletter` checkbox drives all `optin_*` fields server-side.
 
-**Databowl signature**: `databowlRequest()` in `app.js` builds an HMAC-SHA256 signature. URL brackets (`data[key]`) must remain literal (not percent-encoded) in the string-to-sign but must be percent-encoded in the actual request URL — this is a known Databowl quirk.
+**Databowl signature**: `databowlRequest()` in `lib/databowl.js` builds an HMAC-SHA256 signature. URL brackets (`data[key]`) must remain literal (not percent-encoded) in the string-to-sign but must be percent-encoded in the actual request URL — this is a known Databowl quirk.
 
-**Deployment**: Vercel. All requests rewrite to `app.js` via `vercel.json`. `@vercel/functions` `waitUntil` is used to fire the Everflow postback after the response is sent.
+**Deployment**: Vercel. Non-API requests rewrite to `api/index.js` via `vercel.json`; each `/api/*` endpoint deploys as its own zero-config Vercel Function (see Architecture above). `@vercel/functions` `waitUntil` is used to fire the Everflow postback after the response is sent.
 
 **Analytics**: Every template ends its `<body>` with the Vercel Web Analytics + Speed Insights scripts:
 ```html
