@@ -99,10 +99,11 @@ describe('api/lead', () => {
     });
     const res = mockRes();
     const req = baseReq({ cid: '925', sid: '1' });
+    req.headers.host = 'verdienduurzaam.nl:8080';
 
     await handler(req, res);
 
     const [, options] = vi.mocked(fetch).mock.calls[0];
-    expect(new URLSearchParams(options.body).get('f_1288_lead_source_url')).toContain('verdienduurzaam.nl');
+    expect(new URLSearchParams(options.body).get('f_1288_lead_source_url')).toBe('verdienduurzaam.nl');
   });
 });
