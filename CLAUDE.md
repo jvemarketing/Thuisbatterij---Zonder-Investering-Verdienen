@@ -60,6 +60,16 @@ npm run dev -- your-hostname.ngrok-free.app
 
 **Deployment**: Vercel. All requests rewrite to `app.js` via `vercel.json`. `@vercel/functions` `waitUntil` is used to fire the Everflow postback after the response is sent.
 
+**Analytics**: Every template ends its `<body>` with the Vercel Web Analytics + Speed Insights scripts:
+```html
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+```
+On a successful lead creation (`data.result === 'created'` from `/api/lead`), the frontend fires a custom `lead_submitted` event via `if (window.va) window.va('event', { name: 'lead_submitted' });` — see `views/vaste-lasten/index.ejs` and `views/thuisbatterij/flow.ejs`. Any new lead form should fire this same event on success so conversions stay comparable across campaigns in Vercel Analytics.
+
 ## Environment Variables
 
 | Variable | Purpose |
@@ -98,6 +108,7 @@ const pageHtml = data.pages[data.entry];
 9. Add the Clarity tracking script using `<%= clarityId %>` — the ID is injected server-side from `pages.js` per domain, so no hardcoded value is needed in the template.
 10. Add `<script src="/affiliate.js"></script>` at the end of `<body>`.
 11. Mobile hero image — change `aspect-ratio: 4/5` to `4/3` and add `background-size:cover; background-position:center top` on `.bg` in the mobile media query.
+12. Add the Vercel Web Analytics + Speed Insights scripts at the end of `<body>` (see Analytics section above), and fire the `lead_submitted` custom event on successful lead creation if the template includes its own lead form.
 
 ## Git
 
