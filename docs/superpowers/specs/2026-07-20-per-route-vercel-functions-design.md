@@ -208,13 +208,15 @@ if (process.env.NODE_ENV !== 'test') {
 ```
 
 Each handler file is the single source of truth; `api/index.js` just wires
-them up for convenient local testing. In production on Vercel, these mounts
-are dead code — `/api/lead` never reaches `api/index.js` because the
-dedicated `api/lead.js` Function intercepts it first at the filesystem-routing
-level — so there's no behavioral difference in production, only in local
-dev. This mirrors the exact pattern already in the codebase today (the whole
-block is skipped when `NODE_ENV === 'test'`), so it introduces no new risk
-beyond what's already accepted.
+them up for convenient local testing. The route mounts themselves are
+unconditional — only the `app.listen(3000, ...)` call is gated on
+`NODE_ENV !== 'test'`, matching today's `app.js`, where the `app.post(...)`
+registrations were always unconditional and only the listener was skipped
+under test. In production on Vercel, the mounts are unreachable dead code
+regardless — `/api/lead` never reaches `api/index.js` because the dedicated
+`api/lead.js` Function intercepts it first at the filesystem-routing level —
+so there's no behavioral difference in production, only in local dev and
+in tests that exercise the app directly via supertest.
 
 Two small accompanying changes:
 
