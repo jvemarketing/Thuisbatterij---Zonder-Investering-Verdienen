@@ -166,9 +166,9 @@
   }
   .hero-image-header .bg {
     position:absolute; inset:0;
-    background-image:url("/vaste-lasten/img/energie-crisis-bg.png");
-    background-size:cover;
-    background-position:center;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center;
   }
   .hero-image-header .scrim {
     position:absolute; inset:0;
@@ -222,7 +222,7 @@
   }
   @media (max-width:720px) {
     .hero-image-header { aspect-ratio: 4 / 3; }
-    .hero-image-header .bg { background-size:cover; background-position:center top; }
+    .hero-image-header .bg { object-position:center top; }
     .hero-image-header .content { padding:22px 22px 22px; }
     .hero-image-header h1 { font-size:26px; }
   }
@@ -602,7 +602,8 @@
 
   <!-- HERO IMAGE HEADER with overlaid title -->
   <div class="hero-image-header" id="hero-header" data-variant="photo">
-    <div class="bg" role="img" aria-label="Tankstation en gasvlam — stijgende energiekosten"></div>
+    <img class="bg" src="/vaste-lasten/img/energie-crisis-bg.jpg" alt="Tankstation en gasvlam — stijgende energiekosten" fetchpriority="high" decoding="async">
+
     <div class="scrim"></div>
     <div class="content">
       <span class="warn-tag">Energiecrisis · Juni 2026</span>
