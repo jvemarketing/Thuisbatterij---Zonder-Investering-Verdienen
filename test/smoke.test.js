@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 
 vi.mock('node-fetch', () => ({ default: vi.fn() }));
 
-import app from '../app.js';
+import app from '../api/index.js';
 import pages from '../pages.js';
 
 // Build the full route matrix from pages.js so the test list stays in sync automatically
