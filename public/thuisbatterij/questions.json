@@ -34,8 +34,54 @@
       {"text": "Ja", "value": "ja"}
     ],
     "branching_rules": {
-      "nee_nog_niet": "interesse_in_zonnepanelen",
-      "ja": "heeft_u_een_gas_aansluiting"
+      "nee_nog_niet": "interesse_in_zonnepanelen_met_thuisbatterij",
+      "ja": "hoeveel_zonnepanelen"
+    }
+  },
+  {
+    "question_id": "hoeveel_zonnepanelen",
+    "text": "Hoeveel panelen heb jij? ",
+    "description": "Per 1 januari 2027 vervalt de salderingsregeling en verdien je zonder thuisbatterij minder aan je zonnepanelen.",
+    "type": "radio",
+    "options": [
+      {"text": "1 tot 6 panelen (€550 verlies per jaar zonder thuisbatterij)", "value": "1_tot_6"},
+      {"text": "7 tot 12 panelen (€1125 verlies per jaar zonder thuisbatterij)", "value": "7_tot_12"},
+      {"text": "13 tot 20 panelen (€1670 verlies per jaar zonder thuisbatterij)", "value": "13_tot_20"},
+      {"text": "21 tot 30 panelen (€2430 verlies per jaar zonder thuisbatterij)", "value": "21_tot_30"}
+    ],
+    "branching_rules": {
+      "1_tot_6": "purchasing_power_of_electricity",
+      "7_tot_12": "purchasing_power_of_electricity",
+      "13_tot_20": "purchasing_power_of_electricity",
+      "21_tot_30": "purchasing_power_of_electricity"
+    }
+  },
+  {
+    "question_id": "purchasing_power_of_electricity",
+    "text": "Zet je verlies om in rendement en schaf nu een thuisbatterij aan. Alleen dit jaar nog met BTW teruggave en zónder eigen inleg.",
+    "type": "radio",
+    "options": [
+      {"text": "Ja dit wil ik", "value": "ja_dit_wil_ik"},
+      {"text": "Nee", "value": "nee"}
+    ],
+    "branching_rules": {
+      "ja_dit_wil_ik": "heeft_u_een_gas_aansluiting",
+      "nee": "heeft_u_een_gas_aansluiting"
+    }
+  },
+  {
+    "question_id": "interesse_in_zonnepanelen_met_thuisbatterij",
+    "text": "Heeft u interesse in zonnepanelen in combinatie met een thuisbatterij om niet meer afhankelijk van het Energienet te zijn? Nu tijdelijk zonder eigen inleg en mét BTW teruggave (beperkt beschikbaar)",
+    "type": "radio",
+    "options": [
+      {"text": "Ik heb alleen interesse in zonnepanelen", "value": "ik_heb_alleen_interesse_in_zonnepanelen"},
+      {"text": "Ik heb interesse in zonnepanelen icm een thuisbatterij", "value": "ik_heb_interesse_in_zonnepanelen_icm_een_thuisbatterij"},
+      {"text": "Geen interesse", "value": "geen_interesse"}
+    ],
+    "branching_rules": {
+      "ik_heb_alleen_interesse_in_zonnepanelen": "heeft_u_een_gas_aansluiting",
+      "ik_heb_interesse_in_zonnepanelen_icm_een_thuisbatterij": "heeft_u_een_gas_aansluiting",
+      "geen_interesse": "heeft_u_een_gas_aansluiting"
     }
   },
   {
