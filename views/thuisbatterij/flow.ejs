@@ -1119,10 +1119,6 @@
         '<input type="checkbox" id="fPrivacy" required />' +
         '<label for="fPrivacy">Ik ga akkoord met de <a href="/privacy.html" target="_blank">privacyverklaring</a> en algemene voorwaarden *</label>' +
         '</div>' +
-        '<div class="fcheck">' +
-        '<input type="checkbox" id="fNews" />' +
-        '<label for="fNews">Ja, ik ontvang graag tips en aanbiedingen over verduurzamen</label>' +
-        '</div>' +
         '<button type="submit" class="fsubmit"><i class="fas fa-paper-plane mr-2"></i>Verstuur mijn aanvraag</button>' +
         '</form>';
 
@@ -1232,7 +1228,7 @@
         houseNumberAddition: $('#fHouseNumberAddition').val(),
         email:               $('#fEmail').val(),
         phone:               itiTel ? itiTel.getNumber() : $('#fPhone').val(),
-        newsletter:          $('#fNews').prop('checked'),
+        newsletter:          $('#fNews').prop('checked'), // checkbox removed; always false pending marketing decision on optin default
         transaction_id:      everflowTracking.ef_click_id || ''
       }, answers);
 
