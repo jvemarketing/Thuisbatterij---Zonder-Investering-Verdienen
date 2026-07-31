@@ -7,6 +7,7 @@ const pages = [
         ],
         defaultViewData: {
             partner: 'vaste-lasten-onderzoek',
+            partnerName: 'Vastelastenexperts',
             logo: {
                 src: '/vaste-lasten/img/no-logo.png',
                 alt: 'Vaste lasten onderzoek',
@@ -22,6 +23,8 @@ const pages = [
             hideStatsBand: false,
             consentCheckbox: false,
             partnerFooter: null,
+            databowlCid: '925',
+            databowlSid: '34',
         },
         routes: [
             {
@@ -67,6 +70,7 @@ const pages = [
                 view: 'vaste-lasten/index',
                 routeViewData: {
                     partner: 'voltafy',
+                    partnerName: 'Voltafy',
                     logo: {
                         src: '/vaste-lasten/img/voltafy.png',
                         alt: 'Voltafy',
@@ -82,6 +86,7 @@ const pages = [
                 view: 'vaste-lasten/index',
                 routeViewData: {
                     partner: 'gemakkelijk-besparen',
+                    partnerName: 'Gemakkelijk Besparen',
                     logo: {
                         src: '/vaste-lasten/img/gemakkelijk-besparen.png',
                         alt: 'Gemakkelijkbesparen',
@@ -112,6 +117,61 @@ const pages = [
                     hideStatsBand: true,
                     consentCheckbox: true,
                     partnerFooter: 'In samenwerking met: Essent - EnergieDirect - Vattenfall - Engie - Greenchoice - Omnis Energy - NextEnergy',
+                },
+            },
+            {
+                path: '/ebned',
+                view: 'vaste-lasten/index',
+                routeViewData: {
+                    partner: 'ebned',
+                    partnerName: 'Ebned',
+                    logo: {
+                        src: '/vaste-lasten/img/ebned.png',
+                        alt: 'Ebned',
+                    },
+                    privacyURL: 'https://ebned.nl/privacy',
+                    termsURL: 'https://ebned.nl/voorwaarden',
+                    optOutURL: '/ebned/opt-out.html',
+                    // PLACEHOLDER — replace with the real Databowl campaign id/sub-id for
+                    // "NL - VLO - EBNED - Energie" once that campaign exists in Databowl.
+                    databowlCid: 'TBD_EBNED_CID',
+                    databowlSid: 'TBD_EBNED_SID',
+                },
+            },
+            {
+                path: '/ebned/opt-out.html',
+                view: 'vaste-lasten/opt-out',
+                routeViewData: {
+                    logo: {
+                        src: '/vaste-lasten/img/ebned-logo.png',
+                        alt: 'Ebned',
+                    },
+                    // PLACEHOLDER — replace with Ebned's real contact email.
+                    companyEmail: '[EBNED CONTACT E-MAIL]',
+                    accentColor: '#c6f28b',
+                    accentColorHover: '#b3e56a',
+                    accentTextColor: '#0C1324',
+                },
+            },
+            {
+                path: '/ebned/actievoorwaarden-vastelastenonderzoek.html',
+                view: 'vaste-lasten/actievoorwaarden',
+                routeViewData: {
+                    logo: {
+                        src: '/vaste-lasten/img/ebned-logo.png',
+                        alt: 'Ebned',
+                    },
+                    // PLACEHOLDERS — replace with Ebned's real company/legal details.
+                    companyName: '[EBNED BEDRIJFSNAAM]',
+                    companyAddress: '[EBNED ADRES]',
+                    companyKvk: '[EBNED KVK-NUMMER]',
+                    companyEmail: '[EBNED CONTACT E-MAIL]',
+                    privacyURL: 'https://ebned.nl/privacy',
+                    optOutURL: '/ebned/opt-out.html',
+                    faqURL: '/faq.html',
+                    accentColor: '#c6f28b',
+                    accentTextColor: '#0C1324',
+                    accentTint: '#eef9dc',
                 },
             },
         ],
