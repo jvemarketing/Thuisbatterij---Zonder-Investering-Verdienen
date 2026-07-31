@@ -207,27 +207,12 @@
       {"text": ">5300 kWh", "value": ">5300_kWh"}
     ],
     "branching_rules": {
-      "2300_kWh": "ruimte_voor_een_thuisbatterij",
-      "3400_kWh": "ruimte_voor_een_thuisbatterij",
-      "4100_kWh": "ruimte_voor_een_thuisbatterij",
-      "4600_kWh": "ruimte_voor_een_thuisbatterij",
-      "5300_kWh": "ruimte_voor_een_thuisbatterij",
-      ">5300_kWh": "ruimte_voor_een_thuisbatterij"
-    }
-  },
-  {
-    "question_id": "ruimte_voor_een_thuisbatterij",
-    "text": "Is er in uw woning voldoende ruimte voor een thuisbatterij?",
-    "type": "radio",
-    "options": [
-      {"text": "Ja, voldoende ruimte", "value": "ja_voldoende_ruimte"},
-      {"text": "Ik twijfel", "value": "ik_twijfel"},
-      {"text": "Nee", "value": "nee"}
-    ],
-    "branching_rules": {
-      "ja_voldoende_ruimte": "interesse_in_airco",
-      "ik_twijfel": "interesse_in_airco",
-      "nee": "interesse_in_airco"
+      "2300_kWh": "interesse_in_airco",
+      "3400_kWh": "interesse_in_airco",
+      "4100_kWh": "interesse_in_airco",
+      "4600_kWh": "interesse_in_airco",
+      "5300_kWh": "interesse_in_airco",
+      ">5300_kWh": "interesse_in_airco"
     }
   },
   {
