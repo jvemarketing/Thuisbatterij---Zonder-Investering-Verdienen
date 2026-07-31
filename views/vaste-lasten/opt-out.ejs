@@ -10,10 +10,7 @@
           crossorigin="anonymous">
 
     <style>
-        /* Aangepaste CSS voor de achtergrond, lettertype en leesbaarheid */
         body.background-image {
-            /* BELANGRIJK: Pas het pad aan indien nodig. */
-            background-image: url('Rustige achtergrond.png');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -23,29 +20,26 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            font-family: 'Inter Tight', sans-serif; /* Lettertype Inter Tight */
+            font-family: 'Inter Tight', sans-serif;
             color: #333;
         }
 
-        /* Styling van de kaart/container */
         .unsubscribe-card {
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
-            padding: 40px; /* Padding 40px zoals gevraagd */
+            padding: 40px;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-            max-width: 550px; /* Compacte breedte */
+            max-width: 550px;
             width: 100%;
         }
 
-        /* Nieuwe stijl voor het logo */
         .logo-image {
-            max-width: 180px; /* Aanbevolen breedte, u kunt dit aanpassen */
+            max-width: 180px;
             height: auto;
-            margin-bottom: 24px; /* 3x8 afstand boven de h1 */
+            margin-bottom: 24px;
             display: block;
         }
 
-        /* Titels en koppen (Inter Tight 700 voor de titel) */
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
@@ -54,69 +48,63 @@
             text-align: left;
         }
 
-        /* Algemene teksten */
         .card-text {
             font-size: 1.1rem;
             font-weight: 400;
             line-height: 1.5;
-            margin-bottom: 32px; /* 3x8 afstand */
+            margin-bottom: 32px;
             text-align: left;
         }
 
         .card-text strong {
-            font-weight: 600; /* Medium dik voor het e-mailadres */
+            font-weight: 600;
             display: block;
             margin-bottom: 24px;
         }
 
-        /* Label/Titel voor invoerveld */
         .input-label {
             font-weight: 400;
             display: block;
-            margin-bottom: 8px; /* 8px afstand tussen label en invoerveld (Regel van 8) */
+            margin-bottom: 8px;
             font-size: 1rem;
             text-align: left;
         }
 
-        /* Invoervelden */
         .form-control {
             border-radius: 5px;
-            padding: 16px; /* 2x8 padding */
+            padding: 16px;
             font-size: 1rem;
             height: auto;
             border: 1px solid #ced4da;
-            margin-bottom: 24px; /* 3x8 afstand tussen velden */
-            width: 100%; /* Vult de container */
+            margin-bottom: 24px;
+            width: 100%;
             font-family: 'Inter Tight', sans-serif;
-            /* NIEUWE TOEVOEGING: Zorgt ervoor dat padding en border in de totale breedte zitten */
             box-sizing: border-box;
         }
 
-        /* Scheidingslijn */
         hr {
             border-top: 1px solid #fafafa;
-            margin-top: 32px; /* 4x8 afstand */
-            margin-bottom: 32px; /* 4x8 afstand */
+            margin-top: 32px;
+            margin-bottom: 32px;
         }
 
-        /* Knop */
         .btn-unsubscribe {
-            background-color: #c6f28b; /* Ebned merkkleur */
-            border-color: #c6f28b;
-            color: #0C1324;
+            background-color: <%= accentColor %>;
+            border-color: <%= accentColor %>;
+            color: <%= accentTextColor %>;
             padding: 16px 24px;
             font-size: 1.2rem;
             font-weight: 600;
             border-radius: 5px;
-            width: 100%; /* Vult de hele breedte */
-            margin-top: 16px; /* 3x8 afstand boven de knop */
+            width: 100%;
+            margin-top: 16px;
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .btn-unsubscribe:hover {
-            background-color: #b3e56a;
-            border-color: #b3e56a;
-            color: #0C1324;
+            background-color: <%= accentColorHover %>;
+            border-color: <%= accentColorHover %>;
+            color: <%= accentTextColor %>;
         }
 
         .text-small {
@@ -138,8 +126,8 @@
 
             <div class="unsubscribe-card mx-auto">
 
-                <img src="/vaste-lasten/img/ebned-logo.png"
-                     alt="Ebned" class="logo-image">
+                <img src="<%= logo.src %>"
+                     alt="<%= logo.alt %>" class="logo-image">
 
                 <h1>Afmelden</h1>
 
@@ -210,7 +198,7 @@
 
                 <p class="text-muted text-small">
                     Heeft u vragen? Stuur een mailtje naar
-                    <a href="mailto:[EBNED CONTACT E-MAIL]">[EBNED CONTACT E-MAIL]</a>
+                    <a href="mailto:<%= companyEmail %>"><%= companyEmail %></a>
                 </p>
             </div>
         </div>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Actievoorwaarden Vaste Lasten Onderzoek – Ebned</title>
+<title>Actievoorwaarden Vaste Lasten Onderzoek – <%= companyName %></title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,8 +41,8 @@
 
   .campaign-label {
     display: inline-block;
-    background: #eef9dc;
-    color: #0C1324;
+    background: <%= accentTint %>;
+    color: <%= accentTextColor %>;
     font-size: .75rem;
     font-weight: 600;
     letter-spacing: .05em;
@@ -71,7 +71,7 @@
     display: inline-block;
     font-size: .72rem;
     font-weight: 600;
-    color: #0C1324;
+    color: <%= accentTextColor %>;
     letter-spacing: .06em;
     text-transform: uppercase;
     margin-bottom: 6px;
@@ -105,8 +105,8 @@
   }
 
   .disclaimer-box {
-    background: #f8fdf2;
-    border-left: 3px solid #c6f28b;
+    background: <%= accentTint %>;
+    border-left: 3px solid <%= accentColor %>;
     border-radius: 0 6px 6px 0;
     padding: 14px 16px;
     margin: 12px 0;
@@ -121,7 +121,7 @@
     margin: 20px 0 0;
   }
 
-  a { color: #0C1324; text-decoration: underline; text-underline-offset: 2px; }
+  a { color: <%= accentTextColor %>; text-decoration: underline; text-underline-offset: 2px; }
   a:hover { opacity: .8; }
 
   .contact-block {
@@ -151,7 +151,7 @@
 
 <div class="card">
 
-  <div class="logo"><img src="/vaste-lasten/img/ebned-logo.png" alt="Ebned" style="height:32px;display:block"></div>
+  <div class="logo"><img src="<%= logo.src %>" alt="<%= logo.alt %>" style="height:32px;display:block"></div>
 
   <span class="campaign-label">Winactie</span>
   <h1>Actievoorwaarden Vaste Lasten Onderzoek</h1>
@@ -160,8 +160,8 @@
   <!-- Artikel 1 -->
   <span class="article-number">Artikel 1</span>
   <h2>Organisatie</h2>
-  <p>Deze winactie wordt georganiseerd door [EBNED BEDRIJFSNAAM] (hierna: "de Organisator"), gevestigd aan [EBNED ADRES], Nederland, ingeschreven bij de Kamer van Koophandel onder nummer [EBNED KVK-NUMMER].</p>
-  <p>Voor vragen, opmerkingen of klachten over deze winactie kunt u contact opnemen via <a href="mailto:[EBNED CONTACT E-MAIL]" target="_blank">[EBNED CONTACT E-MAIL]</a>.</p>
+  <p>Deze winactie wordt georganiseerd door <%= companyName %> (hierna: "de Organisator"), gevestigd aan <%= companyAddress %>, Nederland, ingeschreven bij de Kamer van Koophandel onder nummer <%= companyKvk %>.</p>
+  <p>Voor vragen, opmerkingen of klachten over deze winactie kunt u contact opnemen via <a href="mailto:<%= companyEmail %>" target="_blank"><%= companyEmail %></a>.</p>
 
   <hr class="divider">
 
@@ -191,7 +191,7 @@
   </ol>
 
   <div class="disclaimer-box">
-    <strong>Merken disclaimer:</strong> [EBNED BEDRIJFSNAAM] heeft op geen enkele wijze een relatie met de fabrikanten of aanbieders van de getoonde en verlote producten. De respectieve fabrikanten en aanbieders blijven onverminderd rechthebbende op de getoonde handelsmerken. De getoonde handelsmerken en afbeeldingen worden uitsluitend gebruikt ter illustratie.
+    <strong>Merken disclaimer:</strong> <%= companyName %> heeft op geen enkele wijze een relatie met de fabrikanten of aanbieders van de getoonde en verlote producten. De respectieve fabrikanten en aanbieders blijven onverminderd rechthebbende op de getoonde handelsmerken. De getoonde handelsmerken en afbeeldingen worden uitsluitend gebruikt ter illustratie.
   </div>
 
   <hr class="divider">
@@ -235,12 +235,12 @@
   <span class="article-number">Artikel 7</span>
   <h2>Privacy en gegevensverwerking</h2>
   <ol>
-    <li>Door deelname aan deze winactie gaat de deelnemer akkoord met het <a href="https://ebned.nl/privacy" target="_blank">privacybeleid</a> van [EBNED BEDRIJFSNAAM].</li>
-    <li>[EBNED BEDRIJFSNAAM] treedt op als verwerkingsverantwoordelijke voor de verwerking van persoonsgegevens in het kader van deze winactie.</li>
+    <li>Door deelname aan deze winactie gaat de deelnemer akkoord met het <a href="<%= privacyURL %>" target="_blank">privacybeleid</a> van <%= companyName %>.</li>
+    <li><%= companyName %> treedt op als verwerkingsverantwoordelijke voor de verwerking van persoonsgegevens in het kader van deze winactie.</li>
     <li>Tijdens de registratie kan de deelnemer vrijwillig en expliciet toestemming geven voor het ontvangen van marketingberichten van geselecteerde partners (sponsors). Deze toestemming is niet verplicht om deel te nemen aan de winactie.</li>
     <li>Indien de deelnemer via een actieve handeling (zoals het aanvinken van een checkbox) toestemming geeft, worden de relevante contactgegevens gedeeld met de betreffende sponsor. Vanaf dat moment treedt de sponsor op als zelfstandig verwerkingsverantwoordelijke en is het privacybeleid van de sponsor van toepassing.</li>
-    <li>De deelnemer kan zijn of haar toestemming te allen tijde intrekken via de afmeldlink in de ontvangen berichten of via onze <a href="/ebned/opt-out.html" target="_blank">afmeldpagina</a>.</li>
-    <li>Heeft u vragen over uw gegevens? Bekijk onze <a href="/faq.html" target="_blank">veelgestelde vragen</a> of neem contact op via <a href="mailto:[EBNED CONTACT E-MAIL]" target="_blank">[EBNED CONTACT E-MAIL]</a>.</li>
+    <li>De deelnemer kan zijn of haar toestemming te allen tijde intrekken via de afmeldlink in de ontvangen berichten of via onze <a href="<%= optOutURL %>" target="_blank">afmeldpagina</a>.</li>
+    <li>Heeft u vragen over uw gegevens? Bekijk onze <a href="<%= faqURL %>" target="_blank">veelgestelde vragen</a> of neem contact op via <a href="mailto:<%= companyEmail %>" target="_blank"><%= companyEmail %></a>.</li>
   </ol>
 
   <hr class="divider">
@@ -269,13 +269,13 @@
   <div class="contact-block">
     <strong>Contact</strong>
     Heeft u vragen over deze actievoorwaarden? Neem dan contact met ons op:<br><br>
-    [EBNED BEDRIJFSNAAM]<br>
-    [EBNED ADRES]<br>
-    KVK: [EBNED KVK-NUMMER]<br>
-    <a href="mailto:[EBNED CONTACT E-MAIL]" target="_blank">[EBNED CONTACT E-MAIL]</a>
+    <%= companyName %><br>
+    <%= companyAddress %><br>
+    KVK: <%= companyKvk %><br>
+    <a href="mailto:<%= companyEmail %>" target="_blank"><%= companyEmail %></a>
   </div>
 
-  <p class="date-note">Versie: 2 februari 2026 &nbsp;·&nbsp; [EBNED BEDRIJFSNAAM]</p>
+  <p class="date-note">Versie: 2 februari 2026 &nbsp;·&nbsp; <%= companyName %></p>
 
 </div>
 

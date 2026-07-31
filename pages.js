@@ -138,6 +138,42 @@ const pages = [
                     databowlSid: 'TBD_EBNED_SID',
                 },
             },
+            {
+                path: '/ebned/opt-out.html',
+                view: 'vaste-lasten/opt-out',
+                routeViewData: {
+                    logo: {
+                        src: '/vaste-lasten/img/ebned-logo.png',
+                        alt: 'Ebned',
+                    },
+                    // PLACEHOLDER — replace with Ebned's real contact email.
+                    companyEmail: '[EBNED CONTACT E-MAIL]',
+                    accentColor: '#c6f28b',
+                    accentColorHover: '#b3e56a',
+                    accentTextColor: '#0C1324',
+                },
+            },
+            {
+                path: '/ebned/actievoorwaarden-vastelastenonderzoek.html',
+                view: 'vaste-lasten/actievoorwaarden',
+                routeViewData: {
+                    logo: {
+                        src: '/vaste-lasten/img/ebned-logo.png',
+                        alt: 'Ebned',
+                    },
+                    // PLACEHOLDERS — replace with Ebned's real company/legal details.
+                    companyName: '[EBNED BEDRIJFSNAAM]',
+                    companyAddress: '[EBNED ADRES]',
+                    companyKvk: '[EBNED KVK-NUMMER]',
+                    companyEmail: '[EBNED CONTACT E-MAIL]',
+                    privacyURL: 'https://ebned.nl/privacy',
+                    optOutURL: '/ebned/opt-out.html',
+                    faqURL: '/faq.html',
+                    accentColor: '#c6f28b',
+                    accentTextColor: '#0C1324',
+                    accentTint: '#eef9dc',
+                },
+            },
         ],
     },
     {
