@@ -476,7 +476,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                 <div class="footer-links">
                     <a href="<%= privacyURL %>" target="_blank">Privacy Beleid</a>
                     <a href="<%= termsURL %>" target="_blank">Algemene Voorwaarden</a>
-                    <a href="/actievoorwaarden-vastelastenonderzoek.html" target="_blank">Spelvoorwaarden</a>
+                    <a href="<%= actievoorwaardenURL || '/actievoorwaarden-vastelastenonderzoek.html' %>" target="_blank">Spelvoorwaarden</a>
                     <a href="<%= optOutURL %>" target="_blank"><%= optOutLabel || 'Opt-out' %></a>
                 </div>
             </div>
@@ -658,12 +658,12 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
         <button class="cta-btn" onclick="submitLeadForm()" style="width:100%;margin-top:12px;opacity:.5;cursor:not-allowed;" disabled>Akkoord &amp; Ga Verder ›</button>
         <% } else { %>
         <button class="cta-btn" onclick="submitLeadForm()" style="width:100%;margin-top:4px;">Ga Verder ›</button>
-        <p class="legal-text">Wat gebeurt er met uw gegevens? Door op "Ga Verder" te klikken geeft u toestemming dat
+        <p class="legal-text"><% if (typeof consentText !== 'undefined' && consentText) { %><%- consentText %><% } else { %>Wat gebeurt er met uw gegevens? Door op "Ga Verder" te klikken geeft u toestemming dat
             <%= partnerName %> u telefonisch benadert om te berekenen hoeveel u kunt Besparen op uw energie en telecomkosten. De
             berekening wordt gratis en vrijblijvend telefonisch gedaan door een energieadviseur van <%= partnerName %>.
             Wilt u dit niet meer, intrek via het <a href="<%= optOutURL %>" target="_blank">formulier
                 op onze website</a>. Zie ook onze <a href="<%= privacyURL %>" target="_blank">Privacy
-                Policy</a>.</p>
+                Policy</a>.<% } %></p>
         <% } %>
     </div>
     <div class="foot-lt">
