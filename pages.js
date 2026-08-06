@@ -151,7 +151,7 @@ const pages = [
                         alt: 'Ebned',
                     },
                     // PLACEHOLDER — replace with Ebned's real contact email.
-                    companyEmail: '[EBNED CONTACT E-MAIL]',
+                    companyEmail: 'privacy@ebned.nl',
                     accentColor: '#c6f28b',
                     accentColorHover: '#b3e56a',
                     accentTextColor: '#0C1324',
@@ -162,8 +162,8 @@ const pages = [
                 view: 'vaste-lasten/actievoorwaarden',
                 routeViewData: {
                     logo: {
-                        src: '/vaste-lasten/img/ebned-logo.png',
-                        alt: 'Ebned',
+                        src: '/jve-logo.png',
+                        alt: 'JVE Marketing',
                     },
                     // JVE Marketing B.V. is the legal organizer of the prize draw; Ebned B.V.
                     // is named within the copy as the co-organizing partner (see actievoorwaarden.ejs).
