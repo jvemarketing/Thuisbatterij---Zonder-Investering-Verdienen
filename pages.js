@@ -16,6 +16,8 @@ const pages = [
             termsURL: '/terms.html',
             faqURL: '/faq.html',
             optOutURL: '/opt-out.html',
+            actievoorwaardenURL: null,
+            consentText: null,
             freeLabel: null,
             vrijblijvendLabel: null,
             joinLabel: null,
@@ -129,9 +131,11 @@ const pages = [
                         src: '/vaste-lasten/img/ebned.png',
                         alt: 'Ebned',
                     },
-                    privacyURL: 'https://ebned.nl/privacy',
-                    termsURL: 'https://ebned.nl/voorwaarden',
+                    // Footer stays on JVE Marketing's own privacy/terms (page defaults) —
+                    // only the opt-in consent block below links to Ebned's own policies.
                     optOutURL: '/ebned/opt-out.html',
+                    actievoorwaardenURL: '/ebned/actievoorwaarden-vastelastenonderzoek.html',
+                    consentText: 'Door op "Ga Verder" te klikken geeft u toestemming dat Ebned B.V. telefonisch contact met u opneemt voor een gratis en vrijblijvende bespaarcheck van uw energie- en telecomkosten. Hiervoor worden uw contactgegevens gedeeld met Ebned B.V., die deze verwerkt overeenkomstig haar privacyverklaring. U kunt uw toestemming op ieder moment intrekken via de <a href="/ebned/opt-out.html" target="_blank">afmeldmogelijkheid van Ebned</a> of door contact op te nemen met Ebned. Lees ook de <a href="https://ebned.nl/privacy" target="_blank">Privacyverklaring</a> en <a href="https://ebned.nl/voorwaarden" target="_blank">Algemene Voorwaarden</a> van Ebned.',
                     // PLACEHOLDER — replace with the real Databowl campaign id/sub-id for
                     // "NL - VLO - EBNED - Energie" once that campaign exists in Databowl.
                     databowlCid: 'TBD_EBNED_CID',
@@ -161,12 +165,13 @@ const pages = [
                         src: '/vaste-lasten/img/ebned-logo.png',
                         alt: 'Ebned',
                     },
-                    // PLACEHOLDERS — replace with Ebned's real company/legal details.
-                    companyName: '[EBNED BEDRIJFSNAAM]',
-                    companyAddress: '[EBNED ADRES]',
-                    companyKvk: '[EBNED KVK-NUMMER]',
-                    companyEmail: '[EBNED CONTACT E-MAIL]',
-                    privacyURL: 'https://ebned.nl/privacy',
+                    // JVE Marketing B.V. is the legal organizer of the prize draw; Ebned B.V.
+                    // is named within the copy as the co-organizing partner (see actievoorwaarden.ejs).
+                    companyName: 'JVE Marketing B.V.',
+                    companyAddress: 'Keizersgracht 482, 1017 EG Amsterdam',
+                    companyKvk: '98130137',
+                    companyEmail: 'dpo@jvemarketing.com',
+                    privacyURL: '/privacy.html',
                     optOutURL: '/ebned/opt-out.html',
                     faqURL: '/faq.html',
                     accentColor: '#c6f28b',
