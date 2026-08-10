@@ -441,8 +441,8 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                             </svg>
                         </div>
                     </div>
-                    <div class="faq-a">Een energieadviseur neemt contact op voor een gratis tariefcheck. Jouw gegevens
-                        worden nooit verkocht. Lees onze <a href="https://vastelastenexperts.nl/privacy-policy/"
+                    <div class="faq-a">Een energieadviseur<% if (advisorName) { %> van <%= advisorName %><% } %> neemt contact op voor een gratis tariefcheck. Jouw gegevens
+                        worden nooit verkocht. Lees onze <a href="<%= privacyURL %>"
                                                             onclick="event.stopPropagation()">privacyverklaring</a>.
                     </div>
                 </div>
@@ -585,7 +585,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                           fill="white"/>
                 </svg>
             </div>
-            Je ontvangt <strong>&nbsp;sowieso&nbsp;</strong> een gratis cadeau na deelname!
+            Je ontvangt <strong>sowieso</strong> een gratis cadeau na deelname!
         </div>
         <div class="lead-h">Bedankt voor je deelname aan het onderzoek.</div>
         <p class="lead-sub">Je hebt de quiz ingevuld en maakt nu officieel kans op de prijs.<br><br>Om jouw prijs te
@@ -741,7 +741,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                                   fill="#1a4f8a"/>
                         </svg>
                     </div>
-                    <div><strong>Gratis tariefcheck:</strong> Een energieadviseur van Vaste Lasten Experte neemt zo snel mogelijk contact op.
+                    <div><strong>Gratis tariefcheck:</strong> Een energieadviseur van <%= advisorName || 'Vaste Lasten Experte' %> neemt zo snel mogelijk contact op.
                     </div>
                 </div>
             </div>

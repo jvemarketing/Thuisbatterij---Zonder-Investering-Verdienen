@@ -18,6 +18,7 @@ const pages = [
             optOutURL: '/opt-out.html',
             actievoorwaardenURL: null,
             consentText: null,
+            advisorName: null,
             freeLabel: null,
             vrijblijvendLabel: null,
             joinLabel: null,
@@ -131,10 +132,10 @@ const pages = [
                         src: '/vaste-lasten/img/ebned.png',
                         alt: 'Ebned',
                     },
-                    // Footer stays on JVE Marketing's own privacy/terms (page defaults) —
+                    // Footer stays on JVE Marketing's own privacy/terms/opt-out (page defaults) —
                     // only the opt-in consent block below links to Ebned's own policies.
-                    optOutURL: '/ebned/opt-out.html',
                     actievoorwaardenURL: '/ebned/actievoorwaarden-vastelastenonderzoek.html',
+                    advisorName: 'EBNed',
                     consentText: 'Door op "Ga Verder" te klikken geeft u toestemming dat Ebned B.V. telefonisch contact met u opneemt voor een gratis en vrijblijvende bespaarcheck van uw energie- en telecomkosten. Hiervoor worden uw contactgegevens gedeeld met Ebned B.V., die deze verwerkt overeenkomstig haar privacyverklaring. U kunt uw toestemming op ieder moment intrekken via de <a href="/ebned/opt-out.html" target="_blank">afmeldmogelijkheid van Ebned</a> of door contact op te nemen met Ebned. Lees ook de <a href="https://ebned.nl/privacy" target="_blank">Privacyverklaring</a> en <a href="https://ebned.nl/voorwaarden" target="_blank">Algemene Voorwaarden</a> van Ebned.',
                     // PLACEHOLDER — replace with the real Databowl campaign id/sub-id for
                     // "NL - VLO - EBNED - Energie" once that campaign exists in Databowl.

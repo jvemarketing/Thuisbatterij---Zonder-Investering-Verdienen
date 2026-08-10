@@ -77,12 +77,13 @@ nav {
   display:flex;align-items:center;gap:12px;
 }
 .nav-badge {
-  display:flex;align-items:center;gap:6px;
+  display:none;align-items:center;gap:6px;
   font-size:.72rem;font-weight:600;color:var(--gr);
   background:var(--grl);border:1px solid var(--grm);
   padding:5px 12px;border-radius:20px;
   white-space:nowrap;
 }
+@media(min-width:640px){.nav-badge{display:flex;}}
 .nav-cta {
   display:none;
   background:linear-gradient(135deg,var(--or),var(--orh));
