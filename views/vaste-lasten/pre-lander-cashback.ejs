@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Check in 2 minuten hoeveel jij kunt besparen op je vaste lasten. Maak kans op een prijs t.w.v. €500 en ontvang tot €350 cashback bij een overstap.">
+<title>Vaste Lasten Onderzoek – Doe mee & win!</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --or:#F57F20; --orh:#d86810;
+  --bl:#1a4f8a; --bd:#dde5f0;
+  --bg:#f5f7fc; --wh:#ffffff;
+  --t1:#0f1c2e; --t2:#3d5068; --t3:#7a90a8;
+  --f:'Outfit',sans-serif;
+  --fb:'Inter',sans-serif;
+  --max:1200px;
+  --pad-mobile:16px;
+  --pad-tablet:32px;
+  --pad-desktop:64px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{overflow-x:hidden;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--t1);min-height:100vh;background-image:radial-gradient(circle,rgba(26,79,138,.06) 1.5px,transparent 1.5px);background-size:28px 28px;}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+
+.container{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad-mobile);}
+@media(min-width:768px){.container{padding:0 var(--pad-tablet);}}
+@media(min-width:1024px){.container{padding:0 var(--pad-desktop);}}
+
+.cta-btn {
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;
+  background:linear-gradient(135deg,var(--or),var(--orh));
+  color:#fff;font-family:var(--f);font-weight:800;font-size:1.05rem;
+  padding:18px 28px;border-radius:14px;border:none;
+  box-shadow:0 8px 28px rgba(245,127,32,.42);
+  transition:all .22s ease;
+  position:relative;overflow:hidden;
+  text-decoration:none;
+  cursor:pointer;
+}
+.cta-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.1),transparent);
+  pointer-events:none;
+}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(245,127,32,.52);}
+.cta-btn:active{transform:translateY(0);}
+@media(min-width:640px){.cta-btn{width:auto;}}
+
+.simple-bg{min-height:100vh;background:linear-gradient(135deg,#dbe7f3 0%,#eef3f8 45%,#c9dced 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;}
+@media(min-width:640px){.simple-bg{padding:60px 20px;}}
+.simple-ticker{font-size:.82rem;color:var(--t2);margin-bottom:14px;background:rgba(255,255,255,.7);border-radius:999px;padding:6px 16px;}
+.simple-ticker strong{color:var(--bl);}
+.simple-card{background:#fff;border-radius:18px;box-shadow:0 30px 70px rgba(20,68,124,.15);padding:32px 24px;max-width:920px;width:100%;}
+@media(min-width:640px){.simple-card{padding:44px 52px;}}
+.simple-rule{border:none;border-top:1px solid var(--bd);margin:0 0 28px;}
+.simple-h1{font-family:var(--f);font-size:1.9rem;font-weight:800;color:var(--t1);margin-bottom:14px;}
+.simple-p{font-size:.95rem;color:var(--t2);line-height:1.7;margin-bottom:14px;}
+.simple-bold{font-weight:700;color:var(--t1);margin-bottom:8px;}
+.simple-row{display:grid;grid-template-columns:1fr;gap:20px;align-items:center;margin-bottom:28px;}
+@media(min-width:640px){.simple-row{grid-template-columns:1fr 322px;gap:28px;align-items:start;}}
+.simple-imgwrap{align-self:start;}
+.simple-imgwrap img{width:100%;display:block;filter:drop-shadow(0 14px 24px rgba(20,68,124,.18));}
+.simple-cta{width:100%;max-width:none;margin-bottom:10px;}
+.simple-note{font-size:.85rem;color:var(--t2);margin-bottom:22px;}
+.simple-disclaimer{font-size:.78rem;color:var(--t3);font-style:italic;line-height:1.6;}
+
+footer{
+  background:var(--bl);
+  border-top:1px solid rgba(255,255,255,.1);
+  padding:28px 0;
+}
+.footer-inner{
+  display:flex;flex-direction:column;gap:12px;
+  align-items:center;text-align:center;
+}
+@media(min-width:768px){
+  .footer-inner{
+    flex-direction:row;justify-content:space-between;
+    text-align:left;
+  }
+}
+.footer-text{font-size:.68rem;color:rgba(255,255,255,.48);line-height:2;}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+.footer-links a{font-size:.68rem;color:rgba(255,255,255,.52);text-decoration:underline;}
+.footer-links a:hover{color:rgba(255,255,255,.8);}
+</style>
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "<%= clarityId %>");
+  </script>
+</head>
+<body>
+
+<div class="simple-bg">
+  <div class="simple-ticker">Tot <strong>€350</strong> cashback bij overstap · <strong>28.400+</strong> deelnemers deze maand</div>
+  <div class="simple-card">
+    <img src="<%= logo.src %>" alt="<%= logo.alt %>" style="height:40px;width:auto;display:block;margin:0 auto 24px;">
+    <hr class="simple-rule">
+    <h1 class="simple-h1">Betaal jij nog te veel<br>voor energie?</h1>
+    <p class="simple-p">Waarschijnlijk wel. En je kon het niet weten. Leveranciers geven hun beste tarieven en cashback alleen aan nieuwe klanten. Blijf je zitten, dan krijg je die aanbiedingen nooit te zien.</p>
+    <div class="simple-row">
+      <div class="simple-col">
+        <p class="simple-bold">Vergelijk, maak kans en win!</p>
+        <p class="simple-p">Doe mee aan het Vaste Lasten Onderzoek. Het kost je maar een paar minuten.</p>
+        <p class="simple-p">Als dank voor je deelname maak je kans op <strong>een gegarandeerd cadeauaanbod en een prijs naar keuze t.w.v. €500,-</strong>. Stap je bovendien over naar een goedkoper energiecontract via onze adviseur? Dan kun je <strong>tot €350 cashback ontvangen</strong>.</p>
+        <a href="<%= flowURL %>" class="cta-btn simple-cta">Start het onderzoek →</a>
+        <p class="simple-note">Slechts 12 korte vragen · 2 minuten</p>
+      </div>
+      <div class="simple-imgwrap"><img src="<%= giftImage %>" alt="Cadeaukaarten en producten"></div>
+    </div>
+    <p class="simple-disclaimer">Je antwoorden worden vertrouwelijk verwerkt. Deelname is gratis en vrijblijvend.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-text">
+        &copy; Vaste Lasten Onderzoek &nbsp;·&nbsp; Keizersgracht 482, 1017EG Amsterdam<br>
+        KVK: 90216482 &nbsp;·&nbsp; +31 20 238 9270
+      </div>
+      <div class="footer-links">
+        <a href="<%= privacyURL %>" target="_blank">Privacy Beleid</a>
+        <a href="<%= termsURL %>" target="_blank">Algemene Voorwaarden</a>
+        <a href="<%= optOutURL %>" target="_blank"><%= optOutLabel || 'Opt-out' %></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/affiliate.js"></script>
+
+<!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>

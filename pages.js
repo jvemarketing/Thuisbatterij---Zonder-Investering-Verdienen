@@ -69,6 +69,30 @@ const pages = [
                 },
             },
             {
+                path: '/cashback1',
+                view: 'vaste-lasten/pre-lander-cashback',
+                routeViewData: {
+                    giftImage: '/vaste-lasten/img/cashback-gifts-1.png',
+                    flowURL: '/?start',
+                },
+            },
+            {
+                path: '/cashback2',
+                view: 'vaste-lasten/pre-lander-cashback',
+                routeViewData: {
+                    giftImage: '/vaste-lasten/img/cashback-gifts-2.png',
+                    flowURL: '/1?start',
+                },
+            },
+            {
+                path: '/cashback3',
+                view: 'vaste-lasten/pre-lander-cashback',
+                routeViewData: {
+                    giftImage: '/vaste-lasten/img/cashback-gifts-3.png',
+                    flowURL: '/2?start',
+                },
+            },
+            {
                 path: '/voltafy',
                 view: 'vaste-lasten/index',
                 routeViewData: {
