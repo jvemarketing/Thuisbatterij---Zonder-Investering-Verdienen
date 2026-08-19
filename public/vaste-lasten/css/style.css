@@ -38,6 +38,7 @@ a{color:inherit;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 @keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
 @keyframes su{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes spin{to{transform:rotate(360deg);}}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(245,127,32,.4);}50%{box-shadow:0 0 0 8px rgba(245,127,32,0);}}
 
 /* ═══════════════════════════════════════════════════════════════
@@ -712,6 +713,21 @@ footer{
   margin-bottom:8px;
 }
 .resp-text{font-size:.86rem;color:#166534;line-height:1.65;}
+
+.q-pre{font-size:.82rem;color:var(--t2);line-height:1.6;margin-bottom:10px;}
+
+.incentive-bar{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--olt),#ffe8d0);border:1.5px solid var(--omid);border-radius:12px;padding:13px 16px;margin-top:14px;}
+.incentive-bar-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--or),var(--orh));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.incentive-bar-text{font-size:.79rem;color:#92400e;line-height:1.5;font-weight:600;}
+
+.interim-wrap{max-width:440px;margin:0 auto;padding:60px var(--pad-mobile,16px) 80px;text-align:center;}
+.interim-spin{width:64px;height:64px;border-radius:50%;border:4px solid var(--bll);border-top-color:var(--or);margin:0 auto 24px;animation:spin 1s linear infinite;}
+.interim-wrap h2{font-family:var(--f);font-size:1.15rem;font-weight:700;color:var(--t1);}
+.interim-done{display:none;}
+.interim-done.show{display:block;animation:fadeUp .3s ease;}
+.interim-tick{width:74px;height:74px;border-radius:50%;margin:0 auto 18px;background:linear-gradient(135deg,var(--gr),#15803d);display:flex;align-items:center;justify-content:center;box-shadow:0 0 48px rgba(22,163,74,.4);animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+.interim-done h2{font-family:var(--f);font-size:1.3rem;font-weight:900;color:var(--t1);margin-bottom:12px;}
+.interim-done p{font-size:.86rem;color:var(--t2);line-height:1.7;margin-bottom:26px;}
 
 .next-btn{
   display:none;width:100%;

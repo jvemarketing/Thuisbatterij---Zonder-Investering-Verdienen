@@ -167,6 +167,25 @@ const pages = [
                 },
             },
             {
+                // Preview of a new 12-question flow for the EBNED partner page —
+                // same partner branding/consent/Databowl campaign as /ebned, only
+                // the question set differs (view: vaste-lasten/ebned-new-flow).
+                path: '/ebned-new-flow',
+                view: 'vaste-lasten/ebned-new-flow',
+                routeViewData: {
+                    partner: 'ebned',
+                    partnerName: 'Ebned',
+                    logo: {
+                        src: '/vaste-lasten/img/ebned.png',
+                        alt: 'Ebned',
+                    },
+                    actievoorwaardenURL: '/ebned/actievoorwaarden-vastelastenonderzoek.html',
+                    advisorName: 'EBNed',
+                    consentText: 'Door op "Ga Verder" te klikken geeft u toestemming dat Ebned B.V. telefonisch contact met u opneemt voor een gratis en vrijblijvende bespaarcheck van uw energie- en telecomkosten. Hiervoor worden uw contactgegevens gedeeld met Ebned B.V., die deze verwerkt overeenkomstig haar privacyverklaring. U kunt uw toestemming op ieder moment intrekken via de <a href="/ebned/opt-out.html" target="_blank">afmeldmogelijkheid van Ebned</a> of door contact op te nemen met Ebned. Lees ook de <a href="https://ebned.nl/privacy" target="_blank">Privacyverklaring</a> en <a href="https://ebned.nl/voorwaarden" target="_blank">Algemene Voorwaarden</a> van Ebned.',
+                    databowlCid: '1420',
+                },
+            },
+            {
                 path: '/ebned/opt-out.html',
                 view: 'vaste-lasten/opt-out',
                 routeViewData: {

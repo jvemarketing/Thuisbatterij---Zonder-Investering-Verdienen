@@ -1,0 +1,1647 @@
+<%
+const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPrizes : [
+    { id: 'bol',        name: 'Bol.com Cadeaukaart',  shortName: 'Bol.com',     val: '€500', img: '/vaste-lasten/img/bol.com-cadeaukaart.png' },
+    { id: 'coolblue',   name: 'Coolblue Cadeaukaart', shortName: 'Coolblue',    val: '€500', img: '/vaste-lasten/img/coolblue-cadeaukaart.png' },
+    { id: 'airpods',    name: 'Apple AirPods Pro',    shortName: 'AirPods Pro', val: '€279', img: '/vaste-lasten/img/apple-airpods-pro.png' },
+    { id: 'watch',      name: 'Garmin Smartwatch',    shortName: 'Smartwatch',  val: '€299', img: '/vaste-lasten/img/garmin.png' },
+    { id: 'mediamarkt', name: 'Mediamarkt Kaart',     shortName: 'Mediamarkt',  val: '€500', img: '/vaste-lasten/img/mediamarkt-cadeaukaart.png' },
+    { id: 'vvv',        name: 'VVV Cadeaukaart',      shortName: 'VVV Bon',     val: '€500', img: '/vaste-lasten/img/vvv-cadeaukaart.png' },
+];
+%>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaste Lasten Onderzoek – Doe mee & win!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/vaste-lasten/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/css/intlTelInput.min.css">
+
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "<%= clarityId %>");
+    </script>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════════ -->
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <img src="<%= logo.src %>" alt="<%= logo.alt %>" style="height: 40px; width: auto; display: block;">
+            </div>
+            <div class="nav-right">
+                <div class="nav-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 1L3 5V11C3 16.5 7 21.7 12 23C17 21.7 21 16.5 21 11V5L12 1Z" fill="#16a34a"/>
+                    </svg>
+                    Veilig &amp; Gratis
+                </div>
+                <button class="nav-cta" onclick="startSurvey()" <% if (query && query.start !== undefined) { %>style="display:none"<% } %>>Start onderzoek →</button>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="pw">
+    <div class="pf" id="prog" style="width:0%"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════════════════════════ -->
+<div class="page <%= query && query.start !== undefined ? '' : 'active' %>" id="p-home">
+
+    <!-- Top strip -->
+    <div class="tstrip">
+        <div class="tstrip-inner container">
+            <div class="tsi">
+                <div class="tsi-dot"></div>
+                <%= freeLabel || '100% Gratis' %> deelname
+            </div>
+            <div class="tsi">
+                <div class="tsi-dot"></div>
+                Gegarandeerd cadeau
+            </div>
+
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-decor-1"></div>
+        <div class="hero-decor-2"></div>
+        <div class="hero-grid-overlay"></div>
+        <div class="hero-body">
+            <div class="container">
+                <div class="hero-layout">
+
+                    <!-- Left: text + CTA -->
+                    <div>
+                        <div class="hero-collab">
+                            <div class="hero-collab-badge">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+                                     style="display:inline;vertical-align:middle;margin-right:4px;">
+                                    <path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="currentColor"/>
+                                </svg>
+                                Energie Onderzoek 2026
+                            </div>
+
+                        </div>
+
+                        <div class="hero-guarantee-pill">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                                      fill="rgba(255,255,255,0.3)"/>
+                                <path d="M12 2C8.7 2 5.8 3.4 3.8 5.6L2 4v6h6L5.8 7.8C7.4 6.1 9.6 5 12 5c3.9 0 7.1 2.8 7.8 6.5L22.8 11C21.8 6 17.3 2 12 2z"
+                                      fill="white"/>
+                                <path d="M18.2 16.2C16.6 17.9 14.4 19 12 19c-3.9 0-7.1-2.8-7.8-6.5L1.2 13C2.2 18 6.7 22 12 22c3.3 0 6.2-1.4 8.2-3.6L22 20v-6h-6l2.2 2.2z"
+                                      fill="white"/>
+                            </svg>
+                            Gegarandeerd cadeau voor iedere deelnemer
+                        </div>
+
+                        <h1 class="hero-h1">
+                            Doe mee met het<br>
+                            <span class="acc">Vaste Lasten</span><br>
+                            Onderzoek!
+                            <span class="line2">en maak kans op mooie prijzen — naar keuze!</span>
+                        </h1>
+
+                        <div class="hero-cta-wrap">
+                            <button class="cta-btn" onclick="startSurvey()" style="width:100%;max-width:360px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="white"/>
+                                </svg>
+                                Start deelname →
+                            </button>
+                            <p class="hero-cta-sub">
+                                ✓ <%= vrijblijvendLabel || 'Gratis & vrijblijvend' %> &nbsp;·&nbsp;
+                                <strong>✓ Kans op €500+ aan prijzen</strong> &nbsp;·&nbsp;
+                                ✓ Persoonlijk bespaartips
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: prize panel (desktop only) -->
+                    <div class="hero-right">
+                        <div class="prize-panel">
+                            <div class="prize-panel-title">Te winnen prijzen</div>
+                            <div class="prize-panel-grid">
+                                <% prizes.forEach(function(p) { %>
+                                <div class="prize-panel-card" onclick="startSurveyWithPrize('<%= p.id %>','<%= p.name %>','<%= p.val %>')" style="cursor:pointer;">
+                                    <div class="ppc-icon" style="width: 100%; height: 80px; background: none; margin-bottom: 5px;">
+                                        <img src="<%= p.img %>" alt="<%= p.name %>" style="width:100%; height:100%; object-fit:contain;">
+                                    </div>
+                                    <div class="ppc-name"><%= p.shortName %></div>
+                                    <div class="ppc-val"><%= p.val %></div>
+                                </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero image zone (mobile/tablet) -->
+        <div class="hero-image-zone">
+            <!--
+              ╔══════════════════════════════════════════════════════════╗
+              ║  HERO AFBEELDING — vervang .hiz-placeholder door:       ║
+              ║  <img src="hero.jpg" width="100%"                       ║
+              ║       style="display:block;max-height:340px;            ║
+              ║              object-fit:cover;width:100%;">             ║
+              ╚══════════════════════════════════════════════════════════╝
+            -->
+            <div class="hiz-placeholder">
+                <div class="hiz-tag">Beschikbare prijzen</div>
+                <div class="prize-chip-strip" style="position: relative; z-index: 1;">
+                    <% prizes.forEach(function(p) { %>
+                    <div class="prize-chip" onclick="startSurveyWithPrize('<%= p.id %>','<%= p.name %>','<%= p.val %>')" style="cursor:pointer;">
+                        <div class="pc-icon" style="background: none;">
+                            <img src="<%= p.img %>" alt="<%= p.name %>" style="width:100%; height:100%; object-fit:contain;">
+                        </div>
+                        <div class="pc-name"><%= p.shortName %></div>
+                        <div class="pc-val"><%= p.val %></div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wave"></div>
+
+    <!-- TRUST BAND -->
+    <div class="trust-band">
+        <div class="container">
+            <div class="trust-inner">
+                <div class="trust-item">
+                    <div class="trust-icon gr">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#16a34a"/>
+                        </svg>
+                    </div>
+                    <%= freeLabel || '100% Gratis' %>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon or">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                                  fill="rgba(245,127,32,.3)"/>
+                            <path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
+                                  fill="#F57F20"/>
+                        </svg>
+                    </div>
+                    Altijd een cadeau
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon bl">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 1L3 5V11C3 16.5 7 21.7 12 23C17 21.7 21 16.5 21 11V5L12 1Z" fill="#1a4f8a"/>
+                        </svg>
+                    </div>
+                    AVG-conform
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon or">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="#F57F20"/>
+                        </svg>
+                    </div>
+                    Direct bespaartips
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon bl">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.1 21 3 14.9 3 7c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                                  fill="#1a4f8a"/>
+                        </svg>
+                    </div>
+                    Gratis tariefcheck
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GUARANTEED BOX -->
+    <div class="container">
+        <div class="guar-box">
+            <div class="guar-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                          fill="rgba(255,255,255,.2)"/>
+                    <path d="M12 2C8.7 2 5.8 3.4 3.8 5.6L2 4v6h6L5.8 7.8C7.4 6.1 9.6 5 12 5c3.9 0 7.1 2.8 7.8 6.5L22.8 11C21.8 6 17.3 2 12 2z"
+                          fill="white"/>
+                    <path d="M18.2 16.2C16.6 17.9 14.4 19 12 19c-3.9 0-7.1-2.8-7.8-6.5L1.2 13C2.2 18 6.7 22 12 22c3.3 0 6.2-1.4 8.2-3.6L22 20v-6h-6l2.2 2.2z"
+                          fill="white"/>
+                </svg>
+            </div>
+            <div>
+                <div class="guar-title">Gegarandeerd cadeau voor elke deelnemer!</div>
+                <div class="guar-text">Na deelname ontvang je via onze partner Sovendus <strong>altijd</strong> een
+                    exclusief cadeauaanbod — helemaal gratis, los van de grote prijstrekking. Jij wint dus altijd iets!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRIZES -->
+    <div class="sec">
+        <div class="container">
+            <div class="sec-header-row">
+                <div>
+                    <div class="sec-eyebrow">Prijzen</div>
+                    <div class="sec-title">Wat kun jij winnen?</div>
+                </div>
+                <div class="sec-sub" style="max-width:320px;">Kies bij deelname jouw favoriete prijs.</div>
+            </div>
+            <div class="prizes-grid">
+                <% prizes.forEach(function(p) { %>
+                <div class="prize-card" onclick="startSurveyWithPrize('<%= p.id %>','<%= p.name %>','<%= p.val %>')" style="cursor:pointer;">
+                    <div class="prize-card-icon" style="background: none; width: 60px; height: 60px; margin: 0 auto 10px;">
+                        <img src="<%= p.img %>" alt="<%= p.name %>" style="width:100%; height:100%; object-fit:contain;">
+                    </div>
+                    <div class="prize-card-name"><%= p.name %></div>
+                    <div class="prize-card-val"><%= p.val %></div>
+                </div>
+                <% }) %>
+            </div>
+            <br><br>
+            <div style="text-align:center;">
+                <button class="cta-btn" onclick="startSurvey()" style="max-width:400px;">
+                    Start deelname →
+                </button>
+                <p style="font-size:.72rem;color:var(--t3);margin-top:10px;"><%= joinLabel || 'Gratis & vrijblijvend deelnemen' %></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="sec sec-white">
+        <div class="container">
+            <div class="sec-eyebrow">Hoe werkt het</div>
+            <div class="sec-title">In 3 stappen kans op een prijs</div>
+            <div class="sec-sub">Snel, gratis en altijd met een beloning!</div>
+            <div class="steps-row">
+                <div class="steps-line"></div>
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-label">Beantwoord vragen</div>
+                    <div class="step-sub">11 korte vragen over je energiegebruik</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-label">Kies je prijs</div>
+                    <div class="step-sub">Selecteer de prijs die jij wilt winnen</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-label">Win altijd!</div>
+                    <div class="step-sub">Grote prijs + gegarandeerd cadeau</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WHY JOIN -->
+    <div class="sec">
+        <div class="container">
+            <div class="sec-eyebrow">Waarom meedoen</div>
+            <div class="sec-title">Wat heb jij eraan?</div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon or">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"
+                                  fill="#F57F20"/>
+                        </svg>
+                    </div>
+                    <div class="why-title">Bespaar tot €500/jaar</div>
+                    <div class="why-text">Gratis persoonlijk bespaartips op maat</div>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon gr">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                                  fill="rgba(22,163,74,.2)"/>
+                            <path d="M12 2C8.7 2 5.8 3.4 3.8 5.6L2 4v6h6L5.8 7.8C7.4 6.1 9.6 5 12 5c3.9 0 7.1 2.8 7.8 6.5L22.8 11C21.8 6 17.3 2 12 2z"
+                                  fill="#16a34a"/>
+                            <path d="M18.2 16.2C16.6 17.9 14.4 19 12 19c-3.9 0-7.1-2.8-7.8-6.5L1.2 13C2.2 18 6.7 22 12 22c3.3 0 6.2-1.4 8.2-3.6L22 20v-6h-6l2.2 2.2z"
+                                  fill="#16a34a"/>
+                        </svg>
+                    </div>
+                    <div class="why-title">Altijd een cadeau</div>
+                    <div class="why-text">Gegarandeerd via Sovendus na deelname</div>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon bl">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="#1a4f8a"/>
+                        </svg>
+                    </div>
+                    <div class="why-title">Gratis tariefcheck</div>
+                    <div class="why-text">Energieadviseur checkt je huidige tarief</div>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon or">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 1L3 5V11C3 16.5 7 21.7 12 23C17 21.7 21 16.5 21 11V5L12 1Z" fill="#F57F20"/>
+                        </svg>
+                    </div>
+                    <div class="why-title">Privacy first</div>
+                    <div class="why-text">Volledig conform de AVG-wetgeving</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS BAND -->
+    <% if (!hideStatsBand) { %>
+    <div class="stats-band">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-num">28.400+</div>
+                    <div class="stat-label">Deelnemers deze maand</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">€420</div>
+                    <div class="stat-label">Gem. besparing per jaar</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">4.7 / 5</div>
+                    <div class="stat-label">Beoordeling deelnemers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- FAQ -->
+    <div class="sec sec-white">
+        <div class="container">
+            <div class="sec-eyebrow">Veelgestelde vragen</div>
+            <div class="sec-title" style="margin-bottom:24px;">Alles wat je wilt weten</div>
+            <div class="faq-grid">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Is deelname echt gratis?
+                        <div class="faq-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9l6 6 6-6" stroke="#7a90a8" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-a">Ja, deelname is 100% gratis en volledig vrijblijvend. Je hoeft nergens voor te
+                        betalen.
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Wat is het gegarandeerde cadeautje?
+                        <div class="faq-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9l6 6 6-6" stroke="#7a90a8" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-a">Na succesvolle deelname ontvang je via partner Sovendus een exclusief
+                        cadeauaanbod — los van de grote prijstrekking. Jij wint dus altijd iets!
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Wanneer weet ik of ik gewonnen heb?
+                        <div class="faq-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9l6 6 6-6" stroke="#7a90a8" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-a">De winnaar wordt persoonlijk gecontacteerd via het opgegeven telefoonnummer.
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Wat doet vaste Lasten Onderzoek met mijn gegevens?
+                        <div class="faq-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9l6 6 6-6" stroke="#7a90a8" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-a">Een energieadviseur<% if (advisorName) { %> van <%= advisorName %><% } %> neemt contact op voor een gratis tariefcheck. Jouw gegevens
+                        worden nooit verkocht. Lees onze <a href="<%= privacyURL %>"
+                                                            onclick="event.stopPropagation()">privacyverklaring</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM CTA -->
+    <div class="bottom-cta-section">
+        <div class="container">
+            <h2>Doe nu mee &amp; win altijd!</h2>
+            <p>Beantwoord 11 korte vragen en maak kans op mooie prijzen.<br>Plus: jij krijgt <strong>sowieso</strong>
+                een gratis cadeau na deelname!</p>
+            <button class="cta-btn" onclick="startSurvey()" style="margin:0 auto;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="white"/>
+                </svg>
+                Start deelname →
+            </button>
+            <p class="cta-note">Slechts 2 minuten · <%= vrijblijvendLabel || 'Gratis & vrijblijvend' %></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-text">
+                    &copy; Vaste Lasten Onderzoek &nbsp;·&nbsp; Keizersgracht 482, 1017EG Amsterdam<br>
+                    KVK: 90216482 &nbsp;·&nbsp; +31 20 238 9270
+                </div>
+                <div class="footer-links">
+                    <a href="<%= privacyURL %>" target="_blank">Privacy Beleid</a>
+                    <a href="<%= termsURL %>" target="_blank">Algemene Voorwaarden</a>
+                    <a href="<%= actievoorwaardenURL || '/actievoorwaarden-vastelastenonderzoek.html' %>" target="_blank">Spelvoorwaarden</a>
+                    <a href="<%= optOutURL %>" target="_blank"><%= optOutLabel || 'Opt-out' %></a>
+                </div>
+            </div>
+            <% if (partnerFooter) { %>
+            <div class="footer-text" style="margin-top:10px;font-size:.7rem;"><%= partnerFooter %></div>
+            <% } %>
+        </div>
+    </footer>
+</div><!-- /p-home -->
+
+<!-- ════════════════════════════════════════════════════════════
+     SURVEY PAGE
+════════════════════════════════════════════════════════════ -->
+<div class="page <%= query && query.start !== undefined ? 'active' : '' %>" id="p-survey">
+    <div class="survey-wrap">
+        <div class="survey-inner" id="qWrap"></div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     INTERIM (brief "processing" transition before gift selection)
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="p-interim">
+    <div class="interim-wrap">
+        <div id="interimLoading">
+            <div class="interim-spin"></div>
+            <h2>Je antwoorden worden verwerkt…</h2>
+        </div>
+        <div id="interimDone" class="interim-done">
+            <div class="interim-tick"><svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/></svg></div>
+            <h2>Je deelname is compleet</h2>
+            <p>Op basis van je antwoorden zoekt een energieadviseur uit of er voor jou een lager tarief beschikbaar is. Je krijgt een vrijblijvende vergelijking: wat betaal je nu, en wat is er op dit moment mogelijk.</p>
+            <button class="cta-btn" style="width:100%" onclick="showGiftSelection()">Verder naar mijn prijs →</button>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     GIFT SELECTION
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="p-gifts">
+    <div class="gift-wrap">
+        <div class="gift-header">
+            <div class="gift-header-ey">Laatste stap</div>
+            <div class="gift-header-h">Selecteer nu de prijs die jij wilt winnen!</div>
+            <div class="gift-header-s">Bedankt voor het beantwoorden van de vragen. Je persoonlijke advies van Vaste
+                Lasten Experts is bijna klaar. Selecteer de prijs die jij wilt winnen.
+            </div>
+        </div>
+        <div class="always-win">
+            <div class="always-win-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                          fill="rgba(255,255,255,.2)"/>
+                    <path d="M12 2C8.7 2 5.8 3.4 3.8 5.6L2 4v6h6L5.8 7.8C7.4 6.1 9.6 5 12 5c3.9 0 7.1 2.8 7.8 6.5L22.8 11C21.8 6 17.3 2 12 2z"
+                          fill="white"/>
+                    <path d="M18.2 16.2C16.6 17.9 14.4 19 12 19c-3.9 0-7.1-2.8-7.8-6.5L1.2 13C2.2 18 6.7 22 12 22c3.3 0 6.2-1.4 8.2-3.6L22 20v-6h-6l2.2 2.2z"
+                          fill="white"/>
+                </svg>
+            </div>
+            <div class="always-win-text"><strong>Goed nieuws:</strong> Na deelname ontvang je sowieso een gratis cadeau
+                — gegarandeerd voor iedere deelnemer!
+            </div>
+        </div>
+        <div class="gifts-grid">
+            <% prizes.forEach(function(p) { %>
+            <div class="gift-card" onclick="selectGift(this,'<%= p.id %>','<%= p.name %>','<%= p.val %>')">
+                <div class="gift-card-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
+                    </svg>
+                </div>
+                <div class="gift-card-img">
+                    <img src="<%= p.img %>" alt="<%= p.name %>" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <div class="gift-card-body">
+                    <div class="gift-card-name"><%= p.name %></div>
+                    <div class="gift-card-val">t.w.v. <%= p.val %></div>
+                    <button class="gift-card-want">Ik wil deze prijs!</button>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+        <div class="sovendus-teaser">
+            <div class="sov-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                          fill="rgba(255,255,255,.3)"/>
+                    <path d="M12 2C8.7 2 5.8 3.4 3.8 5.6L2 4v6h6L5.8 7.8C7.4 6.1 9.6 5 12 5c3.9 0 7.1 2.8 7.8 6.5L22.8 11C21.8 6 17.3 2 12 2z"
+                          fill="white"/>
+                    <path d="M18.2 16.2C16.6 17.9 14.4 19 12 19c-3.9 0-7.1-2.8-7.8-6.5L1.2 13C2.2 18 6.7 22 12 22c3.3 0 6.2-1.4 8.2-3.6L22 20v-6h-6l2.2 2.2z"
+                          fill="white"/>
+                </svg>
+                Altijd een cadeau
+            </div>
+            <div class="sov-title">Jij krijgt sowieso een verrassing!</div>
+            <div class="sov-text">Na het invullen van je gegevens ontvang je via onze partner een exclusief cadeauaanbod
+                — gratis en gegarandeerd voor <strong>iedere</strong> deelnemer, los van de grote prijstrekking.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     LEAD FORM
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="p-lead">
+    <div class="lead-wrap">
+        <div class="prize-banner">
+            <div class="pbe" id="ldE" style="font-size:2rem;flex-shrink:0;"></div>
+            <div>
+                <div class="pb-label">Jouw gekozen prijs</div>
+                <div class="pb-name" id="ldN">–</div>
+            </div>
+        </div>
+        <div class="also-strip">
+            <div class="also-strip-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                          fill="rgba(255,255,255,.2)"/>
+                    <path d="M12 2C8.7 2 5.8 3.4 3.8 5.6L2 4v6h6L5.8 7.8C7.4 6.1 9.6 5 12 5c3.9 0 7.1 2.8 7.8 6.5L22.8 11C21.8 6 17.3 2 12 2z"
+                          fill="white"/>
+                    <path d="M18.2 16.2C16.6 17.9 14.4 19 12 19c-3.9 0-7.1-2.8-7.8-6.5L1.2 13C2.2 18 6.7 22 12 22c3.3 0 6.2-1.4 8.2-3.6L22 20v-6h-6l2.2 2.2z"
+                          fill="white"/>
+                </svg>
+            </div>
+            Je ontvangt <strong>sowieso</strong> een gratis cadeau na deelname!
+        </div>
+        <div class="lead-h">Bedankt voor je deelname aan het onderzoek.</div>
+        <p class="lead-sub">Je hebt de quiz ingevuld en maakt nu officieel kans op de prijs.<br><br>Om jouw prijs te
+            kunnen versturen en je deelname compleet te maken, hebben we een paar gegevens nodig. Vul hieronder je
+            gegevens in:</p>
+        <div class="form-group"><label class="form-label">Geslacht</label>
+            <div class="gender-row">
+                <button class="gender-btn" onclick="selectGender(this,'Dhr.')">Dhr.</button>
+                <button class="gender-btn" onclick="selectGender(this,'Mevr.')">Mevr.</button>
+                <button class="gender-btn" onclick="selectGender(this,'Anders')">Anders</button>
+            </div>
+            <div id="gdrStatus" class="email-status"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" id="fn" name="firstName"
+                                                                                     type="text" placeholder="Jan">
+                <div id="fnStatus" class="email-status"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" id="ln" name="lastName"
+                                                                                       type="text" placeholder="Jansen">
+                <div id="lnStatus" class="email-status"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Geboortedatum</label>
+            <input class="form-input" id="dob"
+              name="dateOfBirth"
+              type="text"
+              placeholder="DD/MM/JJJJ"
+              inputmode="numeric">
+            <div id="dobStatus" class="email-status"></div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" id="em" name="email"
+                                                                                    type="email"
+                                                                                    placeholder="jan@voorbeeld.nl">
+            <div id="emStatus" class="email-status"></div>
+        </div>
+        <div class="form-divider"></div>
+        <div style="display:grid;grid-template-columns:2fr 1.2fr 0.8fr;gap:10px;">
+            <div class="form-group">
+                <label class="form-label">Postcode</label>
+                <input class="form-input" id="pc" name="postalCode" type="text" placeholder="1234 AB" maxlength="7">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Huisnummer</label>
+                <input class="form-input" id="hn" name="houseNumber" type="number" inputmode="numeric" min="1" placeholder="12">
+                <div id="addrStatus" class="email-status"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Toevoeging</label>
+                <input class="form-input" id="hnAdd" name="houseNumberAddition" type="text" placeholder="A">
+            </div>
+        </div>
+        <div class="form-group" id="addrRow" style="display:none"><label class="form-label">Straat
+                (automatisch)</label><input class="form-input" id="addrF" name="street" type="text" readonly></div>
+        <div class="form-divider"></div>
+        <div class="form-row">
+            <div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" id="ph" name="phone"
+                                                                                           type="tel">
+                <div id="phStatus" class="email-status"></div>
+            </div>
+        </div>
+        <% if (consentCheckbox) { %>
+        <div class="consent-row" id="consentRow">
+            <div class="consent-box" id="consentBox"></div>
+            <span class="consent-txt">Door op "Akkoord &amp; Ga Verder" te klikken geeft u toestemming aan <%= partnerName %> om u binnen drie maanden éénmalig telefonisch te benaderen voor persoonlijk advies over mogelijke besparingen op uw vaste lasten en om u een commercieel aanbod te doen van verschillende leveranciers. Dit gesprek is vrijblijvend. Wilt u uw toestemming intrekken? Dat kan eenvoudig via het <a href="<%= optOutURL %>" target="_blank">formulier op onze website</a>. Raadpleeg ook onze <a href="<%= privacyURL %>" target="_blank">Privacy Policy</a> voor meer informatie.</span>
+        </div>
+        <div class="consent-err" id="consentErr">Vink de checkbox aan om door te gaan.</div>
+        <button class="cta-btn" onclick="submitLeadForm()" style="width:100%;margin-top:12px;opacity:.5;cursor:not-allowed;" disabled>Akkoord &amp; Ga Verder ›</button>
+        <% } else { %>
+        <button class="cta-btn" onclick="submitLeadForm()" style="width:100%;margin-top:4px;">Ga Verder ›</button>
+        <p class="legal-text"><% if (typeof consentText !== 'undefined' && consentText) { %><%- consentText %><% } else { %>Wat gebeurt er met uw gegevens? Door op "Ga Verder" te klikken geeft u toestemming dat
+            <%= partnerName %> u telefonisch benadert om te berekenen hoeveel u kunt Besparen op uw energie en telecomkosten. De
+            berekening wordt gratis en vrijblijvend telefonisch gedaan door een energieadviseur van <%= partnerName %>.
+            Wilt u dit niet meer, intrek via het <a href="<%= optOutURL %>" target="_blank">formulier
+                op onze website</a>. Zie ook onze <a href="<%= privacyURL %>" target="_blank">Privacy
+                Policy</a>.<% } %></p>
+        <% } %>
+    </div>
+    <div class="foot-lt">
+        <a href="<%= privacyURL %>" target="_blank">Privacy Beleid</a> &nbsp;·&nbsp; <a
+            href="<%= termsURL %>" target="_blank">Algemene Voorwaarden</a> &nbsp;·&nbsp;
+        Keizersgracht 482, 1017EG Amsterdam
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     VERIFY
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="p-verify">
+    <div class="verify-wrap">
+        <div class="prize-banner" style="text-align:left;margin-bottom:28px;">
+            <div class="pbe" id="vfE" style="font-size:2rem;flex-shrink:0;"></div>
+            <div>
+                <div class="pb-label">Jouw gekozen prijs</div>
+                <div class="pb-name" id="vfN">–</div>
+            </div>
+        </div>
+        <div class="verify-circle">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.1 21 3 14.9 3 7c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                      fill="white"/>
+            </svg>
+        </div>
+        <h2>Rond je aanvraag af door je telefoonnummer te verifiëren.</h2>
+        <p>Er is zojuist een SMS met een verificatiecode gestuurd naar <strong id="mph">*******397</strong>.<br><br>Voer
+            de code hieronder in om je deelname te bevestigen en een leuke verrassing te ontvangen!</p>
+        <input class="code-input" id="cb" type="tel" maxlength="4" placeholder="————" oninput="onCodeInput()">
+        <button class="cta-btn" id="vb" onclick="verifyCode()" style="width:100%;opacity:.35;pointer-events:none">Bevestig
+            deelname
+        </button>
+        <p class="resend-text">Geen SMS ontvangen? <span class="resend-link" onclick="resendCode()">Verstuur opnieuw</span></p>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     THANK YOU
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="p-thanks">
+    <div class="thanks-wrap">
+        <div class="thanks-hero">
+            <div class="thanks-tick">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
+                </svg>
+            </div>
+            <h1>Bedankt voor je deelname!</h1>
+            <p>Een energieadviseur neemt zo snel mogelijk contact met je op.</p>
+        </div>
+        <div class="thanks-body">
+            <div class="prize-won-box">
+                <div class="pwe" id="thE" style="font-size:2rem;"></div>
+                <div>
+                    <div class="pwl">Jij maakt kans op</div>
+                    <div class="pwn" id="thN">–</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-row">
+                    <div class="info-row-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.9 0 3.5 1.6 3.5 3.5S13.9 13 12 13s-3.5-1.6-3.5-3.5S10.1 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"
+                                  fill="#1a4f8a"/>
+                        </svg>
+                    </div>
+                    <div><strong>Prijstrekking:</strong> Je wordt persoonlijk gebeld als je hebt gewonnen.</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.1 21 3 14.9 3 7c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                                  fill="#1a4f8a"/>
+                        </svg>
+                    </div>
+                    <div><strong>Gratis tariefcheck:</strong> Een energieadviseur van <%= advisorName || 'Vaste Lasten Experte' %> neemt zo snel mogelijk contact op.
+                    </div>
+                </div>
+            </div>
+            <!-- SOVENDUS EXIT -->
+            <div class="sovendus-box">
+                <div class="sov-box-badge">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 12C20 16.4 16.4 20 12 20S4 16.4 4 12 7.6 4 12 4s8 3.6 8 8z"
+                              fill="rgba(255,255,255,.3)"/>
+                        <path d="M12 2C8.7 2 5.8 3.4 3.8 5.6L2 4v6h6L5.8 7.8C7.4 6.1 9.6 5 12 5c3.9 0 7.1 2.8 7.8 6.5L22.8 11C21.8 6 17.3 2 12 2z"
+                              fill="white"/>
+                        <path d="M18.2 16.2C16.6 17.9 14.4 19 12 19c-3.9 0-7.1-2.8-7.8-6.5L1.2 13C2.2 18 6.7 22 12 22c3.3 0 6.2-1.4 8.2-3.6L22 20v-6h-6l2.2 2.2z"
+                              fill="white"/>
+                    </svg>
+                    Gegarandeerd cadeau
+                </div>
+                <div class="sov-box-h">Jouw gratis cadeau wacht op je!</div>
+                <div class="sov-box-s">Als dank voor je deelname aan het onderzoek heb jij recht op een exclusief
+                    cadeauaanbod van onze partner. Dit is gratis en gegarandeerd voor iedere deelnemer!
+                </div>
+                <div class="sov-gift-row">
+                    <div class="sov-gift-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z" fill="#F57F20"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="sov-gift-name">Exclusief partner cadeauaanbod</div>
+                        <div class="sov-gift-val">Gratis gereserveerd voor jou</div>
+                    </div>
+                </div>
+                <button class="sov-btn" onclick="openSovendusClickout()">
+                    Claim nu mijn gratis cadeau →
+                </button>
+                <div class="sov-small">Aangeboden door onze partner · Gratis voor iedere deelnemer</div>
+            </div>
+            <p style="font-size:.8rem;color:var(--t3);text-align:center;margin-bottom:12px;">Vergroot je winkans door
+                deze actie te delen!</p>
+            <div class="share-grid">
+                <button class="share-btn" onclick="shareWhatsApp()">
+                    <div class="share-icon" style="background:#dcfce7;">
+                        <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 2C8.268 2 2 8.268 2 16c0 2.47.648 4.792 1.782 6.8L2 30l7.378-1.762A13.944 13.944 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 01-5.836-1.597l-.418-.249-4.376 1.044 1.063-4.26-.274-.438A11.47 11.47 0 014.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.61c-.344-.172-2.04-1.006-2.356-1.12-.315-.115-.544-.172-.773.172-.229.344-.887 1.12-1.087 1.35-.2.228-.4.257-.744.086-.344-.172-1.452-.535-2.766-1.707-1.022-.912-1.713-2.038-1.913-2.382-.2-.344-.021-.53.15-.701.155-.154.344-.4.516-.6.172-.2.229-.344.344-.573.115-.229.057-.43-.028-.601-.086-.172-.773-1.864-1.059-2.552-.279-.672-.562-.58-.773-.59l-.658-.011c-.229 0-.6.086-.915.43-.315.344-1.202 1.175-1.202 2.866 0 1.692 1.23 3.326 1.401 3.555.172.229 2.42 3.697 5.865 5.186.82.354 1.46.565 1.958.724.823.261 1.572.224 2.164.136.66-.099 2.04-.834 2.327-1.64.287-.806.287-1.497.201-1.64-.086-.143-.315-.229-.659-.401z" fill="#25D366"/>
+                        </svg>
+                    </div>
+                    Deel via WhatsApp
+                </button>
+                <button class="share-btn" onclick="copyLink()">
+                    <div class="share-icon" style="background:var(--bll);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                                  fill="#1a4f8a"/>
+                        </svg>
+                    </div>
+                    Kopieer link
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="foot-lt"><a href="<%= privacyURL %>" target="_blank">Privacy Beleid</a> &nbsp;·&nbsp; <a
+            href="<%= termsURL %>" target="_blank">Algemene Voorwaarden</a> &nbsp;·&nbsp; KVK:
+        90216482
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/imask/dist/imask.min.js"></script>
+<script src="/dob-mask.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
+<script src="/affiliate.js"></script>
+<script src="/form-validation.js"></script>
+
+<script>
+    // ── DATABOWL CONFIG ─────────────────────────────────────────────
+    var DATABOWL_CID = "<%= databowlCid %>";
+    var DATABOWL_SID = "<%= databowlSid %>";
+
+
+    // Databowl field map — rename outgoing keys before submission.
+    var LEAD_FIELD_MAP = {
+        // Contact fields
+        email:               "f_1_email",
+        firstName:           "f_3_firstname",
+        lastName:            "f_4_lastname",
+        geboortedatum:       "f_5_dob",
+        postalCode:          "f_11_postcode",
+        phone:               "f_12_phone1",
+        city:                "f_40_city",
+        stateName:           "f_10_county",
+        aanspreektitel:      "f_101_gender",
+        houseNumber:         "f_167_house_number",
+        houseNumberAddition: "f_1070_address_addition",
+        street:              "f_991_street_name",
+        // Affiliate tracking
+        transaction_id:      "f_331_transaction_id",
+        // Survey answer fields
+        lampen_aan_staan:        "f_1156_lampen_aan_staan",
+        elektrische_fiets:       "f_1157_elektrische_fiets",
+        douche_duur:             "f_1158_douche_duur",
+        heeft_zonnepanelen:      "f_1159_heeft_zonnepanelen",
+        thuisbatterij_info:      "f_1160_thuisbatterij_info",
+        interesse_zonnepanelen:  "f_1161_interesse_zonnepanelen",
+        elektrisch_rijden:       "f_1162_elektrisch_rijden",
+        laadpaal_info:           "f_1163_laadpaal_info",
+        interesse_thuisbatterij: "f_1164_interesse_thuisbatterij",
+        woning_isolatie:         "f_1165_woning_isolatie",
+        meer_weten_isolatie:     "f_1166_meer_weten_isolatie",
+        kookwijze:               "f_1168_kookwijze",
+        warmtepomp_info:         "f_1169_warmtepomp_info",
+        type_woning:             "f_1058_type_woning",
+        koop_of_huur:            "f_1170_koop_of_huur",
+        gezinssamenstelling:     "f_1171_gezinssamenstelling",
+        energieleverancier:      "f_1172_energieleverancier",
+        verder_isoleren:         "f_1167_verder_isoleren",
+        internet_provider:       "f_1420_internet_provider",
+        // DOI timestamps
+        doi_sent_time:           "f_399_doi_sent_time",
+        doi_confirmed_time:      "f_400_doi_confirmed_time",
+        // Extra fields (passed through as-is, ignored by Databowl if unknown)
+        prize_name:              "prize_name",
+    };
+
+    // ── ICONS (SVG strings for survey answers) ──────────────────────
+    const SVG = {
+        bulb: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.9-3.1-7-7-7zm1 14h-2v-1h2v1zm1-3H10V9.8L8.8 11 7.4 9.6 12 5l4.6 4.6-1.4 1.4L14 9.8V13z" fill="#1a4f8a"/></svg>`,
+        bike: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5S3.1 13.5 5 13.5s3.5 1.6 3.5 3.5S6.9 20.5 5 20.5zm8.3-9.5H13c-.6 0-1-.4-1-1l.6-3.3L14 8v1c0 .5.2 1 .5 1.3L17.7 13H21v2h-3.8c-.4 0-.8-.2-1.1-.5l-1.8-2.1L14 14l2 2v5h-2v-4.5l-2.5-2.5L10 18H8v-2h1.8l.7-2.6-1.5-1.5V10H7V8h4.4l-.9 4h2.8zm5.7.5c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z" fill="#1a4f8a"/></svg>`,
+        shower: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6c0-1.7-1.3-3-3-3S3 4.3 3 6h2c0-.6.4-1 1-1s1 .4 1 1H9zm-1.5 6c.3.6.5 1.3.5 2H6c0-.7-.2-1.4-.5-2H7.5zM3 14h2c.3-.7.5-1.4.5-2H3.5c0 .7-.2 1.4-.5 2zm12 0c-.3.6-.5 1.3-.5 2H12.5c0-.7.2-1.4.5-2H15zm-3.5-6H13c.3.6.5 1.3.5 2H12c0-.7-.2-1.4-.5-2zm-1 0c-.3.6-.5 1.3-.5 2H6.5c0-.7.2-1.4.5-2H10.5zM22 7H11V4H9v3H3c-.6 0-1 .4-1 1v6c0 .6.4 1 1 1h.5l-2 6h2.2l.5-1.5h11.6l.5 1.5h2.2l-2-6H22c.6 0 1-.4 1-1V8c0-.6-.4-1-1-1z" fill="#1a4f8a"/></svg>`,
+        sun: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z" fill="#F57F20"/></svg>`,
+        car: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" fill="#1a4f8a"/></svg>`,
+        home: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="#1a4f8a"/></svg>`,
+        cook: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3C7.45 3 3.73 5.7 2.31 9.5h19.38C20.27 5.7 16.55 3 12 3zM2 11.5v1C2 13.88 3.12 15 4.5 15S7 13.88 7 12.5v-1H2zm20 0h-5v1c0 1.38 1.12 2.5 2.5 2.5S22 13.88 22 12.5v-1zM4.5 17c-1.55 0-2.94-.57-4-1.5v.5C.5 19.1 2.9 21.5 5.9 21.5c2.1 0 3.97-1.15 4.93-2.93C12 20.08 14.73 21 17.5 21H19v-2h-1.5c-1.24 0-2.43-.37-3.43-1.05C13.28 19.24 11.67 20 10 20c-1.67 0-3.28-.76-4.07-2.05C5.43 17.63 4.97 17 4.5 17z" fill="#1a4f8a"/></svg>`,
+        building: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5v-2h2v2zm4 4H9v-2h2v2zm0-4H9v-2h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V5h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z" fill="#1a4f8a"/></svg>`,
+        key: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#1a4f8a"/></svg>`,
+        family: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="#1a4f8a"/></svg>`,
+        lightning: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="#1a4f8a"/></svg>`,
+        leaf: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20C19 20 22 3 22 3c-1 2-8 4-8 4" fill="#16a34a"/></svg>`,
+        plug: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 7V3h-2v4H10V3H8v4c-2.21 0-4 1.79-4 4v3h1v5c0 .55.45 1 1 1h10c.55 0 1-.45 1-1v-5h1v-3c0-2.21-1.79-4-4-4zM9 8h6c1.1 0 2 .9 2 2H7c0-1.1.9-2 2-2z" fill="#1a4f8a"/></svg>`,
+        question: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="#7a90a8"/></svg>`,
+        check: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#16a34a"/></svg>`,
+        right: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        house: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="#1a4f8a"/></svg>`,
+        warmth: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 6c0-1.1-.9-2-2-2s-2 .9-2 2c0 .55.22 1.05.59 1.41L14 11.82V13c0 2.21-1.79 4-4 4S6 15.21 6 13c0-1.42.73-2.65 1.84-3.36L6.42 8.22C4.96 9.37 4 11.07 4 13c0 3.31 2.69 6 6 6s6-2.69 6-6v-1.18l-2-2V6z" fill="#F57F20"/></svg>`,
+        battery: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4zm-1.67 11h-4v-4h4v4zm0-6H10V7h4v2z" fill="#1a4f8a"/></svg>`,
+        charge: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14.69 2.21L4.33 11.49c-.64.58-.28 1.65.58 1.73L13 14l-4.85 6.76c-.22.31-.19.74.08 1.01.3.3.77.31 1.08.02l10.36-9.28c.64-.58.28-1.65-.58-1.73L11 10l4.85-6.76c.22-.31.19-.74-.08-1.01-.3-.3-.77-.31-1.08-.02z" fill="#F57F20"/></svg>`,
+        isolate: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3L2 12h3v9h14v-9h3L12 3zm5 16H7v-7.6l5-4.5 5 4.5V19z" fill="#1a4f8a"/></svg>`,
+        flame: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" fill="#1a4f8a"/><rect x="5" y="7" width="8" height="5" rx="1" fill="#dbeafe"/><path d="M9 11.5c-.35-.45-.6-.95-.6-1.6 0 .15-.4.65-.4 1.25 0 .6.45 1.1 1 1.1s1-.5 1-1.1c0-.6-.4-1.1-.4-1.25 0 .65-.25 1.15-.6 1.6z" fill="#e25c00"/><circle cx="17" cy="10.5" r="2.5" fill="#dbeafe"/><circle cx="17" cy="10.5" r="1" fill="#1a4f8a"/><rect x="7" y="1" width="2" height="4" rx="1" fill="#1a4f8a"/><rect x="15" y="1" width="2" height="4" rx="1" fill="#1a4f8a"/><rect x="7" y="17" width="2" height="5" rx="1" fill="#1a4f8a"/><rect x="15" y="17" width="2" height="5" rx="1" fill="#1a4f8a"/></svg>`,
+        person: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 11c1.66 0 3-1.34 3-3S13.66 5 12 5s-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="#1a4f8a"/></svg>`,
+        'family-child': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 9.5A2.5 2.5 0 1 0 5 4.5a2.5 2.5 0 0 0 0 5zM14 9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM20 10.8a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6zM5 11c-1.87 0-5.5.84-5.5 2.5V17h11v-3.5C10.5 11.84 6.87 11 5 11zM14 11c-.23 0-.47.01-.73.04.97.7 1.73 1.64 1.73 2.71V17h7v-3.5c0-1.66-3.37-2.5-8-2.5zM20 11.8c-.45 0-2.2.32-2.2 1.3V17h4.4v-3.9c0-.98-1.75-1.3-2.2-1.3z" fill="#1a4f8a"/></svg>`,
+    };
+
+    // ── STATE ─────────────────────────────────────────────────────
+    let qi = 0, ans = {}, gId = '', gN = '', gV = '', gdr = '', ms = [];
+    // queue holds the active question sequence (base questions + injected sub-questions)
+    let queue = [];
+
+    // ── QUESTION DEFINITIONS ───────────────────────────────────────
+    // type: 'single' = pick one → auto-advance (with optional response shown first)
+    //       'sub'    = two-tier child question, same as single but labelled differently
+    //       'dropdown' = select from dropdown → auto-advance
+    // branch: {answer: questionObject} — injects sub-question after this one when answer matches
+    // r: response text shown briefly before auto-advancing (null = advance immediately)
+
+    const BASE_QUESTIONS = [
+        // ── 1 ─────────────────────────────────────────────────────────
+        {
+            id: 'lampen_aan_staan', ic: 'bulb', label: 'Vraag 1', type: 'single',
+            img: '/vaste-lasten/img/vraag-1.jpg',
+            q: 'Laat je wel eens de lampen aan staan als je een kamer verlaat?',
+            o: [{ic: 'bulb', l: 'Altijd wel'}, {ic: 'question', l: 'Soms'}, {ic: 'check', l: 'Nooit, ik doe ze altijd uit'}],
+            r: null, k: 'lampen'
+        },
+
+        // ── 2 ─────────────────────────────────────────────────────────
+        {
+            id: 'douche_duur', ic: 'shower', label: 'Vraag 2', type: 'single',
+            img: '/vaste-lasten/img/douchen.jpg',
+            q: 'Hoe lang douche je gemiddeld per keer?',
+            o: [
+                {ic: 'lightning', l: 'Korter dan 5 min'},
+                {ic: 'shower', l: '5 tot 10 min'},
+                {ic: 'shower', l: '10 tot 15 min'},
+                {ic: 'shower', l: 'Langer dan 15 min'}
+            ],
+            r: null, k: 'douche'
+        },
+
+        // ── 3 ─────────────────────────────────────────────────────────
+        {
+            id: 'kookwijze', ic: 'cook', label: 'Vraag 3', type: 'single',
+            img: '/vaste-lasten/img/koken.jpg',
+            q: 'Waar kook je op?',
+            o: [
+                {ic: 'cook', l: 'Gas'},
+                {ic: 'plug', l: 'Elektrisch'},
+                {ic: 'lightning', l: 'Inductie'},
+                {ic: 'question', l: 'Weet ik niet'}
+            ],
+            r: null, k: 'koken'
+        },
+
+        // ── 4 ─────────────────────────────────────────────────────────
+        {
+            id: 'elektrische_fiets', ic: 'bike', label: 'Vraag 4', type: 'single',
+            img: '/vaste-lasten/img/elektrische-fiets.jpg',
+            q: 'Heb je een elektrische fiets?',
+            o: [{ic: 'bike', l: 'Ja'}, {ic: 'question', l: 'Nee'}],
+            r: 'Goed bezig. Nog 8 vragen.', incentive: true, k: 'efiets'
+        },
+
+        // ── 5 ─────────────────────────────────────────────────────────
+        {
+            id: 'type_woning', ic: 'building', label: 'Vraag 5', type: 'single',
+            img: '/vaste-lasten/img/woning.jpg',
+            q: 'Wat voor woning heb je?',
+            o: [
+                {ic: 'building', l: 'Appartement'},
+                {ic: 'home', l: 'Rijtjeshuis'},
+                {ic: 'home', l: 'Hoekwoning'},
+                {ic: 'home', l: '2-onder-1-kap'},
+                {ic: 'house', l: 'Vrijstaand'}
+            ],
+            r: null, k: 'woning'
+        },
+
+        // ── 6 ─────────────────────────────────────────────────────────
+        {
+            id: 'koop_of_huur', ic: 'key', label: 'Vraag 6', type: 'single',
+            img: '/vaste-lasten/img/koophuis.jpg',
+            q: 'Woon je in een koop- of huurwoning?',
+            o: [{ic: 'key', l: 'Koopwoning'}, {ic: 'building', l: 'Huurwoning'}],
+            r: 'Halverwege. Je cadeau staat straks klaar.', k: 'hurkoop'
+        },
+
+        // ── 7 ─────────────────────────────────────────────────────────
+        {
+            id: 'gezinssamenstelling', ic: 'family', label: 'Vraag 7', type: 'single',
+            img: '/vaste-lasten/img/gezinsamenstelling.jpg',
+            q: 'Wat is je gezinssamenstelling?',
+            o: [
+                {ic: 'question', l: 'Alleenstaand'},
+                {ic: 'family', l: 'Samenwonend zonder kinderen'},
+                {ic: 'family', l: 'Gezin met kinderen'},
+                {ic: 'question', l: 'Anders'}
+            ],
+            r: null, k: 'gezin'
+        },
+
+        // ── 8 ─────────────────────────────────────────────────────────
+        {
+            id: 'heeft_zonnepanelen', ic: 'sun', label: 'Vraag 8', type: 'single',
+            img: '/vaste-lasten/img/zonnepanelen.jpg',
+            q: 'Heb je zonnepanelen op je dak?',
+            o: [{ic: 'sun', l: 'Ja'}, {ic: 'question', l: 'Nee'}, {ic: 'question', l: 'Binnenkort'}],
+            r: null, k: 'zon'
+        },
+
+        // ── 9 ─────────────────────────────────────────────────────────
+        // No existing Databowl field for this topic yet — intentionally
+        // not added to LEAD_FIELD_MAP, so the answer is captured in `ans`
+        // but not submitted until a real field id exists.
+        {
+            id: 'energierekening_te_hoog', ic: 'lightning', label: 'Vraag 9', type: 'single',
+            img: '/vaste-lasten/img/energierekening-te-hoog.jpg',
+            q: 'Vind je je energierekening te hoog?',
+            o: [
+                {ic: 'lightning', l: 'Ja, veel te hoog'},
+                {ic: 'question', l: 'Een beetje'},
+                {ic: 'check', l: 'Nee, valt mee'},
+                {ic: 'question', l: 'Weet ik niet'}
+            ],
+            r: null, k: 'rekening_te_hoog'
+        },
+
+        // ── 10 ────────────────────────────────────────────────────────
+        // Same as Vraag 9 — no Databowl field yet, intentionally unmapped.
+        {
+            id: 'zorgen_energiekosten', ic: 'warmth', label: 'Vraag 10', type: 'single',
+            img: '/vaste-lasten/img/zorgen-energiekosten.jpg',
+            q: 'Maak je je zorgen over je energiekosten voor komend jaar?',
+            o: [{ic: 'warmth', l: 'Ja'}, {ic: 'question', l: 'Een beetje'}, {ic: 'check', l: 'Nee'}],
+            r: 'Bijna klaar. Nog 2 vragen.', k: 'zorgen'
+        },
+
+        // ── 11 ────────────────────────────────────────────────────────
+        {
+            id: 'energieleverancier', ic: 'plug', label: 'Vraag 11', type: 'dropdown',
+            img: '/vaste-lasten/img/energieleverancier.jpg',
+            q: 'Bij welke energieleverancier zit je nu?',
+            options: [
+                'Vattenfall', 'Essent', 'Eneco', 'Greenchoice', 'Budget Energie',
+                'Oxxio', 'NLE', 'Engie', 'Energiedirect.nl', 'United Consumers',
+                'Vandebron', 'Coolblue Energie', 'Anders', 'Weet ik niet'
+            ],
+            r: null, incentive: true, k: 'leverancier'
+        },
+
+        // ── 12 ────────────────────────────────────────────────────────
+        {
+            id: 'internet_provider', ic: 'wifi', label: 'Vraag 12', type: 'dropdown',
+            img: '/vaste-lasten/img/internetprovider.jpg',
+            pre: 'Tot slot kijken we ook naar je andere vaste lasten.',
+            q: 'Wie is je huidige internetprovider?',
+            options: [
+                'Ziggo', 'KPN', 'Odido', 'Delta', 'Caiway', 'Online.nl', 'Freedom Internet', 'Anders', 'Weet ik niet'
+            ],
+            r: null, k: 'internetprovider'
+        }
+    ];
+
+    // ── GIFT DATA (generated from server-side prizes array) ─────────
+    const GIFTS = <%- JSON.stringify(prizes.reduce(function(acc, p) {
+        acc[p.id] = {
+            svg: '<img src="' + p.img + '" alt="' + p.name + '" style="width:50px;height:50px;object-fit:contain;background:#fff;border-radius:8px;padding:4px;border:1px solid #dde5f0;">',
+            name: p.name,
+            val: p.val
+        };
+        return acc;
+    }, {})) %>;
+
+    // ── SVG PATH LOOKUP ────────────────────────────────────────────
+    function getSVGPath(ic) {
+        const paths = {
+            bulb: `<path d="M12 2C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.9-3.1-7-7-7z" fill="#1a4f8a"/>`,
+            bike: `<path d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5S3.1 13.5 5 13.5s3.5 1.6 3.5 3.5S6.9 20.5 5 20.5zm13-8.5c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z" fill="#1a4f8a"/>`,
+            shower: `<path d="M9 6c0-1.7-1.3-3-3-3S3 4.3 3 6h2c0-.6.4-1 1-1s1 .4 1 1H9zm13 1H11V4H9v3H3c-.6 0-1 .4-1 1v6c0 .6.4 1 1 1h.5l-2 6h2.2l.5-1.5h11.6l.5 1.5h2.2l-2-6H22c.6 0 1-.4 1-1V8c0-.6-.4-1-1-1z" fill="#1a4f8a"/>`,
+            sun: `<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2v-2H2v2zm18 0h2v-2h-2v2zM11 2v2h2V2h-2zm0 18v2h2v-2h-2zM5.99 4.58L4.58 5.99l1.41 1.42 1.42-1.42L5.99 4.58zm12.02 12.02l-1.41 1.41 1.41 1.41 1.41-1.41-1.41-1.41zM18.01 4.58l-1.41 1.41 1.41 1.42 1.41-1.42-1.41-1.41zM5.99 16.6l-1.41 1.41 1.42 1.41 1.41-1.41-1.42-1.41z" fill="#F57F20"/>`,
+            car: `<path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" fill="#1a4f8a"/>`,
+            home: `<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="#1a4f8a"/>`,
+            cook: `<path d="M12 3C7.45 3 3.73 5.7 2.31 9.5h19.38C20.27 5.7 16.55 3 12 3zM2 11.5v1C2 13.88 3.12 15 4.5 15S7 13.88 7 12.5v-1H2zm20 0h-5v1c0 1.38 1.12 2.5 2.5 2.5S22 13.88 22 12.5v-1z" fill="#1a4f8a"/>`,
+            building: `<path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5v-2h2v2zm4 4H9v-2h2v2zm0-4H9v-2h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V5h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z" fill="#1a4f8a"/>`,
+            key: `<path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#1a4f8a"/>`,
+            family: `<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="#1a4f8a"/>`,
+            lightning: `<path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="#F57F20"/>`,
+            leaf: `<path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20C19 20 22 3 22 3c-1 2-8 4-8 4" fill="#16a34a"/>`,
+            house: `<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="#1a4f8a"/>`,
+            battery: `<path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4zm-1.67 11h-4v-4h4v4zm0-6H10V7h4v2z" fill="#1a4f8a"/>`,
+            charge: `<path d="M14.69 2.21L4.33 11.49c-.64.58-.28 1.65.58 1.73L13 14l-4.85 6.76c-.22.31-.19.74.08 1.01.3.3.77.31 1.08.02l10.36-9.28c.64-.58.28-1.65-.58-1.73L11 10l4.85-6.76c.22-.31.19-.74-.08-1.01-.3-.3-.77-.31-1.08-.02z" fill="#F57F20"/>`,
+            warmth: `<path d="M14 6c0-1.1-.9-2-2-2s-2 .9-2 2c0 .55.22 1.05.59 1.41L14 11.82V13c0 2.21-1.79 4-4 4S6 15.21 6 13c0-1.42.73-2.65 1.84-3.36L6.42 8.22C4.96 9.37 4 11.07 4 13c0 3.31 2.69 6 6 6s6-2.69 6-6v-1.18l-2-2V6z" fill="#F57F20"/>`,
+            plug: `<path d="M16 7V3h-2v4H10V3H8v4c-2.21 0-4 1.79-4 4v3h1v5c0 .55.45 1 1 1h10c.55 0 1-.45 1-1v-5h1v-3c0-2.21-1.79-4-4-4z" fill="#1a4f8a"/>`,
+            person: `<path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" fill="#1a4f8a"/>`,
+            'family-child': `<path d="M9 11c1.66 0 3-1.34 3-3S10.66 5 9 5 6 6.34 6 8s1.34 3 3 3zm9-2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9 13c-2.33 0-7 1.17-7 3.5V19h14v-2.5C16 14.17 11.33 13 9 13zm9 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5C25 14.17 20.67 13 18 13zM12 20v-1h-2v1H4v1h18v-1h-10z" fill="#1a4f8a"/>`,
+            flame: `<rect x="3" y="4" width="18" height="13" rx="2" fill="#1a4f8a"/><rect x="5" y="7" width="8" height="5" rx="1" fill="#dbeafe"/><path d="M9 11.5c-.35-.45-.6-.95-.6-1.6 0 .15-.4.65-.4 1.25 0 .6.45 1.1 1 1.1s1-.5 1-1.1c0-.6-.4-1.1-.4-1.25 0 .65-.25 1.15-.6 1.6z" fill="#e25c00"/><circle cx="17" cy="10.5" r="2.5" fill="#dbeafe"/><circle cx="17" cy="10.5" r="1" fill="#1a4f8a"/><rect x="7" y="1" width="2" height="4" rx="1" fill="#1a4f8a"/><rect x="15" y="1" width="2" height="4" rx="1" fill="#1a4f8a"/><rect x="7" y="17" width="2" height="5" rx="1" fill="#1a4f8a"/><rect x="15" y="17" width="2" height="5" rx="1" fill="#1a4f8a"/>`,
+            wifi: `<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" fill="#1a4f8a"/>`,
+        };
+        return paths[ic] || `<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="#7a90a8"/>`;
+    }
+
+    function escapeQuotes(s) {
+        return s.replace(/'/g, "\\'");
+    }
+
+    // ── SURVEY ENGINE ──────────────────────────────────────────────
+    // Build initial queue from BASE_QUESTIONS (deep copy so we can splice sub-questions in)
+    function buildQueue() {
+        return BASE_QUESTIONS.map(q => Object.assign({}, q));
+    }
+
+    var preSelectedPrize = null;
+
+    function startSurveyWithPrize(id, name, val) {
+        preSelectedPrize = {id: id, name: name, val: val};
+        startSurvey();
+    }
+
+    function startSurvey() {
+        qi = 0;
+        ans = {};
+        ms = [];
+        queue = buildQueue();
+        document.querySelector('.nav-cta').style.display = 'none';
+        showPage('p-survey');
+        renderQuestion(queue[0]);
+        setProgress(5);
+    }
+
+    function renderQuestion(qd) {
+        // Label: distinguish sub-questions visually
+        const isSub = qd.type === 'sub';
+        const labelClass = isSub ? 'q-num sub-label' : 'q-num';
+        const labelText = isSub
+            ? `<span style="display:inline-flex;align-items:center;gap:5px;background:var(--olt);color:var(--or);padding:3px 10px;border-radius:20px;font-size:.65rem;font-weight:700;">${qd.label} — Aanvullende vraag</span>`
+            : `${qd.label} van ${BASE_QUESTIONS.length}`;
+
+        let opts = '';
+
+        if (qd.type === 'dropdown') {
+            const optHtml = qd.options.map(o => `<option value="${o}">${o}</option>`).join('');
+            opts = `
+      <div class="form-group" style="margin-top:14px;">
+        <label class="form-label">Selecteer je leverancier</label>
+        <select class="form-input" id="ddSel" onchange="handleDropdown(this,'${qd.id}')">
+          <option value="" disabled selected>— Kies je leverancier —</option>
+          ${optHtml}
+        </select>
+      </div>`;
+        } else {
+            qd.o.forEach(o => {
+                opts += `<button class="ans" onclick="handleAnswer(this,'${escapeQuotes(o.l)}','${qd.id}')">
+        <span class="ans-icon-wrap">${SVG[o.ic] || SVG.question}</span>
+        ${o.l}
+      </button>`;
+            });
+        }
+
+        const respHtml = `
+    <div class="response-box" id="rc">
+      <div class="resp-icon">${SVG.bulb}</div>
+      <div class="resp-text" id="rcText">${qd.r || ''}</div>
+    </div>`;
+
+        const incentiveHtml = qd.incentive ? `
+    <div class="incentive-bar">
+      <div class="incentive-bar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" fill="white"/></svg></div>
+      <div class="incentive-bar-text">Nieuwe klanten krijgen tot €350 cashback. Wij kijken of jij dat ook krijgt.</div>
+    </div>` : '';
+
+        // HIER GEBEURT HET: We checken of er een qd.img is, anders tonen we de oude icon-box
+        const imageHtml = qd.img
+            ? `<img src="${qd.img}" style="width:100%; height:100%; object-fit:cover; display:block;">`
+            : `<div class="q-image-icon" style="width:72px;height:72px;border-radius:18px;background:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">${getSVGPath(qd.ic)}</svg>
+      </div>`;
+
+        const qWrap = document.getElementById('qWrap');
+        qWrap.innerHTML = `
+    <div class="q-image" style="background:none;">
+      ${imageHtml}
+    </div>
+    <div class="${labelClass}">${labelText}</div>
+    ${qd.pre ? `<div class="q-pre">${qd.pre}</div>` : ''}
+    <div class="q-text">${qd.q}</div>
+    ${qd.d ? `<div class="q-desc" style="font-size:.85rem;color:var(--t2);line-height:1.6;margin-bottom:18px;">${qd.d}</div>` : ''}
+    ${opts}${incentiveHtml}${respHtml}`;
+
+        // Block ghost taps on mobile (Safari fires a synthetic click ~300ms after touch)
+        qWrap.style.pointerEvents = 'none';
+        setTimeout(() => { qWrap.style.pointerEvents = ''; }, 450);
+
+        window.scrollTo({top: 0, behavior: 'instant'});
+        updateProgress();
+    }// Answer handler for single/sub questions — auto-advance
+    function handleAnswer(btn, label, key) {
+        // Disable all buttons immediately
+        document.querySelectorAll('#qWrap .ans').forEach(b => {
+            b.style.pointerEvents = 'none';
+            b.style.opacity = '.6';
+        });
+        btn.style.opacity = '1';
+        btn.classList.add('ch');
+        ans[key] = label;
+
+        // Inject sub-question if this answer triggers a branch
+        const curQ = queue[qi];
+        if (curQ.branch && curQ.branch[label]) {
+            const subQ = curQ.branch[label];
+            if (!queue.some(q => q.id === subQ.id)) {
+                queue.splice(qi + 1, 0, Object.assign({}, subQ));
+            }
+        }
+
+        // Always show response box briefly, then auto-advance
+        const rc = document.getElementById('rc');
+        if (rc && curQ.r) {
+            // Has a response message: fade in, hold, advance
+            setTimeout(() => {
+                rc.classList.add('show');
+            }, 200);
+            setTimeout(() => advance(), 1400);
+        } else {
+            // No response: just advance quickly
+            setTimeout(() => advance(), 380);
+        }
+    }
+
+    // Dropdown auto-advance on selection
+    function handleDropdown(sel, key) {
+        if (!sel.value) return;
+        ans[key] = sel.value;
+        sel.disabled = true;
+        const curQ = queue[qi];
+        const rc = document.getElementById('rc');
+        if (rc && curQ.r) {
+            setTimeout(() => {
+                rc.classList.add('show');
+            }, 200);
+            setTimeout(() => advance(), 1400);
+        } else {
+            setTimeout(() => advance(), 380);
+        }
+    }
+
+    function advance() {
+        qi++;
+        if (qi >= queue.length) {
+            showInterim();
+        } else {
+            renderQuestion(queue[qi]);
+        }
+    }
+
+    function showInterim() {
+        showPage('p-interim');
+        document.getElementById('interimLoading').style.display = 'block';
+        document.getElementById('interimDone').classList.remove('show');
+        setTimeout(function () {
+            document.getElementById('interimLoading').style.display = 'none';
+            document.getElementById('interimDone').classList.add('show');
+        }, 1700);
+    }
+
+    function showGiftSelection() {
+        showPage('p-gifts');
+        setProgress(85);
+        if (preSelectedPrize) {
+            var cards = document.querySelectorAll('.gift-card');
+            cards.forEach(function(c) {
+                if (c.getAttribute('onclick') && c.getAttribute('onclick').indexOf("'" + preSelectedPrize.id + "'") !== -1) {
+                    selectGift(c, preSelectedPrize.id, preSelectedPrize.name, preSelectedPrize.val);
+                }
+            });
+            preSelectedPrize = null;
+        }
+    }
+
+    function selectGift(card, id, name, val) {
+        document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('sel'));
+        card.classList.add('sel');
+        gId = id;
+        gN = name;
+        gV = val;
+        showLeadForm();
+    }
+
+    function setGiftDisplay(eid, nid) {
+        const g = GIFTS[gId] || {svg: '', name: gN, val: gV};
+        const eEl = document.getElementById(eid);
+        const nEl = document.getElementById(nid);
+        if (eEl) eEl.innerHTML = g.svg || '';
+        if (nEl) nEl.textContent = g.name + ' ' + g.val;
+    }
+
+    function showLeadForm() {
+        setGiftDisplay('ldE', 'ldN');
+        showPage('p-lead');
+        setProgress(92);
+    }
+
+    function selectGender(btn, v) {
+        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        gdr = v;
+        document.getElementById('gdrStatus').textContent = '';
+    }
+
+    ['fn', 'ln'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function () {
+            this.classList.remove('error');
+            document.getElementById(id + 'Status').textContent = '';
+        });
+    });
+
+    DobMask.init(document.getElementById('dob'));
+
+    let emailValid = false;
+    FormValidation.attachEmail(
+        document.getElementById('em'),
+        document.getElementById('emStatus'),
+        function (valid) {
+            emailValid = valid;
+        }
+    );
+
+    let phoneValid = false;
+    const itiTel = window.intlTelInput(document.getElementById('ph'), {
+        initialCountry: 'nl',
+        separateDialCode: true,
+        allowDropdown: false,
+        utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
+    });
+
+
+
+    FormValidation.attachPhone(
+        document.getElementById('ph'),
+        document.getElementById('phStatus'),
+        function () {
+            return itiTel.getNumber();
+        },
+        function () {
+            return itiTel.isValidNumber();
+        },
+        function (valid) {
+            phoneValid = valid;
+        }
+    );
+
+    let addressValid = false;
+    let resolvedCity = null;
+    let resolvedState = null;
+    FormValidation.attachAddress(
+        function () {
+            return document.getElementById('pc').value;
+        },
+        document.getElementById('hn'),
+        document.getElementById('hnAdd'),
+        document.getElementById('addrF'),
+        document.getElementById('addrStatus'),
+        function (valid, addressData) {
+            addressValid = valid;
+            resolvedCity  = addressData ? (addressData.cityName  || null) : null;
+            resolvedState = addressData ? (addressData.stateName || null) : null;
+            document.getElementById('addrRow').style.display = valid ? 'block' : 'none';
+        }
+    );
+
+    function submitLeadForm() {
+        let ok = true;
+
+        if (!gdr) {
+            const s = document.getElementById('gdrStatus');
+            s.textContent = 'Selecteer een aanspreektitel';
+            s.style.color = '#dc2626';
+            ok = false;
+        }
+        if (!document.getElementById('fn').value.trim()) {
+            FormValidation.showError(document.getElementById('fn'), document.getElementById('fnStatus'), 'Voer je voornaam in');
+            ok = false;
+        }
+        if (!document.getElementById('ln').value.trim()) {
+            FormValidation.showError(document.getElementById('ln'), document.getElementById('lnStatus'), 'Voer je achternaam in');
+            ok = false;
+        }
+        if (!DobMask.validate(document.getElementById('dob'), document.getElementById('dobStatus'))) {
+            ok = false;
+        }
+        if (!emailValid) {
+            FormValidation.showError(document.getElementById('em'), document.getElementById('emStatus'), 'Bevestig een geldig e-mailadres');
+            ok = false;
+        }
+        if (!addressValid) {
+            FormValidation.showError(document.getElementById('hn'), document.getElementById('addrStatus'), 'Combinatie niet gevonden. Controleer uw huisnummer.');
+            ok = false;
+        }
+        if (!phoneValid) {
+            FormValidation.showError(document.getElementById('ph'), document.getElementById('phStatus'), 'Bevestig een geldig mobiel nummer');
+            ok = false;
+        }
+        const consentErr = document.getElementById('consentErr');
+        if (consentErr && document.querySelector('#p-lead .cta-btn').disabled) {
+            consentErr.style.display = 'block';
+            ok = false;
+        }
+        if (!ok) return;
+
+        const ph = itiTel.getNumber();
+        const submitBtn = document.querySelector('#p-lead .cta-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Versturen...';
+        fetch('/api/sms/send', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone: ph, firstName: document.getElementById('fn').value.trim()})
+        }).then(r => r.json()).then(data => {
+            if (data.sent) {
+                verifyPhone = ph;
+                doiSentTime = data.doi_sent_time || '';
+                document.getElementById('mph').textContent = '*'.repeat(7) + ph.slice(-3);
+                setGiftDisplay('vfE', 'vfN');
+                showPage('p-verify');
+                setProgress(97);
+                setTimeout(() => document.getElementById('cb').focus(), 50);
+            } else {
+                alert('Fout bij versturen verificatiecode. Probeer opnieuw.');
+            }
+        }).catch(() => {
+            alert('Fout bij versturen verificatiecode. Probeer opnieuw.');
+        }).finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '<%= consentCheckbox ? "Akkoord & Ga Verder ›" : "Ga Verder ›" %>';
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+        });
+    }
+
+    let verifyPhone = '';
+    let doiSentTime = '';
+    let doiConfirmedTime = '';
+
+    function onCodeInput() {
+        const v = document.getElementById('cb').value;
+        const b = document.getElementById('vb');
+        b.style.opacity = v.length >= 4 ? '1' : '.35';
+        b.style.pointerEvents = v.length >= 4 ? 'auto' : 'none';
+    }
+
+    function verifyCode() {
+        const code = document.getElementById('cb').value.trim();
+        const btn = document.getElementById('vb');
+        btn.disabled = true;
+        btn.textContent = 'Controleren...';
+        fetch('/api/sms/verify', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone: verifyPhone, code})
+        }).then(r => r.json()).then(data => {
+            if (data.verified) {
+                doiConfirmedTime = data.doi_confirmed_time || '';
+                btn.textContent = 'Versturen...';
+                submitLead().finally(() => {
+                    setGiftDisplay('thE', 'thN');
+                    showPage('p-thanks');
+                    setProgress(100);
+                });
+            } else {
+                document.getElementById('cb').style.borderColor = '#dc2626';
+                alert('Ongeldige verificatiecode. Probeer het opnieuw.');
+                btn.disabled = false;
+                btn.textContent = 'Bevestig deelname';
+            }
+        }).catch(() => {
+            alert('Er is een technische fout opgetreden. Probeer het later opnieuw.');
+            btn.disabled = false;
+            btn.textContent = 'Bevestig deelname';
+        });
+    }
+
+    function submitLead() {
+        var everflowTracking = window.AffiliateTracking ? AffiliateTracking.getTracking() : {};
+        var fbTracking = window.AffiliateTracking ? AffiliateTracking.getFbTracking() : {};
+        var pc = document.getElementById('pc').value.trim();
+
+        console.log("City:" + resolvedCity);
+
+        var rawData = Object.assign({
+            firstName:           document.getElementById('fn').value.trim(),
+            lastName:            document.getElementById('ln').value.trim(),
+            email:               document.getElementById('em').value.trim(),
+            phone:               itiTel.getNumber(),
+            postalCode:          pc,
+            city:                resolvedCity,
+            stateName:           resolvedState,
+            houseNumber:         document.getElementById('hn').value.trim(),
+            houseNumberAddition: document.getElementById('hnAdd').value.trim(),
+            street:              document.getElementById('addrF').value.trim(),
+            geboortedatum:       DobMask.toISO(document.getElementById('dob')),
+            aanspreektitel:      gdr,
+            geselecteerde_prijs: gN + ' ' + gV,
+            transaction_id:      everflowTracking.ef_click_id || '',
+            doi_sent_time:       doiSentTime,
+            doi_confirmed_time:  doiConfirmedTime,
+        }, ans);
+
+        var formData = { cid: DATABOWL_CID, sid: DATABOWL_SID };
+        for (var key in LEAD_FIELD_MAP) {
+            if (rawData[key] !== undefined && rawData[key] !== null && rawData[key] !== '') {
+                formData[LEAD_FIELD_MAP[key]] = rawData[key];
+            }
+        }
+
+        if (everflowTracking.ef_click_id) {
+            formData.everflow_tracking = everflowTracking;
+        }
+
+        if (fbTracking.fbclid) {
+            formData.fb_tracking = fbTracking;
+        }
+
+        return fetch('/api/lead', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        }).then(r => r.json()).then(data => {
+            if (data.result === 'created') {
+                if (window.va) window.va('event', { name: 'lead_submitted' });
+            } else {
+                console.warn('Lead rejected by Databowl:', data);
+            }
+        }).catch(err => {
+            console.error('Lead submission error:', err);
+        });
+    }
+
+    function resendCode() {
+        fetch('/api/sms/send', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone: verifyPhone})
+        }).then(r => r.json()).then(data => {
+            if (data.sent) alert('Een nieuwe verificatiecode is verstuurd.');
+        }).catch(() => {
+            alert('Er is een fout opgetreden. Probeer het opnieuw.');
+        });
+    }
+
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo({top: 0, behavior: 'instant'});
+    }
+
+    function setProgress(p) {
+        document.getElementById('prog').style.width = p + '%';
+    }
+
+    function updateProgress() {
+        // Survey runs from 5% to 80%; gift/lead/verify/thanks use fixed setProgress() calls
+        const pct = 5 + Math.round((qi / queue.length) * 75);
+        setProgress(pct);
+    }
+
+    function toggleFaq(el) {
+        el.classList.toggle('open');
+    }
+
+    function openSovendusClickout() {
+        var fn = document.getElementById('fn');
+        var ln = document.getElementById('ln');
+        var em = document.getElementById('em');
+        var pc = document.getElementById('pc');
+
+        var params = new URLSearchParams({
+            firstName: fn ? fn.value.trim() : '',
+            lastName:  ln ? ln.value.trim() : '',
+            email:     em ? em.value.trim() : '',
+            zipcode:   pc ? pc.value.trim() : '',
+        });
+
+        window.open('/sovendus?' + params.toString(), '_blank', 'noopener,noreferrer');
+    }
+
+    function shareWhatsApp() {
+        window.open('https://wa.me/?text=Doe+mee+met+het+Vaste+Lasten+Onderzoek!+https://consumentenquiz.nl/1', '_blank');
+    }
+
+    function copyLink() {
+        navigator.clipboard?.writeText('https://consumentenquiz.nl/1').then(() => alert('Link gekopieerd!'));
+    }
+
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', function() {
+        history.pushState(null, '', location.href);
+    });
+
+    if (new URLSearchParams(location.search).has('start')) {
+        qi = 0; ans = {}; ms = [];
+        queue = buildQueue();
+        document.querySelector('.nav-cta').style.display = 'none';
+        renderQuestion(queue[0]);
+        setProgress(5);
+    }
+
+    (function() {
+        const row = document.getElementById('consentRow');
+        if (!row) return;
+        const box   = document.getElementById('consentBox');
+        const err   = document.getElementById('consentErr');
+        const btn   = document.querySelector('#p-lead .cta-btn');
+        let checked = false;
+
+        function setChecked(val) {
+            checked = val;
+            box.classList.toggle('is-checked', val);
+            btn.disabled          = !val;
+            btn.style.opacity     = val ? '1' : '.5';
+            btn.style.cursor      = val ? 'pointer' : 'not-allowed';
+            if (val) err.style.display = 'none';
+        }
+
+        row.addEventListener('click', function(e) {
+            if (e.target.closest('a')) return;
+            setChecked(!checked);
+        });
+    })();
+</script>
+
+<!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
