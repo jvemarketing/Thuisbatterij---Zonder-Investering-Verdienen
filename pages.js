@@ -229,6 +229,11 @@ const pages = [
                 routeViewData: {},
             },
             {
+                path: '/thuisbatterij-verdienen',
+                view: 'thuisbatterij/pre-lander-verdienen',
+                routeViewData: {},
+            },
+            {
                 path: '/flow',
                 view: 'thuisbatterij/flow',
                 routeViewData: {},
