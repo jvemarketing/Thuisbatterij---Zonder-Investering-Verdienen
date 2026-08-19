@@ -16,7 +16,8 @@ export default async function handler(req, res) {
     const now = new Date().toISOString();
     const hostname = (req.headers.host || '').split(':')[0];
 
-    // Extract network tracking data (not forwarded to Databowl)
+    // Extract network tracking data (used for postbacks below; fbclid is
+    // also forwarded to Databowl as f_1585_fbclid, see params below)
     const everflowTracking = body.everflow_tracking || null;
     const fbTracking       = body.fb_tracking       || null;
 
@@ -28,6 +29,10 @@ export default async function handler(req, res) {
       cid: body.cid,
       sid: body.sid,
     };
+
+    if (fbTracking?.fbclid) {
+      params.f_1585_fbclid = fbTracking.fbclid;
+    }
 
     // IP address and source URL
     params.f_17_ipaddress          = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '';

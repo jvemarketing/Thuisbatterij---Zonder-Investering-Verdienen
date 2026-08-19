@@ -106,4 +106,33 @@ describe('api/lead', () => {
     const [, options] = vi.mocked(fetch).mock.calls[0];
     expect(new URLSearchParams(options.body).get('f_1288_lead_source_url')).toBe('verdienduurzaam.nl');
   });
+
+  it('forwards fbclid to Databowl as f_1585_fbclid when present', async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      status: 200,
+      json: async () => ({ result: 'created', lead_id: '123' }),
+    });
+    const res = mockRes();
+
+    await handler(
+      baseReq({ cid: '925', sid: '1', fb_tracking: { fbclid: 'abc123' } }),
+      res
+    );
+
+    const [, options] = vi.mocked(fetch).mock.calls[0];
+    expect(new URLSearchParams(options.body).get('f_1585_fbclid')).toBe('abc123');
+  });
+
+  it('omits f_1585_fbclid when no fbclid is present', async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      status: 200,
+      json: async () => ({ result: 'created', lead_id: '123' }),
+    });
+    const res = mockRes();
+
+    await handler(baseReq({ cid: '925', sid: '1' }), res);
+
+    const [, options] = vi.mocked(fetch).mock.calls[0];
+    expect(new URLSearchParams(options.body).has('f_1585_fbclid')).toBe(false);
+  });
 });
