@@ -820,6 +820,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     // ── DATABOWL CONFIG ─────────────────────────────────────────────
     var DATABOWL_CID = "<%= databowlCid %>";
     var DATABOWL_SID = "<%= databowlSid %>";
+    var PARTNER = "<%= partner %>";
 
 
     // Databowl field map — rename outgoing keys before submission.
@@ -1470,7 +1471,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
         fetch('/api/sms/send', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({phone: ph, firstName: document.getElementById('fn').value.trim()})
+            body: JSON.stringify({phone: ph, firstName: document.getElementById('fn').value.trim(), partner: PARTNER})
         }).then(r => r.json()).then(data => {
             if (data.sent) {
                 verifyPhone = ph;
@@ -1595,7 +1596,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
         fetch('/api/sms/send', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({phone: verifyPhone})
+            body: JSON.stringify({phone: verifyPhone, partner: PARTNER})
         }).then(r => r.json()).then(data => {
             if (data.sent) alert('Een nieuwe verificatiecode is verstuurd.');
         }).catch(() => {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Actievoorwaarden Vaste Lasten Onderzoek – <%= companyName %></title>
+<title>Spelvoorwaarden Vaste Lasten Onderzoek – <%= companyName %></title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -154,15 +154,18 @@
   <div class="logo"><img src="<%= logo.src %>" alt="<%= logo.alt %>" style="height:32px;display:block"></div>
 
   <span class="campaign-label">Winactie</span>
-  <h1>Actievoorwaarden Vaste Lasten Onderzoek</h1>
-  <p class="intro">Deze actievoorwaarden zijn van toepassing op de winactie verbonden aan <strong>Vaste Lasten Onderzoek</strong>, een merknaam van <%= companyName %>, georganiseerd in samenwerking met <strong>Ebned B.V.</strong> Door deel te nemen verklaart u zich akkoord met deze voorwaarden.</p>
+  <h1>Spelvoorwaarden</h1>
+  <p class="intro">Deze spelvoorwaarden zijn van toepassing op de winactie verbonden aan het <strong>Vaste Lasten Onderzoek</strong>. Zij zijn opgesteld in overeenstemming met de Gedragscode promotionele kansspelen 2014. Door deel te nemen verklaart de deelnemer zich akkoord met deze spelvoorwaarden.</p>
 
   <!-- Artikel 1 -->
   <span class="article-number">Artikel 1</span>
-  <h2>Organisatie</h2>
-  <p>Deze winactie wordt georganiseerd door <%= companyName %> (hierna: "de Organisator"), gevestigd aan <%= companyAddress %>, Nederland, ingeschreven bij de Kamer van Koophandel onder nummer <%= companyKvk %>.</p>
-  <p><strong>Vaste Lasten Onderzoek</strong> is een merknaam van <%= companyName %>. De winactie wordt uitgevoerd in samenwerking met <strong>Ebned B.V.</strong>, gevestigd aan Bogert 31, 5612 LX Eindhoven.</p>
-  <p>Voor vragen, opmerkingen of klachten over deze winactie kunt u contact opnemen via <a href="mailto:<%= companyEmail %>" target="_blank"><%= companyEmail %></a>.</p>
+  <h2>Organisatie en toepasselijkheid</h2>
+  <ol>
+    <li>Deze winactie wordt georganiseerd door <%= companyName %>, aanbieder van de bemiddelingsdienst Ebned.nl, correspondentieadres <%= companyAddress %>, Nederland, ingeschreven bij de Kamer van Koophandel onder nummer <%= companyKvk %>, hierna te noemen: "de organisator".</li>
+    <li>Deze spelvoorwaarden zijn gedurende de gehele looptijd van de actie online in te zien via een hyperlink op de actiepagina.</li>
+    <li>Op deze winactie is de Gedragscode promotionele kansspelen 2014 van toepassing. De organisator handelt in overeenstemming met deze gedragscode.</li>
+    <li>Op deze spelvoorwaarden is Nederlands recht van toepassing.</li>
+  </ol>
 
   <hr class="divider">
 
@@ -170,12 +173,13 @@
   <span class="article-number">Artikel 2</span>
   <h2>Deelname en looptijd</h2>
   <ol>
-    <li>Deelname is toegestaan aan alle natuurlijke personen van 18 jaar of ouder, woonachtig in Nederland.</li>
-    <li>De actieperiode loopt van 1 januari 2026 tot en met 31 december 2026. Inschrijvingen ontvangen na 31 december 2026 om 23:59 uur komen niet in aanmerking.</li>
-    <li>Deelname is kosteloos en volledig vrijblijvend.</li>
-    <li>Deelname is uitsluitend geldig indien het registratieformulier volledig en naar waarheid is ingevuld én het verificatieproces (double opt-in via SMS en/of e-mail) succesvol is afgerond.</li>
-    <li>Medewerkers van de Organisator, Ebned B.V. en hun directe familieleden zijn uitgesloten van deelname.</li>
-    <li>Per persoon geldt één geldige deelname. Bij meerdere inschrijvingen wordt uitsluitend de eerste geldige inschrijving in aanmerking genomen.</li>
+    <li>Deelname staat open voor natuurlijke personen van 18 jaar of ouder die woonachtig zijn in Nederland.</li>
+    <li>De actieperiode loopt van 1 januari 2026 tot en met 31 december 2026 om 23:59 uur. Inschrijvingen die na dit tijdstip worden ontvangen, komen niet in aanmerking.</li>
+    <li>Deelname is kosteloos. Aan deelname zijn geen kosten verbonden anders dan de gebruikelijke kosten voor internet- of telefoonverkeer.</li>
+    <li>Deelname is uitsluitend geldig indien het registratieformulier volledig en naar waarheid is ingevuld en het verificatieproces via SMS en/of e-mail succesvol is afgerond.</li>
+    <li>Per persoon geldt één geldige deelname. Bij meerdere inschrijvingen van dezelfde persoon komt uitsluitend de eerste geldige inschrijving in aanmerking. Herhaalde inschrijving kan leiden tot uitsluiting van deelname.</li>
+    <li>Medewerkers van de organisator en van de bij de actie betrokken partijen, alsmede hun directe familieleden, zijn uitgesloten van deelname.</li>
+    <li>De organisator heeft het recht een inschrijving op grond van gegronde redenen niet te accepteren, waaronder bij een vermoeden van fraude, misbruik of manipulatie.</li>
   </ol>
 
   <hr class="divider">
@@ -184,100 +188,112 @@
   <span class="article-number">Artikel 3</span>
   <h2>De prijs</h2>
   <ol>
-    <li>De prijs bestaat uit een cadeaukaart of fysiek product naar keuze van de Organisator, met een maximale economische waarde van €500,- (vijfhonderd euro).</li>
-    <li>De exacte invulling van de prijs wordt bepaald door de Organisator en kan bestaan uit een cadeaukaart, een fysiek product, een testpakket of een combinatie hiervan.</li>
-    <li>De prijs is persoonsgebonden en niet inwisselbaar voor contant geld.</li>
-    <li>De Organisator behoudt zich het recht voor om, indien omstandigheden dit vereisen (zoals leveringsproblemen of voorraadtekorten), een alternatieve prijs van gelijke waarde aan te bieden.</li>
-    <li>Eventuele kansspelbelasting die wettelijk verschuldigd is, komt volledig voor rekening van de Organisator.</li>
+    <li>Er wordt één (1) hoofdprijs beschikbaar gesteld met een economische waarde van maximaal € 500,- (vijfhonderd euro).</li>
+    <li>Bij inschrijving geeft de deelnemer aan welke prijs uit het op de actiepagina getoonde aanbod zijn of haar voorkeur heeft. Deze voorkeur wordt gehonoreerd, tenzij de betreffende prijs op het moment van uitreiking niet beschikbaar is.</li>
+    <li>Indien de gekozen prijs niet beschikbaar is, biedt de organisator een alternatieve prijs aan van vergelijkbare economische waarde.</li>
+    <li>De prijs is persoonsgebonden, staat op naam van de winnaar en is niet overdraagbaar. De prijs is niet inwisselbaar voor contant geld of voor andere producten of diensten.</li>
+    <li>De verschuldigde kansspelbelasting komt voor rekening van de organisator en wordt door de organisator afgedragen.</li>
+    <li>De prijs wordt toegekend in de staat waarin deze zich bevindt. Gebruik van de prijs is voor rekening en risico van de winnaar.</li>
   </ol>
 
   <div class="disclaimer-box">
-    <strong>Merken disclaimer:</strong> <%= companyName %> heeft op geen enkele wijze een relatie met de fabrikanten of aanbieders van de getoonde en verlote producten. De respectieve fabrikanten en aanbieders blijven onverminderd rechthebbende op de getoonde handelsmerken. De getoonde handelsmerken en afbeeldingen worden uitsluitend gebruikt ter illustratie.
+    <strong>Merken disclaimer:</strong> De organisator heeft geen relatie met de fabrikanten of aanbieders van de getoonde en verlote producten. De respectieve fabrikanten en aanbieders blijven onverminderd rechthebbende op hun handelsmerken. Getoonde handelsmerken en afbeeldingen worden uitsluitend ter illustratie gebruikt.
   </div>
 
   <hr class="divider">
 
   <!-- Artikel 4 -->
   <span class="article-number">Artikel 4</span>
-  <h2>Gegarandeerd cadeau</h2>
+  <h2>Trekking</h2>
   <ol>
-    <li>Naast de prijstrekking ontvangt iedere deelnemer die het registratieproces succesvol heeft afgerond een exclusief cadeauaanbod via een partner van de Organisator. Dit aanbod staat volledig los van de hoofdprijstrekking.</li>
-    <li>Het cadeauaanbod kan worden verzorgd door Ebned B.V. of een andere partner van de Organisator. De Organisator is niet verantwoordelijk voor de inhoud, beschikbaarheid of levering van aanbiedingen van derden.</li>
-    <li>Op het cadeauaanbod zijn de voorwaarden van de betreffende partner van toepassing.</li>
+    <li>De trekking vindt plaats op 15 januari 2027, binnen vijftien (15) dagen na afloop van de actieperiode.</li>
+    <li>De trekking geschiedt op onpartijdige wijze door middel van een geautomatiseerde randomizer, uit alle geldige en volledig geverifieerde inschrijvingen.</li>
+    <li>Tijdens de trekking worden één (1) hoofdwinnaar en drie (3) reservewinnaars geselecteerd.</li>
+    <li>Over de uitslag kan niet worden gecorrespondeerd.</li>
   </ol>
 
   <hr class="divider">
 
   <!-- Artikel 5 -->
   <span class="article-number">Artikel 5</span>
-  <h2>De trekking en winstbepaling</h2>
+  <h2>Bekendmaking en uitreiking</h2>
   <ol>
-    <li>De verloting vindt plaats op 15 januari 2027 — 15 dagen na afloop van de actieperiode.</li>
-    <li>De trekking geschiedt op onpartijdige en geautomatiseerde wijze (randomizer) uit alle geldige en volledig geverifieerde inschrijvingen.</li>
-    <li>Tijdens de trekking worden één (1) hoofdwinnaar en drie (3) reservewinnaars geselecteerd.</li>
-    <li>De trekking is niet openbaar. De uitslag is bindend en hierover kan niet worden gecorrespondeerd.</li>
+    <li>De winnaar ontvangt binnen vijf (5) werkdagen na de trekking persoonlijk bericht op het door hem of haar opgegeven e-mailadres en/of telefoonnummer.</li>
+    <li>De winnaar heeft vijftien (15) dagen vanaf de eerste kennisgeving om de prijs te aanvaarden. Blijft een reactie binnen deze termijn uit, dan vervalt het recht op de prijs en wordt deze toegekend aan de eerstvolgende reservewinnaar.</li>
+    <li>De organisator kan verzoeken om inzage in een geldig legitimatiebewijs ter verificatie van de identiteit van de winnaar. Het burgerservicenummer en het documentnummer mogen daarbij worden afgeschermd. Deze gegevens worden uitsluitend voor verificatiedoeleinden gebruikt en daarna verwijderd.</li>
+    <li>De prijs wordt na aanvaarding en verificatie kosteloos verzonden naar het door de winnaar opgegeven adres, dan wel digitaal verstrekt indien de prijs bestaat uit een cadeaukaart of vergelijkbaar digitaal product.</li>
+    <li>Indien geen geldige winnaar kan worden vastgesteld, vervalt de prijs aan de organisator.</li>
+    <li>Bekendmaking van de naam of woonplaats van de winnaar vindt uitsluitend plaats na voorafgaande toestemming van de winnaar. Deelname aan de actie verplicht niet tot medewerking aan publicitaire uitingen.</li>
   </ol>
 
   <hr class="divider">
 
   <!-- Artikel 6 -->
   <span class="article-number">Artikel 6</span>
-  <h2>Bekendmaking en uitreiking</h2>
+  <h2>Verwerking van persoonsgegevens</h2>
   <ol>
-    <li>De winnaar ontvangt binnen 5 werkdagen na de trekking persoonlijk bericht via het opgegeven e-mailadres en/of telefoonnummer.</li>
-    <li>De winnaar heeft 15 dagen vanaf de eerste kennisgeving om de prijs te claimen. Reageert de winnaar niet tijdig, dan vervalt het recht op de prijs en wordt deze toegekend aan de eerstvolgende reservewinnaar.</li>
-    <li>Ter verificatie dient de winnaar zijn of haar identiteit aan te tonen. Kopieën van identiteitsbewijzen mogen worden afgeschermd (BSN en documentnummer) en worden uitsluitend voor verificatiedoeleinden gebruikt.</li>
-    <li>Indien geen geldige winnaar kan worden vastgesteld, vervalt de prijs aan de Organisator.</li>
+    <li>De organisator treedt op als verwerkingsverantwoordelijke voor de persoonsgegevens die in het kader van deze winactie worden verwerkt.</li>
+    <li>De persoonsgegevens van deelnemers worden verwerkt voor het uitvoeren van de trekking, het vaststellen en informeren van de winnaar en het uitreiken van de prijs.</li>
+    <li>De verwerking van persoonsgegevens vindt plaats in overeenstemming met de Algemene Verordening Gegevensbescherming. Het <a href="<%= privacyURL %>" target="_blank">privacybeleid</a> van de organisator is van toepassing en is via de actiepagina in te zien.</li>
+    <li>Toestemming voor het ontvangen van commerciële berichten of voor telefonisch contact wordt uitsluitend afzonderlijk gevraagd door middel van een actieve handeling van de deelnemer. Het geven van deze toestemming is geen voorwaarde voor deelname aan de winactie en het intrekken ervan heeft geen gevolgen voor de winkans.</li>
+    <li>De deelnemer kan een gegeven toestemming te allen tijde intrekken via de afmeldlink in ontvangen berichten of via de <a href="<%= optOutURL %>" target="_blank">afmeldpagina</a>.</li>
   </ol>
 
   <hr class="divider">
 
   <!-- Artikel 7 -->
   <span class="article-number">Artikel 7</span>
-  <h2>Privacy en gegevensverwerking</h2>
+  <h2>Overige aanbiedingen</h2>
   <ol>
-    <li>Door deelname aan deze winactie gaat de deelnemer akkoord met het <a href="<%= privacyURL %>" target="_blank">privacybeleid</a> van <%= companyName %>.</li>
-    <li><%= companyName %> treedt op als verwerkingsverantwoordelijke voor de verwerking van persoonsgegevens in het kader van deze winactie.</li>
-    <li>De uitvoering van (onderdelen van) het Vaste Lasten Onderzoek en de daarbij behorende dienstverlening kan plaatsvinden in samenwerking met Ebned B.V. Indien dit noodzakelijk is voor de uitvoering van de dienstverlening of opvolging van een aanvraag, kunnen persoonsgegevens worden gedeeld met Ebned B.V., uitsluitend overeenkomstig de Algemene Verordening Gegevensbescherming (AVG) en de tussen partijen gemaakte afspraken.</li>
-    <li>Tijdens de registratie kan de deelnemer vrijwillig en expliciet toestemming geven voor het ontvangen van marketingberichten van geselecteerde partners (sponsors). Deze toestemming is niet verplicht om deel te nemen aan de winactie.</li>
-    <li>Indien de deelnemer via een actieve handeling (zoals het aanvinken van een checkbox) toestemming geeft, worden de relevante contactgegevens gedeeld met de betreffende sponsor. Vanaf dat moment treedt de sponsor op als zelfstandig verwerkingsverantwoordelijke en is het privacybeleid van de sponsor van toepassing.</li>
-    <li>De deelnemer kan zijn of haar toestemming te allen tijde intrekken via de afmeldlink in de ontvangen berichten of via onze <a href="<%= optOutURL %>" target="_blank">afmeldpagina</a>.</li>
-    <li>Heeft u vragen over uw gegevens? Bekijk onze <a href="<%= faqURL %>" target="_blank">veelgestelde vragen</a> of neem contact op via <a href="mailto:<%= companyEmail %>" target="_blank"><%= companyEmail %></a>.</li>
+    <li>Naast de hierboven beschreven prijstrekking kan de deelnemer na afronding van de registratie een aanbieding van een partner van de organisator ontvangen. Deze aanbieding staat volledig los van de winactie en vormt geen onderdeel van het promotionele kansspel.</li>
+    <li>De organisator is niet verantwoordelijk voor de inhoud, beschikbaarheid of levering van aanbiedingen van derden. Op deze aanbiedingen zijn de voorwaarden van de betreffende partner van toepassing.</li>
   </ol>
 
   <hr class="divider">
 
   <!-- Artikel 8 -->
   <span class="article-number">Artikel 8</span>
-  <h2>Aansprakelijkheid en gedrag</h2>
+  <h2>Aansprakelijkheid</h2>
   <ol>
-    <li>De Organisator is niet aansprakelijk voor directe of indirecte schade die voortvloeit uit deelname aan de winactie, waaronder technische storingen, vertragingen in internet- of SMS-verkeer of het niet ontvangen van berichten.</li>
-    <li>De Organisator is niet verantwoordelijk voor het niet of niet tijdig ontvangen van verificatiecodes of winnaarsberichten door spamfilters of onjuist opgegeven contactgegevens.</li>
-    <li>Bij vermoeden van fraude, misbruik of manipulatie behoudt de Organisator zich het recht voor deelnemers zonder opgaaf van reden uit te sluiten.</li>
+    <li>De organisator is niet aansprakelijk voor directe of indirecte schade die voortvloeit uit deelname aan de winactie, waaronder technische storingen, vertragingen in internet- of SMS-verkeer of het niet ontvangen van berichten.</li>
+    <li>De organisator is niet verantwoordelijk voor het niet of niet tijdig ontvangen van verificatiecodes of winnaarsberichten als gevolg van spamfilters of onjuist opgegeven contactgegevens.</li>
+    <li>De organisator is niet aansprakelijk voor schade die voortvloeit uit gebreken of vertragingen met betrekking tot de deelname of de aanwijzing van de winnaar.</li>
   </ol>
 
   <hr class="divider">
 
   <!-- Artikel 9 -->
   <span class="article-number">Artikel 9</span>
+  <h2>Vragen en klachten</h2>
+  <ol>
+    <li>Voor vragen, opmerkingen of klachten over deze winactie kan contact worden opgenomen via <a href="mailto:<%= companyEmail %>" target="_blank"><%= companyEmail %></a> of schriftelijk via het correspondentieadres <%= companyAddress %>.</li>
+    <li>Klachten worden binnen tien (10) werkdagen na ontvangst inhoudelijk beantwoord.</li>
+    <li>Indien een klacht niet naar tevredenheid wordt afgehandeld, kan de deelnemer zich wenden tot de Kansspelautoriteit.</li>
+  </ol>
+
+  <hr class="divider">
+
+  <!-- Artikel 10 -->
+  <span class="article-number">Artikel 10</span>
   <h2>Slotbepalingen</h2>
   <ol>
-    <li>Op deze actievoorwaarden is Nederlands recht van toepassing.</li>
-    <li>De Organisator behoudt zich het recht voor de winactie of de voorwaarden tussentijds te wijzigen of de actie voortijdig te beëindigen, voor zover redelijkerwijs noodzakelijk en binnen de grenzen van de wet.</li>
-    <li>Druk-, spel-, zet- of vergelijkbare fouten kunnen niet aan de Organisator worden tegengeworpen en scheppen geen verplichtingen.</li>
-    <li>Geschillen worden bij voorkeur in onderling overleg opgelost. Indien dit niet mogelijk is, worden geschillen voorgelegd aan de bevoegde rechter in het arrondissement Amsterdam.</li>
+    <li>De organisator is gerechtigd deze spelvoorwaarden gedurende de looptijd te wijzigen of aan te passen, dan wel de actie voortijdig te beëindigen, voor zover redelijkerwijs noodzakelijk en zonder de deelnemer daarbij te benadelen. Wijzigingen worden op de actiepagina bekendgemaakt.</li>
+    <li>Druk-, spel- of zetfouten kunnen niet aan de organisator worden tegengeworpen en scheppen geen verplichtingen.</li>
+    <li>Indien één of meer bepalingen van deze spelvoorwaarden nietig of ongeldig zijn, blijven de overige bepalingen onverminderd van kracht.</li>
+    <li>In gevallen waarin deze spelvoorwaarden niet voorzien, beslist de organisator.</li>
+    <li>Geschillen worden bij voorkeur in onderling overleg opgelost. Indien dit niet mogelijk is, worden geschillen voorgelegd aan de bevoegde rechter in het arrondissement Oost-Brabant.</li>
   </ol>
 
   <div class="contact-block">
     <strong>Contact</strong>
-    Heeft u vragen over deze actievoorwaarden? Neem dan contact met ons op:<br><br>
+    Heeft u vragen over deze spelvoorwaarden? Neem dan contact met ons op:<br><br>
     <%= companyName %><br>
     <%= companyAddress %><br>
     KVK: <%= companyKvk %><br>
     <a href="mailto:<%= companyEmail %>" target="_blank"><%= companyEmail %></a>
   </div>
 
-  <p class="date-note">Versie: 4 augustus 2026 &nbsp;·&nbsp; <%= companyName %></p>
+  <p class="date-note">Versie: 4 augustus 2026 &nbsp;·&nbsp; Het Vaste Lasten Onderzoek is een initiatief van <%= companyName %></p>
 
 </div>
 

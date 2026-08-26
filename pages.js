@@ -156,8 +156,10 @@ const pages = [
                         src: '/vaste-lasten/img/ebned.png',
                         alt: 'Ebned',
                     },
-                    // Footer stays on JVE Marketing's own privacy/terms/opt-out (page defaults) —
-                    // only the opt-in consent block below links to Ebned's own policies.
+                    // Footer links to Ebned's own privacy/terms/opt-out pages.
+                    privacyURL: 'https://ebned.nl/privacy',
+                    termsURL: 'https://ebned.nl/voorwaarden',
+                    optOutURL: 'https://ebned.nl/privacyvoorkeuren',
                     actievoorwaardenURL: '/ebned/actievoorwaarden-vastelastenonderzoek.html',
                     advisorName: 'EBNed',
                     consentText: 'Door op "Ga Verder" te klikken geeft u toestemming dat Ebned B.V. telefonisch contact met u opneemt voor een gratis en vrijblijvende bespaarcheck van uw energie- en telecomkosten. Hiervoor worden uw contactgegevens gedeeld met Ebned B.V., die deze verwerkt overeenkomstig haar privacyverklaring. U kunt uw toestemming op ieder moment intrekken via de <a href="/ebned/opt-out.html" target="_blank">afmeldmogelijkheid van Ebned</a> of door contact op te nemen met Ebned. Lees ook de <a href="https://ebned.nl/privacy" target="_blank">Privacyverklaring</a> en <a href="https://ebned.nl/voorwaarden" target="_blank">Algemene Voorwaarden</a> van Ebned.',
@@ -179,6 +181,10 @@ const pages = [
                         src: '/vaste-lasten/img/ebned.png',
                         alt: 'Ebned',
                     },
+                    // Footer links to Ebned's own privacy/terms/opt-out pages.
+                    privacyURL: 'https://ebned.nl/privacy',
+                    termsURL: 'https://ebned.nl/voorwaarden',
+                    optOutURL: 'https://ebned.nl/privacyvoorkeuren',
                     actievoorwaardenURL: '/ebned/actievoorwaarden-vastelastenonderzoek.html',
                     advisorName: 'EBNed',
                     consentText: 'Door op "Ga Verder" te klikken geeft u toestemming dat Ebned B.V. telefonisch contact met u opneemt voor een gratis en vrijblijvende bespaarcheck van uw energie- en telecomkosten. Hiervoor worden uw contactgegevens gedeeld met Ebned B.V., die deze verwerkt overeenkomstig haar privacyverklaring. U kunt uw toestemming op ieder moment intrekken via de <a href="/ebned/opt-out.html" target="_blank">afmeldmogelijkheid van Ebned</a> of door contact op te nemen met Ebned. Lees ook de <a href="https://ebned.nl/privacy" target="_blank">Privacyverklaring</a> en <a href="https://ebned.nl/voorwaarden" target="_blank">Algemene Voorwaarden</a> van Ebned.',
@@ -205,18 +211,17 @@ const pages = [
                 view: 'vaste-lasten/actievoorwaarden',
                 routeViewData: {
                     logo: {
-                        src: '/jve-logo.png',
-                        alt: 'JVE Marketing',
+                        src: '/vaste-lasten/img/ebned.png',
+                        alt: 'Ebned',
                     },
-                    // JVE Marketing B.V. is the legal organizer of the prize draw; Ebned B.V.
-                    // is named within the copy as the co-organizing partner (see actievoorwaarden.ejs).
-                    companyName: 'JVE Marketing B.V.',
-                    companyAddress: 'Keizersgracht 482, 1017 EG Amsterdam',
-                    companyKvk: '98130137',
-                    companyEmail: 'dpo@jvemarketing.com',
-                    privacyURL: '/privacy.html',
-                    optOutURL: '/ebned/opt-out.html',
-                    faqURL: '/faq.html',
+                    // EBNed B.V. is the sole legal organizer of this prize draw per the
+                    // updated spelvoorwaarden (Asana task 1217814462344882).
+                    companyName: 'EBNed B.V.',
+                    companyAddress: 'Bogert 31, 5612 LX Eindhoven',
+                    companyKvk: '95569111',
+                    companyEmail: 'klachten@ebned.nl',
+                    privacyURL: 'https://ebned.nl/privacy',
+                    optOutURL: 'https://ebned.nl/privacyvoorkeuren',
                     accentColor: '#c6f28b',
                     accentTextColor: '#0C1324',
                     accentTint: '#eef9dc',

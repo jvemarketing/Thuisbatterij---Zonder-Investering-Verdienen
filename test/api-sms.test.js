@@ -44,6 +44,24 @@ describe('api/sms/send', () => {
     });
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ sent: true }));
   });
+
+  it('uses the default opt-out link for partners without their own', async () => {
+    const res = mockRes();
+    await sendHandler({ method: 'POST', body: { phone: '+31612345678', firstName: 'Jan' } }, res);
+
+    expect(messagesCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ body: expect.stringContaining('vastelastenexperts.nl/toestemming-intrekken') })
+    );
+  });
+
+  it('uses the EBNed opt-out link when partner is ebned', async () => {
+    const res = mockRes();
+    await sendHandler({ method: 'POST', body: { phone: '+31612345678', firstName: 'Jan', partner: 'ebned' } }, res);
+
+    expect(messagesCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ body: expect.stringContaining('https://ebned.nl/privacyvoorkeuren') })
+    );
+  });
 });
 
 describe('api/sms/verify', () => {
