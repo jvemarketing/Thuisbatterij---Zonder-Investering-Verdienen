@@ -258,6 +258,16 @@ const pages = [
                 routeViewData: {},
             },
             {
+                path: '/thuisbatterij-saldering',
+                view: 'thuisbatterij/pre-lander-saldering',
+                routeViewData: {},
+            },
+            {
+                path: '/thuisbatterij-saldering/flow',
+                view: 'thuisbatterij/flow-saldering',
+                routeViewData: {},
+            },
+            {
                 path: '/flow',
                 view: 'thuisbatterij/flow',
                 routeViewData: {},
