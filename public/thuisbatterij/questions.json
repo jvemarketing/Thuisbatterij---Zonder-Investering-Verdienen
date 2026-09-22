@@ -51,7 +51,7 @@
     "options": [
       {"text": "Ja", "value": "ja"},
       {"text": "Nee", "value": "nee"},
-      {"text": "Nog niet, ik wil ze laten leggen", "value": "nog_niet"}
+      {"text": "Nog niet, ik wil ze laten leggen", "value": "nog_niet_ik_wil_ze"}
     ],
     "branching_rules": {
       "ja": "hoeveel_wekken_panelen_op",
