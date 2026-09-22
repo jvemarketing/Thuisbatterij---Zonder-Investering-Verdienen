@@ -1,228 +1,150 @@
 [
   {
     "question_id": "woning_of_bedrijfspand",
-    "text": "Bent u geïnteresseerd in het verduurzamen van uw woning of bedrijfspand?",
+    "text": "Ben je geïnteresseerd in een thuisbatterij voor een woning of bedrijfspand?",
     "type": "radio",
     "options": [
       {"text": "Woning", "value": "woning"},
-      {"text": "Bedrijf", "value": "bedrijf"}
+      {"text": "Bedrijfspand", "value": "bedrijf"}
     ],
     "branching_rules": {
       "woning": "type_woning",
-      "bedrijf": "heeft_u_zonnepanelen"
+      "bedrijf": "reden_thuisbatterij"
     }
   },
   {
     "question_id": "type_woning",
-    "text": "Wat voor type woning heeft u?",
+    "text": "Woon je in een koopwoning of een huurwoning?",
     "type": "radio",
     "options": [
       {"text": "Koopwoning", "value": "koopwoning"},
       {"text": "Huurwoning", "value": "huurwoning"}
     ],
     "branching_rules": {
-      "koopwoning": "heeft_u_zonnepanelen",
-      "huurwoning": "heeft_u_zonnepanelen"
+      "koopwoning": "reden_thuisbatterij",
+      "huurwoning": "reden_thuisbatterij"
+    }
+  },
+  {
+    "question_id": "reden_thuisbatterij",
+    "text": "Waarom wil je een thuisbatterij?",
+    "type": "radio",
+    "options": [
+      {"text": "De salderingsregeling stopt", "value": "saldering"},
+      {"text": "Verdienen door te handelen op de energiemarkt", "value": "handelen"},
+      {"text": "Zelfvoorzienend worden", "value": "zelfvoorzienend"},
+      {"text": "Verduurzamen", "value": "verduurzamen"},
+      {"text": "Een combinatie hiervan", "value": "combinatie"}
+    ],
+    "branching_rules": {
+      "saldering": "heeft_u_zonnepanelen",
+      "handelen": "heeft_u_zonnepanelen",
+      "zelfvoorzienend": "heeft_u_zonnepanelen",
+      "verduurzamen": "heeft_u_zonnepanelen",
+      "combinatie": "heeft_u_zonnepanelen"
     }
   },
   {
     "question_id": "heeft_u_zonnepanelen",
-    "text": "Heeft u zonnepanelen op uw dak?",
-    "type": "radio",
-    "options": [
-      {"text": "Nee, nog niet", "value": "nee_nog_niet"},
-      {"text": "Ja", "value": "ja"}
-    ],
-    "branching_rules": {
-      "nee_nog_niet": "interesse_in_zonnepanelen_met_thuisbatterij",
-      "ja": "hoeveel_zonnepanelen"
-    }
-  },
-  {
-    "question_id": "hoeveel_zonnepanelen",
-    "text": "Hoeveel panelen heb jij? ",
-    "description": "Per 1 januari 2027 vervalt de salderingsregeling en verdien je zonder thuisbatterij minder aan je zonnepanelen.",
-    "type": "radio",
-    "options": [
-      {"text": "1 tot 6 panelen (€550 verlies per jaar zonder thuisbatterij)", "value": "1_tot_6"},
-      {"text": "7 tot 12 panelen (€1125 verlies per jaar zonder thuisbatterij)", "value": "7_tot_12"},
-      {"text": "13 tot 20 panelen (€1670 verlies per jaar zonder thuisbatterij)", "value": "13_tot_20"},
-      {"text": "21 tot 30 panelen (€2430 verlies per jaar zonder thuisbatterij)", "value": "21_tot_30"}
-    ],
-    "branching_rules": {
-      "1_tot_6": "purchasing_power_of_electricity",
-      "7_tot_12": "purchasing_power_of_electricity",
-      "13_tot_20": "purchasing_power_of_electricity",
-      "21_tot_30": "purchasing_power_of_electricity"
-    }
-  },
-  {
-    "question_id": "purchasing_power_of_electricity",
-    "text": "Zet je verlies om in rendement en schaf nu een thuisbatterij aan. Alleen dit jaar nog met BTW teruggave en zónder eigen inleg.",
-    "type": "radio",
-    "options": [
-      {"text": "Ja dit wil ik", "value": "ja_dit_wil_ik"},
-      {"text": "Nee", "value": "nee"}
-    ],
-    "branching_rules": {
-      "ja_dit_wil_ik": "heeft_u_een_gas_aansluiting",
-      "nee": "heeft_u_een_gas_aansluiting"
-    }
-  },
-  {
-    "question_id": "interesse_in_zonnepanelen_met_thuisbatterij",
-    "text": "Heeft u interesse in zonnepanelen in combinatie met een thuisbatterij om niet meer afhankelijk van het Energienet te zijn? Nu tijdelijk zonder eigen inleg en mét BTW teruggave (beperkt beschikbaar)",
-    "type": "radio",
-    "options": [
-      {"text": "Ik heb alleen interesse in zonnepanelen", "value": "ik_heb_alleen_interesse_in_zonnepanelen"},
-      {"text": "Ik heb interesse in zonnepanelen icm een thuisbatterij", "value": "ik_heb_interesse_in_zonnepanelen_icm_een_thuisbatterij"},
-      {"text": "Geen interesse", "value": "geen_interesse"}
-    ],
-    "branching_rules": {
-      "ik_heb_alleen_interesse_in_zonnepanelen": "heeft_u_een_gas_aansluiting",
-      "ik_heb_interesse_in_zonnepanelen_icm_een_thuisbatterij": "heeft_u_een_gas_aansluiting",
-      "geen_interesse": "heeft_u_een_gas_aansluiting"
-    }
-  },
-  {
-    "question_id": "interesse_in_zonnepanelen",
-    "text": "Heeft u interesse in zonnepanelen zonder eigen inleg?",
+    "text": "Heb je zonnepanelen?",
     "type": "radio",
     "options": [
       {"text": "Ja", "value": "ja"},
-      {"text": "Nee", "value": "nee"}
+      {"text": "Nee", "value": "nee"},
+      {"text": "Nog niet, ik wil ze laten leggen", "value": "nog_niet"}
     ],
     "branching_rules": {
-      "ja": "heeft_u_een_gas_aansluiting",
-      "nee": "heeft_u_een_gas_aansluiting"
+      "ja": "hoeveel_wekken_panelen_op",
+      "nee": "energiecontract",
+      "nog_niet": "energiecontract"
     }
   },
   {
-    "question_id": "heeft_u_een_gas_aansluiting",
-    "text": "Heeft u een gas aansluiting?",
+    "question_id": "hoeveel_wekken_panelen_op",
+    "text": "Hoeveel wekken je panelen op per jaar?",
+    "description": "Staat op je jaarafrekening. Weet je het niet? Kies \"weet ik niet\", dan zoekt de adviseur het met je uit.",
     "type": "radio",
     "options": [
-      {"text": "Ja", "value": "ja"},
-      {"text": "Nee", "value": "nee"}
+      {"text": "Minder dan 2.000 kWh", "value": "minder_dan_2000"},
+      {"text": "2.000 - 3.500 kWh", "value": "2000_tot_3500"},
+      {"text": "3.500 - 5.000 kWh", "value": "3500_tot_5000"},
+      {"text": "Meer dan 5.000 kWh", "value": "meer_dan_5000"},
+      {"text": "Weet ik niet", "value": "onbekend"}
     ],
     "branching_rules": {
-      "ja": "wilt_u_ook_verdienen_dmv_een_warmtepomp",
-      "nee": "rijdt_u_elektrisch"
+      "minder_dan_2000": "hoeveel_lever_je_terug",
+      "2000_tot_3500": "hoeveel_lever_je_terug",
+      "3500_tot_5000": "hoeveel_lever_je_terug",
+      "meer_dan_5000": "hoeveel_lever_je_terug",
+      "onbekend": "hoeveel_lever_je_terug"
     }
   },
   {
-    "question_id": "wilt_u_ook_verdienen_dmv_een_warmtepomp",
-    "text": "Wilt u ook verdienen d.m.v. een warmtepomp?",
-    "description": "Wist u dat u met een warmtepomp 60% tot 100% minder energie verbruikt dan gas.",
+    "question_id": "hoeveel_lever_je_terug",
+    "text": "Hoeveel daarvan lever je terug aan het net?",
     "type": "radio",
     "options": [
-      {"text": "Ja", "value": "ja"},
-      {"text": "Nee", "value": "nee"}
+      {"text": "Bijna niks, ik gebruik het meeste zelf", "value": "bijna_niks"},
+      {"text": "Ongeveer een kwart", "value": "kwart"},
+      {"text": "Ongeveer de helft", "value": "helft"},
+      {"text": "Het grootste deel", "value": "grootste_deel"},
+      {"text": "Weet ik niet", "value": "onbekend"}
     ],
     "branching_rules": {
-      "ja": "rijdt_u_elektrisch",
-      "nee": "rijdt_u_elektrisch"
+      "bijna_niks": "energiecontract",
+      "kwart": "energiecontract",
+      "helft": "energiecontract",
+      "grootste_deel": "energiecontract",
+      "onbekend": "energiecontract"
     }
   },
   {
-    "question_id": "rijdt_u_elektrisch",
-    "text": "Rijdt u elektrisch?",
+    "question_id": "energiecontract",
+    "text": "Wat voor energiecontract heb je nu?",
     "type": "radio",
     "options": [
-      {"text": "Hybride", "value": "hybride"},
-      {"text": "Ja, volledig elektrisch", "value": "ja_volledig_elektrisch"},
-      {"text": "Nee", "value": "nee"}
+      {"text": "Vast", "value": "vast"},
+      {"text": "Dynamisch", "value": "dynamisch"},
+      {"text": "Variabel", "value": "variabel"},
+      {"text": "Weet ik niet", "value": "onbekend"}
     ],
     "branching_rules": {
-      "hybride": "laadpaal",
-      "ja_volledig_elektrisch": "laadpaal",
-      "nee": "is_uw_woning_al_goed_geisoleerd"
+      "vast": "locatie_batterij",
+      "dynamisch": "locatie_batterij",
+      "variabel": "locatie_batterij",
+      "onbekend": "locatie_batterij"
     }
   },
   {
-    "question_id": "laadpaal",
-    "text": "Wilt u meer weten over de voordelen van een laadpaal?",
-    "description": "Een laadpaal maakt uw auto opladen nog gemakkelijker en verhoogt daarbij ook de waarde van uw woning.",
+    "question_id": "locatie_batterij",
+    "text": "Waar zou de batterij komen te staan?",
     "type": "radio",
     "options": [
-      {"text": "Ja graag", "value": "ja_graag"},
-      {"text": "Nee dankjewel", "value": "nee_dankjewel"}
+      {"text": "In de schuur", "value": "schuur"},
+      {"text": "In de garage", "value": "garage"},
+      {"text": "In de meterkast", "value": "meterkast"},
+      {"text": "Op zolder", "value": "zolder"},
+      {"text": "In de kelder", "value": "kelder"},
+      {"text": "Weet ik nog niet", "value": "onbekend"}
     ],
     "branching_rules": {
-      "ja_graag": "is_uw_woning_al_goed_geisoleerd",
-      "nee_dankjewel": "is_uw_woning_al_goed_geisoleerd"
+      "schuur": "wanneer_plaatsen",
+      "garage": "wanneer_plaatsen",
+      "meterkast": "wanneer_plaatsen",
+      "zolder": "wanneer_plaatsen",
+      "kelder": "wanneer_plaatsen",
+      "onbekend": "wanneer_plaatsen"
     }
   },
   {
-    "question_id": "is_uw_woning_al_goed_geisoleerd",
-    "text": "Is uw woning al goed geïsoleerd?",
+    "question_id": "wanneer_plaatsen",
+    "text": "Wanneer wil je de batterij laten plaatsen?",
     "type": "radio",
     "options": [
-      {"text": "Nee, nog niet", "value": "nee_nog_niet"},
-      {"text": "Gedeeltelijk", "value": "gedeeltelijk"},
-      {"text": "Ja, helemaal", "value": "ja_helemaal"}
-    ],
-    "branching_rules": {
-      "nee_nog_niet": "wilt_u_meer_weten_over_isolatie",
-      "gedeeltelijk": "woning_verder_verduurzamen",
-      "ja_helemaal": "jaarlijks_verbruik"
-    }
-  },
-  {
-    "question_id": "wilt_u_meer_weten_over_isolatie",
-    "text": "Wilt u meer te weten komen over hoe isolatie uw huis kan verduurzamen en uw kosten kan verlagen?",
-    "type": "radio",
-    "options": [
-      {"text": "Ja, graag", "value": "ja_graag"},
-      {"text": "Nee, dankjewel", "value": "nee_dankjewel"}
-    ],
-    "branching_rules": {
-      "ja_graag": "jaarlijks_verbruik",
-      "nee_dankjewel": "jaarlijks_verbruik"
-    }
-  },
-  {
-    "question_id": "woning_verder_verduurzamen",
-    "text": "Bent u van plan uw woning verder te verduurzamen en uw energierekening nog meer te verlagen?",
-    "type": "radio",
-    "options": [
-      {"text": "Ja zeker", "value": "ja_zeker"},
-      {"text": "Nee, ik denk het niet", "value": "nee_ik_denk_het_niet"}
-    ],
-    "branching_rules": {
-      "ja_zeker": "jaarlijks_verbruik",
-      "nee_ik_denk_het_niet": "jaarlijks_verbruik"
-    }
-  },
-  {
-    "question_id": "jaarlijks_verbruik",
-    "text": "Wat is uw geschat jaarlijks verbruik?",
-    "type": "radio",
-    "options": [
-      {"text": "2300 kWh (1 pers.)", "value": "2300_kWh"},
-      {"text": "3400 kWh (2 pers.)", "value": "3400_kWh"},
-      {"text": "4100 kWh (3 pers.)", "value": "4100_kWh"},
-      {"text": "4600 kWh (4 pers.)", "value": "4600_kWh"},
-      {"text": "5300 kWh (5 pers)", "value": "5300_kWh"},
-      {"text": ">5300 kWh", "value": ">5300_kWh"}
-    ],
-    "branching_rules": {
-      "2300_kWh": "interesse_in_airco",
-      "3400_kWh": "interesse_in_airco",
-      "4100_kWh": "interesse_in_airco",
-      "4600_kWh": "interesse_in_airco",
-      "5300_kWh": "interesse_in_airco",
-      ">5300_kWh": "interesse_in_airco"
-    }
-  },
-  {
-    "question_id": "interesse_in_airco",
-    "text": "Wilt u ook profiteren van een energiezuinige airco?",
-    "description": "Koelen in de zomer, verwarmen in de winter én besparen op uw energiekosten. Ontvang vrijblijvend advies bij u thuis.",
-    "type": "radio",
-    "options": [
-      {"text": "Ja, ik wil gratis advies", "value": "ja"},
-      {"text": "Nee, bedankt", "value": "nee"}
+      {"text": "Zo snel mogelijk", "value": "zsm"},
+      {"text": "Over 2 tot 4 weken", "value": "2_tot_4_weken"},
+      {"text": "Over 4 tot 8 weken", "value": "4_tot_8_weken"},
+      {"text": "Weet ik nog niet", "value": "onbekend"}
     ],
     "branching_rules": {}
   }

@@ -911,23 +911,21 @@
       street:              "f_991_street_name",
       // Affiliate tracking
       transaction_id: "f_331_transaction_id",
-      // Survey answer fields
-      woning_of_bedrijfspand:                  "f_1057_woning_of_bedrijfspand",
-      type_woning:                             "f_1058_type_woning",
-      heeft_u_zonnepanelen:                    "f_1059_heeft_u_zonnepanelen",
-      hoeveel_zonnepanelen:                    "f_1486_hoeveel_zonnepanelen",
-      purchasing_power_of_electricity:        "f_1487_purchasing_power_of_electricity",
-      interesse_in_zonnepanelen_met_thuisbatterij: "f_1488_interesse_in_zonnepanelen_met_thuisbatterij",
-      interesse_in_zonnepanelen:               "f_1060_interesse_in_zonnepanelen",
-      heeft_u_een_gas_aansluiting:             "f_1061_heeft_u_een_gas_aansluiting",
-      wilt_u_ook_verdienen_dmv_een_warmtepomp: "f_1062_wilt_u_ook_verdienen_dmv_een_warmtepomp",
-      rijdt_u_elektrisch:                      "f_1063_rijdt_u_elektrisch",
-      laadpaal:                                "f_1064_laadpaal",
-      is_uw_woning_al_goed_geisoleerd:         "f_1065_is_uw_woning_al_goed_geisoleerd",
-      wilt_u_meer_weten_over_isolatie:         "f_1066_wilt_u_meer_weten_over_isolatie",
-      woning_verder_verduurzamen:              "f_1067_woning_verder_verduurzamen",
-      jaarlijks_verbruik:                      "f_1068_jaarlijks_verbruik",
-      interesse_in_airco:                      "f_1321_interesse_in_airco",
+      // Survey answer fields — reused from the old cross-sell survey, same
+      // question meaning and values so the renter-suppression check in
+      // api/lead.js (body.f_1058_type_woning !== 'huurwoning') keeps working.
+      woning_of_bedrijfspand: "f_1057_woning_of_bedrijfspand",
+      type_woning:            "f_1058_type_woning",
+      // TODO placeholders — these Databowl fields don't exist yet for the new
+      // saldering-focused questions. Replace with the real field IDs once
+      // they're created, then this flow is safe to go live.
+      reden_thuisbatterij:       "f_9001_reden_thuisbatterij",
+      heeft_u_zonnepanelen:      "f_9002_heeft_u_zonnepanelen",
+      hoeveel_wekken_panelen_op: "f_9003_hoeveel_wekken_panelen_op",
+      hoeveel_lever_je_terug:    "f_9004_hoeveel_lever_je_terug",
+      energiecontract:           "f_9005_energiecontract",
+      locatie_batterij:          "f_9006_locatie_batterij",
+      wanneer_plaatsen:          "f_9007_wanneer_plaatsen",
     };
 
     // Survey state
