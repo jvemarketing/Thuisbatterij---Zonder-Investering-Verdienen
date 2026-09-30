@@ -271,6 +271,7 @@ const pages = [
                 path: '/isolatie',
                 view: 'isolatie/index',
                 routeViewData: {
+                    clarityId: { 'verdienduurzaam.nl': 'yqcqk5h2q0' },
                     slug: '/',
                     measure: 'Isolatiecheck',
                     headlineDark: 'De gasprijs is dit jaar verdrievoudigd.',
@@ -333,6 +334,7 @@ const pages = [
                 path: '/dakisolatie',
                 view: 'isolatie/index',
                 routeViewData: {
+                    clarityId: { 'verdienduurzaam.nl': 'yqcruvsqds' },
                     slug: '/dakisolatie',
                     measure: 'Dakisolatie',
                     headlineDark: 'Ben jij klaar om te veel voor je energie te betalen deze winter?',
@@ -395,6 +397,7 @@ const pages = [
                 path: '/vloerisolatie',
                 view: 'isolatie/index',
                 routeViewData: {
+                    clarityId: { 'verdienduurzaam.nl': 'yqcsl8wf46' },
                     slug: '/vloerisolatie',
                     measure: 'Vloerisolatie',
                     headlineDark: 'Ben jij klaar om te veel voor je energie te betalen deze winter?',
@@ -457,6 +460,7 @@ const pages = [
                 path: '/muurisolatie',
                 view: 'isolatie/index',
                 routeViewData: {
+                    clarityId: { 'verdienduurzaam.nl': 'yqct9l1w4g' },
                     slug: '/muurisolatie',
                     measure: 'Muurisolatie',
                     headlineDark: 'Ben jij klaar om te veel voor je energie te betalen deze winter?',

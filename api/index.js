@@ -54,10 +54,22 @@ app.use((req, res, next) => {
 
   if (!page || !domainEntry || !route) return next();
 
+  // clarityId normally comes from the domain, but a route can override it —
+  // either a plain string (applies on every domain serving that route) or a
+  // { domain: clarityId } map (applies only on the listed domains, falling
+  // back to the domain's own default elsewhere).
+  let clarityId = domainEntry.clarityId;
+  const routeClarityId = route.routeViewData?.clarityId;
+  if (typeof routeClarityId === 'string') {
+    clarityId = routeClarityId;
+  } else if (routeClarityId && typeof routeClarityId === 'object') {
+    clarityId = routeClarityId[lookupHost] ?? clarityId;
+  }
+
   const viewData = {
     ...page.defaultViewData,
     ...route.routeViewData,
-    clarityId: domainEntry.clarityId,
+    clarityId,
     query: req.query,
   };
   console.log(viewData);
