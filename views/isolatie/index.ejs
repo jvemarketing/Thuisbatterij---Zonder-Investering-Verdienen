@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+<meta name="description" content="<%= seo.description %>"/>
+<title><%= seo.title %></title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/css/intlTelInput.css"/>
+<style>
+/* ── Design tokens (ported 1:1 from the Lovable source's styles.css) ── */
+:root{
+  --radius:1rem;
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 20px);
+  --radius-4xl: calc(var(--radius) + 28px);
+
+  --font-display:'Archivo',ui-sans-serif,system-ui,sans-serif;
+  --font-sans:'Figtree',ui-sans-serif,system-ui,sans-serif;
+
+  --background: oklch(0.968 0.014 88.5);
+  --foreground: oklch(0.235 0.028 158);
+  --card: oklch(0.995 0.003 90);
+  --card-foreground: oklch(0.235 0.028 158);
+  --primary: oklch(0.505 0.114 162);
+  --primary-foreground: oklch(0.99 0.004 90);
+  --primary-soft: oklch(0.94 0.033 158);
+  --secondary: oklch(0.945 0.016 88);
+  --muted: oklch(0.945 0.014 88);
+  --muted-foreground: oklch(0.49 0.017 158);
+  --accent: oklch(0.72 0.198 48);
+  --accent-hover: oklch(0.67 0.196 46);
+  --accent-foreground: oklch(0.995 0.005 90);
+  --warm: oklch(0.79 0.14 62);
+  --cool: oklch(0.72 0.09 232);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0.012 100);
+  --input: oklch(0.9 0.012 100);
+  --ring: oklch(0.505 0.114 162);
+
+  --shadow-card: 0 1px 2px oklch(0.24 0.03 160 / 5%), 0 12px 32px -18px oklch(0.24 0.03 160 / 22%);
+  --shadow-panel: 0 2px 4px oklch(0.24 0.03 160 / 6%), 0 28px 60px -28px oklch(0.24 0.03 160 / 28%);
+  --shadow-cta: 0 10px 24px -10px var(--accent);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-sans);background:var(--background);color:var(--foreground);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:800;letter-spacing:-0.025em;margin:0}
+p{margin:0}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+.container-page{width:100%;margin-inline:auto;max-width:76rem;padding-inline:1.25rem}
+
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:40;border-bottom:1px solid color-mix(in oklab, var(--border) 70%, transparent);background:color-mix(in oklab, var(--background) 85%, transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.site-header .container-page{display:flex;height:4rem;align-items:center;justify-content:space-between;gap:1rem}
+.logo-img{width:auto;height:1.5rem}
+@media(min-width:640px){.logo-img{height:1.75rem}}
+
+/* URGENCY BAR */
+.urgbar{background:var(--accent);padding:0.625rem 1rem;text-align:center;font-size:13px;font-weight:700;color:var(--accent-foreground)}
+.urgbar .inner{display:inline-flex;align-items:center;gap:0.5rem}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:var(--background);color:var(--foreground)}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.24;pointer-events:none}
+.hero-inner{position:relative;display:grid;gap:1rem;padding-top:2rem;padding-bottom:1rem;grid-template-columns:1fr}
+@media(min-width:1024px){.hero-inner{grid-template-columns:1.1fr 0.9fr;gap:3rem;padding-top:2.5rem;padding-bottom:1.5rem}}
+.hero-copy{min-width:0;grid-row:1;grid-column:1}
+.hero-copy h1{margin-top:0;white-space:pre-line;font-size:1.95rem;line-height:1.08}
+@media(min-width:640px){.hero-copy h1{font-size:2.25rem}}
+@media(min-width:1024px){.hero-copy h1{font-size:3rem}}
+.hero-copy h1 .hl{color:var(--accent)}
+.hero-copy .sub{margin-top:1rem;max-width:36rem;font-size:15px;line-height:1.6;color:var(--foreground)}
+@media(min-width:640px){.hero-copy .sub{font-size:16px}}
+.hero-flow{min-width:0;grid-row:2;grid-column:1}
+@media(min-width:1024px){.hero-flow{grid-row:1/span 2;grid-column:2;align-self:center}}
+.hero-stats{grid-row:3;grid-column:1}
+@media(min-width:1024px){.hero-stats{grid-row:2;grid-column:1}}
+.stat-grid{margin-top:0.5rem;display:grid;grid-template-columns:1fr;gap:0.75rem}
+@media(min-width:640px){.stat-grid{grid-template-columns:repeat(3,1fr)}}
+.stat-card{display:flex;align-items:center;gap:0.75rem;border-radius:var(--radius-2xl);border:1px solid var(--border);background:var(--card);padding:0.875rem;box-shadow:var(--shadow-card)}
+@media(min-width:640px){.stat-card{display:block}}
+.stat-card .v{flex-shrink:0;font-size:1.25rem;font-weight:800;color:var(--foreground)}
+@media(min-width:640px){.stat-card .v{font-size:1.5rem}}
+.stat-card .l{margin-top:0;font-size:12px;line-height:1.35;color:var(--muted-foreground)}
+@media(min-width:640px){.stat-card .l{margin-top:0.25rem;display:block}}
+
+/* CTA BUTTON */
+.cta-btn{display:inline-flex;width:100%;align-items:center;justify-content:center;gap:0.5rem;border-radius:var(--radius-2xl);background:var(--accent);padding:1rem 1.5rem;text-align:center;font-size:1rem;font-weight:800;letter-spacing:0.01em;color:var(--accent-foreground);box-shadow:var(--shadow-cta);border:none;text-decoration:none;transition:background-color .15s}
+.cta-btn:hover{background:var(--accent-hover);color:var(--accent-foreground)}
+@media(min-width:640px){.cta-btn{width:auto}}
+
+/* TRUST BAR */
+.trustbar{background:var(--primary-soft);padding:0.625rem 1rem;text-align:center;font-size:13px;font-weight:700;color:var(--primary)}
+.trustbar .inner{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.375rem 1.5rem}
+.trustbar .item{display:flex;align-items:center;gap:0.375rem}
+
+/* FLOW CARD (postcode step) */
+.flow-card{border-radius:var(--radius-3xl);border:1px solid var(--border);background:var(--card);padding:1.25rem;color:var(--card-foreground);box-shadow:var(--shadow-panel)}
+@media(min-width:640px){.flow-card{padding:1.75rem}}
+.flow-card h2{font-size:1.25rem;font-weight:800;color:var(--primary)}
+@media(min-width:640px){.flow-card h2{font-size:1.5rem}}
+.flow-progress-row{margin-top:1.25rem;display:flex;align-items:center;gap:0.75rem}
+.flow-progress-track{height:0.5rem;flex:1;overflow:hidden;border-radius:9999px;background:var(--muted)}
+.flow-progress-fill{height:100%;border-radius:9999px;background:var(--primary);transition:width .3s}
+.flow-progress-row .steplabel{flex-shrink:0;font-size:12px;font-weight:600;color:var(--muted-foreground)}
+.flow-card form{margin-top:1.5rem}
+.step-block{margin-top:1.5rem}
+.flow-card h3{font-size:1.125rem;font-weight:700;color:var(--foreground)}
+@media(min-width:640px){.flow-card h3{font-size:1.25rem}}
+.postcode-title{color:var(--primary)}
+.flow-card .field-sub{margin-top:0.375rem;font-size:14px;color:var(--muted-foreground)}
+.field-label{display:block}
+.field-label span{margin-bottom:0.375rem;display:block;font-size:12px;font-weight:600;color:var(--muted-foreground)}
+.field-input{height:3rem;width:100%;border-radius:var(--radius-xl);border:1px solid var(--input);background:var(--background);padding:0 0.875rem;font-size:15px;outline:none;transition:border-color .15s}
+.field-input:focus{border-color:var(--primary);box-shadow:0 0 0 2px color-mix(in oklab, var(--ring) 25%, transparent)}
+.field-error{margin-top:0.375rem;display:block;font-size:12px;font-weight:500;color:var(--destructive)}
+.flow-note{margin-top:1rem;text-align:center;font-size:12px;color:var(--muted-foreground)}
+.flow-submit-btn{display:block;width:100%;margin-top:1.25rem;border:none;border-radius:var(--radius-2xl);background:var(--accent);padding:1rem 1.25rem;text-align:center;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.025em;color:var(--accent-foreground);box-shadow:var(--shadow-cta);transition:background-color .15s}
+.flow-submit-btn:hover{background:var(--accent-hover)}
+.flow-submit-btn:disabled{opacity:0.4;cursor:not-allowed}
+.flow-submit-btn:disabled:hover{background:var(--accent)}
+
+/* LEAD FORM */
+.form-grid{display:grid;gap:0.75rem}
+@media(min-width:640px){.form-grid{grid-template-columns:1fr 1fr}}
+.form-grid .full{grid-column:1/-1}
+.subgrid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.field-input.valid{border-color:var(--success)}
+.field-input.error{border-color:var(--destructive)}
+.field-input:disabled{background:var(--muted);color:var(--muted-foreground);cursor:not-allowed}
+.field-status{margin-top:0.375rem;font-size:12px}
+.iti{width:100%}
+.iti__tel-input{height:3rem;width:100%;border-radius:var(--radius-xl);border:1px solid var(--input);background:var(--background);padding:0 0.875rem 0 4.5rem;font-size:15px;outline:none}
+.iti__tel-input:focus{border-color:var(--primary);box-shadow:0 0 0 2px color-mix(in oklab, var(--ring) 25%, transparent)}
+.fcheck{display:flex;align-items:flex-start;gap:0.55rem;margin-top:0.9rem}
+.fcheck input{margin-top:0.2rem;width:17px;height:17px;flex-shrink:0}
+.fcheck label{font-size:13px;color:var(--muted-foreground);line-height:1.5}
+.fcheck label a{color:var(--primary);text-decoration:underline}
+.form-note{margin-top:0.75rem;display:flex;align-items:flex-start;justify-content:center;gap:0.375rem;text-align:center;font-size:12px;color:var(--muted-foreground)}
+
+/* EXIT SCREEN */
+.exit-icon{display:inline-flex;align-items:center;justify-content:center;width:3rem;height:3rem;border-radius:var(--radius-2xl);background:var(--primary-soft);color:var(--primary);font-size:1.35rem}
+.flow-card .exit-title{margin-top:1.25rem;font-size:1.5rem;color:var(--foreground)}
+@media(min-width:640px){.flow-card .exit-title{font-size:1.875rem}}
+.exit-text{margin-top:0.75rem;color:var(--muted-foreground);font-size:15px;line-height:1.7}
+.exit-fine{margin-top:1.5rem;font-size:12px;color:var(--muted-foreground)}
+
+/* QUESTION OPTIONS */
+.q-options{margin-top:1rem;display:grid;gap:0.625rem}
+.q-option{display:flex;width:100%;align-items:center;justify-content:space-between;gap:0.75rem;border-radius:var(--radius-2xl);border:1px solid var(--border);background:var(--background);padding:1rem;text-align:left;font-size:15px;font-weight:600;color:var(--foreground);transition:transform .15s,border-color .15s,background-color .15s}
+.q-option:hover{border-color:var(--primary);background:var(--primary-soft);transform:translateY(-2px)}
+.q-option.selected{border-color:var(--primary);background:var(--primary-soft)}
+.q-option .arrow{flex-shrink:0;color:var(--muted-foreground);transition:color .15s}
+.q-option:hover .arrow{color:var(--primary)}
+.q-option .checkbox{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:1.25rem;height:1.25rem;border-radius:6px;border:1px solid var(--border);background:var(--background);color:transparent;font-size:11px;transition:background-color .15s,border-color .15s,color .15s}
+.q-option.selected .checkbox{border-color:var(--primary);background:var(--primary);color:var(--primary-foreground)}
+
+/* BENEFITS */
+.benefits-section{padding-top:2rem;padding-bottom:1rem}
+@media(min-width:640px){.benefits-section{padding-top:2.5rem;padding-bottom:1.5rem}}
+.benefits-grid{display:grid;gap:2rem}
+@media(min-width:1024px){.benefits-grid{grid-template-columns:1fr 1fr;align-items:center;gap:3rem}}
+.benefits-image-wrap{order:2}
+@media(min-width:1024px){.benefits-image-wrap{order:0}}
+.benefits-image-wrap img{aspect-ratio:4/3;width:100%;border-radius:var(--radius-4xl);object-fit:cover;box-shadow:var(--shadow-card)}
+.benefits-copy{min-width:0}
+.benefits-copy h2{max-width:42rem;font-size:1.5rem}
+@media(min-width:640px){.benefits-copy h2{font-size:1.875rem}}
+.benefit-list{list-style:none;margin:1.5rem 0 0;padding:0;display:flex;flex-direction:column;gap:1.25rem}
+.benefit-item{display:flex;gap:0.875rem}
+.benefit-icon{margin-top:0.125rem;flex-shrink:0;display:inline-flex;height:2.25rem;width:2.25rem;align-items:center;justify-content:center;border-radius:var(--radius-xl);background:var(--primary-soft);color:var(--primary);font-size:1.1rem}
+.benefit-item h3{font-size:1rem;font-weight:700}
+.benefit-item p{margin-top:0.25rem;font-size:14px;line-height:1.6;color:var(--muted-foreground)}
+
+/* COMPARE */
+.compare-section{padding-top:1.5rem;padding-bottom:1rem}
+@media(min-width:640px){.compare-section{padding-top:2rem;padding-bottom:1.5rem}}
+.compare-section h2{font-size:1.5rem}
+@media(min-width:640px){.compare-section h2{font-size:1.875rem}}
+.compare-grid{margin-top:1.5rem;display:grid;align-items:start;gap:1rem}
+@media(min-width:768px){.compare-grid{grid-template-columns:1fr 1fr}}
+.compare-card{border-radius:var(--radius-3xl);padding:1.25rem}
+.compare-card--before{border:1px solid var(--border);background:linear-gradient(180deg, color-mix(in oklab, var(--warm) 20%, transparent), transparent)}
+.compare-card--after{border:1px solid color-mix(in oklab, var(--primary) 30%, transparent);background:var(--primary-soft)}
+.compare-card .title{display:flex;align-items:center;gap:0.5rem;font-size:14px;font-weight:800}
+.compare-card--before .title i{color:var(--cool)}
+.compare-card--after .title i{color:var(--primary)}
+.compare-card p{margin-top:0.625rem;white-space:pre-line;font-size:14px;line-height:1.6;color:var(--muted-foreground)}
+
+/* GAS PRICE BANNER */
+.gas-banner-section{padding-top:0.75rem;padding-bottom:0.75rem}
+@media(min-width:640px){.gas-banner-section{padding-top:1rem;padding-bottom:1rem}}
+.gas-banner{display:flex;flex-direction:column;align-items:center;gap:1.25rem;border-radius:var(--radius-2xl);background:var(--foreground);padding:1.75rem}
+@media(min-width:640px){.gas-banner{flex-direction:row;justify-content:space-between;padding:2rem 2.25rem}}
+.gas-banner .copy{max-width:36rem;text-align:center}
+@media(min-width:640px){.gas-banner .copy{text-align:left}}
+.gas-banner .kicker{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:0.2em;color:color-mix(in oklab, var(--background) 50%, transparent)}
+.gas-banner h2{margin-top:0.375rem;font-size:1.25rem;font-weight:900;line-height:1.25;color:var(--background)}
+@media(min-width:640px){.gas-banner h2{font-size:1.5rem}}
+.gas-banner p{margin-top:0.5rem;font-size:14px;line-height:1.5;color:color-mix(in oklab, var(--background) 70%, transparent)}
+.gas-banner p.dim{color:color-mix(in oklab, var(--background) 60%, transparent)}
+.gas-banner .source{margin-top:0.625rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;font-size:11px;font-weight:600;color:color-mix(in oklab, var(--background) 50%, transparent)}
+@media(min-width:640px){.gas-banner .source{justify-content:flex-start}}
+.gas-banner .source img{height:1.25rem;width:auto;border-radius:3px;background:#fff;padding:0.125rem 0.25rem}
+.gas-banner .cta-wrap{flex-shrink:0;display:flex;width:100%}
+@media(min-width:640px){.gas-banner .cta-wrap{width:auto}}
+
+/* FUNDS */
+.funds-section{padding-top:1rem;padding-bottom:1rem}
+@media(min-width:640px){.funds-section{padding-top:1.5rem;padding-bottom:1.5rem}}
+.funds-section h2{max-width:42rem;font-size:1.5rem}
+@media(min-width:640px){.funds-section h2{font-size:1.875rem}}
+.funds-section > .container-page > p{margin-top:0.75rem;max-width:42rem;font-size:14px;line-height:1.6;color:var(--muted-foreground)}
+@media(min-width:640px){.funds-section > .container-page > p{font-size:16px}}
+.funds-grid{margin-top:1.5rem;display:grid;gap:1rem}
+@media(min-width:640px){.funds-grid{grid-template-columns:1fr 1fr}}
+.funds-card{border-radius:var(--radius-3xl);border:1px solid var(--border);background:var(--card);padding:1.25rem;box-shadow:var(--shadow-card)}
+.funds-card h3{display:flex;align-items:center;gap:0.5rem;font-size:1rem;font-weight:700}
+.funds-card h3 i{color:var(--primary)}
+.funds-card p{margin-top:0.5rem;font-size:14px;line-height:1.6;color:var(--muted-foreground);white-space:pre-line}
+
+/* REVIEWS */
+.reviews-section{padding-top:3rem;padding-bottom:3rem}
+@media(min-width:640px){.reviews-section{padding-top:4rem;padding-bottom:4rem}}
+.reviews-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem}
+.reviews-head h2{max-width:42rem;font-size:1.5rem}
+@media(min-width:640px){.reviews-head h2{font-size:1.875rem}}
+.rating-badge{display:inline-flex;align-items:center;gap:0.5rem;border-radius:9999px;background:var(--card);padding:0.375rem 0.875rem;font-size:12px;font-weight:700;color:var(--primary)}
+.rating-badge .stars{color:var(--accent)}
+.reviews-grid{margin-top:1.5rem;display:grid;gap:1rem}
+@media(min-width:640px){.reviews-grid{grid-template-columns:repeat(3,1fr)}}
+.review-card{display:flex;flex-direction:column;border-radius:var(--radius-3xl);border:1px solid var(--border);background:var(--card);padding:1.25rem}
+.review-card .stars{color:var(--accent);font-size:14px}
+.review-card blockquote{margin:0.75rem 0 0;flex:1;font-size:14px;line-height:1.6}
+.review-card .who{margin-top:1rem;border-top:1px solid var(--border);padding-top:0.75rem}
+.review-card .who .name{display:block;font-size:14px;font-weight:800}
+.review-card .who .meta{display:block;font-size:12px;color:var(--muted-foreground)}
+
+/* FINAL CTA */
+.final-cta-section{padding-bottom:3.5rem}
+.final-cta{border-radius:var(--radius-4xl);background:var(--foreground);padding:2.5rem 1.25rem;text-align:center}
+@media(min-width:640px){.final-cta{padding:3rem}}
+.final-cta h2{margin:0 auto;max-width:42rem;font-size:1.5rem;color:var(--background)}
+@media(min-width:640px){.final-cta h2{font-size:2.25rem}}
+.final-cta p{margin:0.75rem auto 0;max-width:36rem;font-size:15px;color:color-mix(in oklab, var(--background) 75%, transparent)}
+.final-cta .cta-wrap{margin-top:1.5rem;display:flex;justify-content:center}
+.final-cta .cta-wrap .cta-btn{width:auto}
+.variant-pills{margin-top:2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.5rem}
+.variant-pills a{border-radius:9999px;border:1px solid color-mix(in oklab, var(--background) 25%, transparent);padding:0.375rem 0.75rem;font-size:12px;font-weight:600;color:color-mix(in oklab, var(--background) 70%, transparent);text-decoration:none}
+
+/* FOOTER */
+.site-footer{border-top:1px solid var(--border);background:var(--card)}
+.footer-top{display:flex;flex-direction:column;gap:1.5rem;padding:2.5rem 0}
+@media(min-width:640px){.footer-top{flex-direction:row;align-items:flex-start;justify-content:space-between}}
+.footer-about{max-width:28rem}
+.footer-about p{margin-top:0.75rem;font-size:14px;color:var(--muted-foreground)}
+.footer-about p.fine{margin-top:0.5rem;font-size:12px}
+.footer-links{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:1.5rem;font-size:14px;color:var(--muted-foreground)}
+@media(min-width:640px){.footer-links{gap:2.5rem}}
+.footer-links .col{display:flex;flex-direction:column;gap:0.5rem}
+.footer-links .col .head{font-weight:600;color:var(--foreground)}
+.footer-links .col a{text-decoration:none;transition:color .15s}
+.footer-links .col a:hover{color:var(--foreground)}
+.footer-bottom{border-top:1px solid var(--border);padding:1.25rem 0;font-size:12px;color:var(--muted-foreground)}
+</style>
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "<%= clarityId %>");
+</script>
+
+<!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '4513411092222816');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+               src="https://www.facebook.com/tr?id=4513411092222816&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container-page">
+    <a href="/isolatie" style="display:flex;align-items:center">
+      <img class="logo-img" src="/isolatie/img/logo-verdienduurzaam.png" alt="VerdienDuurzaam"/>
+    </a>
+  </div>
+</header>
+
+<div class="urgbar">
+  <span class="inner"><i class="fas fa-clock"></i> Energieprijzen stijgen. Het subsidiebudget voor 2026 is beperkt — op=op</span>
+</div>
+
+<section class="hero">
+  <div class="hero-bg" style="background-image:url('/isolatie/img/gas-price-bg.jpg')"></div>
+  <div class="container-page hero-inner">
+    <div class="hero-copy">
+      <h1><%= headlineDark %> <span class="hl"><%- headlineGreen %></span></h1>
+      <p class="sub"><%= sub %></p>
+    </div>
+
+    <div class="hero-flow">
+      <div class="flow-card">
+        <h2 id="flowTitle"><%= formTitle %></h2>
+        <p class="field-sub" id="flowSub"></p>
+        <div class="flow-progress-row" id="flowProgressRow">
+          <div class="flow-progress-track"><div class="flow-progress-fill" id="flowProgressFill" style="width:6%"></div></div>
+          <span class="steplabel" id="flowStepLabel">Stap 1 van <%= flowTotalSteps %></span>
+        </div>
+        <div id="flowBody">
+          <form id="postcodeForm">
+            <h3 class="postcode-title">Wat is je postcode?</h3>
+            <p class="field-sub">Hiermee zien we welke landelijke én gemeentelijke regelingen voor jouw woning gelden.</p>
+            <div style="margin-top:1rem">
+              <label class="field-label">
+                <span>Postcode</span>
+                <input class="field-input" type="text" id="hpc" placeholder="1234 AB" autocomplete="postal-code"/>
+              </label>
+              <span class="field-error" id="hpcError"></span>
+            </div>
+            <button type="submit" class="flow-submit-btn">Start mijn aanvraag →</button>
+          </form>
+        </div>
+        <p class="flow-note" id="flowNote">Je gegevens gebruiken we alleen voor jouw isolatie- en subsidiecheck</p>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-grid">
+        <div class="stat-card"><span class="v">€ 900</span><span class="l">gemiddelde besparing per jaar</span></div>
+        <div class="stat-card"><span class="v">35%</span><span class="l">lagere energierekening</span></div>
+        <div class="stat-card"><span class="v">€4500</span><span class="l">maximale subsidie per woning</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trustbar">
+  <span class="inner">
+    <span class="item"><i class="fas fa-check"></i> Subsidie geregeld</span>
+    <span class="item"><i class="fas fa-check"></i> Gecertificeerde installateurs</span>
+    <span class="item"><i class="fas fa-check"></i> Alles uit handen</span>
+  </span>
+</div>
+
+<section class="benefits-section">
+  <div class="container-page benefits-grid">
+    <div class="benefits-image-wrap">
+      <img src="/isolatie/img/<%= benefitsImage %>" alt="<%= measure %>" loading="lazy"/>
+    </div>
+    <div class="benefits-copy">
+      <h2><%= benefitsTitle %></h2>
+      <ul class="benefit-list">
+        <% benefits.slice(0,3).forEach(function(b){ %>
+        <li class="benefit-item">
+          <span class="benefit-icon"><i class="fas fa-<%= b.icon %>"></i></span>
+          <div>
+            <h3><%= b.title %></h3>
+            <p><%= b.text %></p>
+          </div>
+        </li>
+        <% }); %>
+      </ul>
+      <div style="margin-top:1.75rem">
+        <a href="#check" class="cta-btn">Start mijn aanvraag <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare-section">
+  <div class="container-page">
+    <h2>Wat isolatie kan betekenen voor de warmte in huis</h2>
+    <div class="compare-grid">
+      <div class="compare-card compare-card--before">
+        <span class="title"><i class="fas fa-snowflake"></i> <%= compareBeforeTitle %></span>
+        <p><%= compareBeforeText %></p>
+      </div>
+      <div class="compare-card compare-card--after">
+        <span class="title"><i class="fas fa-temperature-high"></i> <%= compareAfterTitle %></span>
+        <p><%= compareAfterText %></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gas-banner-section">
+  <div class="container-page">
+    <div class="gas-banner">
+      <div class="copy">
+        <p class="kicker">Energiebericht · 21 september 2026</p>
+        <h2>Gasprijs verdrievoudigd: Van €25 naar €80 per megawattuur</h2>
+        <p>De groothandelsprijs van gas is dit jaar verdrievoudigd. Huishoudens betalen nu 11% meer dan in januari. En de winter moet nog beginnen.</p>
+        <p class="dim">In een slecht geïsoleerd huis verdwijnt warmte via het dak, de vloer en de muren. Aan de prijs kun je niets veranderen maar aan je verbruik wel. Isolatie verlaagt je rekening direct.</p>
+        <p class="source">
+          <img src="/isolatie/img/logo-nunl.png" alt="NU.nl"/>
+          Bron: NU.nl, 18 september 2026 · CBS
+        </p>
+      </div>
+      <div class="cta-wrap">
+        <a href="#check" class="cta-btn" style="text-transform:none">Stop met te veel betalen,isoleer je woning</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="funds-section">
+  <div class="container-page">
+    <h2><%= fundsTitle %></h2>
+    <p><%= fundsIntro %></p>
+    <div class="funds-grid">
+      <% funds.forEach(function(f){ %>
+      <div class="funds-card">
+        <h3><i class="fas fa-check"></i><%= f.title %></h3>
+        <p><%= f.text %></p>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section">
+  <div class="container-page">
+    <div class="reviews-head">
+      <h2>Wat woningeigenaren zeggen</h2>
+      <span class="rating-badge"><span class="stars">★★★★★</span> 4,8/5 uit 1.240+ beoordelingen</span>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <span class="stars">★★★★★</span>
+        <blockquote>&ldquo;De check kostte me een minuut. Twee weken later was mijn subsidieaanvraag rond en de muren geïsoleerd.&rdquo;</blockquote>
+        <div class="who"><span class="name">Hendrik Jansen</span><span class="meta">Spouwmuurisolatie · Utrecht</span></div>
+      </div>
+      <div class="review-card">
+        <span class="stars">★★★★★</span>
+        <blockquote>&ldquo;Dankzij de subsidiecheck ontdekte ik dat ik recht had op ruim € 1.400. Dat had ik zelf nooit gevonden.&rdquo;</blockquote>
+        <div class="who"><span class="name">Mariëlle Vos</span><span class="meta">Dakisolatie · Zwolle</span></div>
+      </div>
+      <div class="review-card">
+        <span class="stars">★★★★★</span>
+        <blockquote>&ldquo;Duidelijk advies, netjes geholpen en merkbaar warmer in huis. De energierekening is flink gedaald.&rdquo;</blockquote>
+        <div class="who"><span class="name">Ahmed el Amrani</span><span class="meta">Vloerisolatie · Rotterdam</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta-section">
+  <div class="container-page">
+    <div class="final-cta">
+      <h2>Bespaar <%= saving %> per jaar! Check je subsidie voor 2026</h2>
+      <p>Het subsidiebudget voor 2026 is beperkt en wordt op volgorde van aanvraag verdeeld. Doe de check in minder dan een minuut.</p>
+      <div class="cta-wrap">
+        <a href="#check" class="cta-btn">Start mijn aanvraag <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="variant-pills">
+        <% if (slug !== '/') { %><a href="/isolatie">Algemene isolatiecheck</a><% } %>
+        <% if (slug !== '/dakisolatie') { %><a href="/dakisolatie">Dakisolatie</a><% } %>
+        <% if (slug !== '/vloerisolatie') { %><a href="/vloerisolatie">Vloerisolatie</a><% } %>
+        <% if (slug !== '/muurisolatie') { %><a href="/muurisolatie">Muurisolatie</a><% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container-page footer-top">
+    <div class="footer-about">
+      <img class="logo-img" src="/isolatie/img/logo-verdienduurzaam.png" alt="VerdienDuurzaam"/>
+      <p>VerdienDuurzaam helpt woningeigenaren uitzoeken welke isolatiemaatregel bij hun woning past en welke landelijke en gemeentelijke subsidieregelingen daarop van toepassing zijn.</p>
+      <p class="fine">Subsidiebedragen en voorwaarden zijn afhankelijk van maatregel, woning, gemeente en actuele regelgeving. Landelijke regeling: ISDE via RVO.</p>
+    </div>
+    <div class="footer-links">
+      <div class="col">
+        <span class="head">Isolatiechecks</span>
+        <a href="/isolatie">Algemene isolatiecheck</a>
+        <a href="/dakisolatie">Dakisolatie subsidie</a>
+        <a href="/vloerisolatie">Vloerisolatie subsidie</a>
+        <a href="/muurisolatie">Muurisolatie subsidie</a>
+      </div>
+      <div class="col">
+        <span class="head">Juridisch</span>
+        <a href="/privacy.html" target="_blank">Privacyverklaring</a>
+        <a href="/terms.html" target="_blank">Algemene voorwaarden</a>
+        <a href="/opt-out.html" target="_blank">Afmelden</a>
+      </div>
+    </div>
+  </div>
+  <div class="container-page footer-bottom">
+    © 2026 VerdienDuurzaam · Gegevens worden alleen gebruikt om je isolatie- en subsidiecheck af te ronden.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/imask/dist/imask.min.js"></script>
+<script src="/affiliate.js"></script>
+<script src="/form-validation.js"></script>
+<script src="/dob-mask.js"></script>
+<script>
+(function () {
+  var formSub = <%- JSON.stringify(formSub) %>;
+  var everflowTracking = AffiliateTracking.getTracking();
+  var fbTracking = AffiliateTracking.getFbTracking();
+  var itiTel;
+  var emailValid = false;
+  var phoneValid = false;
+  var addressValid = false;
+  var city = null;
+  var stateName = null;
+
+  // Databowl campaign config for the Isolatie funnel (campaign 959).
+  var DATABOWL_CID = "959";
+  var DATABOWL_SID = "34";
+
+  // All fields below verified against campaign 959's live field list (map.html and the
+  // Databowl app directly for stateName, which isn't listed in map.html).
+  var LEAD_FIELD_MAP = {
+    dob:                 "f_5_dob",
+    email:               "f_1_email",
+    firstName:           "f_3_firstname",
+    lastName:            "f_4_lastname",
+    postalCode:          "f_11_postcode",
+    phone:               "f_12_phone1",
+    city:                "f_40_city",
+    stateName:           "f_10_county",
+    houseNumber:         "f_167_house_number",
+    houseNumberAddition: "f_1070_address_addition",
+    street:              "f_991_street_name",
+    transaction_id:      "f_331_transaction_id",
+    eigenaar:            "f_1717_eigenaar",
+    woningtype:          "f_1718_woningtype",
+    bouwjaar:            "f_1719_bouwjaar",
+    reden:               "f_1720_reden",
+    interesse:           "f_1721_interesse",
+    planning:            "f_1722_planning",
+  };
+
+  var flowSteps = [];
+  var step = 0; // 0 = postcode, 1..flowSteps.length = questions, flowSteps.length+1 = form
+  var answers = {};
+  var postcode = '';
+
+  fetch('/isolatie/questions.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) { flowSteps = data; })
+    .catch(function (err) { console.error('Kon vragenlijst niet laden.', err); });
+
+  function totalSteps() { return flowSteps.length + 2; }
+
+  function renderProgress() {
+    var total = totalSteps();
+    var pct = Math.max(Math.round((step / total) * 100), 6);
+    document.getElementById('flowProgressFill').style.width = pct + '%';
+    document.getElementById('flowStepLabel').textContent = 'Stap ' + (step + 1) + ' van ' + total;
+    document.getElementById('flowSub').textContent = step === 0 ? '' : formSub;
+    document.getElementById('flowNote').style.display = step === 0 ? '' : 'none';
+  }
+
+  function scrollToFlow() {
+    document.querySelector('.flow-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  document.getElementById('postcodeForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('hpc');
+    var errorEl = document.getElementById('hpcError');
+    var pc = input.value.trim();
+    if (!/^\s*\d{4}\s*[a-zA-Z]{2}\s*$/.test(pc)) {
+      errorEl.textContent = 'Voer een geldige postcode in (bijvoorbeeld: 1234 AB)';
+      return;
+    }
+    errorEl.textContent = '';
+    postcode = pc.toUpperCase();
+    step = 1;
+    renderProgress();
+    renderStep();
+  });
+
+  function renderStep() {
+    if (step > flowSteps.length) { renderForm(); return; }
+    renderQuestion(flowSteps[step - 1]);
+  }
+
+  function renderQuestion(q) {
+    var html = '<div class="step-block"><h3>' + q.question + '</h3>';
+    if (q.help) html += '<p class="field-sub">' + q.help + '</p>';
+    html += '<div class="q-options">';
+    q.options.forEach(function (option) {
+      if (q.multi) {
+        html += '<button type="button" class="q-option" data-value="' + option + '" onclick="isolatieFlow.toggleOption(this)">' +
+          option + '<span class="checkbox">✓</span></button>';
+      } else {
+        html += '<button type="button" class="q-option" data-value="' + option + '" onclick="isolatieFlow.selectOption(this)">' +
+          option + '<span class="arrow">→</span></button>';
+      }
+    });
+    html += '</div>';
+    if (q.multi) {
+      html += '<button type="button" class="flow-submit-btn" id="multiNext" disabled onclick="isolatieFlow.submitMulti()">Volgende →</button>';
+    }
+    html += '</div>';
+    document.getElementById('flowBody').innerHTML = html;
+    scrollToFlow();
+  }
+
+  function selectOption(el) {
+    var q = flowSteps[step - 1];
+    answers[q.id] = el.getAttribute('data-value');
+    step += 1;
+    renderProgress();
+    renderStep();
+  }
+
+  function toggleOption(el) {
+    el.classList.toggle('selected');
+    var anySelected = document.querySelectorAll('#flowBody .q-option.selected').length > 0;
+    document.getElementById('multiNext').disabled = !anySelected;
+  }
+
+  function submitMulti() {
+    var q = flowSteps[step - 1];
+    var selected = Array.prototype.slice.call(document.querySelectorAll('#flowBody .q-option.selected'))
+      .map(function (el) { return el.getAttribute('data-value'); });
+    answers[q.id] = selected.join('|');
+    step += 1;
+    renderProgress();
+    renderStep();
+  }
+
+  function renderForm() {
+    var html =
+      '<div class="step-block">' +
+      '<h3>Jouw woning komt zeer waarschijnlijk in aanmerking voor een isolatie regeling</h3>' +
+      '<p class="field-sub">Vul je gegevens in en ontdek welke subsidieregelingen voor jouw huis gelden.</p>' +
+      '<form id="leadForm" novalidate>' +
+      '<div class="form-grid" style="margin-top:1rem">' +
+      '<label class="field-label"><span>Voornaam *</span><input class="field-input" id="fVoornaam" autocomplete="given-name"/><span class="field-error" id="errVoornaam"></span></label>' +
+      '<label class="field-label"><span>Achternaam *</span><input class="field-input" id="fAchternaam" autocomplete="family-name"/><span class="field-error" id="errAchternaam"></span></label>' +
+      '<label class="field-label"><span>Geboortedatum *</span><input class="field-input" type="text" id="fDob" placeholder="DD/MM/JJJJ" inputmode="numeric" autocomplete="off"/><span class="field-error" id="errDob"></span></label>' +
+      '<label class="field-label"><span>Telefoonnummer *</span><input class="field-input" type="tel" id="fPhone" autocomplete="tel"/><span class="field-status" id="phoneStatus"></span></label>' +
+      '<label class="field-label full"><span>E-mailadres *</span><input class="field-input" type="email" id="fEmail" autocomplete="email"/><span class="field-status" id="emailStatus"></span></label>' +
+      '<label class="field-label"><span>Straatnaam *</span><input class="field-input" id="fStraat" autocomplete="address-line1" disabled/><span class="field-error" id="errStraat"></span></label>' +
+      '<div class="subgrid">' +
+      '<label class="field-label"><span>Huisnr. *</span><input class="field-input" id="fHuisnummer" placeholder="12" autocomplete="address-line2"/><span class="field-status" id="addressStatus"></span></label>' +
+      '<label class="field-label"><span>Toevoeging</span><input class="field-input" id="fToevoeging" autocomplete="address-line3"/></label>' +
+      '</div>' +
+      '<label class="field-label"><span>Postcode *</span><input class="field-input" id="fPostcode" placeholder="1234 AB" value="' + postcode + '" autocomplete="postal-code"/><span class="field-error" id="errPostcode"></span></label>' +
+      '</div>' +
+      '<div class="fcheck"><input type="checkbox" id="fPrivacy"/><label for="fPrivacy">Ik ga akkoord met de <a href="/privacy.html" target="_blank">privacyverklaring</a> en algemene voorwaarden *</label></div>' +
+      '<div class="fcheck"><input type="checkbox" id="fNewsletter"/><label for="fNewsletter">Ja, ik ontvang graag tips en aanbiedingen over verduurzamen</label></div>' +
+      '<button type="submit" class="flow-submit-btn">Rond mijn aanvraag af →</button>' +
+      '<p class="form-note"><i class="fas fa-lock"></i> Je gegevens gebruiken we alleen om je isolatie- en subsidiecheck af te ronden. Geen verplichtingen.</p>' +
+      '</form>' +
+      '</div>';
+    document.getElementById('flowBody').innerHTML = html;
+    scrollToFlow();
+
+    DobMask.init(document.getElementById('fDob'));
+
+    itiTel = window.intlTelInput(document.getElementById('fPhone'), {
+      initialCountry: 'nl',
+      onlyCountries: ['nl'],
+      separateDialCode: true,
+      allowDropdown: false,
+      utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
+    });
+
+    FormValidation.attachAddress(
+      function () { return document.getElementById('fPostcode').value.trim(); },
+      document.getElementById('fHuisnummer'),
+      document.getElementById('fToevoeging'),
+      document.getElementById('fStraat'),
+      document.getElementById('addressStatus'),
+      function (valid, addressData) {
+        addressValid = valid;
+        if (addressData && addressData.cityName) {
+          city = addressData.cityName;
+          stateName = addressData.stateName || null;
+        }
+      }
+    );
+
+    FormValidation.attachPhone(
+      document.getElementById('fPhone'),
+      document.getElementById('phoneStatus'),
+      function () { return itiTel ? itiTel.getNumber() : document.getElementById('fPhone').value.trim(); },
+      function () { return !itiTel || itiTel.isValidNumber(); },
+      function (valid) { phoneValid = valid; }
+    );
+
+    FormValidation.attachEmail(
+      document.getElementById('fEmail'),
+      document.getElementById('emailStatus'),
+      function (valid) { emailValid = valid; }
+    );
+
+    document.getElementById('leadForm').addEventListener('submit', submitForm);
+  }
+
+  function setFieldError(inputId, errorId, message) {
+    document.getElementById(inputId).classList.toggle('error', !!message);
+    document.getElementById(errorId).textContent = message || '';
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    var valid = true;
+
+    ['Voornaam', 'Achternaam'].forEach(function (name) {
+      var el = document.getElementById('f' + name);
+      if (!el.value.trim()) { setFieldError('f' + name, 'err' + name, 'Vul je ' + name.toLowerCase() + ' in'); valid = false; }
+      else { setFieldError('f' + name, 'err' + name, ''); }
+    });
+
+    if (!DobMask.validate(document.getElementById('fDob'), document.getElementById('errDob'))) {
+      valid = false;
+    }
+
+    var postcodeVal = document.getElementById('fPostcode').value.trim();
+    if (!/^\s*\d{4}\s*[a-zA-Z]{2}\s*$/.test(postcodeVal)) {
+      setFieldError('fPostcode', 'errPostcode', 'Voer een geldige postcode in (bijvoorbeeld: 1234 AB)');
+      valid = false;
+    } else {
+      setFieldError('fPostcode', 'errPostcode', '');
+    }
+
+    if (!document.getElementById('fStraat').value.trim()) {
+      setFieldError('fStraat', 'errStraat', 'Vul een geldige straatnaam in');
+      valid = false;
+    } else {
+      setFieldError('fStraat', 'errStraat', '');
+    }
+
+    if (!emailValid) {
+      FormValidation.showError(document.getElementById('fEmail'), document.getElementById('emailStatus'), 'Bevestig een geldig e-mailadres');
+      valid = false;
+    }
+    if (!phoneValid) {
+      FormValidation.showError(document.getElementById('fPhone'), document.getElementById('phoneStatus'), 'Bevestig een geldig mobiel nummer');
+      valid = false;
+    }
+    if (!addressValid) {
+      FormValidation.showError(document.getElementById('fHuisnummer'), document.getElementById('addressStatus'), 'Combinatie niet gevonden. Controleer je huisnummer.');
+      valid = false;
+    }
+    if (!document.getElementById('fPrivacy').checked) {
+      valid = false;
+      alert('Je moet akkoord gaan met de privacyverklaring om door te gaan.');
+    }
+
+    if (!valid) return;
+
+    var btn = document.querySelector('#leadForm .flow-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Bezig met verzenden...';
+
+    var rawData = {
+      dob:                 DobMask.toISO(document.getElementById('fDob')),
+      email:               document.getElementById('fEmail').value.trim(),
+      firstName:           document.getElementById('fVoornaam').value.trim(),
+      lastName:             document.getElementById('fAchternaam').value.trim(),
+      postalCode:          postcodeVal,
+      city:                city,
+      stateName:           stateName,
+      houseNumber:         document.getElementById('fHuisnummer').value.trim(),
+      houseNumberAddition: document.getElementById('fToevoeging').value.trim(),
+      street:              document.getElementById('fStraat').value.trim(),
+      phone:               itiTel ? itiTel.getNumber() : document.getElementById('fPhone').value.trim(),
+      transaction_id:      everflowTracking.ef_click_id || ''
+    };
+    for (var key in answers) { rawData[key] = answers[key]; }
+
+    var formData = { newsletter: document.getElementById('fNewsletter').checked, cid: DATABOWL_CID, sid: DATABOWL_SID };
+    for (var mapKey in LEAD_FIELD_MAP) {
+      var val = rawData[mapKey];
+      if (val !== undefined && val !== null && val !== '') formData[LEAD_FIELD_MAP[mapKey]] = val;
+    }
+    if (everflowTracking.ef_click_id) formData.everflow_tracking = everflowTracking;
+    if (fbTracking.fbclid) formData.fb_tracking = fbTracking;
+
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    }).then(function (r) { return r.json().then(function (json) { return { status: r.status, json: json }; }); })
+      .then(function (result) {
+        if (result.json.result === 'created') {
+          if (window.va) window.va('event', { name: 'lead_submitted' });
+          renderExit(rawData.firstName);
+        } else if (result.status === 409) {
+          renderExit(rawData.firstName);
+        } else {
+          console.warn('Lead rejected by Databowl:', result.json);
+          btn.disabled = false;
+          btn.textContent = 'Rond mijn aanvraag af →';
+          alert('Er is een probleem opgetreden bij het verwerken van je aanvraag. Probeer het opnieuw.');
+        }
+      })
+      .catch(function (err) {
+        console.error('Lead submission error:', err);
+        btn.disabled = false;
+        btn.textContent = 'Rond mijn aanvraag af →';
+        alert('Er is een technische fout opgetreden. Probeer het later opnieuw.');
+      });
+  }
+
+  function renderExit(firstName) {
+    document.getElementById('flowTitle').style.display = 'none';
+    document.getElementById('flowSub').style.display = 'none';
+    document.getElementById('flowProgressRow').style.display = 'none';
+    document.getElementById('flowNote').style.display = 'none';
+    document.getElementById('flowBody').innerHTML =
+      '<span class="exit-icon"><i class="fas fa-glass-cheers"></i></span>' +
+      '<h2 class="exit-title">Je isolatiecheck is klaar</h2>' +
+      '<p class="exit-text">We hebben je aanvraag ontvangen' + (firstName ? ', ' + firstName : '') + '! ' +
+      'Ons team gaat je gegevens bekijken en onderzoekt op basis van je postcode welke landelijke en gemeentelijke regelingen beschikbaar zijn voor jouw woning. ' +
+      'We nemen spoedig contact met je op om de mogelijkheden voor het isoleren van jouw woning te bespreken en je te helpen bepalen welke aanpak het beste bij jouw situatie past.</p>' +
+      '<p class="exit-fine">Subsidiebedragen en voorwaarden hangen af van de maatregel, je woning en de regelingen van je gemeente. We toetsen dat aan de actuele voorwaarden voordat we je iets voorleggen.</p>';
+    scrollToFlow();
+  }
+
+  window.isolatieFlow = { selectOption: selectOption, toggleOption: toggleOption, submitMulti: submitMulti };
+})();
+</script>
+
+<!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+[
+  {
+    "id": "eigenaar",
+    "question": "Ben je eigenaar van de woning?",
+    "help": "De landelijke ISDE-regeling geldt voor eigenaar-bewoners.",
+    "options": [
+      "Ja, ik ben de eigenaar",
+      "Nee, binnen 3 maanden wordt ik de eigenaar",
+      "Nee, over meer dan 3 maanden wordt ik de eigenaar",
+      "Nee, ik ben van plan een woning te kopen",
+      "Nee, ik huur"
+    ],
+    "qualifier": true
+  },
+  {
+    "id": "woningtype",
+    "question": "Wat voor woning heb je?",
+    "options": [
+      "Tussenwoning",
+      "Hoekwoning",
+      "Twee-onder-een-kap",
+      "Vrijstaande woning",
+      "Appartement"
+    ]
+  },
+  {
+    "id": "bouwjaar",
+    "question": "Uit welk bouwjaar komt de woning?",
+    "help": "Het bouwjaar bepaalt vaak hoe veel je kunt winnen met isolatie.",
+    "options": [
+      "Vóór 1975",
+      "1975 – 1991",
+      "1992 – 2005",
+      "Na 2005",
+      "Weet ik niet precies"
+    ]
+  },
+  {
+    "id": "reden",
+    "question": "Waarom wil je je woning isoleren?",
+    "options": [
+      "Lagere energierekening",
+      "Meer comfort",
+      "Minder tocht",
+      "Minder geluidsoverlast",
+      "Duurzamer wonen"
+    ]
+  },
+  {
+    "id": "interesse",
+    "question": "In welk type isolatie heeft u interesse?",
+    "help": "Meerdere maatregelen combineren verhoogt de landelijke bijdrage per maatregel.",
+    "options": ["Spouwmuur", "Kruipruimte", "Dak", "Allemaal"],
+    "qualifier": true,
+    "multi": true
+  },
+  {
+    "id": "planning",
+    "question": "Wanneer wil je de isolatie laten uitvoeren?",
+    "options": ["Direct", "Binnen 3 maanden", "Binnen 6 tot 12 maanden", "Ik oriënteer me"],
+    "qualifier": true
+  }
+]
