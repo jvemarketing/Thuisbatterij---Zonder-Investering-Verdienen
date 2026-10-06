@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De Grote Bespaarcheck 2026 | <%= brandName %></title>
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --paars:<%= paars %>; --paars-mid:<%= paarsMid %>; --groen:<%= groen %>; --groen-donker:<%= groenDonker %>;
+    --bg:<%= bg %>; --ink:var(--paars); --grey:<%= grey %>; --line:<%= line %>; --ok:#16A34A; --err:#DC2626; --geel:#FFC24B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI",Arial,Helvetica,sans-serif; background:var(--bg); color:var(--ink); min-height:100vh;}
+
+  /* header */
+  header{background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10;}
+  .hwrap{max-width:1100px; margin:0 auto; padding:14px 18px; display:flex; align-items:center; gap:14px;}
+  .brandname{display:flex; align-items:center; gap:8px; font-weight:800; font-size:19px; line-height:1.1; color:var(--paars);}
+  .brandname .badge{background:var(--groen); color:<%= onGroen %>; font-size:11px; font-weight:800; padding:3px 8px; border-radius:99px;}
+  .ism{font-size:12px; color:var(--grey);}
+  .hlogo img{height:40px; width:auto; display:block;}
+  .chip{margin-left:auto; background:#E9FBEF; color:var(--groen-donker); border:1px solid #BFEED2; font-weight:700; font-size:14px; padding:8px 16px; border-radius:99px; white-space:nowrap;}
+  .chip::before{content:"\1F6E1\FE0F "; }
+  .progress{height:5px; background:var(--line);}
+  .progress i{display:block; height:100%; width:0; background:var(--groen); transition:width .3s;}
+
+  .wrap{max-width:820px; margin:0 auto; padding:34px 18px 70px;}
+  .card{background:#fff; border-radius:20px; padding:34px 30px; box-shadow:0 8px 30px rgba(34,18,58,.08); margin-bottom:20px;}
+  @media(max-width:560px){ .card{padding:24px 16px;} }
+
+  .banner{height:190px; border-radius:16px; margin-bottom:22px; display:flex; align-items:center; justify-content:center; font-size:74px; background:linear-gradient(135deg,var(--paars-mid),var(--paars)); position:relative; overflow:hidden;}
+  .banner::before,.banner::after{content:""; position:absolute; border-radius:50%; background:#fff; opacity:.06;}
+  .banner::before{width:230px; height:230px; left:-60px; top:-90px;}
+  .banner::after{width:190px; height:190px; right:-40px; bottom:-80px;}
+  .kicker{color:#8A80A0; font-weight:800; letter-spacing:2px; font-size:13px; text-transform:uppercase; margin-bottom:8px;}
+  h1{font-size:27px; line-height:1.3; font-weight:800; margin-bottom:8px;}
+  @media(max-width:560px){ h1{font-size:22px;} }
+  .sub{color:var(--grey); font-size:16px; line-height:1.55; margin-bottom:14px;}
+
+  /* antwoorden */
+  .opts{display:flex; flex-direction:column; gap:14px; margin-top:20px;}
+  .opt{display:flex; align-items:center; gap:16px; width:100%; background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:15px 18px; font-size:17px; font-weight:600; color:var(--ink); cursor:pointer; text-align:left; transition:all .12s; font-family:inherit; box-shadow:0 3px 10px rgba(34,18,58,.05);}
+  .opt:hover{border-color:var(--groen); transform:translateY(-1px); box-shadow:0 6px 16px rgba(<%= groenRgb %>,.18);}
+  .opt .ic{width:46px; height:46px; flex:0 0 46px; border-radius:12px; background:<%= icBg %>; display:flex; align-items:center; justify-content:center; font-size:21px;}
+  select.qselect{width:100%; margin-top:18px; border:1.5px solid var(--line); border-radius:14px; padding:16px; font-size:17px; font-family:inherit; background:#fff;}
+  select.qselect:focus{outline:none; border-color:var(--groen);}
+  .back{display:inline-block; margin-top:20px; background:none; border:0; color:var(--grey); font-size:14px; cursor:pointer; font-family:inherit;}
+  .back:hover{color:var(--ink);}
+
+  /* intro */
+  .hero-card{background:linear-gradient(135deg,var(--paars-mid),var(--paars)); color:#fff; text-align:center; border-radius:20px; padding:46px 30px; margin-bottom:20px;}
+  .hero-card .pill{display:inline-block; background:rgba(<%= groenRgb %>,.18); border:1px solid rgba(<%= groenRgb %>,.5); color:var(--groen); font-weight:700; font-size:13.5px; padding:7px 16px; border-radius:99px; margin-bottom:18px;}
+  .hero-card h1{color:#fff; font-size:34px; margin-bottom:12px;}
+  .hero-card h1 em{color:var(--groen); font-style:normal;}
+  .hero-card p{color:<%= heroSubColor %>; font-size:17px; margin-bottom:26px;}
+  .start{display:inline-block; background:var(--groen); color:<%= onGroen %>; font-weight:800; font-size:19px; border:0; border-radius:999px; padding:18px 44px; cursor:pointer; box-shadow:0 8px 24px rgba(<%= groenRgb %>,.35); font-family:inherit;}
+  .start:hover{background:<%= groenHoverBg %>;}
+  .hero-card .mini{font-size:13px; color:<%= heroMiniColor %>; margin-top:16px;}
+  .prijzen{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:26px;}
+  @media(max-width:560px){ .prijzen{grid-template-columns:repeat(2,1fr);} }
+  .prijs{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:14px; padding:16px 10px; text-align:center;}
+  .prijs .em{font-size:30px;}
+  .prijs .nm{font-size:13.5px; font-weight:700; color:#fff; margin-top:6px;}
+  .prijs .pr{font-size:13px; color:var(--groen); font-weight:800;}
+  .usps{display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:center; background:#fff; border-radius:16px; padding:16px 20px; font-size:14.5px; font-weight:600; box-shadow:0 6px 20px rgba(34,18,58,.06);}
+  .usps span::before{content:"\2713"; display:inline-flex; width:19px; height:19px; border-radius:50%; background:var(--groen-donker); color:#fff; font-size:11px; align-items:center; justify-content:center; margin-right:7px; vertical-align:-3px;}
+
+  /* formulier */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .grid .full{grid-column:1/-1;}
+  @media(max-width:560px){ .grid{grid-template-columns:1fr;} }
+  .adres-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; grid-column:1/-1;}
+  label{display:block; font-weight:700; font-size:12.5px; letter-spacing:1px; text-transform:uppercase; color:#6C6383; margin-bottom:7px;}
+  input,select{width:100%; border:1.5px solid var(--line); border-radius:12px; padding:14px; font-size:16px; font-family:inherit; background:#fff;}
+  input:focus,select:focus{outline:none; border-color:var(--groen-donker);}
+  input[readonly]{background:#F6F4FA; color:#6C6383;}
+  .hint{font-size:13px; color:var(--grey); margin-top:6px; min-height:17px;}
+  .hint.ok{color:var(--ok); font-weight:600;}
+  .hint.err{color:var(--err); font-weight:600;}
+  .hint a{color:var(--groen-donker); cursor:pointer; text-decoration:underline;}
+  input.invalid{border-color:var(--err); background:#FEF5F5;}
+  input.valid{border-color:var(--ok);}
+  .seg{display:flex; gap:12px;}
+  .seg button{flex:1; background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; color:var(--ink);}
+  .seg button.sel{border-color:var(--groen-donker); background:#E9FBEF; color:var(--groen-donker);}
+  .consent{display:flex; gap:12px; align-items:flex-start; margin:20px 0 6px; font-size:14px; color:#4A4458; line-height:1.55; font-weight:400; text-transform:none; letter-spacing:0;}
+  .consent input{width:22px; height:22px; flex:0 0 22px; margin-top:2px; accent-color:var(--groen-donker);}
+  .consent a{color:var(--groen-donker); font-weight:700;}
+  .submit{width:100%; margin-top:20px; background:var(--groen); border:0; color:<%= onGroen %>; border-radius:999px; padding:19px; font-size:19px; font-weight:800; cursor:pointer; box-shadow:0 8px 22px rgba(<%= groenRgb %>,.35); font-family:inherit;}
+  .submit:hover{background:<%= groenHoverBg %>;}
+  .submit:disabled{opacity:.5; cursor:not-allowed; box-shadow:none;}
+  .form-err{display:none; background:#FEF2F2; border:1px solid #FCA5A5; color:#B91C1C; border-radius:12px; padding:12px 16px; font-size:14.5px; margin-top:16px;}
+
+  /* sms */
+  .sms-icon{width:84px; height:84px; border-radius:50%; background:var(--paars-mid); color:#fff; font-size:38px; display:flex; align-items:center; justify-content:center; margin:4px auto 22px;}
+  .code-box{display:flex; justify-content:center; gap:14px; margin:26px 0 8px;}
+  .code-box input{width:62px; height:72px; text-align:center; font-size:32px; font-weight:800; border:2px solid var(--line); border-radius:14px;}
+  .code-box input:focus{border-color:var(--groen-donker); outline:none;}
+  .resend{text-align:center; font-size:14.5px; color:var(--grey); margin-top:16px;}
+  .resend a{color:var(--groen-donker); font-weight:700; cursor:pointer; text-decoration:underline;}
+  .democode{text-align:center; font-size:12.5px; color:#A79FC0; margin-top:10px;}
+
+  /* bedankt */
+  .thanks-hero{background:linear-gradient(135deg,var(--paars-mid),var(--paars)); border-radius:20px; text-align:center; color:#fff; padding:46px 26px; margin-bottom:20px;}
+  .big-check{width:86px; height:86px; border-radius:50%; background:var(--ok); color:#fff; font-size:42px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; box-shadow:0 0 0 12px rgba(22,163,74,.18);}
+  .thanks-hero h1{color:#fff;}
+  .thanks-hero p{color:<%= heroSubColor %>; font-size:16.5px;}
+  .prize-card{display:flex; gap:16px; align-items:center; background:#FFF7E8; border:1px solid #F5DDA9; border-radius:16px; padding:18px 20px; margin-bottom:16px;}
+  .prize-card .em{font-size:40px;}
+  .prize-card .k{font-size:12px; font-weight:800; letter-spacing:1.5px; color:#B27B00; text-transform:uppercase;}
+  .prize-card .v{font-size:20px; font-weight:800;}
+  .info-row{display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--line); font-size:15px; line-height:1.5; color:#4A4458;}
+  .info-row:last-child{border-bottom:0;}
+  .info-row .ic{width:38px; height:38px; flex:0 0 38px; border-radius:10px; background:<%= icBg %>; display:flex; align-items:center; justify-content:center; font-size:17px;}
+  .share{display:flex; gap:12px; margin-top:6px;}
+  .share button{flex:1; background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:15px; font-size:15.5px; font-weight:700; cursor:pointer; font-family:inherit; color:var(--ink);}
+  .share button:hover{border-color:var(--groen-donker);}
+
+  footer{background:var(--paars); color:<%= heroMiniColor %>; text-align:center; padding:40px 18px 28px; margin-top:36px;}
+  footer img{height:44px; width:auto; margin-bottom:16px; filter:brightness(0) invert(1);}
+  footer .legal{font-size:14.5px; font-weight:700; color:#fff; margin-bottom:6px;}
+  footer .meta{font-size:13px; line-height:1.7; color:#CFC9DF; margin-bottom:16px;}
+  footer .meta a{color:#fff;}
+  footer .levline{font-size:13px; color:<%= heroMiniColor %>; margin-bottom:10px;}
+  footer .levs{margin-bottom:18px;}
+  footer .levs span{display:inline-block; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:20px; padding:6px 14px; margin:3px; font-size:12.5px; font-weight:700; color:#fff;}
+  footer nav{margin:4px 0 18px;}
+  footer nav a{color:#D9D2E8; margin:0 10px; text-decoration:underline; font-size:13.5px;}
+  footer nav a.uit{background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.3); border-radius:99px; padding:7px 16px; text-decoration:none;}
+  footer .disclosure{max-width:760px; margin:0 auto 18px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:14px 18px; font-size:12.5px; line-height:1.6; color:#CFC9DF;}
+  footer .copy{border-top:1px solid rgba(255,255,255,.12); padding-top:14px; font-size:12.5px; color:#8A80A0;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="brandname">De Grote Bespaarcheck <span class="badge">2026</span></div>
+    <span class="ism">i.s.m.</span>
+    <div class="hlogo"><img src="<%= logo %>" alt="<%= brandName %>"></div>
+    <div class="chip">Veilig &amp; Gratis</div>
+  </div>
+  <div class="progress"><i id="prog"></i></div>
+</header>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="stepIntro">
+    <div class="hero-card">
+      <% if (winactie) { %>
+      <div class="pill">&#127873; Kans op &euro;500+ aan prijzen voor iedere deelnemer</div>
+      <% } else { %>
+      <div class="pill">&#9889; D&eacute; landelijke check op energie, internet &amp; verduurzamen</div>
+      <% } %>
+      <h1 id="introTitle">Doe De Grote <em>Bespaarcheck</em> 2026!</h1>
+      <% if (winactie) { %>
+      <p id="introSub">Ontdek in 2 minuten waar jij te veel betaalt &mdash; en maak kans op mooie prijzen naar keuze!</p>
+      <% } else { %>
+      <p id="introSub">Ontdek in 2 minuten waar jij te veel betaalt aan je vaste lasten.</p>
+      <% } %>
+      <button class="start" id="startBtn" type="button">&#9889;&nbsp; Start de check &rarr;</button>
+      <div class="mini" id="introMini">&#10003; 100% vrijblijvend &nbsp;&bull;&nbsp; &#10003; Persoonlijke bespaartips &nbsp;&bull;&nbsp; &#10003; Gratis tariefcheck</div>
+
+      <% if (winactie) { %>
+      <div class="prijzen">
+        <div class="prijs"><div class="em">&#127873;</div><div class="nm">Bol.com kaart</div><div class="pr">&euro;500</div></div>
+        <div class="prijs"><div class="em">&#128230;</div><div class="nm">Coolblue kaart</div><div class="pr">&euro;500</div></div>
+        <div class="prijs"><div class="em">&#127911;</div><div class="nm">AirPods Pro</div><div class="pr">&euro;279</div></div>
+        <div class="prijs"><div class="em">&#8986;</div><div class="nm">Smartwatch</div><div class="pr">&euro;299</div></div>
+        <div class="prijs"><div class="em">&#128717;</div><div class="nm">MediaMarkt kaart</div><div class="pr">&euro;500</div></div>
+        <div class="prijs"><div class="em">&#127915;</div><div class="nm">VVV Bon</div><div class="pr">&euro;500</div></div>
+      </div>
+      <% } %>
+
+    </div>
+    <div class="usps">
+      <span>100% vrijblijvend</span><span>AVG-conform</span><span>Direct bespaartips</span><span>Gratis tariefcheck</span>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="card hidden" id="stepQuiz">
+    <div class="banner" id="qBanner">&#9889;</div>
+    <div class="kicker" id="qKicker">VRAAG 1 VAN 13</div>
+    <h1 id="qTitle"></h1>
+    <p class="sub" id="qSub" style="display:none"></p>
+    <div class="opts" id="qOpts"></div>
+    <button class="back" id="qBack" type="button">&larr; Vorige vraag</button>
+  </section>
+
+  <!-- FORMULIER -->
+  <section class="card hidden" id="stepForm">
+    <h1 id="formTitle">Bijna klaar!</h1>
+    <p class="sub" id="formSub">Om je persoonlijke bespaaradvies te kunnen sturen, hebben we een paar gegevens nodig:</p>
+    <form id="leadForm" novalidate>
+      <div class="grid">
+        <div class="full">
+          <label>Aanhef</label>
+          <div class="seg" id="aanhefSeg">
+            <button type="button" data-v="Dhr.">Dhr.</button>
+            <button type="button" data-v="Mevr.">Mevr.</button>
+            <button type="button" data-v="Anders">Anders</button>
+          </div>
+          <div class="hint" data-hint="aanhef"></div>
+        </div>
+        <div>
+          <label for="voornaam">Voornaam</label>
+          <input id="voornaam" type="text" placeholder="Jan" autocomplete="given-name">
+          <div class="hint" data-hint="voornaam"></div>
+        </div>
+        <div>
+          <label for="achternaam">Achternaam</label>
+          <input id="achternaam" type="text" placeholder="Jansen" autocomplete="family-name">
+          <div class="hint" data-hint="achternaam"></div>
+        </div>
+        <div class="full">
+          <label for="gebdatum">Geboortedatum</label>
+          <input id="gebdatum" type="text" inputmode="numeric" placeholder="DD-MM-JJJJ" maxlength="10" autocomplete="bday">
+          <div class="hint" data-hint="gebdatum"></div>
+        </div>
+        <div class="full">
+          <label for="email">E-mailadres</label>
+          <input id="email" type="email" placeholder="jan@voorbeeld.nl" autocomplete="email">
+          <div class="hint" data-hint="email"></div>
+        </div>
+        <div class="adres-grid">
+          <div><label for="postcode">Postcode</label><input id="postcode" type="text" placeholder="1234 AB" maxlength="7" autocomplete="postal-code"></div>
+          <div><label for="huisnr">Huisnummer</label><input id="huisnr" type="text" inputmode="numeric" placeholder="12"></div>
+          <div><label for="toevoeging">Toevoeging</label><input id="toevoeging" type="text" placeholder="A"></div>
+        </div>
+        <div class="full"><div class="hint" data-hint="adres">Vul postcode + huisnummer in &mdash; het adres wordt automatisch gecontroleerd.</div></div>
+        <div>
+          <label for="straat">Straat</label>
+          <input id="straat" type="text" placeholder="Automatisch" readonly>
+        </div>
+        <div>
+          <label for="plaats">Woonplaats</label>
+          <input id="plaats" type="text" placeholder="Automatisch" readonly>
+        </div>
+        <div class="full">
+          <label for="telefoon">Mobiel nummer</label>
+          <input id="telefoon" type="tel" placeholder="06 12345678" autocomplete="tel">
+          <div class="hint" data-hint="telefoon"></div>
+        </div>
+      </div>
+
+      <label class="consent"><input type="checkbox" id="akkoord">
+        <span>Ja, ik geef toestemming aan <%= brandName %> om mij 5x per jaar te benaderen voor een vergelijking van minimaal twee leveranciers en indien gewenst mij op basis daarvan een passende commerci&euml;le aanbieding van &eacute;&eacute;n leverancier te doen. Bekijk voor meer informatie onze <a href="https://<%= brandDomain %>/privacy-policy/" target="_blank">privacy verklaring</a> en onze <a href="https://<%= brandDomain %>/algemene-voorwaarden/" target="_blank">algemene voorwaarden</a>.</span>
+      </label>
+
+      <div class="form-err" id="formErr">Controleer de rood gemarkeerde velden hierboven.</div>
+      <button class="submit" id="toSmsBtn" type="submit">Akkoord &amp; Ga Verder &rsaquo;</button>
+    </form>
+  </section>
+
+  <!-- SMS-VERIFICATIE -->
+  <section class="card hidden" id="stepSms" style="text-align:center">
+    <div class="sms-icon">&#128222;</div>
+    <h1>Rond je aanvraag af door je telefoonnummer te verifi&euml;ren.</h1>
+    <p class="sub">Er is zojuist een SMS met een verificatiecode gestuurd naar <b id="maskedPhone">******000</b>.<br>Voer de code hieronder in om je aanvraag te bevestigen.</p>
+    <div class="code-box">
+      <input type="text" inputmode="numeric" maxlength="1" class="code" id="c1">
+      <input type="text" inputmode="numeric" maxlength="1" class="code" id="c2">
+      <input type="text" inputmode="numeric" maxlength="1" class="code" id="c3">
+      <input type="text" inputmode="numeric" maxlength="1" class="code" id="c4">
+    </div>
+    <div class="hint err" id="smsErr" style="text-align:center"></div>
+    <button class="submit" id="verifyBtn" type="button" disabled>&#10148;&nbsp; Verstuur mijn aanvraag</button>
+    <div class="resend">Geen SMS ontvangen? <a id="resend">Verstuur opnieuw</a></div>
+    <div class="democode" id="demoHint"></div>
+  </section>
+
+  <!-- BEDANKT -->
+  <section class="hidden" id="stepThanks">
+    <div class="thanks-hero">
+      <div class="big-check">&#10003;</div>
+      <h1>Bedankt<span id="thName"></span>!</h1>
+      <p id="thSub">Je aanvraag is bevestigd. Een adviseur van <%= brandName %> neemt binnen 2 werkdagen contact met je op voor je gratis tariefcheck.</p>
+    </div>
+    <div class="card">
+
+      <% if (winactie) { %>
+      <div class="prize-card"><div class="em">&#127873;</div><div><div class="k">Jij maakt kans op</div><div class="v">Bol.com Cadeaukaart &euro;500</div></div></div>
+      <div class="info-row"><div class="ic">&#128222;</div><div><b>Prijstrekking:</b> je wordt persoonlijk gebeld als je hebt gewonnen.</div></div>
+      <% } %>
+
+      <div class="info-row"><div class="ic">&#128200;</div><div><b>Gratis tariefcheck:</b> een adviseur van <%= brandName %> vergelijkt minimaal twee leveranciers en belt je binnen 2 werkdagen met het resultaat.</div></div>
+      <div class="info-row"><div class="ic">&#128737;</div><div><b>100% vrijblijvend:</b> jij beslist pas na het advies of je wilt overstappen.</div></div>
+
+      <% if (winactie) { %>
+      <p class="sub" style="text-align:center; margin:18px 0 10px;">Vergroot je winkans door deze actie te delen!</p>
+      <div class="share">
+        <button type="button" id="shareWa">&#128172;&nbsp; Deel via WhatsApp</button>
+        <button type="button" id="shareCopy">&#128279;&nbsp; Kopieer link</button>
+      </div>
+      <% } %>
+
+    </div>
+  </section>
+</div>
+
+<footer>
+  <img src="<%= logo %>" alt="<%= brandName %>">
+  <div class="legal"><%= brandName %> handelend onder Collectieve Adviesgroep B.V.</div>
+  <div class="meta">KVK: 90216482 &nbsp;|&nbsp; Keizersgracht 482, 1017EG Amsterdam<br>E-mail: <a href="mailto:info@<%= brandDomain %>">info@<%= brandDomain %></a></div>
+  <div class="levline">Wij vergelijken minimaal 2 aanbiedingen van onderstaande leveranciers, zodat jij niet zelf deze aanbieders hoeft af te gaan.</div>
+  <div class="levs"><span>energiedirect</span><span>essent</span><span>GreenChoice</span><span>NextEnergy</span><span>Omnis energy</span><span>mega</span></div>
+  <nav>
+    <a href="https://<%= brandDomain %>/algemene-voorwaarden/" target="_blank">Algemene voorwaarden</a>
+    <a href="https://<%= brandDomain %>/cookiebeleid/" target="_blank">Cookiebeleid</a>
+    <a href="https://<%= brandDomain %>/klachtenprocedure/" target="_blank">Klachtenprocedure</a>
+    <a href="https://<%= brandDomain %>/toestemming-intrekken/" target="_blank">Toestemming intrekken</a>
+    <a class="uit" href="https://<%= brandDomain %>/afmelden/" target="_blank">Uitschrijven</a>
+  </nav>
+  <div class="disclosure">Collectieve Adviesgroep werkt samen met diverse erkende opdrachtgevers. Wij ontvangen een vergoeding van de leverancier wanneer u besluit bij deze organisatie een overeenkomst te sluiten.</div>
+  <div class="copy">&copy; <span id="year"></span> De Grote Bespaarcheck &ndash; Alle rechten voorbehouden</div>
+</footer>
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "<%= clarityId %>");
+</script>
+
+<script>
+/* ================= CONFIG ================= */
+const CONFIG = {
+  WINACTIE: <%= winactie %>,
+  // PLACEHOLDER — no Databowl campaign for this funnel; leads are expected to
+  // land in a Google Sheet instead. Wire the real endpoint once that's ready.
+  WEBHOOK_URL: "",                      // POST-endpoint voor de lead (JSON). Leeg = demo.
+  SMS_SEND_URL: "",                     // eigen backend: POST {telefoon} -> stuurt sms met code
+  SMS_VERIFY_URL: "",                   // eigen backend: POST {telefoon, code} -> {ok:true/false}
+  DEMO_CODE: "1234",                    // in demo-modus (geen SMS_SEND_URL) is dit de code
+  SHARE_URL: location.origin + location.pathname,
+  ACTIE_SUFFIX: "<%= actieSuffix %>"
+};
+
+/* ================= VRAGEN (13) ================= */
+const QUESTIONS = [
+  { key:"eauto",     em:"\u{1F697}", title:"Heb je een elektrische of hybride auto?", opts:[["⚡","Ja"],["\u{1F697}","Nee"],["\u{1F4AD}","Nee, maar ik overweeg er een"]] },
+  { key:"efiets",    em:"\u{1F6B4}", title:"Heb je een elektrische fiets?", opts:[["⚡","Ja, ik gebruik die regelmatig"],["\u{1F6B2}","Nee, (nog) niet"],["\u{1F4AD}","Nee, maar ik denk erover"]] },
+  { key:"rekening",  em:"\u{1F4B6}", title:"Hoe hoog is je maandelijkse energierekening ongeveer?", opts:[["\u{1F4B6}","Minder dan €100"],["\u{1F4B6}","€100 - €200"],["\u{1F4B6}","€200 - €300"],["\u{1F4B6}","Meer dan €300"],["❓","Weet ik niet"]] },
+  { key:"zonnepanelen", em:"☀️", title:"Heb je reeds al zonnepanelen op je dak?", opts:[["☀️","Ja, al een tijdje"],["⚡","Nee, nog niet"]] },
+  { key:"contract",  em:"\u{1F4C4}", title:"Wat voor energiecontract heb je nu?", opts:[["\u{1F4C4}","Vast"],["\u{1F4C8}","Variabel"],["⚡","Dynamisch"],["❓","Weet ik niet"]] },
+  { key:"batterij",  em:"\u{1F50B}", title:"Heb jij interesse in een thuisbatterij?", sub:"Zo benut je je eigen stroom maximaal, verlaag je je energierekening en profiteer je van subsidies.", opts:[["⚡","Ja, ik wil verdienen!"],["\u{1F44B}","Nee, dankjewel"]] },
+  { key:"verduurzamen", em:"\u{1F331}", title:"Denk je erover om (verder) te verduurzamen?", sub:"Bijvoorbeeld met een warmtepomp, isolatie of zonnepanelen.", opts:[["✅","Ja, komend jaar"],["\u{1F4C6}","Misschien later"],["❌","Nee"]] },
+  { key:"internet",  em:"\u{1F4F6}", title:"Hoe tevreden ben je over je internet en tv?", opts:[["\u{1F60A}","Heel tevreden"],["\u{1F610}","Kan beter"],["\u{1F620}","Ontevreden"],["❓","Weet ik niet"]] },
+  { key:"woningtype", em:"\u{1F3E1}", title:"Wat voor type woning heb je?", opts:[["\u{1F3E2}","Appartement"],["\u{1F3E0}","Tussenwoning"],["\u{1F3E0}","Hoekwoning"],["\u{1F3E0}","2-onder-1-kap"],["\u{1F3E1}","Vrijstaand"]] },
+  { key:"koophuur",  em:"\u{1F511}", title:"Woon je in een koop of huurwoning?", opts:[["\u{1F511}","Koop"],["\u{1F3E2}","Huur"]] },
+  { key:"gezin",     em:"\u{1F46A}", title:"Wat is je gezinssamenstelling?", opts:[["\u{1F464}","Alleenstaand"],["\u{1F465}","Met partner"],["\u{1F46A}","Gezin met kinderen"],["⚡","Anders"]] },
+  { key:"energieleverancier", em:"\u{1F50C}", title:"Wie is jouw huidige energieleverancier?", select:["Essent","Eneco","Vattenfall","Greenchoice","Budget Energie","ENGIE","Frank Energie","Oxxio","Anders","Weet ik niet"] },
+  { key:"internetprovider", em:"\u{1F4E1}", title:"Wie is je huidige internetprovider?", select:["Ziggo","KPN","Odido","Budget Thuis","Delta","Solcon","Anders","Weet ik niet"] },
+];
+
+/* ================= STATE ================= */
+const $=(id)=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const answers={}; let qIndex=0; let aanhef="";
+$("year").textContent=new Date().getFullYear();
+
+function show(step){
+  ["stepIntro","stepQuiz","stepForm","stepSms","stepThanks"].forEach(s=>$(s).classList.add("hidden"));
+  $(step).classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function setProgress(){
+  const total=QUESTIONS.length+2; // vragen + formulier + sms
+  let done=qIndex;
+  if(!$("stepForm").classList.contains("hidden")) done=QUESTIONS.length+0.5;
+  if(!$("stepSms").classList.contains("hidden")) done=QUESTIONS.length+1.5;
+  if(!$("stepThanks").classList.contains("hidden")) done=total;
+  $("prog").style.width=Math.min(100,(done/total)*100)+"%";
+}
+
+/* ================= QUIZ ================= */
+$("startBtn").addEventListener("click",()=>{ renderQuestion(); show("stepQuiz"); });
+function renderQuestion(){
+  if(qIndex>=QUESTIONS.length){ show("stepForm"); setProgress(); return; }
+  const q=QUESTIONS[qIndex];
+  $("qBanner").textContent=q.em;
+  $("qKicker").textContent="VRAAG "+(qIndex+1)+" VAN "+QUESTIONS.length;
+  $("qTitle").textContent=q.title;
+  $("qSub").style.display=q.sub?"block":"none"; $("qSub").textContent=q.sub||"";
+  if(q.select){
+    $("qOpts").innerHTML=`<select class="qselect" id="qSel"><option value="">— Kies je leverancier —</option>${q.select.map(o=>`<option>${o}</option>`).join("")}</select>`;
+    $("qSel").addEventListener("change",e=>{ if(e.target.value){ answers[q.key]=e.target.value; qIndex++; renderQuestion(); } });
+  } else {
+    $("qOpts").innerHTML=q.opts.map(([em,t])=>`<button type="button" class="opt" data-v="${t}"><span class="ic">${em}</span>${t}</button>`).join("");
+    $("qOpts").querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{ answers[q.key]=b.dataset.v; qIndex++; renderQuestion(); }));
+  }
+  $("qBack").style.visibility=qIndex===0?"hidden":"visible";
+  setProgress();
+}
+$("qBack").addEventListener("click",()=>{ qIndex=Math.max(0,qIndex-1); renderQuestion(); });
+
+/* ================= FORMULIER-VALIDATIE ================= */
+const hint=(k,msg,cls)=>{ const el=document.querySelector(`[data-hint="${k}"]`); if(el){ el.textContent=msg||""; el.className="hint "+(cls||""); } };
+const mark=(el,ok)=>{ el.classList.toggle("invalid",ok===false); el.classList.toggle("valid",ok===true); };
+$("aanhefSeg").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+  aanhef=b.dataset.v; $("aanhefSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("sel",x===b)); hint("aanhef","","");
+}));
+const TYPOS={"gmial.com":"gmail.com","gamil.com":"gmail.com","gmai.com":"gmail.com","gmail.co":"gmail.com","gmail.nl":"gmail.com","hotmial.com":"hotmail.com","hotmal.com":"hotmail.com","hotmail.co":"hotmail.com","outlok.com":"outlook.com","iclould.com":"icloud.com","ziggo.nll":"ziggo.nl"};
+function validateEmail(){
+  const el=$("email"); const v=el.value.trim().toLowerCase();
+  if(!v){ hint("email","",""); mark(el,null); return false; }
+  if(!/^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/.test(v)){ hint("email","Dit lijkt geen geldig e-mailadres.","err"); mark(el,false); return false; }
+  const dom=v.split("@")[1];
+  if(TYPOS[dom]){ const sug=v.split("@")[0]+"@"+TYPOS[dom];
+    const h=document.querySelector('[data-hint="email"]'); h.innerHTML=`Bedoel je <a id="fixMail">${sug}</a>?`; h.className="hint err";
+    $("fixMail").onclick=()=>{ el.value=sug; validateEmail(); }; mark(el,false); return false; }
+  hint("email","✓ E-mailadres ziet er goed uit","ok"); mark(el,true); return true;
+}
+function validatePhone(){
+  const el=$("telefoon"); let v=el.value.replace(/[\s\-().]/g,"");
+  if(!v){ hint("telefoon","",""); mark(el,null); return false; }
+  v=v.replace(/^00316/,"06").replace(/^\+316/,"06");
+  if(!/^06\d{8}$/.test(v)){ hint("telefoon","Vul een geldig Nederlands mobiel nummer in (06 + 8 cijfers).","err"); mark(el,false); return false; }
+  el.value=v.replace(/^(\d{2})(\d{8})$/,"$1 $2");
+  hint("telefoon","✓ Mobiel nummer klopt","ok"); mark(el,true); return true;
+}
+$("gebdatum").addEventListener("input",e=>{
+  let v=e.target.value.replace(/[^\d]/g,"").slice(0,8);
+  if(v.length>4) v=v.slice(0,2)+"-"+v.slice(2,4)+"-"+v.slice(4);
+  else if(v.length>2) v=v.slice(0,2)+"-"+v.slice(2);
+  e.target.value=v;
+});
+function validateDob(){
+  const el=$("gebdatum"); const m=el.value.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+  if(!m){ if(el.value){hint("gebdatum","Gebruik het formaat DD-MM-JJJJ.","err"); mark(el,false);} return false; }
+  const d=new Date(+m[3],+m[2]-1,+m[1]); const age=(Date.now()-d)/31557600000;
+  if(d.getDate()!=+m[1]||d.getMonth()!=+m[2]-1||age<18||age>100){ hint("gebdatum","Controleer je geboortedatum (18+).","err"); mark(el,false); return false; }
+  hint("gebdatum","",""); mark(el,true); return true;
+}
+let addressFound=false, lookupTimer=null;
+async function lookupAddress(){
+  const pc=$("postcode").value.toUpperCase().replace(/\s+/g,""); const nr=$("huisnr").value.trim();
+  addressFound=false; $("straat").value=""; $("plaats").value="";
+  if(!/^\d{4}[A-Z]{2}$/.test(pc)||!/^\d+$/.test(nr)){ hint("adres","Vul postcode + huisnummer in — het adres wordt automatisch gecontroleerd.",""); return; }
+  $("postcode").value=pc.replace(/^(\d{4})([A-Z]{2})$/,"$1 $2");
+  hint("adres","Adres controleren…","");
+  try{
+    const r=await fetch(`https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=${encodeURIComponent(pc+" "+nr)}&fq=type:adres&rows=1`);
+    const doc=(await r.json()).response?.docs?.[0];
+    if(!doc||!doc.straatnaam) throw 0;
+    $("straat").value=doc.straatnaam; $("plaats").value=doc.woonplaatsnaam; addressFound=true;
+    hint("adres",`✓ Adres gevonden: ${doc.straatnaam} ${nr}, ${doc.woonplaatsnaam}`,"ok");
+  }catch(e){
+    $("straat").removeAttribute("readonly"); $("plaats").removeAttribute("readonly");
+    $("straat").placeholder="Vul je straat in"; $("plaats").placeholder="Vul je woonplaats in";
+    hint("adres","Adres niet gevonden — controleer postcode/huisnummer of vul het zelf in.","err");
+  }
+}
+["postcode","huisnr"].forEach(id=>$(id).addEventListener("input",()=>{ clearTimeout(lookupTimer); lookupTimer=setTimeout(lookupAddress,500); }));
+$("email").addEventListener("blur",validateEmail);
+$("telefoon").addEventListener("blur",validatePhone);
+$("gebdatum").addEventListener("blur",validateDob);
+
+/* ================= NAAR SMS-STAP ================= */
+$("leadForm").addEventListener("submit",async(ev)=>{
+  ev.preventDefault();
+  let ok=true;
+  if(!aanhef){ hint("aanhef","Kies een aanhef.","err"); ok=false; }
+  ["voornaam","achternaam"].forEach(id=>{ const el=$(id);
+    if(el.value.trim().length<2){ hint(id,"Dit veld is verplicht.","err"); mark(el,false); ok=false; } else { hint(id,"",""); mark(el,true); } });
+  if(!validateDob()) ok=false;
+  if(!validateEmail()) ok=false;
+  if(!validatePhone()) ok=false;
+  if(!(addressFound||($("straat").value.trim()&&$("plaats").value.trim()))){ hint("adres","Vul een geldig adres in.","err"); ok=false; }
+  if(!$("akkoord").checked){ ok=false; document.querySelector(".consent").style.color="var(--err)"; } else { document.querySelector(".consent").style.color=""; }
+  $("formErr").style.display=ok?"none":"block";
+  if(!ok) return;
+  // SMS versturen
+  const tel=$("telefoon").value.replace(/\s/g,"");
+  $("maskedPhone").textContent="******"+tel.slice(-3);
+  if(CONFIG.SMS_SEND_URL){
+    try{ await fetch(CONFIG.SMS_SEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:"+31"+tel.slice(1)})}); }
+    catch(e){ $("formErr").textContent="SMS versturen mislukt, probeer opnieuw."; $("formErr").style.display="block"; return; }
+  } else {
+    $("demoHint").textContent="(demo-modus: gebruik code "+CONFIG.DEMO_CODE+")";
+  }
+  show("stepSms"); setProgress(); $("c1").focus();
+});
+
+/* ================= SMS-CODE INVOER ================= */
+const codeEls=["c1","c2","c3","c4"].map($);
+codeEls.forEach((el,i)=>{
+  el.addEventListener("input",()=>{
+    el.value=el.value.replace(/\D/g,"").slice(0,1);
+    if(el.value&&i<3) codeEls[i+1].focus();
+    $("verifyBtn").disabled=codeEls.some(c=>!c.value);
+  });
+  el.addEventListener("keydown",e=>{ if(e.key==="Backspace"&&!el.value&&i>0) codeEls[i-1].focus(); });
+});
+$("resend").addEventListener("click",()=>{ $("smsErr").textContent="Nieuwe code verstuurd."; setTimeout(()=>$("smsErr").textContent="",2500); });
+
+$("verifyBtn").addEventListener("click",async()=>{
+  const code=codeEls.map(c=>c.value).join("");
+  const tel=$("telefoon").value.replace(/\s/g,"");
+  $("verifyBtn").disabled=true; $("verifyBtn").textContent="Controleren…";
+  let valid=false;
+  try{
+    if(CONFIG.SMS_VERIFY_URL){
+      const r=await fetch(CONFIG.SMS_VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:"+31"+tel.slice(1),code})});
+      valid=(await r.json()).ok===true;
+    } else { await new Promise(r=>setTimeout(r,600)); valid=(code===CONFIG.DEMO_CODE); }
+  }catch(e){ valid=false; }
+  if(!valid){
+    $("smsErr").textContent="De code klopt niet. Controleer de SMS en probeer opnieuw.";
+    codeEls.forEach(c=>c.value=""); codeEls[0].focus();
+    $("verifyBtn").disabled=true; $("verifyBtn").innerHTML="&#10148;&nbsp; Verstuur mijn aanvraag";
+    return;
+  }
+  // lead versturen
+  const payload={
+    actie: "grote-bespaarcheck-2026" + (CONFIG.WINACTIE ? "-winactie" : "") + CONFIG.ACTIE_SUFFIX,
+    aanhef, voornaam:$("voornaam").value.trim(), achternaam:$("achternaam").value.trim(),
+    geboortedatum:$("gebdatum").value, email:$("email").value.trim().toLowerCase(),
+    postcode:$("postcode").value, huisnummer:$("huisnr").value.trim(), toevoeging:$("toevoeging").value.trim(),
+    straat:$("straat").value, plaats:$("plaats").value, adres_geverifieerd:addressFound,
+    telefoon:"+31"+tel.slice(1), telefoon_geverifieerd:true,
+    consent_tekst:"5x per jaar benaderen voor vergelijking min. 2 leveranciers + commercieel aanbod 1 leverancier",
+    consent:true, antwoorden:answers,
+    utm:{source:params.get("utm_source"),medium:params.get("utm_medium"),campaign:params.get("utm_campaign"),content:params.get("utm_content")},
+    verzonden_op:new Date().toISOString()
+  };
+  try{
+    if(CONFIG.WEBHOOK_URL){
+      const r=await fetch(CONFIG.WEBHOOK_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+      if(!r.ok) throw 0;
+    } else { console.log("DEMO — payload:",payload); }
+    if (window.va) window.va('event', { name: 'lead_submitted' });
+    $("thName").textContent=", "+payload.voornaam;
+    show("stepThanks"); setProgress();
+  }catch(e){
+    $("smsErr").textContent="Versturen mislukt. Probeer het opnieuw.";
+    $("verifyBtn").disabled=false; $("verifyBtn").innerHTML="&#10148;&nbsp; Verstuur mijn aanvraag";
+  }
+});
+
+/* ================= DELEN (winactie) ================= */
+if($("shareWa")) $("shareWa").addEventListener("click",()=>window.open("https://wa.me/?text="+encodeURIComponent("Doe ook mee met De Grote Bespaarcheck 2026! "+CONFIG.SHARE_URL),"_blank"));
+if($("shareCopy")) $("shareCopy").addEventListener("click",async()=>{ try{ await navigator.clipboard.writeText(CONFIG.SHARE_URL); $("shareCopy").textContent="✓ Gekopieerd!"; }catch(e){} });
+
+/* ================= TEST-SHORTCUTS ================= */
+const stap=params.get("stap");
+if(stap==="vragen"){ renderQuestion(); show("stepQuiz"); }
+else if(stap==="form"){ show("stepForm"); setProgress(); }
+else if(stap==="sms"){ $("maskedPhone").textContent="******225"; if(!CONFIG.SMS_SEND_URL) $("demoHint").textContent="(demo-modus: gebruik code "+CONFIG.DEMO_CODE+")"; show("stepSms"); setProgress(); }
+else if(stap==="bedankt"){ show("stepThanks"); setProgress(); }
+</script>
+
+<!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>

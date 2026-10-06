@@ -1,3 +1,45 @@
+// Brand data shared between each brand's "/" and "/winactie" route for the
+// "De Grote Bespaarcheck 2026" campaign (see the bespaarcheck-2026 page group
+// below) — kept here instead of duplicated per-route.
+const BESPAARCHECK_VLE_BRAND = {
+    brandName: 'Vastelastenexperts',
+    brandDomain: 'vastelastenexperts.nl',
+    logo: '/bespaarcheck/img/vle-logo.png',
+    actieSuffix: '',
+    paars: '#22123A',
+    paarsMid: '#3B2570',
+    groen: '#3DE260',
+    groenDonker: '#12A344',
+    groenRgb: '61,226,96',
+    groenHoverBg: '#2ECC4F',
+    bg: '#F4F2F9',
+    grey: '#5C556E',
+    line: '#E4E0EE',
+    onGroen: 'var(--paars)',
+    icBg: '#F1EDFB',
+    heroSubColor: '#CDBFF5',
+    heroMiniColor: '#B4A7CE',
+};
+const BESPAARCHECK_HOEKSTRA_BRAND = {
+    brandName: 'Hoekstra Ondernemersadvies',
+    brandDomain: 'hoekstraondernemersadvies.nl',
+    logo: '/bespaarcheck/img/hoekstra-logo.png',
+    actieSuffix: '-hoekstra',
+    paars: '#24193E',
+    paarsMid: '#3B316F',
+    groen: '#38AA3C',
+    groenDonker: '#2E8F33',
+    groenRgb: '56,170,60',
+    groenHoverBg: '#2E8F33',
+    bg: '#F3F2F8',
+    grey: '#4A4458',
+    line: '#E5E2F0',
+    onGroen: '#ffffff',
+    icBg: '#EFECF7',
+    heroSubColor: '#CFC9E8',
+    heroMiniColor: '#B4ADCB',
+};
+
 const pages = [
     {
         name: 'vaste-lasten-onderzoek',
@@ -518,6 +560,35 @@ const pages = [
                         description: 'Check welke subsidie voor muurisolatie en spouwmuurisolatie in 2026 voor jouw woning geldt. Landelijke ISDE plus gemeentelijke regelingen. Gratis check.',
                     },
                 },
+            },
+        ],
+    },
+    {
+        name: 'bespaarcheck-2026',
+        domains: [
+            { domain: 'de-grote-bespaarcheck.nl', clarityId: '' },
+        ],
+        defaultViewData: {},
+        routes: [
+            {
+                path: '/vle',
+                view: 'bespaarcheck/index',
+                routeViewData: { ...BESPAARCHECK_VLE_BRAND, winactie: false },
+            },
+            {
+                path: '/vle/winactie',
+                view: 'bespaarcheck/index',
+                routeViewData: { ...BESPAARCHECK_VLE_BRAND, winactie: true },
+            },
+            {
+                path: '/hoekstra',
+                view: 'bespaarcheck/index',
+                routeViewData: { ...BESPAARCHECK_HOEKSTRA_BRAND, winactie: false },
+            },
+            {
+                path: '/hoekstra/winactie',
+                view: 'bespaarcheck/index',
+                routeViewData: { ...BESPAARCHECK_HOEKSTRA_BRAND, winactie: true },
             },
         ],
     },
