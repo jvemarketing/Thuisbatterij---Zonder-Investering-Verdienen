@@ -336,9 +336,9 @@
 /* ================= CONFIG ================= */
 const CONFIG = {
   WINACTIE: <%= winactie %>,
-  // PLACEHOLDER — no Databowl campaign for this funnel; leads are expected to
-  // land in a Google Sheet instead. Wire the real endpoint once that's ready.
-  WEBHOOK_URL: "",                      // POST-endpoint voor de lead (JSON). Leeg = demo.
+  // Leads land in a Google Sheet via /api/bespaarcheck-lead (forwards to an
+  // Apps Script Web App — see google-apps-script/bespaarcheck-leads.gs).
+  WEBHOOK_URL: "/api/bespaarcheck-lead",
   SMS_SEND_URL: "",                     // eigen backend: POST {telefoon} -> stuurt sms met code
   SMS_VERIFY_URL: "",                   // eigen backend: POST {telefoon, code} -> {ok:true/false}
   DEMO_CODE: "1234",                    // in demo-modus (geen SMS_SEND_URL) is dit de code

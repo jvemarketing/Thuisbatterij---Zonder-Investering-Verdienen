@@ -18,6 +18,7 @@ import lookupMobilePaymentTypeHandler from './lookup/mobile-payment-type.js';
 import smsSendHandler from './sms/send.js';
 import smsVerifyHandler from './sms/verify.js';
 import leadHandler from './lead.js';
+import bespaarcheckLeadHandler from './bespaarcheck-lead.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -109,6 +110,7 @@ app.post('/api/lookup/mobile-payment-type', lookupMobilePaymentTypeHandler);
 app.post('/api/sms/send', smsSendHandler);
 app.post('/api/sms/verify', smsVerifyHandler);
 app.post('/api/lead', leadHandler);
+app.post('/api/bespaarcheck-lead', bespaarcheckLeadHandler);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(3000, () => console.log("Proxy running on http://127.0.0.1:3000"));

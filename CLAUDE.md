@@ -47,6 +47,7 @@ Each `/api/*` endpoint is its own zero-config Vercel Function file under `api/` 
 | `POST /api/validate/landline` | Databowl landline validation |
 | `POST /api/validate/email` | Databowl email validation |
 | `POST /api/lead` | Submit lead to Databowl + fire Everflow postback |
+| `POST /api/bespaarcheck-lead` | Forward a De Grote Bespaarcheck lead to the Google Sheets Apps Script webhook |
 | `POST /api/sms/send` | Send SMS via Twilio Programmable Messaging |
 | `POST /api/sms/verify` | Verify SMS code (checked against `SMS_VERIFY_CODE` env var) |
 | `GET  /sovendus` | Render Sovendus clickout page |
@@ -57,6 +58,8 @@ Each `/api/*` endpoint is its own zero-config Vercel Function file under `api/` 
 - `GET /api/suppression/download/:filename` — download CSV and record timestamp (Basic Auth)
 
 **Lead submission flow**: The frontend applies the Databowl field name mapping (e.g. `voornaam` → `f_3_firstname`) before posting to `/api/lead`. The server forwards pre-mapped fields directly to Databowl. The `newsletter` checkbox drives all `optin_*` fields server-side.
+
+**De Grote Bespaarcheck lead storage**: this campaign (`views/bespaarcheck/index.ejs`) doesn't use Databowl — leads POST to `/api/bespaarcheck-lead`, which forwards them server-side (adding a shared secret) to a Google Apps Script Web App bound to a Google Sheet. The webhook URL and secret are never exposed to the browser. See `google-apps-script/bespaarcheck-leads.gs` for the Apps Script source and setup steps (it's pasted into the Sheet's script editor, not deployed from this repo).
 
 **Databowl signature**: `databowlRequest()` in `lib/databowl.js` builds an HMAC-SHA256 signature. URL brackets (`data[key]`) must remain literal (not percent-encoded) in the string-to-sign but must be percent-encoded in the actual request URL — this is a known Databowl quirk.
 
@@ -83,6 +86,8 @@ On a successful lead creation (`data.result === 'created'` from `/api/lead`), th
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob for suppression CSVs |
 | `SUPPRESSION_USER` / `SUPPRESSION_PASS` | Basic Auth for suppression admin endpoints |
 | `SOV_TRAFFIC_SOURCE_NUMBER` / `SOV_TRAFFIC_MEDIUM_NUMBER` | Sovendus integration |
+| `BESPAARCHECK_SHEETS_WEBHOOK_URL` | Google Apps Script Web App URL that appends Bespaarcheck leads to a Sheet |
+| `BESPAARCHECK_SHEETS_SECRET` | Shared secret sent to the Apps Script webhook (must match its `SHARED_SECRET` script property) |
 
 ## Prelander Workflow (Bundled HTML → EJS)
 
