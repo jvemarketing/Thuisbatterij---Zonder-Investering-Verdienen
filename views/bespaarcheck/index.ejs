@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>De Grote Bespaarcheck 2026 | <%= brandName %></title>
 <meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/css/intlTelInput.css"/>
 <style>
   :root{
     --paars:<%= paars %>; --paars-mid:<%= paarsMid %>; --groen:<%= groen %>; --groen-donker:<%= groenDonker %>;
@@ -79,7 +80,7 @@
   .hint.ok{color:var(--ok); font-weight:600;}
   .hint.err{color:var(--err); font-weight:600;}
   .hint a{color:var(--groen-donker); cursor:pointer; text-decoration:underline;}
-  input.invalid{border-color:var(--err); background:#FEF5F5;}
+  input.invalid,input.error{border-color:var(--err); background:#FEF5F5;}
   input.valid{border-color:var(--ok);}
   .seg{display:flex; gap:12px;}
   .seg button{flex:1; background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; color:var(--ink);}
@@ -327,6 +328,8 @@
   })(window, document, "clarity", "script", "<%= clarityId %>");
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
+<script src="/form-validation.js"></script>
 <script>
 /* ================= CONFIG ================= */
 const CONFIG = {
@@ -362,6 +365,7 @@ const QUESTIONS = [
 const $=(id)=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const answers={}; let qIndex=0; let aanhef="";
+let emailValid=false, phoneValid=false, addressValid=false, city="", stateName=null, itiTel=null;
 $("year").textContent=new Date().getFullYear();
 
 function show(step){
@@ -405,25 +409,27 @@ const mark=(el,ok)=>{ el.classList.toggle("invalid",ok===false); el.classList.to
 $("aanhefSeg").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
   aanhef=b.dataset.v; $("aanhefSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("sel",x===b)); hint("aanhef","","");
 }));
-const TYPOS={"gmial.com":"gmail.com","gamil.com":"gmail.com","gmai.com":"gmail.com","gmail.co":"gmail.com","gmail.nl":"gmail.com","hotmial.com":"hotmail.com","hotmal.com":"hotmail.com","hotmail.co":"hotmail.com","outlok.com":"outlook.com","iclould.com":"icloud.com","ziggo.nll":"ziggo.nl"};
-function validateEmail(){
-  const el=$("email"); const v=el.value.trim().toLowerCase();
-  if(!v){ hint("email","",""); mark(el,null); return false; }
-  if(!/^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/.test(v)){ hint("email","Dit lijkt geen geldig e-mailadres.","err"); mark(el,false); return false; }
-  const dom=v.split("@")[1];
-  if(TYPOS[dom]){ const sug=v.split("@")[0]+"@"+TYPOS[dom];
-    const h=document.querySelector('[data-hint="email"]'); h.innerHTML=`Bedoel je <a id="fixMail">${sug}</a>?`; h.className="hint err";
-    $("fixMail").onclick=()=>{ el.value=sug; validateEmail(); }; mark(el,false); return false; }
-  hint("email","✓ E-mailadres ziet er goed uit","ok"); mark(el,true); return true;
-}
-function validatePhone(){
-  const el=$("telefoon"); let v=el.value.replace(/[\s\-().]/g,"");
-  if(!v){ hint("telefoon","",""); mark(el,null); return false; }
-  v=v.replace(/^00316/,"06").replace(/^\+316/,"06");
-  if(!/^06\d{8}$/.test(v)){ hint("telefoon","Vul een geldig Nederlands mobiel nummer in (06 + 8 cijfers).","err"); mark(el,false); return false; }
-  el.value=v.replace(/^(\d{2})(\d{8})$/,"$1 $2");
-  hint("telefoon","✓ Mobiel nummer klopt","ok"); mark(el,true); return true;
-}
+itiTel=window.intlTelInput($("telefoon"),{
+  initialCountry:"nl", onlyCountries:["nl"], separateDialCode:true, allowDropdown:false,
+  utilsScript:"https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js"
+});
+FormValidation.attachEmail($("email"), document.querySelector('[data-hint="email"]'), valid=>{ emailValid=valid; });
+FormValidation.attachPhone(
+  $("telefoon"), document.querySelector('[data-hint="telefoon"]'),
+  ()=>itiTel?itiTel.getNumber():$("telefoon").value.trim(),
+  ()=>!itiTel||itiTel.isValidNumber(),
+  valid=>{ phoneValid=valid; }
+);
+FormValidation.attachAddress(
+  ()=>$("postcode").value.trim(), $("huisnr"), $("toevoeging"), $("straat"),
+  document.querySelector('[data-hint="adres"]'),
+  (valid,addressData)=>{
+    addressValid=valid;
+    city=(valid&&addressData&&addressData.cityName)?addressData.cityName:"";
+    stateName=(valid&&addressData&&addressData.stateName)?addressData.stateName:null;
+    $("plaats").value=city;
+  }
+);
 $("gebdatum").addEventListener("input",e=>{
   let v=e.target.value.replace(/[^\d]/g,"").slice(0,8);
   if(v.length>4) v=v.slice(0,2)+"-"+v.slice(2,4)+"-"+v.slice(4);
@@ -437,28 +443,6 @@ function validateDob(){
   if(d.getDate()!=+m[1]||d.getMonth()!=+m[2]-1||age<18||age>100){ hint("gebdatum","Controleer je geboortedatum (18+).","err"); mark(el,false); return false; }
   hint("gebdatum","",""); mark(el,true); return true;
 }
-let addressFound=false, lookupTimer=null;
-async function lookupAddress(){
-  const pc=$("postcode").value.toUpperCase().replace(/\s+/g,""); const nr=$("huisnr").value.trim();
-  addressFound=false; $("straat").value=""; $("plaats").value="";
-  if(!/^\d{4}[A-Z]{2}$/.test(pc)||!/^\d+$/.test(nr)){ hint("adres","Vul postcode + huisnummer in — het adres wordt automatisch gecontroleerd.",""); return; }
-  $("postcode").value=pc.replace(/^(\d{4})([A-Z]{2})$/,"$1 $2");
-  hint("adres","Adres controleren…","");
-  try{
-    const r=await fetch(`https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=${encodeURIComponent(pc+" "+nr)}&fq=type:adres&rows=1`);
-    const doc=(await r.json()).response?.docs?.[0];
-    if(!doc||!doc.straatnaam) throw 0;
-    $("straat").value=doc.straatnaam; $("plaats").value=doc.woonplaatsnaam; addressFound=true;
-    hint("adres",`✓ Adres gevonden: ${doc.straatnaam} ${nr}, ${doc.woonplaatsnaam}`,"ok");
-  }catch(e){
-    $("straat").removeAttribute("readonly"); $("plaats").removeAttribute("readonly");
-    $("straat").placeholder="Vul je straat in"; $("plaats").placeholder="Vul je woonplaats in";
-    hint("adres","Adres niet gevonden — controleer postcode/huisnummer of vul het zelf in.","err");
-  }
-}
-["postcode","huisnr"].forEach(id=>$(id).addEventListener("input",()=>{ clearTimeout(lookupTimer); lookupTimer=setTimeout(lookupAddress,500); }));
-$("email").addEventListener("blur",validateEmail);
-$("telefoon").addEventListener("blur",validatePhone);
 $("gebdatum").addEventListener("blur",validateDob);
 
 /* ================= NAAR SMS-STAP ================= */
@@ -469,17 +453,17 @@ $("leadForm").addEventListener("submit",async(ev)=>{
   ["voornaam","achternaam"].forEach(id=>{ const el=$(id);
     if(el.value.trim().length<2){ hint(id,"Dit veld is verplicht.","err"); mark(el,false); ok=false; } else { hint(id,"",""); mark(el,true); } });
   if(!validateDob()) ok=false;
-  if(!validateEmail()) ok=false;
-  if(!validatePhone()) ok=false;
-  if(!(addressFound||($("straat").value.trim()&&$("plaats").value.trim()))){ hint("adres","Vul een geldig adres in.","err"); ok=false; }
+  if(!emailValid){ FormValidation.showError($("email"), document.querySelector('[data-hint="email"]'), "Bevestig een geldig e-mailadres"); ok=false; }
+  if(!phoneValid){ FormValidation.showError($("telefoon"), document.querySelector('[data-hint="telefoon"]'), "Bevestig een geldig mobiel nummer"); ok=false; }
+  if(!addressValid){ FormValidation.showError($("huisnr"), document.querySelector('[data-hint="adres"]'), "Combinatie niet gevonden. Controleer je huisnummer."); ok=false; }
   if(!$("akkoord").checked){ ok=false; document.querySelector(".consent").style.color="var(--err)"; } else { document.querySelector(".consent").style.color=""; }
   $("formErr").style.display=ok?"none":"block";
   if(!ok) return;
   // SMS versturen
-  const tel=$("telefoon").value.replace(/\s/g,"");
+  const tel=itiTel?itiTel.getNumber():$("telefoon").value.trim();
   $("maskedPhone").textContent="******"+tel.slice(-3);
   if(CONFIG.SMS_SEND_URL){
-    try{ await fetch(CONFIG.SMS_SEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:"+31"+tel.slice(1)})}); }
+    try{ await fetch(CONFIG.SMS_SEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:tel})}); }
     catch(e){ $("formErr").textContent="SMS versturen mislukt, probeer opnieuw."; $("formErr").style.display="block"; return; }
   } else {
     $("demoHint").textContent="(demo-modus: gebruik code "+CONFIG.DEMO_CODE+")";
@@ -501,12 +485,12 @@ $("resend").addEventListener("click",()=>{ $("smsErr").textContent="Nieuwe code 
 
 $("verifyBtn").addEventListener("click",async()=>{
   const code=codeEls.map(c=>c.value).join("");
-  const tel=$("telefoon").value.replace(/\s/g,"");
+  const tel=itiTel?itiTel.getNumber():$("telefoon").value.trim();
   $("verifyBtn").disabled=true; $("verifyBtn").textContent="Controleren…";
   let valid=false;
   try{
     if(CONFIG.SMS_VERIFY_URL){
-      const r=await fetch(CONFIG.SMS_VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:"+31"+tel.slice(1),code})});
+      const r=await fetch(CONFIG.SMS_VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:tel,code})});
       valid=(await r.json()).ok===true;
     } else { await new Promise(r=>setTimeout(r,600)); valid=(code===CONFIG.DEMO_CODE); }
   }catch(e){ valid=false; }
@@ -522,8 +506,8 @@ $("verifyBtn").addEventListener("click",async()=>{
     aanhef, voornaam:$("voornaam").value.trim(), achternaam:$("achternaam").value.trim(),
     geboortedatum:$("gebdatum").value, email:$("email").value.trim().toLowerCase(),
     postcode:$("postcode").value, huisnummer:$("huisnr").value.trim(), toevoeging:$("toevoeging").value.trim(),
-    straat:$("straat").value, plaats:$("plaats").value, adres_geverifieerd:addressFound,
-    telefoon:"+31"+tel.slice(1), telefoon_geverifieerd:true,
+    straat:$("straat").value, plaats:$("plaats").value, stateName, adres_geverifieerd:addressValid,
+    telefoon:tel, telefoon_geverifieerd:true,
     consent_tekst:"5x per jaar benaderen voor vergelijking min. 2 leveranciers + commercieel aanbod 1 leverancier",
     consent:true, antwoorden:answers,
     utm:{source:params.get("utm_source"),medium:params.get("utm_medium"),campaign:params.get("utm_campaign"),content:params.get("utm_content")},
