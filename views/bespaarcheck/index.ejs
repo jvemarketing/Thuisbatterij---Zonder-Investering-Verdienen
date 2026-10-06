@@ -219,7 +219,7 @@
         </div>
         <div class="full">
           <label for="gebdatum">Geboortedatum</label>
-          <input id="gebdatum" type="text" inputmode="numeric" placeholder="DD-MM-JJJJ" maxlength="10" autocomplete="bday">
+          <input id="gebdatum" type="text" inputmode="numeric" placeholder="DD/MM/JJJJ" autocomplete="bday">
           <div class="hint" data-hint="gebdatum"></div>
         </div>
         <div class="full">
@@ -329,7 +329,9 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/intlTelInput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/imask/dist/imask.min.js"></script>
 <script src="/form-validation.js"></script>
+<script src="/dob-mask.js"></script>
 <script>
 /* ================= CONFIG ================= */
 const CONFIG = {
@@ -430,20 +432,7 @@ FormValidation.attachAddress(
     $("plaats").value=city;
   }
 );
-$("gebdatum").addEventListener("input",e=>{
-  let v=e.target.value.replace(/[^\d]/g,"").slice(0,8);
-  if(v.length>4) v=v.slice(0,2)+"-"+v.slice(2,4)+"-"+v.slice(4);
-  else if(v.length>2) v=v.slice(0,2)+"-"+v.slice(2);
-  e.target.value=v;
-});
-function validateDob(){
-  const el=$("gebdatum"); const m=el.value.match(/^(\d{2})-(\d{2})-(\d{4})$/);
-  if(!m){ if(el.value){hint("gebdatum","Gebruik het formaat DD-MM-JJJJ.","err"); mark(el,false);} return false; }
-  const d=new Date(+m[3],+m[2]-1,+m[1]); const age=(Date.now()-d)/31557600000;
-  if(d.getDate()!=+m[1]||d.getMonth()!=+m[2]-1||age<18||age>100){ hint("gebdatum","Controleer je geboortedatum (18+).","err"); mark(el,false); return false; }
-  hint("gebdatum","",""); mark(el,true); return true;
-}
-$("gebdatum").addEventListener("blur",validateDob);
+DobMask.init($("gebdatum"));
 
 /* ================= NAAR SMS-STAP ================= */
 $("leadForm").addEventListener("submit",async(ev)=>{
@@ -452,7 +441,7 @@ $("leadForm").addEventListener("submit",async(ev)=>{
   if(!aanhef){ hint("aanhef","Kies een aanhef.","err"); ok=false; }
   ["voornaam","achternaam"].forEach(id=>{ const el=$(id);
     if(el.value.trim().length<2){ hint(id,"Dit veld is verplicht.","err"); mark(el,false); ok=false; } else { hint(id,"",""); mark(el,true); } });
-  if(!validateDob()) ok=false;
+  if(!DobMask.validate($("gebdatum"), document.querySelector('[data-hint="gebdatum"]'))) ok=false;
   if(!emailValid){ FormValidation.showError($("email"), document.querySelector('[data-hint="email"]'), "Bevestig een geldig e-mailadres"); ok=false; }
   if(!phoneValid){ FormValidation.showError($("telefoon"), document.querySelector('[data-hint="telefoon"]'), "Bevestig een geldig mobiel nummer"); ok=false; }
   if(!addressValid){ FormValidation.showError($("huisnr"), document.querySelector('[data-hint="adres"]'), "Combinatie niet gevonden. Controleer je huisnummer."); ok=false; }
@@ -504,7 +493,7 @@ $("verifyBtn").addEventListener("click",async()=>{
   const payload={
     actie: "grote-bespaarcheck-2026" + (CONFIG.WINACTIE ? "-winactie" : "") + CONFIG.ACTIE_SUFFIX,
     aanhef, voornaam:$("voornaam").value.trim(), achternaam:$("achternaam").value.trim(),
-    geboortedatum:$("gebdatum").value, email:$("email").value.trim().toLowerCase(),
+    geboortedatum:DobMask.toISO($("gebdatum")), email:$("email").value.trim().toLowerCase(),
     postcode:$("postcode").value, huisnummer:$("huisnr").value.trim(), toevoeging:$("toevoeging").value.trim(),
     straat:$("straat").value, plaats:$("plaats").value, stateName, adres_geverifieerd:addressValid,
     telefoon:tel, telefoon_geverifieerd:true,
