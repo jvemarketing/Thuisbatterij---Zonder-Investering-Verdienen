@@ -62,6 +62,16 @@ describe('api/sms/send', () => {
       expect.objectContaining({ body: expect.stringContaining('https://ebned.nl/privacyvoorkeuren') })
     );
   });
+
+  it('sends the code from the SMS_VERIFY_CODE env var, not a hardcoded value', async () => {
+    process.env.SMS_VERIFY_CODE = '9999';
+    const res = mockRes();
+    await sendHandler({ method: 'POST', body: { phone: '+31612345678', firstName: 'Jan' } }, res);
+
+    expect(messagesCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ body: expect.stringContaining('9999') })
+    );
+  });
 });
 
 describe('api/sms/verify', () => {

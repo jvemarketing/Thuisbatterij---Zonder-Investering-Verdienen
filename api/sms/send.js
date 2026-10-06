@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     if (!phone) return res.status(400).json({ error: "phone is required" });
     const name = firstName || 'deelnemer';
     const optOutLink = PARTNER_OPT_OUT_LINKS[partner] || DEFAULT_OPT_OUT_LINK;
-    const message = `Beste ${name}, Gebruik verificatiecode 4463 om je deelname op vastelastenonderzoek.nl te bevestigen. Afmelden: ${optOutLink}`;
+    const message = `Beste ${name}, Gebruik verificatiecode ${process.env.SMS_VERIFY_CODE} om je deelname op vastelastenonderzoek.nl te bevestigen. Afmelden: ${optOutLink}`;
 
     await getTwilioClient().messages.create({
       body: message,

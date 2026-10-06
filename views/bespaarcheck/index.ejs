@@ -339,9 +339,13 @@ const CONFIG = {
   // Leads land in a Google Sheet via /api/bespaarcheck-lead (forwards to an
   // Apps Script Web App — see google-apps-script/bespaarcheck-leads.gs).
   WEBHOOK_URL: "/api/bespaarcheck-lead",
-  SMS_SEND_URL: "",                     // eigen backend: POST {telefoon} -> stuurt sms met code
-  SMS_VERIFY_URL: "",                   // eigen backend: POST {telefoon, code} -> {ok:true/false}
-  DEMO_CODE: "1234",                    // in demo-modus (geen SMS_SEND_URL) is dit de code
+  // Same double opt-in pattern as vastelastenonderzoek.nl (one shared code,
+  // avoids Twilio Verify's per-check fee), but its own endpoints/Twilio
+  // account — see api/bespaarcheck-sms-send.js and -verify.js.
+  SMS_SEND_URL: "/api/bespaarcheck-sms-send",
+  SMS_VERIFY_URL: "/api/bespaarcheck-sms-verify",
+  SMS_BRAND: "<%= smsBrand %>",
+  DEMO_CODE: "1234",                    // only used if SMS_SEND_URL/SMS_VERIFY_URL are ever cleared for local testing
   SHARE_URL: location.origin + location.pathname,
   ACTIE_SUFFIX: "<%= actieSuffix %>"
 };
@@ -368,6 +372,7 @@ const $=(id)=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const answers={}; let qIndex=0; let aanhef="";
 let emailValid=false, phoneValid=false, addressValid=false, city="", stateName=null, itiTel=null;
+let doiSentTime="", doiConfirmedTime="";
 $("year").textContent=new Date().getFullYear();
 
 function show(step){
@@ -452,7 +457,14 @@ $("leadForm").addEventListener("submit",async(ev)=>{
   const tel=itiTel?itiTel.getNumber():$("telefoon").value.trim();
   $("maskedPhone").textContent="******"+tel.slice(-3);
   if(CONFIG.SMS_SEND_URL){
-    try{ await fetch(CONFIG.SMS_SEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:tel})}); }
+    try{
+      const r=await fetch(CONFIG.SMS_SEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        phone:tel, firstName:$("voornaam").value.trim(), brand:CONFIG.SMS_BRAND
+      })});
+      const data=await r.json();
+      if(!data.sent){ $("formErr").textContent="SMS versturen mislukt, probeer opnieuw."; $("formErr").style.display="block"; return; }
+      doiSentTime=data.doi_sent_time||"";
+    }
     catch(e){ $("formErr").textContent="SMS versturen mislukt, probeer opnieuw."; $("formErr").style.display="block"; return; }
   } else {
     $("demoHint").textContent="(demo-modus: gebruik code "+CONFIG.DEMO_CODE+")";
@@ -470,7 +482,19 @@ codeEls.forEach((el,i)=>{
   });
   el.addEventListener("keydown",e=>{ if(e.key==="Backspace"&&!el.value&&i>0) codeEls[i-1].focus(); });
 });
-$("resend").addEventListener("click",()=>{ $("smsErr").textContent="Nieuwe code verstuurd."; setTimeout(()=>$("smsErr").textContent="",2500); });
+$("resend").addEventListener("click",async()=>{
+  const tel=itiTel?itiTel.getNumber():$("telefoon").value.trim();
+  if(!CONFIG.SMS_SEND_URL){ $("smsErr").textContent="Nieuwe code verstuurd."; setTimeout(()=>$("smsErr").textContent="",2500); return; }
+  try{
+    const r=await fetch(CONFIG.SMS_SEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+      phone:tel, firstName:$("voornaam").value.trim(), brand:CONFIG.SMS_BRAND
+    })});
+    const data=await r.json();
+    if(data.sent){ doiSentTime=data.doi_sent_time||doiSentTime; $("smsErr").textContent="Nieuwe code verstuurd."; }
+    else{ $("smsErr").textContent="Versturen mislukt. Probeer het opnieuw."; }
+  }catch(e){ $("smsErr").textContent="Versturen mislukt. Probeer het opnieuw."; }
+  setTimeout(()=>$("smsErr").textContent="",2500);
+});
 
 $("verifyBtn").addEventListener("click",async()=>{
   const code=codeEls.map(c=>c.value).join("");
@@ -479,8 +503,10 @@ $("verifyBtn").addEventListener("click",async()=>{
   let valid=false;
   try{
     if(CONFIG.SMS_VERIFY_URL){
-      const r=await fetch(CONFIG.SMS_VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefoon:tel,code})});
-      valid=(await r.json()).ok===true;
+      const r=await fetch(CONFIG.SMS_VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:tel,code})});
+      const data=await r.json();
+      valid=data.verified===true;
+      if(valid) doiConfirmedTime=data.doi_confirmed_time||"";
     } else { await new Promise(r=>setTimeout(r,600)); valid=(code===CONFIG.DEMO_CODE); }
   }catch(e){ valid=false; }
   if(!valid){
@@ -499,6 +525,7 @@ $("verifyBtn").addEventListener("click",async()=>{
     telefoon:tel, telefoon_geverifieerd:true,
     consent_tekst:"5x per jaar benaderen voor vergelijking min. 2 leveranciers + commercieel aanbod 1 leverancier",
     consent:true, antwoorden:answers,
+    doi_sent_time:doiSentTime, doi_confirmed_time:doiConfirmedTime,
     utm:{source:params.get("utm_source"),medium:params.get("utm_medium"),campaign:params.get("utm_campaign"),content:params.get("utm_content")},
     verzonden_op:new Date().toISOString()
   };

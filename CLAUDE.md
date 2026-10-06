@@ -50,6 +50,8 @@ Each `/api/*` endpoint is its own zero-config Vercel Function file under `api/` 
 | `POST /api/bespaarcheck-lead` | Forward a De Grote Bespaarcheck lead to the Google Sheets Apps Script webhook |
 | `POST /api/sms/send` | Send SMS via Twilio Programmable Messaging |
 | `POST /api/sms/verify` | Verify SMS code (checked against `SMS_VERIFY_CODE` env var) |
+| `POST /api/bespaarcheck-sms-send` | Send the Bespaarcheck double opt-in SMS (separate Twilio account) |
+| `POST /api/bespaarcheck-sms-verify` | Verify a Bespaarcheck SMS code (checked against `BESPAARCHECK_SMS_VERIFY_CODE`) |
 | `GET  /sovendus` | Render Sovendus clickout page |
 
 **Suppression list** (`suppression.js`, mounted at `/api`):
@@ -60,6 +62,8 @@ Each `/api/*` endpoint is its own zero-config Vercel Function file under `api/` 
 **Lead submission flow**: The frontend applies the Databowl field name mapping (e.g. `voornaam` → `f_3_firstname`) before posting to `/api/lead`. The server forwards pre-mapped fields directly to Databowl. The `newsletter` checkbox drives all `optin_*` fields server-side.
 
 **De Grote Bespaarcheck lead storage**: this campaign (`views/bespaarcheck/index.ejs`) doesn't use Databowl — leads POST to `/api/bespaarcheck-lead`, which forwards them server-side (adding a shared secret) to a Google Apps Script Web App bound to a Google Sheet. The webhook URL and secret are never exposed to the browser. See `google-apps-script/bespaarcheck-leads.gs` for the Apps Script source and setup steps (it's pasted into the Sheet's script editor, not deployed from this repo).
+
+**De Grote Bespaarcheck SMS double opt-in**: uses its own Twilio account (separate from the rest of the site, billed independently) via `/api/bespaarcheck-sms-send` and `/api/bespaarcheck-sms-verify`, parallel to but not sharing code with `/api/sms/send` / `/api/sms/verify`. Same one-shared-code pattern (avoids Twilio Verify's per-check fee), with the opt-out link and SMS sender name chosen per brand (`vle` or `hoekstra`, set via `smsBrand` in `pages.js`).
 
 **Databowl signature**: `databowlRequest()` in `lib/databowl.js` builds an HMAC-SHA256 signature. URL brackets (`data[key]`) must remain literal (not percent-encoded) in the string-to-sign but must be percent-encoded in the actual request URL — this is a known Databowl quirk.
 
@@ -88,6 +92,8 @@ On a successful lead creation (`data.result === 'created'` from `/api/lead`), th
 | `SOV_TRAFFIC_SOURCE_NUMBER` / `SOV_TRAFFIC_MEDIUM_NUMBER` | Sovendus integration |
 | `BESPAARCHECK_SHEETS_WEBHOOK_URL` | Google Apps Script Web App URL that appends Bespaarcheck leads to a Sheet |
 | `BESPAARCHECK_SHEETS_SECRET` | Shared secret sent to the Apps Script webhook (must match its `SHARED_SECRET` script property) |
+| `BESPAARCHECK_TWILIO_ACCOUNT_SID` / `BESPAARCHECK_TWILIO_AUTH_TOKEN` | Bespaarcheck's own Twilio account (separate from `TWILIO_ACCOUNT_SID`/`TWILIO_AUTH_TOKEN`) |
+| `BESPAARCHECK_SMS_VERIFY_CODE` | Static verification code checked in `/api/bespaarcheck-sms-verify` (separate from `SMS_VERIFY_CODE`) |
 
 ## Prelander Workflow (Bundled HTML → EJS)
 

@@ -6,6 +6,10 @@ const BESPAARCHECK_VLE_BRAND = {
     brandDomain: 'vastelastenexperts.nl',
     logo: '/bespaarcheck/img/vle-logo.png',
     actieSuffix: '',
+    // Which brand config api/bespaarcheck-sms-send.js and
+    // api/bespaarcheck-sms-verify.js should use (separate Twilio account
+    // from the rest of the site, see those files).
+    smsBrand: 'vle',
     paars: '#22123A',
     paarsMid: '#3B2570',
     groen: '#3DE260',
@@ -25,6 +29,7 @@ const BESPAARCHECK_HOEKSTRA_BRAND = {
     brandDomain: 'hoekstraondernemersadvies.nl',
     logo: '/bespaarcheck/img/hoekstra-logo.png',
     actieSuffix: '-hoekstra',
+    smsBrand: 'hoekstra',
     paars: '#24193E',
     paarsMid: '#3B316F',
     groen: '#38AA3C',

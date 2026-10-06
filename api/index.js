@@ -19,6 +19,8 @@ import smsSendHandler from './sms/send.js';
 import smsVerifyHandler from './sms/verify.js';
 import leadHandler from './lead.js';
 import bespaarcheckLeadHandler from './bespaarcheck-lead.js';
+import bespaarcheckSmsSendHandler from './bespaarcheck-sms-send.js';
+import bespaarcheckSmsVerifyHandler from './bespaarcheck-sms-verify.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -111,6 +113,8 @@ app.post('/api/sms/send', smsSendHandler);
 app.post('/api/sms/verify', smsVerifyHandler);
 app.post('/api/lead', leadHandler);
 app.post('/api/bespaarcheck-lead', bespaarcheckLeadHandler);
+app.post('/api/bespaarcheck-sms-send', bespaarcheckSmsSendHandler);
+app.post('/api/bespaarcheck-sms-verify', bespaarcheckSmsVerifyHandler);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(3000, () => console.log("Proxy running on http://127.0.0.1:3000"));

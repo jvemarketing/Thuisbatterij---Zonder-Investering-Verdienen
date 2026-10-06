@@ -57,6 +57,8 @@ var COLUMNS = [
   { header: 'Telefoon geverifieerd',     get: function (d) { return d.telefoon_geverifieerd; } },
   { header: 'Toestemming',               get: function (d) { return d.consent; } },
   { header: 'Toestemmingstekst',         get: function (d) { return d.consent_tekst; } },
+  { header: 'SMS verstuurd op',          get: function (d) { return d.doi_sent_time; } },
+  { header: 'SMS bevestigd op',          get: function (d) { return d.doi_confirmed_time; } },
   { header: 'Elektrische/hybride auto?', get: function (d) { return antwoord(d, 'eauto'); } },
   { header: 'Elektrische fiets?',        get: function (d) { return antwoord(d, 'efiets'); } },
   { header: 'Energierekening p/m',       get: function (d) { return antwoord(d, 'rekening'); } },
