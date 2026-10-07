@@ -63,6 +63,20 @@ describe('api/sms/send', () => {
     );
   });
 
+  it('uses the custom closing sentence for wij-vergelijken instead of "Afmelden:"', async () => {
+    const res = mockRes();
+    await sendHandler({ method: 'POST', body: { phone: '+31612345678', firstName: 'Jan', partner: 'wij-vergelijken' } }, res);
+
+    expect(messagesCreate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: expect.stringContaining('Wil je telemarketing toestemming voor Vaste Lasten Onderzoek intrekken? Klik dan hier: https://wij-vergelijken.nl/toestemming-intrekken/'),
+      })
+    );
+    expect(messagesCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ body: expect.not.stringContaining('Afmelden:') })
+    );
+  });
+
   it('sends the code from the SMS_VERIFY_CODE env var, not a hardcoded value', async () => {
     process.env.SMS_VERIFY_CODE = '9999';
     const res = mockRes();

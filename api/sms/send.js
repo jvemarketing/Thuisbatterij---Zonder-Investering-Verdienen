@@ -11,6 +11,14 @@ const PARTNER_OPT_OUT_LINKS = {
 };
 const DEFAULT_OPT_OUT_LINK = 'vastelastenexperts.nl/toestemming-intrekken';
 
+// Partners needing a full custom closing sentence instead of the generic
+// "Afmelden: <link>" — e.g. wij-vergelijken's sentence names the original
+// consent entity ("Vaste Lasten Onderzoek"), not the on-page partner brand.
+// See Asana task 1219246685521505.
+const PARTNER_OPT_OUT_TEXT = {
+  'wij-vergelijken': 'Wil je telemarketing toestemming voor Vaste Lasten Onderzoek intrekken? Klik dan hier: https://wij-vergelijken.nl/toestemming-intrekken/',
+};
+
 // POST /api/sms/send   { phone: "+31612345678", firstName: "Jan", partner: "ebned" }
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
@@ -19,7 +27,8 @@ export default async function handler(req, res) {
     if (!phone) return res.status(400).json({ error: "phone is required" });
     const name = firstName || 'deelnemer';
     const optOutLink = PARTNER_OPT_OUT_LINKS[partner] || DEFAULT_OPT_OUT_LINK;
-    const message = `Beste ${name}, Gebruik verificatiecode ${process.env.SMS_VERIFY_CODE} om je deelname op vastelastenonderzoek.nl te bevestigen. Afmelden: ${optOutLink}`;
+    const optOutText = PARTNER_OPT_OUT_TEXT[partner] || `Afmelden: ${optOutLink}`;
+    const message = `Beste ${name}, Gebruik verificatiecode ${process.env.SMS_VERIFY_CODE} om je deelname op vastelastenonderzoek.nl te bevestigen. ${optOutText}`;
 
     await getTwilioClient().messages.create({
       body: message,

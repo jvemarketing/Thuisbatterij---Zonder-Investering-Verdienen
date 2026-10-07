@@ -194,6 +194,29 @@ const pages = [
                 },
             },
             {
+                // Clone of /vle rebranded as "Wij Vergelijken" — Asana task 1219246685521505.
+                path: '/wij-vergelijken',
+                view: 'vaste-lasten/index',
+                routeViewData: {
+                    partner: 'wij-vergelijken',
+                    partnerName: 'Wij Vergelijken',
+                    logo: {
+                        src: '/vaste-lasten/img/wij-vergelijken.png',
+                        alt: 'Wij Vergelijken',
+                    },
+                    privacyURL: 'https://wij-vergelijken.nl/privacy-policy/',
+                    termsURL: 'https://wij-vergelijken.nl/algemene-voorwaarden/',
+                    optOutURL: 'https://wij-vergelijken.nl/toestemming-intrekken/',
+                    freeLabel: '100% vrijblijvend',
+                    vrijblijvendLabel: '100% vrijblijvend advies',
+                    joinLabel: 'vrijblijvend deelnemen',
+                    optOutLabel: 'Toestemming intrekken',
+                    hideStatsBand: true,
+                    consentCheckbox: true,
+                    partnerFooter: 'In samenwerking met: Essent - EnergieDirect - Engie - Greenchoice - Omnis Energy - NextEnergy',
+                },
+            },
+            {
                 path: '/ebned',
                 view: 'vaste-lasten/index',
                 routeViewData: {
