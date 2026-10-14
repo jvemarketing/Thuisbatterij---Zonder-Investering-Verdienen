@@ -140,6 +140,17 @@ const pages = [
                 },
             },
             {
+                // New energy-angle landing page, question flow, and exit page —
+                // Asana task 1218987643470425. Separate Databowl campaign; sub-id
+                // inherits the same default used by the other VLO routes until the
+                // field/API mapping for campaign 1057 is confirmed.
+                path: '/wijvergelijken',
+                view: 'vaste-lasten/energie-2026',
+                routeViewData: {
+                    databowlCid: '1057',
+                },
+            },
+            {
                 path: '/voltafy',
                 view: 'vaste-lasten/index',
                 routeViewData: {
