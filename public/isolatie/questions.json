@@ -51,8 +51,7 @@
     "question": "In welk type isolatie heeft u interesse?",
     "help": "Meerdere maatregelen combineren verhoogt de landelijke bijdrage per maatregel.",
     "options": ["Spouwmuur", "Kruipruimte", "Dak", "Allemaal"],
-    "qualifier": true,
-    "multi": true
+    "qualifier": true
   },
   {
     "id": "planning",
