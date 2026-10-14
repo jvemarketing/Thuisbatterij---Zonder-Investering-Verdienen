@@ -148,6 +148,10 @@ const pages = [
                 view: 'vaste-lasten/energie-2026',
                 routeViewData: {
                     databowlCid: '1057',
+                    partnerName: 'Wij Vergelijken',
+                    privacyURL: 'https://wij-vergelijken.nl/privacy-policy/',
+                    termsURL: 'https://wij-vergelijken.nl/algemene-voorwaarden/',
+                    optOutURL: 'https://wij-vergelijken.nl/toestemming-intrekken/',
                 },
             },
             {
