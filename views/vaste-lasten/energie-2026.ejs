@@ -785,14 +785,9 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     var PARTNER = "<%= partner %>";
 
 
-    // TODO(databowl): campaign 1057's fields/API settings need review per Asana
-    // task 1218987643470425 before this goes live. The new BASE_QUESTIONS below
-    // use different answer keys than the old flow (old: lampen_aan_staan,
-    // elektrische_fiets, douche_duur, heeft_zonnepanelen, elektrisch_rijden, ...;
-    // new: lampen, koken, verwarming, hurkoop, zon, contract, maandbedrag,
-    // afloop, zorgen, leverancier) — the new keys likely need new custom-field
-    // IDs added in Databowl that don't exist yet. cid/sid and the rest of this
-    // map are left unchanged from the original flow until that's confirmed.
+    // TODO(databowl): answers to verwarming, type_contract, maandbedrag_verhoogd,
+    // contract_afloop and zorgen_winter are not sent — campaign 1057 has no
+    // custom fields for them yet. Add their f_* IDs here once created.
     // Databowl field map — rename outgoing keys before submission.
     var LEAD_FIELD_MAP = {
         // Contact fields
@@ -878,210 +873,76 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     // r: response text shown briefly before auto-advancing (null = advance immediately)
 
     const BASE_QUESTIONS = [
-        // ── 1 ─────────────────────────────────────────────────────────
+        // ── Blok 1 · Warm-up ──
         {
             id: 'lampen_aan_staan', ic: 'bulb', label: 'Vraag 1', type: 'single',
             img: '/vaste-lasten/img/vraag-1.jpg',
-            q: 'Laat je wel eens de lampen aan staan als je een kamer verlaat?',
-            o: [
-                {ic: 'lightning', l: 'Ja, dat gebeurt wel eens'},
-                {ic: 'check', l: 'Nee, ik let daar goed op'},
-                {ic: 'lightning', l: 'Soms, als ik haast heb'}],
-            r: 'Slim! Iedereen heeft daar wel eens last van — lampen zijn echte sluipverbruikers. Laten we eens kijken naar andere gewoontes in huis.',
-            k: 'lampen'
+            q: 'Laat je wel eens lampen aan staan als je een kamer verlaat?',
+            o: [{ic: 'lightning', l: 'Ja, regelmatig'}, {ic: 'lightning', l: 'Soms'}, {ic: 'lightning', l: 'Nee, nooit'}],
+            r: null, k: 'lampen'
         },
-
-        // ── 2 ─────────────────────────────────────────────────────────
         {
-            id: 'elektrische_fiets', ic: 'bike', label: 'Vraag 2', type: 'single',
-            img: '/vaste-lasten/img/elektrische-fiets.jpg',
-            q: 'Heb je een elektrische fiets?',
-            o: [
-                {ic: 'lightning', l: 'Ja, ik gebruik die regelmatig'},
-                {ic: 'lightning', l: 'Nee, (nog) niet'},
-                {ic: 'lightning', l: 'Nee, maar ik denk erover'}],
-            r: 'Dat is goed om te weten! Een elektrische fiets zegt iets over je stroomgebruik. Even verder kijken.',
-            k: 'efiets'
-        },
-
-        // ── 3 ─────────────────────────────────────────────────────────
-        {
-            id: 'douche_duur', ic: 'shower', label: 'Vraag 3', type: 'single',
-            img: '/vaste-lasten/img/douchen.jpg',
-            q: 'Hoe lang douche je gemiddeld per keer?',
-            o: [{ic: 'lightning', l: 'Korter dan 5 minuten'}, {
-                ic: 'lightning',
-                l: 'Ongeveer 5 tot 10 minuten'
-            }, {ic: 'lightning', l: 'Langer dan 10 minuten'}],
-            r: 'Interessant! Douchen is vaak een van de grootste energiekosten. Laten we kijken hoe je zelf energie opwekt.',
-            k: 'douche'
-        },
-
-        // ── 4 ─────────────────────────────────────────────────────────
-        {
-            id: 'heeft_zonnepanelen', ic: 'sun', label: 'Vraag 4', type: 'single',
-            img: '/vaste-lasten/img/zonnepanelen.jpg',
-            q: 'Heb je reeds al zonnepanelen op je dak?',
-            o: [{ic: 'sun', l: 'Ja, al een tijdje'}, {ic: 'lightning', l: 'Nee, nog niet'}],
-            r: 'Helder! Zonnepanelen maken een groot verschil. Nu zijn we benieuwd naar je vervoer.',
-            k: 'zon',
-            branch: {
-                'Ja, al een tijdje': {
-                    id: 'thuisbatterij_info', ic: 'battery', label: 'Vraag 4a', type: 'sub',
-                    img: '/vaste-lasten/img/thuisbatterij.jpg',
-                    q: 'Met een thuisbatterij kunnen je zonnepanelen je nog meer geld opleveren.',
-                    d: 'Wil je meer informatie over een thuisbatterij?',
-                    o: [{ic: 'check', l: 'Ja, graag'}, {ic: 'lightning', l: 'Nee, dankje'}],
-                    r: null, k: 'thuisbatterij_interesse'
-                },
-                'Nee, nog niet': {
-                    id: 'interesse_zonnepanelen', ic: 'sun', label: 'Vraag 4b', type: 'sub',
-                    img: '/vaste-lasten/img/besparen-energie.jpg',
-                    q: 'Heb je interesse in besparen op je energierekening met zonnepanelen?',
-                    o: [{ic: 'sun', l: 'Ja, zeker'}, {ic: 'lightning', l: 'Nee, dankje'}],
-                    r: null, k: 'zonnepanelen_interesse'
-                }
-            }
-        },
-
-        // ── 5 ─────────────────────────────────────────────────────────
-        {
-            id: 'elektrisch_rijden', ic: 'car', label: 'Vraag 5', type: 'single',
-            img: '/vaste-lasten/img/laadpaal.jpg',
-            q: 'Rijd je elektrisch?',
-            o: [{ic: 'lightning', l: 'Ja, volledig elektrisch'}, {ic: 'car', l: 'Hybride'}, {ic: 'car', l: 'Nee'}],
-            r: 'Dat geeft een goed beeld! Elektrisch rijden verandert ook je stroomverbruik thuis. Hoe zit het met je woning?',
-            k: 'rijden',
-            branch: {
-                'Ja, volledig elektrisch': {
-                    id: 'laadpaal_info', ic: 'charge', label: 'Vraag 5a', type: 'sub',
-                    img: '/vaste-lasten/img/laadpaal.jpg',
-                    q: 'Een laadpaal maakt je auto opladen nog gemakkelijker en verhoogt de waarde van je woning.',
-                    d: 'Wil je meer weten over het plaatsen van een laadpaal?',
-                    o: [
-                        {ic: 'check', l: 'Ja'},
-                        {ic: 'lightning', l: 'Nee'}
-                    ],
-                    r: null, k: 'laadpaal_interesse'
-                }
-            }
-        },
-
-        // ── 6 ─────────────────────────────────────────────────────────
-        {
-            id: 'interesse_thuisbatterij', ic: 'battery', label: 'Vraag 6', type: 'single',
-            img: '/vaste-lasten/img/thuisbatterij.jpg',
-            q: 'Heb jij interesse in een thuisbatterij?',
-            d: 'Zo benut je je eigen stroom maximaal, verlaag je je energierekening en profiteer je van subsidies.',
-            o: [{ic: 'lightning', l: 'Ja, ik wil verdienen!'}, {ic: 'lightning', l: 'Nee, dankjewel'}],
-            r: null, k: 'thuisbatterij_eigen'
-        },
-
-        // ── 7 ─────────────────────────────────────────────────────────
-        {
-            id: 'woning_isolatie', ic: 'home', label: 'Vraag 7', type: 'single',
-            img: '/vaste-lasten/img/woning-isoleren.jpg',
-            q: 'Is je woning goed geïsoleerd?',
-            o: [
-                {ic: 'check', l: 'Ja, helemaal'},
-                {ic: 'lightning', l: 'Gedeeltelijk'},
-                {ic: 'lightning', l: 'Nee, nog niet'}
-            ],
-            r: 'Dat is waardevolle info. Nu even over koken.',
-            k: 'isolatie',
-            branch: {
-                'Nee, nog niet': {
-                    id: 'meer_weten_isolatie', ic: 'home', label: 'Vraag 7a', type: 'sub',
-                    img: '/vaste-lasten/img/woning-isoleren.jpg',
-                    q: 'Wil je meer weten over isolatie?',
-                    o: [{ic: 'check', l: 'Ja, graag'}, {ic: 'lightning', l: 'Nee, dankjewel'}],
-                    r: null, k: 'isolatie_interesse'
-                },
-                'Gedeeltelijk': {
-                    id: 'verder_isoleren',
-                    ic: 'home',
-                    label: 'Vraag 7a',
-                    type: 'sub',
-                    img: '/vaste-lasten/img/woning-isoleren.jpg',
-                    q: 'Wil je je huis verder isoleren?',
-                    o: [
-                        {ic: 'check', l: 'Ja, graag'},
-                        {ic: 'lightning', l: 'Nee, dankjewel'}
-                    ],
-                    r: null,
-                    k: 'verder_isoleren'
-                }
-            }
-        },
-
-        // ── 8 ─────────────────────────────────────────────────────────
-        {
-            id: 'kookwijze', ic: 'cook', label: 'Vraag 8', type: 'single',
+            id: 'kookwijze', ic: 'cook', label: 'Vraag 2', type: 'single',
             img: '/vaste-lasten/img/koken.jpg',
             q: 'Waar kook je op?',
-            o: [
-                {ic: 'flame', l: 'Gas'},
-                {ic: 'plug', l: 'Elektrisch'},
-                {ic: 'lightning', l: 'Inductie'}
-            ],
-            r: 'Duidelijk! Laten we kijken naar het type woning.',
-            k: 'koken',
-            branch: {
-                'Gas': {
-                    id: 'warmtepomp_info', ic: 'warmth', label: 'Vraag 8a', type: 'sub',
-                    img: '/vaste-lasten/img/besparen-energie.jpg',
-                    q: 'Heb je interesse in een warmtepomp?',
-                    d: 'Een warmtepomp kan je kosten verlagen!',
-                    o: [{ic: 'check', l: 'Ja, zeker'}, {ic: 'lightning', l: 'Nee, dankje'}],
-                    r: null, k: 'warmtepomp_interesse'
-                }
-            }
+            o: [{ic: 'flame', l: 'Gas'}, {ic: 'plug', l: 'Elektrisch'}, {ic: 'lightning', l: 'Inductie'}],
+            r: null, k: 'koken'
         },
-
-        // ── 9 ─────────────────────────────────────────────────────────
         {
-            id: 'type_woning', ic: 'building', label: 'Vraag 9', type: 'single',
+            id: 'verwarming', ic: 'warmth', label: 'Vraag 3', type: 'single',
             img: '/vaste-lasten/img/woning.jpg',
-            q: 'Wat voor type woning heb je?',
-            o: [
-                {ic: 'building', l: 'Appartement'},
-                {ic: 'home', l: 'Tussenwoning'},
-                {ic: 'home', l: 'Hoekwoning'},
-                {ic: 'home', l: '2-onder-1-kap'},
-                {ic: 'house', l: 'Vrijstaand'}],
-            r: 'Oké, dat helpt.',
-            k: 'woning'
+            q: 'Hoe verwarm je je woning?',
+            o: [{ic: 'flame', l: 'Cv-ketel op gas'}, {ic: 'building', l: 'Stadsverwarming'}, {ic: 'plug', l: 'Warmtepomp'}, {ic: 'lightning', l: 'Anders'}],
+            r: null, k: 'verwarming'
         },
-
-        // ── 10 ────────────────────────────────────────────────────────
+        // ── Blok 2 · Je woning ──
         {
-            id: 'koop_of_huur', ic: 'key', label: 'Vraag 10', type: 'single',
+            id: 'koop_of_huur', ic: 'key', label: 'Vraag 4', type: 'single',
             img: '/vaste-lasten/img/koophuis.jpg',
-            q: 'Woon je in een koop of huurwoning?',
-            o: [{ic: 'key', l: 'Koop'}, {ic: 'building', l: 'Huur'}],
+            q: 'Woon je in een koop- of huurwoning?',
+            o: [{ic: 'key', l: 'Koopwoning'}, {ic: 'building', l: 'Huurwoning'}],
             r: null, k: 'hurkoop'
         },
-
-        // ── 11 ────────────────────────────────────────────────────────
         {
-            id: 'gezinssamenstelling', ic: 'family', label: 'Vraag 11', type: 'single',
-            img: '/vaste-lasten/img/gezinsamenstelling.jpg',
-            q: 'Wat is je gezinssamenstelling?',
-            o: [
-                {ic: 'person', l: 'Alleenstaand'},
-                {ic: 'family', l: 'Met partner'},
-                {ic: 'family-child', l: 'Gezin met kinderen'},
-                {ic: 'lightning', l: 'Anders'}
-            ],
-            r: 'Helder.',
-            k: 'gezin'
+            id: 'heeft_zonnepanelen', ic: 'sun', label: 'Vraag 5', type: 'single',
+            img: '/vaste-lasten/img/zonnepanelen.jpg',
+            q: 'Heb je zonnepanelen?',
+            o: [{ic: 'sun', l: 'Ja'}, {ic: 'lightning', l: 'Nee'}],
+            r: null, k: 'zon'
         },
-
-        // ── 12 ────────────────────────────────────────────────────────
+        // ── Blok 3 · Je contract ──
         {
-            id: 'energieleverancier', ic: 'lightning', label: 'Vraag 12', type: 'dropdown',
+            id: 'type_contract', ic: 'lightning', label: 'Vraag 6', type: 'single',
             img: '/vaste-lasten/img/energieleverancier.jpg',
-            q: 'Wie is jouw huidige energieleverancier?',
+            q: 'Wat voor energiecontract heb je?',
+            o: [{ic: 'lightning', l: 'Vast'}, {ic: 'lightning', l: 'Variabel'}, {ic: 'lightning', l: 'Dynamisch'}, {ic: 'lightning', l: 'Weet ik niet'}],
+            r: null, k: 'contract'
+        },
+        {
+            id: 'maandbedrag_verhoogd', ic: 'lightning', label: 'Vraag 7', type: 'single',
+            img: '/vaste-lasten/img/maandbedrag.jpg',
+            q: 'Is je maandbedrag het afgelopen jaar verhoogd?',
+            o: [{ic: 'lightning', l: 'Ja, flink'}, {ic: 'lightning', l: 'Ja, een beetje'}, {ic: 'lightning', l: 'Nee'}, {ic: 'lightning', l: 'Weet ik niet'}],
+            r: null, k: 'maandbedrag'
+        },
+        {
+            id: 'contract_afloop', ic: 'key', label: 'Vraag 8', type: 'single',
+            img: '/vaste-lasten/img/contract-afloop.jpg',
+            q: 'Wanneer loopt je huidige contract af?',
+            o: [{ic: 'lightning', l: 'Binnen 3 maanden'}, {ic: 'lightning', l: 'Binnen een jaar'}, {ic: 'lightning', l: 'Later'}, {ic: 'lightning', l: 'Het is al afgelopen'}, {ic: 'lightning', l: 'Weet ik niet'}],
+            r: null, k: 'afloop'
+        },
+        {
+            id: 'zorgen_winter', ic: 'warmth', label: 'Vraag 9', type: 'single',
+            img: '/vaste-lasten/img/gezinsamenstelling.jpg',
+            q: 'Maak je je zorgen over je energiekosten deze winter?',
+            o: [{ic: 'lightning', l: 'Ja'}, {ic: 'lightning', l: 'Een beetje'}, {ic: 'lightning', l: 'Nee'}],
+            r: null, k: 'zorgen'
+        },
+        {
+            id: 'energieleverancier', ic: 'lightning', label: 'Vraag 10', type: 'dropdown',
+            img: '/vaste-lasten/img/energieleverancier.jpg',
+            q: 'Bij welke energieleverancier zit je?',
             options: [
                 'Vattenfall', 'Eneco', 'Essent', 'Budget Energie', 'Greenchoice',
                 'Nuon', 'Oxxio', 'Energie Concurrent', 'DELTA Energie', 'Vandebron',
@@ -1089,20 +950,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                 'Tibber', 'Frank Energie', 'Octopus Energy', 'Mega Energie',
                 'Atoom', 'BAS Nederland', 'Anders'
             ],
-            r: 'Dank je!',
-            k: 'leverancier'
-        },
-
-        // ── 13 ────────────────────────────────────────────────────────
-        {
-            id: 'internet_provider', ic: 'wifi', label: 'Vraag 13', type: 'dropdown',
-            img: '/vaste-lasten/img/internetprovider.jpg',
-            q: 'Wie is je huidige internetprovider?',
-            options: [
-                'Ziggo', 'KPN', 'Odido', 'Budget thuis', 'Delta', 'Solcon', 'Anders'
-            ],
-            r: 'Dank je!',
-            k: 'internet'
+            r: null, k: 'leverancier'
         }
     ];
 
@@ -1284,7 +1132,8 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     function advance() {
         qi++;
         if (qi >= queue.length) {
-            showGiftSelection();
+            gN = 'Sovendus cadeauaanbod'; gV = '';
+            showLeadForm();
         } else {
             renderQuestion(queue[qi]);
         }
@@ -1420,7 +1269,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
             ok = false;
         }
         if (!addressValid) {
-            FormValidation.showError(document.getElementById('hn'), document.getElementById('addrStatus'), 'Combinatie niet gevonden. Controleer uw huisnummer.');
+            FormValidation.showError(document.getElementById('hn'), document.getElementById('addrStatus'), 'Combinatie niet gevonden. Controleer je huisnummer.');
             ok = false;
         }
         if (!phoneValid) {
