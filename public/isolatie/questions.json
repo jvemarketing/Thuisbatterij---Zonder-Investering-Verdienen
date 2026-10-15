@@ -5,9 +5,6 @@
     "help": "De landelijke ISDE-regeling geldt voor eigenaar-bewoners.",
     "options": [
       "Ja, ik ben de eigenaar",
-      "Nee, binnen 3 maanden wordt ik de eigenaar",
-      "Nee, over meer dan 3 maanden wordt ik de eigenaar",
-      "Nee, ik ben van plan een woning te kopen",
       "Nee, ik huur"
     ],
     "qualifier": true
