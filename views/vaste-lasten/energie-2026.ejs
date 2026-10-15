@@ -785,10 +785,8 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
     var PARTNER = "<%= partner %>";
 
 
-    // TODO(databowl): answers to verwarming, type_contract, maandbedrag_verhoogd,
-    // contract_afloop and zorgen_winter are not sent — campaign 1057 has no
-    // custom fields for them yet. Add their f_* IDs here once created.
     // Databowl field map — rename outgoing keys before submission.
+    // Field names follow the campaign 1057 integration document.
     var LEAD_FIELD_MAP = {
         // Contact fields
         email:               "f_1_email",
@@ -806,25 +804,17 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
         // Affiliate tracking
         transaction_id:      "f_331_transaction_id",
         // Survey answer fields
-        lampen_aan_staan:        "f_1156_lampen_aan_staan",
-        elektrische_fiets:       "f_1157_elektrische_fiets",
-        douche_duur:             "f_1158_douche_duur",
-        heeft_zonnepanelen:      "f_1159_heeft_zonnepanelen",
-        thuisbatterij_info:      "f_1160_thuisbatterij_info",
-        interesse_zonnepanelen:  "f_1161_interesse_zonnepanelen",
-        elektrisch_rijden:       "f_1162_elektrisch_rijden",
-        laadpaal_info:           "f_1163_laadpaal_info",
-        interesse_thuisbatterij: "f_1164_interesse_thuisbatterij",
-        woning_isolatie:         "f_1165_woning_isolatie",
-        meer_weten_isolatie:     "f_1166_meer_weten_isolatie",
-        kookwijze:               "f_1168_kookwijze",
-        warmtepomp_info:         "f_1169_warmtepomp_info",
-        type_woning:             "f_1058_type_woning",
+        verwarming:              "f_1750_verwarming",
         koop_of_huur:            "f_1170_koop_of_huur",
-        gezinssamenstelling:     "f_1171_gezinssamenstelling",
+        type_contract:           "f_1751_type_contract",
+        maandbedrag_verhoogd:    "f_1752_maandbedrag_verhoogd",
+        contract_afloop:         "f_1753_contract_afloop",
+        zorgen_winter:           "f_1754_zorgen_winter",
         energieleverancier:      "f_1172_energieleverancier",
-        verder_isoleren:         "f_1167_verder_isoleren",
-        internet_provider:       "f_1420_internet_provider",
+        // Not (yet) fields in campaign 1057, so Databowl ignores them until they are added.
+        lampen_aan_staan:        "f_1156_lampen_aan_staan",
+        kookwijze:               "f_1168_kookwijze",
+        heeft_zonnepanelen:      "f_1159_heeft_zonnepanelen",
         // DOI timestamps
         doi_sent_time:           "f_399_doi_sent_time",
         doi_confirmed_time:      "f_400_doi_confirmed_time",
@@ -1459,12 +1449,40 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
         window.open('/sovendus?' + params.toString(), '_blank', 'noopener,noreferrer');
     }
 
+    // Share the page itself, without the query string so the visitor's affiliate parameters are not passed on.
+    var SHARE_URL = location.origin + location.pathname;
+
     function shareWhatsApp() {
-        window.open('https://wa.me/?text=Doe+mee+met+het+Vaste+Lasten+Onderzoek!+https://consumentenquiz.nl/1', '_blank');
+        window.open('https://wa.me/?text=' + encodeURIComponent('Doe mee met het Vaste Lasten Onderzoek! ' + SHARE_URL), '_blank');
     }
 
     function copyLink() {
-        navigator.clipboard?.writeText('https://consumentenquiz.nl/1').then(() => alert('Link gekopieerd!'));
+        var button = document.querySelector('.share-btn[onclick="copyLink()"]');
+        var label = button.lastChild;
+        var original = label.textContent;
+        function showCopied() {
+            label.textContent = ' Link gekopieerd!';
+            setTimeout(function () { label.textContent = original; }, 2000);
+        }
+        function fallbackCopy() {
+            // navigator.clipboard is missing on non-HTTPS pages and some in-app browsers.
+            var textarea = document.createElement('textarea');
+            textarea.value = SHARE_URL;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            var copied = false;
+            try { copied = document.execCommand('copy'); } catch (error) {}
+            document.body.removeChild(textarea);
+            if (copied) showCopied(); else window.prompt('Kopieer deze link:', SHARE_URL);
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(SHARE_URL).then(showCopied, fallbackCopy);
+        } else {
+            fallbackCopy();
+        }
     }
 
     history.pushState(null, '', location.href);
