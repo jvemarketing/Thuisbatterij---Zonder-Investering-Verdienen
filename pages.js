@@ -155,6 +155,19 @@ const pages = [
                 },
             },
             {
+                // Second version of /wijvergelijken with prizes instead of the
+                // Sovendus gift on the landing page; /wijvergelijken stays as it is.
+                path: '/wijvergelijkenv2',
+                view: 'vaste-lasten/energie-2026-v2',
+                routeViewData: {
+                    databowlCid: '1057',
+                    partnerName: 'Wij Vergelijken',
+                    privacyURL: 'https://wij-vergelijken.nl/privacy-policy/',
+                    termsURL: 'https://wij-vergelijken.nl/algemene-voorwaarden/',
+                    optOutURL: 'https://wij-vergelijken.nl/toestemming-intrekken/',
+                },
+            },
+            {
                 path: '/voltafy',
                 view: 'vaste-lasten/index',
                 routeViewData: {
