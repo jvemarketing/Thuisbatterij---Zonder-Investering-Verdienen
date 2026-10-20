@@ -4,12 +4,14 @@ function getTwilioClient() {
   return twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 }
 
-// Per-partner opt-out link shown in the double opt-in SMS; falls back to the
-// site's own opt-out page for partners without their own preference center.
+// Per-partner opt-out link shown in the double opt-in SMS; falls back to
+// Wij Vergelijken's opt-out page (Asana task 1219638974613625) for partners
+// without their own preference center.
 const PARTNER_OPT_OUT_LINKS = {
   ebned: 'https://ebned.nl/privacyvoorkeuren',
+  vle: 'https://vastelastenexperts.nl/toestemming-intrekken/',
 };
-const DEFAULT_OPT_OUT_LINK = 'vastelastenexperts.nl/toestemming-intrekken';
+const DEFAULT_OPT_OUT_LINK = 'https://wij-vergelijken.nl/toestemming-intrekken/';
 
 // Partners needing a full custom closing sentence instead of the generic
 // "Afmelden: <link>" — e.g. wij-vergelijken's sentence names the original

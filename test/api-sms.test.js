@@ -50,7 +50,16 @@ describe('api/sms/send', () => {
     await sendHandler({ method: 'POST', body: { phone: '+31612345678', firstName: 'Jan' } }, res);
 
     expect(messagesCreate).toHaveBeenCalledWith(
-      expect.objectContaining({ body: expect.stringContaining('vastelastenexperts.nl/toestemming-intrekken') })
+      expect.objectContaining({ body: expect.stringContaining('Afmelden: https://wij-vergelijken.nl/toestemming-intrekken/') })
+    );
+  });
+
+  it('keeps the Vastelastenexperts opt-out link when partner is vle', async () => {
+    const res = mockRes();
+    await sendHandler({ method: 'POST', body: { phone: '+31612345678', firstName: 'Jan', partner: 'vle' } }, res);
+
+    expect(messagesCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ body: expect.stringContaining('Afmelden: https://vastelastenexperts.nl/toestemming-intrekken/') })
     );
   });
 
