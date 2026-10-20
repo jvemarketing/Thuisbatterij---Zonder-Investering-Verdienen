@@ -54,7 +54,9 @@ const pages = [
         ],
         defaultViewData: {
             partner: 'vaste-lasten-onderzoek',
-            partnerName: 'Vastelastenexperts',
+            // Asana task 1219638974613622: the live VLO pages name Wij Vergelijken
+            // instead of Vastelastenexperts (/vle keeps its own name below).
+            partnerName: 'Wij Vergelijken',
             logo: {
                 src: '/vaste-lasten/img/no-logo.png',
                 alt: 'Vaste lasten onderzoek',
@@ -204,6 +206,7 @@ const pages = [
                 view: 'vaste-lasten/index',
                 routeViewData: {
                     partner: 'vle',
+                    partnerName: 'Vastelastenexperts',
                     logo: {
                         src: '/vaste-lasten/img/vle.png',
                         alt: 'Vle',
