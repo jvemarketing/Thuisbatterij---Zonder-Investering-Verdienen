@@ -196,6 +196,7 @@
 
       houseNumberEl.addEventListener('blur', doLookup);
       if (additionEl) additionEl.addEventListener('blur', doLookup);
+      return doLookup;
     },
 
     _post: function (url, data, onSuccess, onError) {

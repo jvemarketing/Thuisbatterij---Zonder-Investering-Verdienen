@@ -664,12 +664,12 @@ button{font-family:inherit;cursor:pointer}
       '<label class="field-label"><span>Geboortedatum *</span><input class="field-input" type="text" id="fDob" placeholder="DD/MM/JJJJ" inputmode="numeric" autocomplete="off"/><span class="field-error" id="errDob"></span></label>' +
       '<label class="field-label"><span>Telefoonnummer *</span><input class="field-input" type="tel" id="fPhone" autocomplete="tel"/><span class="field-status" id="phoneStatus"></span></label>' +
       '<label class="field-label full"><span>E-mailadres *</span><input class="field-input" type="email" id="fEmail" autocomplete="email"/><span class="field-status" id="emailStatus"></span></label>' +
-      '<label class="field-label"><span>Straatnaam *</span><input class="field-input" id="fStraat" autocomplete="address-line1" disabled/><span class="field-error" id="errStraat"></span></label>' +
+      '<label class="field-label"><span>Postcode *</span><input class="field-input" id="fPostcode" placeholder="1234 AB" value="' + postcode + '" autocomplete="postal-code"/><span class="field-error" id="errPostcode"></span></label>' +
       '<div class="subgrid">' +
       '<label class="field-label"><span>Huisnr. *</span><input class="field-input" id="fHuisnummer" placeholder="12" autocomplete="address-line2"/><span class="field-status" id="addressStatus"></span></label>' +
       '<label class="field-label"><span>Toevoeging</span><input class="field-input" id="fToevoeging" autocomplete="address-line3"/></label>' +
       '</div>' +
-      '<label class="field-label"><span>Postcode *</span><input class="field-input" id="fPostcode" placeholder="1234 AB" value="' + postcode + '" autocomplete="postal-code"/><span class="field-error" id="errPostcode"></span></label>' +
+      '<label class="field-label full"><span>Straatnaam *</span><input class="field-input" id="fStraat" autocomplete="address-line1"/><span class="field-error" id="errStraat"></span></label>' +
       '</div>' +
       '<div class="fcheck"><input type="checkbox" id="fPrivacy"/><label for="fPrivacy">Ik ga akkoord met de <a href="/privacy.html" target="_blank">privacyverklaring</a> en algemene voorwaarden *</label></div>' +
       '<div class="fcheck"><input type="checkbox" id="fNewsletter"/><label for="fNewsletter">Ja, ik ontvang graag tips en aanbiedingen over verduurzamen</label></div>' +
@@ -690,7 +690,7 @@ button{font-family:inherit;cursor:pointer}
       utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
     });
 
-    FormValidation.attachAddress(
+    var lookupAddress = FormValidation.attachAddress(
       function () { return document.getElementById('fPostcode').value.trim(); },
       document.getElementById('fHuisnummer'),
       document.getElementById('fToevoeging'),
@@ -704,6 +704,13 @@ button{font-family:inherit;cursor:pointer}
         }
       }
     );
+
+    // The postcode is prefilled from the first step but can still be changed;
+    // look the address up again so street and city follow the new postcode.
+    document.getElementById('fPostcode').addEventListener('change', function () {
+      addressValid = false;
+      lookupAddress();
+    });
 
     FormValidation.attachPhone(
       document.getElementById('fPhone'),
