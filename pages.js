@@ -359,6 +359,18 @@ const pages = [
                 routeViewData: {},
             },
             {
+                // Client showcase page and its demo flow, brought back from
+                // before commit f219928. The demo flow does not send leads.
+                path: '/thuisbatterij-saldering',
+                view: 'thuisbatterij/pre-lander-saldering',
+                routeViewData: {},
+            },
+            {
+                path: '/thuisbatterij-saldering/flow',
+                view: 'thuisbatterij/flow-saldering',
+                routeViewData: {},
+            },
+            {
                 path: '/flow',
                 view: 'thuisbatterij/flow',
                 routeViewData: {},
