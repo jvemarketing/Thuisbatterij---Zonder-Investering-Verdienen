@@ -23,6 +23,16 @@
   .hlogo img{height:40px; width:auto; display:block;}
   .chip{margin-left:auto; background:#E9FBEF; color:var(--groen-donker); border:1px solid #BFEED2; font-weight:700; font-size:14px; padding:8px 16px; border-radius:99px; white-space:nowrap;}
   .chip::before{content:"\1F6E1\FE0F "; }
+  /* Small phones: the full header row is wider than the screen and caused a
+     horizontal scroll, so shrink the brand and logo and drop the chip. */
+  @media(max-width:560px){
+    .hwrap{padding:10px 14px; gap:8px;}
+    .brandname{font-size:15px; gap:6px;}
+    .brandname .badge{font-size:10px; padding:2px 6px;}
+    .ism{font-size:11px;}
+    .hlogo img{height:30px;}
+    .chip{display:none;}
+  }
   .progress{height:5px; background:var(--line);}
   .progress i{display:block; height:100%; width:0; background:var(--groen); transition:width .3s;}
 
@@ -70,8 +80,14 @@
   /* formulier */
   .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   .grid .full{grid-column:1/-1;}
-  @media(max-width:560px){ .grid{grid-template-columns:1fr;} }
-  .adres-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; grid-column:1/-1;}
+  .adres-grid{display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr); gap:16px; grid-column:1/-1;}
+  @media(max-width:560px){
+    .grid{grid-template-columns:minmax(0,1fr);}
+    /* the uppercase Huisnummer/Toevoeging labels don't fit in three columns,
+       so postcode gets its own row on phones */
+    .adres-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+    .adres-grid > div:first-child{grid-column:1/-1;}
+  }
   label{display:block; font-weight:700; font-size:12.5px; letter-spacing:1px; text-transform:uppercase; color:#6C6383; margin-bottom:7px;}
   input,select{width:100%; border:1.5px solid var(--line); border-radius:12px; padding:14px; font-size:16px; font-family:inherit; background:#fff;}
   input:focus,select:focus{outline:none; border-color:var(--groen-donker);}
@@ -85,6 +101,7 @@
   .seg{display:flex; gap:12px;}
   .seg button{flex:1; background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; color:var(--ink);}
   .seg button.sel{border-color:var(--groen-donker); background:#E9FBEF; color:var(--groen-donker);}
+  @media(max-width:560px){ .seg{gap:8px;} .seg button{padding:14px 6px; min-width:0;} }
   .consent{display:flex; gap:12px; align-items:flex-start; margin:20px 0 6px; font-size:14px; color:#4A4458; line-height:1.55; font-weight:400; text-transform:none; letter-spacing:0;}
   .consent input{width:22px; height:22px; flex:0 0 22px; margin-top:2px; accent-color:var(--groen-donker);}
   .consent a{color:var(--groen-donker); font-weight:700;}
