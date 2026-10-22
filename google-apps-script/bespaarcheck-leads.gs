@@ -36,8 +36,10 @@ var SHEET_NAME = 'Leads';
 
 // Each column is a human-readable header (for non-technical readers of the
 // sheet) plus a function that pulls its value out of the parsed lead body.
-// The 13 quiz answers and 4 UTM fields are flattened into their own named
-// columns instead of one JSON blob, same reasoning for both.
+// The quiz answers and 4 UTM fields are flattened into their own named
+// columns instead of one JSON blob, same reasoning for both. The quiz has 9
+// answer columns, but each visitor answers 8: the zonnepanelen answer decides
+// whether batterij or verduurzamen is asked.
 var COLUMNS = [
   { header: 'Ontvangen op',              get: function (d) { return d.received_at; } },
   { header: 'Actie',                     get: function (d) { return d.actie; } },
@@ -59,17 +61,13 @@ var COLUMNS = [
   { header: 'Toestemmingstekst',         get: function (d) { return d.consent_tekst; } },
   { header: 'SMS verstuurd op',          get: function (d) { return d.doi_sent_time; } },
   { header: 'SMS bevestigd op',          get: function (d) { return d.doi_confirmed_time; } },
-  { header: 'Elektrische/hybride auto?', get: function (d) { return antwoord(d, 'eauto'); } },
-  { header: 'Elektrische fiets?',        get: function (d) { return antwoord(d, 'efiets'); } },
   { header: 'Energierekening p/m',       get: function (d) { return antwoord(d, 'rekening'); } },
   { header: 'Heeft zonnepanelen?',       get: function (d) { return antwoord(d, 'zonnepanelen'); } },
-  { header: 'Type energiecontract',      get: function (d) { return antwoord(d, 'contract'); } },
   { header: 'Interesse in thuisbatterij?', get: function (d) { return antwoord(d, 'batterij'); } },
   { header: 'Wil verduurzamen?',         get: function (d) { return antwoord(d, 'verduurzamen'); } },
   { header: 'Tevreden internet/tv?',     get: function (d) { return antwoord(d, 'internet'); } },
   { header: 'Type woning',               get: function (d) { return antwoord(d, 'woningtype'); } },
   { header: 'Koop of huur?',             get: function (d) { return antwoord(d, 'koophuur'); } },
-  { header: 'Gezinssamenstelling',       get: function (d) { return antwoord(d, 'gezin'); } },
   { header: 'Huidige energieleverancier', get: function (d) { return antwoord(d, 'energieleverancier'); } },
   { header: 'Huidige internetprovider',  get: function (d) { return antwoord(d, 'internetprovider'); } },
   { header: 'UTM source',                get: function (d) { return d.utm ? d.utm.source : ''; } },
