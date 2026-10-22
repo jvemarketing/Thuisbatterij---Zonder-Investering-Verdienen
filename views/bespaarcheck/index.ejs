@@ -185,7 +185,7 @@
   <!-- QUIZ -->
   <section class="card hidden" id="stepQuiz">
     <div class="banner" id="qBanner">&#9889;</div>
-    <div class="kicker" id="qKicker">VRAAG 1 VAN 13</div>
+    <div class="kicker" id="qKicker">VRAAG 1 VAN 8</div>
     <h1 id="qTitle"></h1>
     <p class="sub" id="qSub" style="display:none"></p>
     <div class="opts" id="qOpts"></div>
@@ -350,27 +350,28 @@ const CONFIG = {
   ACTIE_SUFFIX: "<%= actieSuffix %>"
 };
 
-/* ================= VRAGEN (13) ================= */
+/* ================= VRAGEN ================= */
+// Branching flow: the zonnepanelen answer decides whether the batterij or the
+// verduurzamen question is asked (showIf), so every visitor answers 8 questions.
 const QUESTIONS = [
-  { key:"eauto",     em:"\u{1F697}", title:"Heb je een elektrische of hybride auto?", opts:[["⚡","Ja"],["\u{1F697}","Nee"],["\u{1F4AD}","Nee, maar ik overweeg er een"]] },
-  { key:"efiets",    em:"\u{1F6B4}", title:"Heb je een elektrische fiets?", opts:[["⚡","Ja, ik gebruik die regelmatig"],["\u{1F6B2}","Nee, (nog) niet"],["\u{1F4AD}","Nee, maar ik denk erover"]] },
+  { key:"woningtype", em:"\u{1F3E1}", title:"Wat voor type woning heb je?", opts:[["\u{1F3E2}","Appartement"],["\u{1F3D8}\uFE0F","Tussenwoning"],["\u{1F3E0}","Hoekwoning"],["\u{1F3D8}\uFE0F","2-onder-1-kap"],["\u{1F3E1}","Vrijstaand"]] },
+  { key:"koophuur",  em:"\u{1F511}", title:"Woon je in een koop of huurwoning?", opts:[["\u{1F511}","Koop"],["\u{1F4DD}","Huur"]] },
+  { key:"zonnepanelen", em:"☀️", title:"Heb je zonnepanelen op je dak?", opts:[["☀️","Ja"],["\u{1F3E0}","Nee"]] },
+  { key:"batterij",  em:"\u{1F50B}", title:"Heb jij interesse in een thuisbatterij?", sub:"Zo benut je je eigen stroom maximaal, verlaag je je energierekening en profiteer je van subsidies.", opts:[["⚡","Ja, ik wil verdienen!"],["\u{1F44B}","Nee, dankjewel"]], showIf:()=>answers.zonnepanelen==="Ja" },
+  { key:"verduurzamen", em:"\u{1F331}", title:"Denk je erover om te verduurzamen?", sub:"Bijvoorbeeld met een warmtepomp, isolatie of zonnepanelen.", opts:[["✅","Ja, komend jaar"],["\u{1F4C6}","Misschien later"],["❌","Nee"]], showIf:()=>answers.zonnepanelen==="Nee" },
   { key:"rekening",  em:"\u{1F4B6}", title:"Hoe hoog is je maandelijkse energierekening ongeveer?", opts:[["\u{1F4B6}","Minder dan €100"],["\u{1F4B6}","€100 - €200"],["\u{1F4B6}","€200 - €300"],["\u{1F4B6}","Meer dan €300"],["❓","Weet ik niet"]] },
-  { key:"zonnepanelen", em:"☀️", title:"Heb je reeds al zonnepanelen op je dak?", opts:[["☀️","Ja, al een tijdje"],["⚡","Nee, nog niet"]] },
-  { key:"contract",  em:"\u{1F4C4}", title:"Wat voor energiecontract heb je nu?", opts:[["\u{1F4C4}","Vast"],["\u{1F4C8}","Variabel"],["⚡","Dynamisch"],["❓","Weet ik niet"]] },
-  { key:"batterij",  em:"\u{1F50B}", title:"Heb jij interesse in een thuisbatterij?", sub:"Zo benut je je eigen stroom maximaal, verlaag je je energierekening en profiteer je van subsidies.", opts:[["⚡","Ja, ik wil verdienen!"],["\u{1F44B}","Nee, dankjewel"]] },
-  { key:"verduurzamen", em:"\u{1F331}", title:"Denk je erover om (verder) te verduurzamen?", sub:"Bijvoorbeeld met een warmtepomp, isolatie of zonnepanelen.", opts:[["✅","Ja, komend jaar"],["\u{1F4C6}","Misschien later"],["❌","Nee"]] },
-  { key:"internet",  em:"\u{1F4F6}", title:"Hoe tevreden ben je over je internet en tv?", opts:[["\u{1F60A}","Heel tevreden"],["\u{1F610}","Kan beter"],["\u{1F620}","Ontevreden"],["❓","Weet ik niet"]] },
-  { key:"woningtype", em:"\u{1F3E1}", title:"Wat voor type woning heb je?", opts:[["\u{1F3E2}","Appartement"],["\u{1F3E0}","Tussenwoning"],["\u{1F3E0}","Hoekwoning"],["\u{1F3E0}","2-onder-1-kap"],["\u{1F3E1}","Vrijstaand"]] },
-  { key:"koophuur",  em:"\u{1F511}", title:"Woon je in een koop of huurwoning?", opts:[["\u{1F511}","Koop"],["\u{1F3E2}","Huur"]] },
-  { key:"gezin",     em:"\u{1F46A}", title:"Wat is je gezinssamenstelling?", opts:[["\u{1F464}","Alleenstaand"],["\u{1F465}","Met partner"],["\u{1F46A}","Gezin met kinderen"],["⚡","Anders"]] },
   { key:"energieleverancier", em:"\u{1F50C}", title:"Wie is jouw huidige energieleverancier?", select:["Vattenfall","Essent","Eneco","Budget Energie (Budget Thuis)","Energiedirect","Greenchoice","ENGIE","Oxxio","Vandebron","UnitedConsumers","ANWB Energie","Pure Energie","DELTA Energie","Powerpeers","Coolblue Energie","Innova Energie","NextEnergy","Frank Energie","Mega Energie","Anders","Weet ik niet"] },
+  { key:"internet",  em:"\u{1F4FA}", title:"Hoe tevreden ben je over je internet en tv?", opts:[["\u{1F60A}","Heel tevreden"],["\u{1F610}","Kan beter"],["\u{1F620}","Ontevreden"],["❓","Weet ik niet"]] },
   { key:"internetprovider", em:"\u{1F4E1}", title:"Wie is je huidige internetprovider?", select:["Ziggo","KPN","Odido","Budget Thuis","Delta","Solcon","Anders","Weet ik niet"] },
 ];
+const isAsked=(q)=>!q.showIf||q.showIf();
+// Number of questions this visitor answers (the same on both branches).
+const QUESTION_COUNT=QUESTIONS.filter(q=>!q.showIf).length+1;
 
 /* ================= STATE ================= */
 const $=(id)=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
-const answers={}; let qIndex=0; let aanhef="";
+const answers={}; let qIndex=0; let qHistory=[]; let aanhef="";
 let emailValid=false, phoneValid=false, addressValid=false, city="", stateName=null, itiTel=null;
 let doiSentTime="", doiConfirmedTime="";
 $("year").textContent=new Date().getFullYear();
@@ -381,10 +382,10 @@ function show(step){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function setProgress(){
-  const total=QUESTIONS.length+2; // vragen + formulier + sms
-  let done=qIndex;
-  if(!$("stepForm").classList.contains("hidden")) done=QUESTIONS.length+0.5;
-  if(!$("stepSms").classList.contains("hidden")) done=QUESTIONS.length+1.5;
+  const total=QUESTION_COUNT+2; // vragen + formulier + sms
+  let done=qHistory.length;
+  if(!$("stepForm").classList.contains("hidden")) done=QUESTION_COUNT+0.5;
+  if(!$("stepSms").classList.contains("hidden")) done=QUESTION_COUNT+1.5;
   if(!$("stepThanks").classList.contains("hidden")) done=total;
   $("prog").style.width=Math.min(100,(done/total)*100)+"%";
 }
@@ -392,23 +393,25 @@ function setProgress(){
 /* ================= QUIZ ================= */
 $("startBtn").addEventListener("click",()=>{ renderQuestion(); show("stepQuiz"); });
 function renderQuestion(){
+  while(qIndex<QUESTIONS.length&&!isAsked(QUESTIONS[qIndex])){ delete answers[QUESTIONS[qIndex].key]; qIndex++; }
   if(qIndex>=QUESTIONS.length){ show("stepForm"); setProgress(); return; }
   const q=QUESTIONS[qIndex];
   $("qBanner").textContent=q.em;
-  $("qKicker").textContent="VRAAG "+(qIndex+1)+" VAN "+QUESTIONS.length;
+  $("qKicker").textContent="VRAAG "+(qHistory.length+1)+" VAN "+QUESTION_COUNT;
   $("qTitle").textContent=q.title;
   $("qSub").style.display=q.sub?"block":"none"; $("qSub").textContent=q.sub||"";
   if(q.select){
     $("qOpts").innerHTML=`<select class="qselect" id="qSel"><option value="">— Kies je leverancier —</option>${q.select.map(o=>`<option>${o}</option>`).join("")}</select>`;
-    $("qSel").addEventListener("change",e=>{ if(e.target.value){ answers[q.key]=e.target.value; qIndex++; renderQuestion(); } });
+    $("qSel").addEventListener("change",e=>{ if(e.target.value) answer(q,e.target.value); });
   } else {
     $("qOpts").innerHTML=q.opts.map(([em,t])=>`<button type="button" class="opt" data-v="${t}"><span class="ic">${em}</span>${t}</button>`).join("");
-    $("qOpts").querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{ answers[q.key]=b.dataset.v; qIndex++; renderQuestion(); }));
+    $("qOpts").querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>answer(q,b.dataset.v)));
   }
-  $("qBack").style.visibility=qIndex===0?"hidden":"visible";
+  $("qBack").style.visibility=qHistory.length===0?"hidden":"visible";
   setProgress();
 }
-$("qBack").addEventListener("click",()=>{ qIndex=Math.max(0,qIndex-1); renderQuestion(); });
+function answer(q,value){ answers[q.key]=value; qHistory.push(qIndex); qIndex++; renderQuestion(); }
+$("qBack").addEventListener("click",()=>{ if(qHistory.length) qIndex=qHistory.pop(); renderQuestion(); });
 
 /* ================= FORMULIER-VALIDATIE ================= */
 const hint=(k,msg,cls)=>{ const el=document.querySelector(`[data-hint="${k}"]`); if(el){ el.textContent=msg||""; el.className="hint "+(cls||""); } };
