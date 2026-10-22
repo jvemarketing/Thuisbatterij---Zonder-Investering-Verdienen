@@ -371,6 +371,13 @@ const pages = [
                 routeViewData: {},
             },
             {
+                // Kozijnen preview for a client, Asana task 1219544091402017.
+                // Its lead form does not send leads anywhere yet.
+                path: '/kozijnen',
+                view: 'kozijnen/index',
+                routeViewData: {},
+            },
+            {
                 path: '/flow',
                 view: 'thuisbatterij/flow',
                 routeViewData: {},
