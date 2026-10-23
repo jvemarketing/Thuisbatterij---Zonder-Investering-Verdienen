@@ -251,6 +251,12 @@ button{font:inherit;color:inherit}
 .field.bad .e{display:block}
 .field.bad .input{border-color:var(--red)}
 .row2{display:grid;gap:0}
+/* Postcode + huisnummer lookup (Asana subtask 1219806639155975): postcode on its own row on phones */
+.row-adres{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px}
+.row-adres > :first-child{grid-column:1/-1}
+.addr-status{margin:-6px 0 14px;font-size:13.5px;color:var(--muted)}
+.input.error{border-color:var(--red)}
+.input.valid{border-color:var(--green)}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .seg button{min-height:50px;border:2px solid var(--line);border-radius:10px;background:#fff;font-weight:600;color:var(--ink);cursor:pointer}
 .seg button.sel{border-color:var(--green);background:var(--green-soft)}
@@ -313,6 +319,8 @@ button{font:inherit;color:inherit}
   .q h1{font-size:26px}
   .opts.two{grid-template-columns:1fr 1fr}
   .row2{grid-template-columns:1fr 1fr;gap:12px}
+  .row-adres{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr)}
+  .row-adres > :first-child{grid-column:auto}
   .q .btn{width:100%}
 }
 
@@ -720,9 +728,15 @@ button{font:inherit;color:inherit}
           <div class="field" id="f-voornaam"><label for="voornaam">Voornaam</label><input class="input" id="voornaam" autocomplete="given-name"><div class="e">Vul je voornaam in.</div></div>
           <div class="field" id="f-achternaam"><label for="achternaam">Achternaam</label><input class="input" id="achternaam" autocomplete="family-name"><div class="e">Vul je achternaam in.</div></div>
         </div>
+        <div class="row-adres">
+          <div class="field" id="f-postcode"><label for="postcode">Postcode</label><input class="input" id="postcode" autocomplete="postal-code" maxlength="7" placeholder="1234 AB"><div class="e">Vul een geldige postcode in.</div></div>
+          <div class="field" id="f-huisnr"><label for="huisnr">Huisnummer</label><input class="input" id="huisnr" inputmode="numeric" placeholder="12"><div class="e">Vul je huisnummer in.</div></div>
+          <div class="field"><label for="toevoeging">Toevoeging</label><input class="input" id="toevoeging" placeholder="A"></div>
+        </div>
+        <div class="addr-status" id="addrStatus">Vul je postcode en huisnummer in, dan vullen we je adres automatisch aan.</div>
         <div class="row2">
-          <div class="field" id="f-huisnr"><label for="huisnr">Huisnummer + toevoeging</label><input class="input" id="huisnr" autocomplete="address-line2" inputmode="text" placeholder="12 A"><div class="e">Vul je huisnummer in.</div></div>
-          <div class="field"><label for="pcShow">Postcode</label><input class="input" id="pcShow" disabled></div>
+          <div class="field" id="f-straat"><label for="straat">Straatnaam</label><input class="input" id="straat" autocomplete="address-line1"><div class="e">Vul je straatnaam in.</div></div>
+          <div class="field" id="f-plaats"><label for="plaats">Plaats</label><input class="input" id="plaats" autocomplete="address-level2"><div class="e">Vul je plaats in.</div></div>
         </div>
         <div class="field" id="f-email"><label for="email">E-mailadres</label><input class="input" id="email" type="email" autocomplete="email" inputmode="email"><div class="e">Vul een geldig e-mailadres in.</div></div>
         <div class="field" id="f-tel"><label for="tel">Telefoonnummer</label><input class="input" id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="06 12345678"><div class="e">Vul een geldig Nederlands telefoonnummer in.</div></div>
@@ -771,6 +785,7 @@ button{font:inherit;color:inherit}
   </footer>
 </div>
 
+<script src="/form-validation.js"></script>
 <script>
 (function(){
   'use strict';
@@ -796,6 +811,7 @@ button{font:inherit;color:inherit}
 
   var data = {};
   var current = null;
+  var addressValid = false;
 
   /* ---------- helpers ---------- */
   function $(s, r){ return (r || document).querySelector(s); }
@@ -912,7 +928,7 @@ button{font:inherit;color:inherit}
     stepEl(name).classList.add('active');
     current = name;
     progress(name);
-    if (name === 'gegevens') $('#pcShow').value = data.postcode || '';
+    if (name === 'gegevens' && $('#postcode').value !== data.postcode) { $('#postcode').value = data.postcode || ''; addressValid = false; lookupAddress(); }
     try { (window.dataLayer = window.dataLayer || []).push({ event: 'flow_step', flow: 'kozijnen', step: name }); } catch (e) {}
     window.scrollTo(0, 0);
   }
@@ -1011,23 +1027,60 @@ button{font:inherit;color:inherit}
     return v;
   }
 
+  /* Adres: postcode + huisnummer vullen straat en plaats aan. De postcode blijft
+     aanpasbaar, en straat en plaats ook (voor het geval de lookup ernaast zit). */
+  var addrStatus = $('#addrStatus');
+  var lookupAddress = FormValidation.attachAddress(
+    function(){ return $('#postcode').value; }, $('#huisnr'), $('#toevoeging'), $('#straat'), addrStatus,
+    function(valid, address){
+      addressValid = valid;
+      if (valid) {
+        $('#plaats').value = address.cityName || '';
+        ['f-huisnr','f-straat','f-plaats'].forEach(function(id){ $('#' + id).classList.remove('bad'); });
+        addrStatus.textContent = 'Adres gevonden.';
+        addrStatus.style.color = 'var(--green)';
+      } else {
+        $('#plaats').value = '';
+      }
+    }
+  );
+  $('#postcode').addEventListener('change', function(){
+    var v = $('#postcode').value.trim();
+    addressValid = false;
+    if (!PC_RE.test(v)) { $('#f-postcode').classList.add('bad'); return; }
+    $('#f-postcode').classList.remove('bad');
+    $('#postcode').value = normPc(v);
+    setPc(v);
+    lookupAddress();
+  });
+
   $('#submitBtn').addEventListener('click', function(){
     var btn = this;
     var aOk = !!data.aanhef; $('#f-aanhef').classList.toggle('bad', !aOk);
     var vn = validate('voornaam', function(v){ return v.length >= 2; });
     var an = validate('achternaam', function(v){ return v.length >= 2; });
-    var hn = validate('huisnr', function(v){ return /^[0-9]+/.test(v); });
+    var pc = validate('postcode', function(v){ return PC_RE.test(v); });
+    var hn = validate('huisnr', function(v){ return /^[0-9]+$/.test(v); });
+    var st = validate('straat', function(v){ return v.length >= 2; });
+    var pl = validate('plaats', function(v){ return v.length >= 2; });
+    if (pc && hn && !addressValid) {
+      addrStatus.textContent = 'Combinatie niet gevonden. Controleer je postcode en huisnummer.';
+      addrStatus.style.color = 'var(--red)';
+      $('#huisnr').classList.add('error');
+    }
     var em = validate('email', function(v){ return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v); });
     var tel = normTel($('#tel').value.trim()), telOk = /^0[1-9][0-9]{8}$/.test(tel);
     $('#f-tel').classList.toggle('bad', !telOk);
     var cOk = $('#consent').checked; $('#consentWrap').classList.toggle('bad', !cOk);
 
-    if (!(aOk && vn && an && hn && em && telOk && cOk)) {
-      var bad = $('#flow .bad'); if (bad && bad.scrollIntoView) bad.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    if (!(aOk && vn && an && pc && hn && addressValid && st && pl && em && telOk && cOk)) {
+      var bad = $('#flow .bad, #flow .input.error'); if (bad && bad.scrollIntoView) bad.scrollIntoView({ block: 'center', behavior: 'smooth' });
       return;
     }
 
-    data.voornaam = vn; data.achternaam = an; data.huisnummer = hn; data.email = em;
+    setPc(pc);
+    data.voornaam = vn; data.achternaam = an; data.huisnummer = hn; data.toevoeging = $('#toevoeging').value.trim();
+    data.straat = st; data.plaats = pl; data.email = em;
     data.telefoon = tel; data.toestemming = true;
     data.bron = CONFIG.bron; data.tijdstip = new Date().toISOString(); data.pagina = window.location.href;
     ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','sub_id','click_id'].forEach(function(k){ var v = getParam(k); if (v) data[k] = v; });
