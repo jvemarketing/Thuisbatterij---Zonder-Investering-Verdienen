@@ -392,6 +392,14 @@ const pages = [
                 routeViewData: {},
             },
             {
+                // Heat pump page, Asana task 1219490983173514. Its lead form does
+                // not send leads yet: it waits for the Databowl campaign
+                // "NL - VD - Heatpump - Master".
+                path: '/warmtepomp',
+                view: 'warmtepomp/index',
+                routeViewData: {},
+            },
+            {
                 path: '/flow',
                 view: 'thuisbatterij/flow',
                 routeViewData: {},
