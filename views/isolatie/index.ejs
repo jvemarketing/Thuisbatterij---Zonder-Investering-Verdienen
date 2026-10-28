@@ -148,6 +148,7 @@ button{font-family:inherit;cursor:pointer}
 .fcheck input{margin-top:0.2rem;width:17px;height:17px;flex-shrink:0}
 .fcheck label{font-size:13px;color:var(--muted-foreground);line-height:1.5}
 .fcheck label a{color:var(--primary);text-decoration:underline}
+.fcheck.error{background:color-mix(in oklab, var(--destructive) 6%, transparent);border-radius:var(--radius-md)}
 .form-note{margin-top:0.75rem;display:flex;align-items:flex-start;justify-content:center;gap:0.375rem;text-align:center;font-size:12px;color:var(--muted-foreground)}
 
 /* EXIT SCREEN */
@@ -671,7 +672,8 @@ button{font-family:inherit;cursor:pointer}
       '</div>' +
       '<label class="field-label full"><span>Straatnaam *</span><input class="field-input" id="fStraat" autocomplete="address-line1"/><span class="field-error" id="errStraat"></span></label>' +
       '</div>' +
-      '<div class="fcheck"><input type="checkbox" id="fPrivacy"/><label for="fPrivacy">Ik ga akkoord met de <a href="/privacy.html" target="_blank">privacyverklaring</a> en algemene voorwaarden *</label></div>' +
+      '<div class="fcheck" id="fPrivacyWrap"><input type="checkbox" id="fPrivacy"/><label for="fPrivacy">Ik ga akkoord met de <a href="/privacy.html" target="_blank">privacyverklaring</a> en algemene voorwaarden *</label></div>' +
+      '<span class="field-error" id="errPrivacy"></span>' +
       '<div class="fcheck"><input type="checkbox" id="fNewsletter"/><label for="fNewsletter">Ja, ik ontvang graag tips en aanbiedingen over verduurzamen</label></div>' +
       '<button type="submit" class="flow-submit-btn">Rond mijn aanvraag af →</button>' +
       '<p class="form-note"><i class="fas fa-lock"></i> Je gegevens gebruiken we alleen om je isolatie- en subsidiecheck af te ronden. Geen verplichtingen.</p>' +
@@ -727,6 +729,11 @@ button{font-family:inherit;cursor:pointer}
     );
 
     document.getElementById('leadForm').addEventListener('submit', submitForm);
+
+    document.getElementById('fPrivacy').addEventListener('change', function () {
+      document.getElementById('fPrivacyWrap').classList.remove('error');
+      document.getElementById('errPrivacy').textContent = '';
+    });
   }
 
   function setFieldError(inputId, errorId, message) {
@@ -775,12 +782,16 @@ button{font-family:inherit;cursor:pointer}
       FormValidation.showError(document.getElementById('fHuisnummer'), document.getElementById('addressStatus'), 'Combinatie niet gevonden. Controleer je huisnummer.');
       valid = false;
     }
-    if (!document.getElementById('fPrivacy').checked) {
-      valid = false;
-      alert('Je moet akkoord gaan met de privacyverklaring om door te gaan.');
-    }
+    var privacyChecked = document.getElementById('fPrivacy').checked;
+    document.getElementById('fPrivacyWrap').classList.toggle('error', !privacyChecked);
+    document.getElementById('errPrivacy').textContent = privacyChecked ? '' : 'Je moet akkoord gaan met de privacyverklaring om door te gaan.';
+    if (!privacyChecked) valid = false;
 
-    if (!valid) return;
+    if (!valid) {
+      var firstError = document.querySelector('#leadForm .error');
+      if (firstError) firstError.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return;
+    }
 
     var btn = document.querySelector('#leadForm .flow-submit-btn');
     btn.disabled = true;
