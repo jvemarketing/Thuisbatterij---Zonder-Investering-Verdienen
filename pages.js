@@ -45,6 +45,14 @@ const BESPAARCHECK_HOEKSTRA_BRAND = {
     heroMiniColor: '#B4ADCB',
 };
 
+// Asana task 1219638974613622: on /, /1 and /2 the links in the text under the
+// "Ga Verder" button go to Wij Vergelijken. Set per route, since the other
+// partner routes on vastelastenonderzoek.nl share the same defaults.
+const WIJ_VERGELIJKEN_CONSENT_LINKS = {
+    consentPrivacyURL: 'https://wij-vergelijken.nl/privacy-policy/',
+    consentOptOutURL: 'https://wij-vergelijken.nl/toestemming-intrekken/',
+};
+
 const pages = [
     {
         name: 'vaste-lasten-onderzoek',
@@ -82,7 +90,7 @@ const pages = [
             {
                 path: '/',
                 view: 'vaste-lasten/index',
-                routeViewData: {},
+                routeViewData: { ...WIJ_VERGELIJKEN_CONSENT_LINKS },
             },
             {
                 path: '/energiecrisis',
@@ -93,6 +101,7 @@ const pages = [
                 path: '/1',
                 view: 'vaste-lasten/index',
                 routeViewData: {
+                    ...WIJ_VERGELIJKEN_CONSENT_LINKS,
                     customPrizes: [
                         { id: 'albert-heijn', name: 'Albert Heijn Cadeaukaart', shortName: 'Albert Heijn', val: '€500', img: '/vaste-lasten/img/albert-heijn-cadeaukaart.png' },
                         { id: 'jumbo',        name: 'Jumbo Cadeaukaart',        shortName: 'Jumbo',        val: '€500', img: '/vaste-lasten/img/jumbo-cadeaukaart.png' },
@@ -107,6 +116,7 @@ const pages = [
                 path: '/2',
                 view: 'vaste-lasten/index',
                 routeViewData: {
+                    ...WIJ_VERGELIJKEN_CONSENT_LINKS,
                     customPrizes: [
                         { id: 'bijenkorf',    name: 'Bijenkorf Cadeaukaart',   shortName: 'Bijenkorf',   val: '€500', img: '/vaste-lasten/img/bijenkorf-cadeaukaart.png' },
                         { id: 'zalando',      name: 'Zalando Cadeaukaart',     shortName: 'Zalando',     val: '€500', img: '/vaste-lasten/img/zalando-cadeaukaart.png' },
@@ -175,6 +185,8 @@ const pages = [
                 routeViewData: {
                     partner: 'voltafy',
                     partnerName: 'Voltafy',
+                    // Their thank-you page keeps naming Vastelastenexperts as the advisor.
+                    advisorName: 'Vastelastenexperts',
                     logo: {
                         src: '/vaste-lasten/img/voltafy.png',
                         alt: 'Voltafy',
@@ -191,6 +203,8 @@ const pages = [
                 routeViewData: {
                     partner: 'gemakkelijk-besparen',
                     partnerName: 'Gemakkelijk Besparen',
+                    // Their thank-you page keeps naming Vastelastenexperts as the advisor.
+                    advisorName: 'Vastelastenexperts',
                     logo: {
                         src: '/vaste-lasten/img/gemakkelijk-besparen.png',
                         alt: 'Gemakkelijkbesparen',

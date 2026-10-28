@@ -661,8 +661,8 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
         <p class="legal-text"><% if (typeof consentText !== 'undefined' && consentText) { %><%- consentText %><% } else { %>Wat gebeurt er met uw gegevens? Door op "Ga Verder" te klikken geeft u toestemming dat
             <%= partnerName %> u telefonisch benadert om te berekenen hoeveel u kunt Besparen op uw energie en telecomkosten. De
             berekening wordt gratis en vrijblijvend telefonisch gedaan door een energieadviseur van <%= partnerName %>.
-            Wilt u dit niet meer, intrek via het <a href="<%= optOutURL %>" target="_blank">formulier
-                op onze website</a>. Zie ook onze <a href="<%= privacyURL %>" target="_blank">Privacy
+            Wilt u dit niet meer, intrek via het <a href="<%= (typeof consentOptOutURL !== 'undefined' && consentOptOutURL) || optOutURL %>" target="_blank">formulier
+                op onze website</a>. Zie ook onze <a href="<%= (typeof consentPrivacyURL !== 'undefined' && consentPrivacyURL) || privacyURL %>" target="_blank">Privacy
                 Policy</a>.<% } %></p>
         <% } %>
     </div>
@@ -741,7 +741,7 @@ const prizes = (typeof customPrizes !== 'undefined' && customPrizes) ? customPri
                                   fill="#1a4f8a"/>
                         </svg>
                     </div>
-                    <div><strong>Gratis tariefcheck:</strong> Een energieadviseur van <%= advisorName || 'Vaste Lasten Experte' %> neemt zo snel mogelijk contact op.
+                    <div><strong>Gratis tariefcheck:</strong> Een energieadviseur van <%= advisorName || partnerName %> neemt zo snel mogelijk contact op.
                     </div>
                 </div>
             </div>
